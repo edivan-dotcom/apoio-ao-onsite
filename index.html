@@ -58,10 +58,11 @@
             position: absolute;
             right: 0;
             background-color: white;
-            min-width: 250px;
+            min-width: 300px;
             box-shadow: 0px 8px 16px rgba(0,0,0,0.1);
             z-index: 1001;
             border-radius: 0 0 8px 8px;
+            overflow: hidden;
             top: 60px;
             border-top: 2px solid var(--primary);
         }
@@ -75,11 +76,14 @@
             display: block;
             font-size: 0.85rem;
             border-bottom: 1px solid #f0f0f0;
+            transition: 0.2s;
         }
 
-        /* CABEÇALHO COM IMAGEM E TRANSPARÊNCIA */
+        .dropdown-content a:hover { background-color: #f1f1f1; color: var(--primary); border-left: 4px solid var(--primary); }
+
+        /* CABEÇALHO */
         header {
-            background: linear-gradient(rgba(106, 17, 203, 0.6), rgba(37, 117, 252, 0.6)), 
+            background: linear-gradient(rgba(106, 17, 203, 0.7), rgba(37, 117, 252, 0.7)), 
                         url('https://wecanbr.com.br/img/quem-somos/main.jpg');
             background-size: cover;
             background-position: center;
@@ -88,14 +92,16 @@
             text-align: center;
         }
 
-        header h1 { font-size: 2.5rem; margin-bottom: 20px; text-shadow: 2px 2px 4px rgba(0,0,0,0.5); }
+        header h1 { font-size: 2.5rem; text-transform: uppercase; letter-spacing: 2px; margin: 0; text-shadow: 2px 2px 4px rgba(0,0,0,0.3); }
 
-        /* PESQUISA */
+        /* BUSCA E RESULTADOS */
         .search-container { 
+            margin-top: 25px; 
             position: relative; 
             width: 500px; 
             max-width: 90%; 
-            margin: 0 auto; 
+            margin-left: auto; 
+            margin-right: auto; 
         }
 
         #searchInput {
@@ -119,8 +125,9 @@
             box-shadow: 0 10px 25px rgba(0,0,0,0.2);
             display: none;
             z-index: 2000;
-            max-height: 300px;
+            max-height: 350px;
             overflow-y: auto;
+            border: 1px solid #ddd;
         }
 
         .result-item {
@@ -132,27 +139,30 @@
             border-bottom: 1px solid #eee;
         }
 
-        .result-item:hover { background: #f0f0f0; }
+        .result-item:hover { background: #f0f0f0; color: var(--primary); }
 
         /* CARDS */
         .container {
             display: flex;
             justify-content: center;
             flex-wrap: wrap;
-            gap: 20px;
+            gap: 25px;
             padding: 40px 20px;
+            max-width: 1200px;
+            margin: 0 auto;
         }
 
         .card {
             background: white;
-            border-radius: 12px;
-            width: 280px;
-            padding: 25px;
+            border-radius: 15px;
+            width: 300px;
+            padding: 30px;
             text-align: center;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
             text-decoration: none;
             color: #333;
             border-top: 5px solid var(--primary);
+            box-sizing: border-box;
             transition: 0.3s;
         }
 
@@ -161,69 +171,89 @@
 
         /* SEÇÃO DO APPSHEET INTEGRADO */
         .app-section {
-            max-width: 1000px;
-            margin: 20px auto;
+            max-width: 1100px;
+            margin: 30px auto;
             padding: 0 20px;
         }
 
         .app-container {
             background: white;
             border-radius: 15px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
             overflow: hidden;
             border: 1px solid #ddd;
         }
 
-        /* O link vai aqui no src do iframe, não no CSS */
-        iframe {https://www.appsheet.com/start/53559df4-e3c6-465a-86bc-1f3a70e6735a}
+        iframe {
             width: 100%;
-            height: 700px;
+            height: 800px; /* Altura ideal para o AppSheet */
             border: none;
+            display: block;
         }
 
-        footer { text-align: center; padding: 20px; background: #222; color: white; margin-top: 40px; }
+        /* AJUSTES CELULAR */
+        @media (max-width: 768px) {
+            .navbar { padding: 0 15px; }
+            .dropdown-btn { margin-left: 10px; font-size: 0.8rem; }
+            header h1 { font-size: 1.8rem; }
+            iframe { height: 600px; }
+        }
+
+        footer { text-align: center; padding: 30px; background: #222; color: white; margin-top: 50px; }
     </style>
 </head>
 <body>
 
     <nav class="navbar">
-        <div style="font-weight: bold; color: var(--primary);">WE CAN BR</div>
+        <div style="font-weight: bold; color: var(--primary); letter-spacing: 1px;">WE CAN BR</div>
         <div class="nav-links">
             <div class="dropdown">
                 <button class="dropdown-btn">📊 Planilhas ▼</button>
-                <div class="dropdown-content dropdown-planilhas">
-                    <a href="https://desafiorhcombr-my.sharepoint.com/:x:/r/personal/mirian_oliveira_wecanbr_com_br/_layouts/15/doc2.aspx?sourcedoc=%7B519706C2-BDEF-438C-B037-385F4D8A3488%7D&file=DRIVE%20DE%20RESCISAO%20SHOPEE.xlsx" target="_blank">Drive de Rescisão Shopee</a>
-                    <a href="https://desafiorhcombr-my.sharepoint.com/:x:/r/personal/edivan_costa_wecanbr_com_br/_layouts/15/Doc.aspx?sourcedoc=%7B63D04DA0-C7A8-4059-8591-37DFCED94A93%7D&file=CENTRAL%20DE%20SOLICITA%25u00c7%25u00d5ES.xlsx" target="_blank">Central de Solicitações (Base)</a>
+                <div class="dropdown-content">
+                    <a href="https://desafiorhcombr-my.sharepoint.com/:x:/r/personal/mirian_oliveira_wecanbr_com_br/_layouts/15/doc2.aspx?sourcedoc=%7B519706C2-BDEF-438C-B037-385F4D8A3488%7D&file=DRIVE%20DE%20RESCISAO%20SHOPEE.xlsx" target="_blank">📈 Drive de Rescisão Shopee</a>
+                    <a href="https://desafiorhcombr-my.sharepoint.com/:x:/r/personal/edivan_costa_wecanbr_com_br/_layouts/15/Doc.aspx?sourcedoc=%7B63D04DA0-C7A8-4059-8591-37DFCED94A93%7D&file=CENTRAL%20DE%20SOLICITA%25u00c7%25u00d5ES.xlsx" target="_blank">📋 Central de Solicitações (Base)</a>
+                    <a href="https://docs.google.com/spreadsheets/d/1WBYOF9AkoS7NpzhqFyqm5PzQRP13yUF2p5ZY8FfZp_c/edit#gid=690743947" target="_blank">🔍 Template Shopee</a>
+                    <a href="https://desafiorhcombr.sharepoint.com/:x:/r/sites/FSWECANBR/_layouts/15/Doc.aspx?sourcedoc=%7B1BA76351-0EC5-4118-9F32-E921659CCCE1%7D&file=01%202026%20REJEITOS%20JANEIRO%20.xlsx" target="_blank">⚠️ Rejeitos 01.2026</a>
                 </div>
             </div>
 
             <div class="dropdown">
                 <button class="dropdown-btn">📄 Documentos ▼</button>
-                <div class="dropdown-content dropdown-docs">
+                <div class="dropdown-content">
                     <a href="https://drive.google.com/file/d/1qsLtN-HC5488FVQc3n5mcT8zjCdVja0d/view" target="_blank">Carta de Suspensão</a>
+                    <a href="https://drive.google.com/file/d/1lGnjwLz_5i4uASifv2OPlkSb7NUGeaHI/view" target="_blank">Comunicado de Desligamento</a>
+                    <a href="https://drive.google.com/file/d/1zsrlh6KBLvMvEGc13tTA6I7Ybra5iObA/view" target="_blank">Advertência Disciplinar</a>
+                    <a href="https://drive.google.com/file/d/1_Dw1qLl9icW282pkZCNln8908Nfqiasi/view" target="_blank">Advertência - Ponto</a>
+                    <a href="https://drive.google.com/file/d/1aryngzuxX72mOhxchNmQPBA30QT2gNt2/view" target="_blank">Carta Banco Santander</a>
+                    <a href="https://drive.google.com/file/d/1PDp_bhtDB-ZR-wRwFUJ80Xpa4gWu_HkQ/view" target="_blank">Termo de Ciência - EPI</a>
+                    <a href="https://drive.google.com/file/d/1a_D1awqrBGXLaiKba6dc_ruE41dDF3ke/view" target="_blank">Dispensa Justa Causa</a>
+                    <a href="https://docs.google.com/document/d/1pqJ2b7wfCbjdAuKC99cIys9RYnenn2nkACDo33isZFE/edit" target="_blank">Aviso Prévio Indenizado</a>
+                    <a href="https://drive.google.com/file/d/16qsbtlkVBkIqZN_vjXK5T0gI7ivXWR/view" target="_blank">Declaração de Vínculo</a>
                     <a href="https://drive.google.com/file/d/1CQQ3GTIUoOW9SGZ2EZTG8O3Q3ZFHk_El/view" target="_blank">DUT</a>
                 </div>
             </div>
-            <a href="https://www.appsheet.com/start/53559df4-e3c6-465a-86bc-1f3a70e6735a" target="_blank" class="dropdown-btn">🚗 Voucher Uber</a>
         </div>
     </nav>
 
     <header>
         <h1>APOIO AO ONSITE</h1>
         <div class="search-container">
-            <input type="text" id="searchInput" onkeyup="buscarTudo()" placeholder="Pesquisar documentos, planilhas ou ferramentas..." autocomplete="off">
+            <input type="text" id="searchInput" onkeyup="buscarAgora()" placeholder="O que você está procurando?" autocomplete="off">
             <div id="searchResults"></div>
         </div>
     </header>
 
     <div class="container" id="cardContainer">
         <a href="https://forms.office.com/Pages/ResponsePage.aspx?id=fCAtUtXsx0-nbxdGSxFh-eVAzhwdpsxLmCSGMQwqNIpUM1E2TFRSRkhNWU9IQk9SVFhBSDJNWTFDVS4u" target="_blank" class="card">
+            <span style="font-size:45px">📝</span>
             <h2>Central de Solicitações</h2>
-            <p>Acesse o formulário de solicitações internas.</p>
+            <p>Plataforma para solicitações internas e acompanhamento.</p>
         </a>
+
         <a href="https://forms.office.com/Pages/ResponsePage.aspx?id=fCAtUtXsx0-nbxdGSxFh-f7MDqf4DUBBuOHjox7sxytUNFFQNTgzR1pQV0FLM05aWElXSjlRMjFHRy4u" target="_blank" class="card" style="border-top-color: var(--danger);">
+            <span style="font-size:45px">🚫</span>
             <h2>Desligamento Shopee</h2>
-            <p>Formulário oficial de desligamento.</p>
+            <p>Formulário oficial para o processo de desligamento.</p>
         </a>
     </div>
 
@@ -236,44 +266,48 @@
     <footer>© 2026 Apoio ao On-Site | WeCanBR</footer>
 
     <script>
-        function buscarTudo() {
+        function buscarAgora() {
             let input = document.getElementById('searchInput').value.toLowerCase();
             let resultsDiv = document.getElementById('searchResults');
-            let links = document.querySelectorAll('.dropdown-content a, .nav-links > a');
             let cards = document.getElementsByClassName('card');
+            let linksDropdown = document.querySelectorAll('.dropdown-content a');
             
             resultsDiv.innerHTML = ""; 
 
             if (input.length < 2) {
                 resultsDiv.style.display = "none";
-                for(let c of cards) c.classList.remove('hidden');
+                for (let card of cards) card.classList.remove('hidden');
                 return;
             }
 
-            let achou = false;
+            let achouNoDropdown = false;
 
-            // Busca nos links (Menus)
-            links.forEach(l => {
-                if(l.innerText.toLowerCase().includes(input)) {
-                    achou = true;
-                    resultsDiv.innerHTML += `<a href="${l.href}" target="_blank" class="result-item">🔍 ${l.innerText}</a>`;
+            // Busca nos links dos menus suspensos
+            linksDropdown.forEach(link => {
+                if (link.innerText.toLowerCase().includes(input)) {
+                    achouNoDropdown = true;
+                    resultsDiv.innerHTML += `<a href="${link.href}" target="_blank" class="result-item">🔍 ${link.innerText}</a>`;
                 }
             });
 
-            // Busca nos cards
-            for(let card of cards) {
-                if(card.innerText.toLowerCase().includes(input)) {
+            // Busca e filtra os cards na tela
+            for (let card of cards) {
+                let texto = card.innerText.toLowerCase();
+                if (texto.includes(input)) {
                     card.classList.remove('hidden');
                 } else {
                     card.classList.add('hidden');
                 }
             }
 
-            resultsDiv.style.display = achou ? "block" : "none";
+            resultsDiv.style.display = achouNoDropdown ? "block" : "none";
         }
 
-        document.addEventListener('click', (e) => {
-            if (e.target.id !== 'searchInput') document.getElementById('searchResults').style.display = "none";
+        // Fecha o menu de busca ao clicar fora
+        document.addEventListener('click', function(e) {
+            if (e.target.id !== 'searchInput') {
+                document.getElementById('searchResults').style.display = "none";
+            }
         });
     </script>
 </body>
