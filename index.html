@@ -36,11 +36,9 @@
 
         .nav-links { display: flex; align-items: center; height: 100%; }
 
-        /* ESTILO DO DROPDOWN CORRIGIDO */
         .dropdown { 
             position: relative; 
-            display: inline-block; 
-            height: 100%; /* Ocupa toda a altura da barra */
+            height: 100%; 
             display: flex;
             align-items: center;
         }
@@ -57,7 +55,7 @@
             display: flex;
             align-items: center;
             gap: 5px;
-            height: 100%; /* Garante que o botão seja alto */
+            height: 100%;
         }
 
         .dropdown-content {
@@ -70,11 +68,10 @@
             z-index: 1001;
             border-radius: 0 0 8px 8px;
             overflow: hidden;
-            top: 60px; /* Alinhado exatamente com o fim da navbar */
+            top: 60px;
             border-top: 2px solid var(--primary);
         }
 
-        /* Essa é a "ponte" para o mouse não perder o foco */
         .dropdown:hover .dropdown-content { display: block; }
 
         .dropdown-content a {
@@ -90,6 +87,25 @@
         .dropdown-planilhas a:hover { background-color: #e6f4ea; color: var(--excel); border-left: 4px solid var(--excel); }
         .dropdown-docs a:hover { background-color: #f1f1f1; color: var(--primary); border-left: 4px solid var(--primary); }
 
+        /* AJUSTE PARA CELULAR (CORREÇÃO DO MENU ESCONDIDO) */
+        @media (max-width: 768px) {
+            .navbar { padding: 0 15px; }
+            .dropdown-btn { margin-left: 10px; font-size: 0.8rem; }
+            
+            .dropdown-content {
+                position: fixed; /* Fixa em relação à tela do celular */
+                left: 5%;
+                right: 5%;
+                width: 90%;
+                min-width: unset;
+                top: 60px;
+                border-radius: 8px;
+            }
+            
+            header h1 { font-size: 1.8rem !important; }
+            #searchInput { width: 90% !important; }
+        }
+
         /* CABEÇALHO */
         header {
             background: linear-gradient(rgba(106, 17, 203, 0.75), rgba(37, 117, 252, 0.75)), 
@@ -102,7 +118,6 @@
         }
 
         header h1 { font-size: 2.5rem; text-transform: uppercase; letter-spacing: 2px; margin: 0; }
-
         .search-container { margin-top: 25px; }
 
         #searchInput {
@@ -143,7 +158,6 @@
 
         .card:hover { transform: translateY(-5px); box-shadow: 0 10px 25px rgba(0,0,0,0.1); }
         .card.hidden { display: none; }
-
         .icon { font-size: 45px; margin-bottom: 15px; display: block; }
         h2 { font-size: 1.2rem; margin: 10px 0; }
         p { font-size: 0.9rem; color: #666; line-height: 1.5; }
