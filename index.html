@@ -82,7 +82,7 @@
         .dropdown-planilhas a:hover { background-color: #e6f4ea; color: var(--excel); border-left: 4px solid var(--excel); }
         .dropdown-docs a:hover { background-color: #f1f1f1; color: var(--primary); border-left: 4px solid var(--primary); }
 
-        /* CABEÇALHO COM A IMAGEM NOVA */
+        /* CABEÇALHO */
         header {
             background: linear-gradient(rgba(106, 17, 203, 0.7), rgba(37, 117, 252, 0.7)), 
                         url('https://wecanbr.com.br/img/quem-somos/main.jpg');
@@ -95,18 +95,45 @@
 
         header h1 { font-size: 2.5rem; text-transform: uppercase; letter-spacing: 2px; margin: 0; text-shadow: 2px 2px 4px rgba(0,0,0,0.3); }
 
-        .search-container { margin-top: 25px; }
+        .search-container { margin-top: 25px; position: relative; width: 450px; max-width: 85%; margin-left: auto; margin-right: auto; }
 
         #searchInput {
             padding: 15px 25px;
-            width: 450px;
-            max-width: 85%;
+            width: 100%;
             border-radius: 30px;
             border: none;
             font-size: 1rem;
             box-shadow: 0 5px 15px rgba(0,0,0,0.3);
             outline: none;
+            box-sizing: border-box;
         }
+
+        /* RESULTADOS DA PESQUISA DINÂMICA (DROPDOWN) */
+        #searchDropdown {
+            position: absolute;
+            top: 60px;
+            left: 0;
+            width: 100%;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+            display: none;
+            z-index: 1002;
+            max-height: 300px;
+            overflow-y: auto;
+            text-align: left;
+        }
+
+        #searchDropdown a {
+            display: block;
+            padding: 12px 20px;
+            color: #333;
+            text-decoration: none;
+            border-bottom: 1px solid #f0f0f0;
+            font-size: 0.9rem;
+        }
+
+        #searchDropdown a:hover { background: #f4f7f6; color: var(--primary); }
 
         /* AJUSTES PARA CELULAR */
         @media (max-width: 768px) {
@@ -192,7 +219,8 @@
     <header>
         <h1>APOIO AO ONSITE</h1>
         <div class="search-container">
-            <input type="text" id="searchInput" onkeyup="filtrarCards()" placeholder="O que você está procurando?">
+            <input type="text" id="searchInput" onkeyup="filtrarTudo()" placeholder="O que você está procurando?" autocomplete="off">
+            <div id="searchDropdown"></div>
         </div>
     </header>
 
@@ -219,9 +247,24 @@
     <footer>© 2026 Apoio ao On-Site | WeCanBR</footer>
 
     <script>
-        function filtrarCards() {
+        function filtrarTudo() {
             let input = document.getElementById('searchInput').value.toLowerCase();
             let cards = document.getElementsByClassName('card');
+            let dropdownResult = document.getElementById('searchDropdown');
+            let linksMenus = document.querySelectorAll('.dropdown-content a');
+            
+            dropdownResult.innerHTML = ""; // Limpa resultados anteriores
+            
+            if (input.length === 0) {
+                dropdownResult.style.display = "none";
+                // Mostra todos os cards novamente
+                for (let card of cards) card.classList.remove('hidden');
+                return;
+            }
+
+            let achouNoDropdown = false;
+
+            // 1. FILTRAR CARDS (O que já fazia)
             for (let i = 0; i < cards.length; i++) {
                 let titulo = cards[i].getElementsByTagName('h2')[0].innerText.toLowerCase();
                 let descricao = cards[i].getElementsByTagName('p')[0].innerText.toLowerCase();
@@ -231,7 +274,30 @@
                     cards[i].classList.add('hidden');
                 }
             }
+
+            // 2. FILTRAR LINKS DOS MENUS (Planilhas e Documentos)
+            linksMenus.forEach(link => {
+                if (link.innerText.toLowerCase().includes(input)) {
+                    let clone = link.cloneNode(true); // Cria uma cópia do link para o dropdown de busca
+                    dropdownResult.appendChild(clone);
+                    achouNoDropdown = true;
+                }
+            });
+
+            // Exibe o dropdown se houver resultados de documentos/planilhas
+            if (achouNoDropdown) {
+                dropdownResult.style.display = "block";
+            } else {
+                dropdownResult.style.display = "none";
+            }
         }
+
+        // Fecha o dropdown se clicar fora dele
+        document.addEventListener('click', function(e) {
+            if (e.target.id !== 'searchInput') {
+                document.getElementById('searchDropdown').style.display = "none";
+            }
+        });
     </script>
 </body>
 </html>
