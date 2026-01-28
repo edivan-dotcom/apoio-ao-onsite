@@ -10,7 +10,6 @@
             --secondary: #2575fc;
             --dark: #333;
             --danger: #ff4b2b;
-            --excel: #1e7e34;
         }
 
         body {
@@ -22,176 +21,71 @@
 
         /* BARRA DE NAVEGAÇÃO */
         .navbar {
-            background: white;
-            height: 60px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 0 30px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-            position: fixed;
-            top: 0; width: 100%; z-index: 1000;
-            box-sizing: border-box;
+            background: white; height: 60px; display: flex; justify-content: space-between;
+            align-items: center; padding: 0 30px; box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: fixed; top: 0; width: 100%; z-index: 1000; box-sizing: border-box;
         }
 
-        .nav-links { display: flex; align-items: center; height: 100%; }
-
         .dropdown { position: relative; height: 100%; display: flex; align-items: center; }
-
         .dropdown-btn {
-            text-decoration: none;
-            color: var(--dark);
-            margin-left: 25px;
-            font-weight: 600;
-            font-size: 0.9rem;
-            cursor: pointer;
-            border: none;
-            background: none;
-            display: flex;
-            align-items: center;
-            gap: 5px;
-            height: 100%;
+            text-decoration: none; color: var(--dark); margin-left: 25px;
+            font-weight: 600; cursor: pointer; border: none; background: none;
         }
 
         .dropdown-content {
-            display: none;
-            position: absolute;
-            right: 0;
-            background-color: white;
-            min-width: 300px;
-            box-shadow: 0px 8px 16px rgba(0,0,0,0.1);
-            z-index: 1001;
-            border-radius: 0 0 8px 8px;
-            top: 60px;
-            border-top: 2px solid var(--primary);
-            overflow: hidden;
+            display: none; position: absolute; right: 0; background-color: white;
+            min-width: 250px; box-shadow: 0px 8px 16px rgba(0,0,0,0.1);
+            top: 60px; border-top: 2px solid var(--primary);
         }
 
         .dropdown:hover .dropdown-content { display: block; }
-
-        .dropdown-content a {
-            color: #333;
-            padding: 12px 16px;
-            text-decoration: none;
-            display: block;
-            font-size: 0.85rem;
-            border-bottom: 1px solid #f0f0f0;
-        }
-
-        .dropdown-content a:hover { background-color: #f1f1f1; color: var(--primary); }
+        .dropdown-content a { color: #333; padding: 12px; text-decoration: none; display: block; border-bottom: 1px solid #f0f0f0; }
 
         /* CABEÇALHO */
         header {
             background: linear-gradient(rgba(106, 17, 203, 0.7), rgba(37, 117, 252, 0.7)), 
                         url('https://wecanbr.com.br/img/quem-somos/main.jpg');
-            background-size: cover;
-            background-position: center;
-            color: white;
-            padding: 80px 20px;
-            text-align: center;
-        }
-
-        header h1 { font-size: 2.5rem; text-transform: uppercase; margin: 0; text-shadow: 2px 2px 4px rgba(0,0,0,0.3); }
-
-        /* BUSCA */
-        .search-container { 
-            margin-top: 25px; 
-            position: relative; 
-            width: 500px; 
-            max-width: 90%; 
-            margin: 0 auto; 
-        }
-
-        #searchInput {
-            padding: 15px 25px;
-            width: 100%;
-            border-radius: 30px;
-            border: none;
-            font-size: 1rem;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
-            outline: none;
-        }
-
-        #searchResults {
-            position: absolute;
-            top: 55px;
-            left: 0;
-            width: 100%;
-            background: white;
-            border-radius: 15px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
-            display: none;
-            z-index: 2000;
-            max-height: 300px;
-            overflow-y: auto;
-        }
-
-        .result-item {
-            display: block;
-            padding: 12px 20px;
-            color: #333;
-            text-decoration: none;
-            text-align: left;
-            border-bottom: 1px solid #eee;
+            background-size: cover; background-position: center;
+            color: white; padding: 80px 20px; text-align: center;
         }
 
         /* CARDS */
-        .container {
-            display: flex;
-            justify-content: center;
-            flex-wrap: wrap;
-            gap: 25px;
-            padding: 40px 20px;
-        }
-
+        .container { display: flex; justify-content: center; flex-wrap: wrap; gap: 20px; padding: 40px 20px; }
         .card {
+            background: white; border-radius: 12px; width: 280px; padding: 25px;
+            text-align: center; box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            text-decoration: none; color: #333; border-top: 5px solid var(--primary);
+        }
+
+        /* PAINEL DE ACESSO AO APP (Substituindo o Iframe que dava erro) */
+        .app-login-section {
+            max-width: 800px;
+            margin: 20px auto 60px;
+            padding: 40px;
             background: white;
             border-radius: 15px;
-            width: 280px;
-            padding: 25px;
             text-align: center;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
-            text-decoration: none;
-            color: #333;
-            border-top: 5px solid var(--primary);
-            transition: 0.3s;
-        }
-
-        .card:hover { transform: translateY(-5px); }
-        .hidden { display: none !important; }
-
-        /* SEÇÃO DO APPSHEET INTEGRADO */
-        .app-section {
-            max-width: 1100px;
-            margin: 20px auto 50px;
-            padding: 0 20px;
-        }
-
-        .app-container {
-            background: white;
-            border-radius: 15px;
             box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-            overflow: hidden;
-            border: 1px solid #ddd;
+            border: 1px solid #eee;
         }
 
-        .app-header {
-            padding: 15px;
-            background: #fff;
-            border-bottom: 1px solid #eee;
+        .app-icon { font-size: 50px; margin-bottom: 20px; }
+        
+        .btn-login-app {
+            display: inline-block;
+            background: linear-gradient(45deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 15px 40px;
+            text-decoration: none;
+            border-radius: 30px;
             font-weight: bold;
-            color: var(--primary);
-            display: flex;
-            align-items: center;
-            gap: 10px;
+            font-size: 1.1rem;
+            margin-top: 20px;
+            transition: 0.3s;
+            box-shadow: 0 4px 15px rgba(106, 17, 203, 0.3);
         }
 
-        iframe {
-            width: 100%;
-            height: 800px;
-            border: none;
-            display: block;
-        }
+        .btn-login-app:hover { transform: scale(1.05); box-shadow: 0 6px 20px rgba(106, 17, 203, 0.4); }
 
         footer { text-align: center; padding: 25px; background: #222; color: white; }
     </style>
@@ -200,20 +94,11 @@
 
     <nav class="navbar">
         <div style="font-weight: bold; color: var(--primary);">WE CAN BR</div>
-        <div class="nav-links">
+        <div style="display: flex;">
             <div class="dropdown">
                 <button class="dropdown-btn">📊 Planilhas ▼</button>
                 <div class="dropdown-content">
-                    <a href="https://desafiorhcombr-my.sharepoint.com/:x:/r/personal/mirian_oliveira_wecanbr_com_br/_layouts/15/doc2.aspx?sourcedoc=%7B519706C2-BDEF-438C-B037-385F4D8A3488%7D&file=DRIVE%20DE%20RESCISAO%20SHOPEE.xlsx" target="_blank">Drive de Rescisão Shopee</a>
-                    <a href="https://docs.google.com/spreadsheets/d/1WBYOF9AkoS7NpzhqFyqm5PzQRP13yUF2p5ZY8FfZp_c/edit#gid=690743947" target="_blank">Template Shopee</a>
-                </div>
-            </div>
-
-            <div class="dropdown">
-                <button class="dropdown-btn">📄 Documentos ▼</button>
-                <div class="dropdown-content">
-                    <a href="https://drive.google.com/file/d/1qsLtN-HC5488FVQc3n5mcT8zjCdVja0d/view" target="_blank">Carta de Suspensão</a>
-                    <a href="https://drive.google.com/file/d/1CQQ3GTIUoOW9SGZ2EZTG8O3Q3ZFHk_El/view" target="_blank">DUT</a>
+                    <a href="https://desafiorhcombr-my.sharepoint.com/:x:/r/personal/mirian_oliveira_wecanbr_com_br/_layouts/15/doc2.aspx?sourcedoc=%7B519706C2-BDEF-438C-B037-385F4D8A3488%7D&file=DRIVE%20DE%20RESCISAO%20SHOPEE.xlsx" target="_blank">Drive de Rescisão</a>
                 </div>
             </div>
         </div>
@@ -221,73 +106,27 @@
 
     <header>
         <h1>APOIO AO ONSITE</h1>
-        <div class="search-container">
-            <input type="text" id="searchInput" onkeyup="buscarAgora()" placeholder="O que você está procurando?" autocomplete="off">
-            <div id="searchResults"></div>
-        </div>
     </header>
 
-    <div class="container" id="cardContainer">
+    <div class="container">
         <a href="https://forms.office.com/Pages/ResponsePage.aspx?id=fCAtUtXsx0-nbxdGSxFh-eVAzhwdpsxLmCSGMQwqNIpUM1E2TFRSRkhNWU9IQk9SVFhBSDJNWTFDVS4u" target="_blank" class="card">
             <h2>Central de Solicitações</h2>
-            <p>Plataforma para realizar solicitações internas.</p>
-        </a>
-
-        <a href="https://forms.office.com/Pages/ResponsePage.aspx?id=fCAtUtXsx0-nbxdGSxFh-f7MDqf4DUBBuOHjox7sxytUNFFQNTgzR1pQV0FLM05aWElXSjlRMjFHRy4u" target="_blank" class="card" style="border-top-color: var(--danger);">
-            <h2>Desligamento Shopee</h2>
-            <p>Formulário oficial para desligamento.</p>
+            <p>Acesse o formulário de solicitações internas.</p>
         </a>
     </div>
 
-    <div class="app-section">
-        <div class="app-container">
-            <div class="app-header">📱 Aplicativo AppSheet</div>
-            <iframe src="https://www.appsheet.com/start/53559df4-e3c6-465a-86bc-1f3a70e6735a"></iframe>
-        </div>
+    <div class="app-login-section">
+        <div class="app-icon">🔐</div>
+        <h2>Área Restrita - AppSheet</h2>
+        <p>Este aplicativo contém dados sensíveis e requer autenticação oficial.</p>
+        <p style="color: #666; font-size: 0.9rem;">Clique no botão abaixo para fazer login com sua conta Google e acessar o sistema.</p>
+        
+        <a href="https://www.appsheet.com/start/53559df4-e3c6-465a-86bc-1f3a70e6735a" target="_blank" class="btn-login-app">
+            EFETUAR LOGIN NO APP
+        </a>
     </div>
 
     <footer>© 2026 Apoio ao On-Site | WeCanBR</footer>
 
-    <script>
-        function buscarAgora() {
-            let input = document.getElementById('searchInput').value.toLowerCase();
-            let resultsDiv = document.getElementById('searchResults');
-            let cards = document.getElementsByClassName('card');
-            let links = document.querySelectorAll('.dropdown-content a');
-            
-            resultsDiv.innerHTML = ""; 
-
-            if (input.length < 2) {
-                resultsDiv.style.display = "none";
-                for (let card of cards) card.classList.remove('hidden');
-                return;
-            }
-
-            let achou = false;
-
-            links.forEach(l => {
-                if (l.innerText.toLowerCase().includes(input)) {
-                    achou = true;
-                    resultsDiv.innerHTML += `<a href="${l.href}" target="_blank" class="result-item">🔗 ${l.innerText}</a>`;
-                }
-            });
-
-            for (let card of cards) {
-                if (card.innerText.toLowerCase().includes(input)) {
-                    card.classList.remove('hidden');
-                } else {
-                    card.classList.add('hidden');
-                }
-            }
-
-            resultsDiv.style.display = achou ? "block" : "none";
-        }
-
-        document.addEventListener('click', function(e) {
-            if (e.target.id !== 'searchInput') {
-                document.getElementById('searchResults').style.display = "none";
-            }
-        });
-    </script>
 </body>
 </html>
