@@ -38,17 +38,19 @@
             margin-left: 20px;
             font-weight: 600;
             font-size: 0.9rem;
+            transition: color 0.3s;
         }
 
-        /* CABEÇALHO COM IMAGEM DE FUNDO */
+        .nav-links a:hover { color: var(--primary); }
+
+        /* CABEÇALHO COM IMAGEM E TRANSPARÊNCIA */
         header {
-            /* Aqui inserimos a imagem do site que você enviou */
-            background: linear-gradient(rgba(106, 17, 203, 0.7), rgba(37, 117, 252, 0.7)), 
+            background: linear-gradient(rgba(106, 17, 203, 0.75), rgba(37, 117, 252, 0.75)), 
                         url('https://wecanbr.com.br/wp-content/uploads/2021/08/bg-quem-somos.jpg');
             background-size: cover;
             background-position: center;
             color: white;
-            padding: 100px 20px; /* Aumentei o padding para mostrar mais a foto */
+            padding: 100px 20px;
             text-align: center;
             border-bottom: 4px solid var(--primary);
         }
@@ -96,12 +98,17 @@
             text-decoration: none;
             color: #333;
             border-top: 5px solid var(--primary);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
 
         .card:hover { transform: translateY(-5px); box-shadow: 0 10px 25px rgba(0,0,0,0.1); }
         .card.hidden { display: none; }
 
-        .icon { font-size: 40px; margin-bottom: 15px; display: block; }
+        .icon { font-size: 45px; margin-bottom: 15px; }
+        h2 { font-size: 1.2rem; margin: 10px 0; color: #222; }
+        p { font-size: 0.9rem; color: #666; line-height: 1.4; }
 
         footer { text-align: center; padding: 30px; background: #222; color: white; margin-top: 50px; }
     </style>
@@ -109,42 +116,42 @@
 <body>
 
     <nav class="navbar">
-        <div style="font-weight: bold; color: var(--primary)">WE CAN BR</div>
+        <div style="font-weight: bold; color: var(--primary); letter-spacing: 1px;">WE CAN BR</div>
         <div class="nav-links">
-            <a href="LINK_DA_PLANILHA" target="_blank">📊 Planilhas</a>
-            <a href="LINK_DO_DOC" target="_blank">📄 Documentos</a>
-            <a href="#">📞 Suporte</a>
+            <a href="#" title="Link para Planilhas">📊 Planilhas</a>
+            <a href="#" title="Link para Documentos">📄 Arquivos</a>
+            <a href="https://www.appsheet.com/start/53559df4-e3c6-465a-86bc-1f3a70e6735a" target="_blank">🚗 Voucher Uber</a>
         </div>
     </nav>
 
     <header>
         <h1>APOIO AO ONSITE</h1>
         <div class="search-container">
-            <input type="text" id="searchInput" onkeyup="filtrarCards()" placeholder="Pesquisar serviços ou ferramentas...">
+            <input type="text" id="searchInput" onkeyup="filtrarCards()" placeholder="O que você precisa hoje?">
         </div>
     </header>
 
     <div class="container" id="cardContainer">
-        <a href="URL_AQUI" target="_blank" class="card">
+        <a href="https://forms.office.com/Pages/ResponsePage.aspx?id=fCAtUtXsx0-nbxdGSxFh-eVAzhwdpsxLmCSGMQwqNIpUM1E2TFRSRkhNWU9IQk9SVFhBSDJNWTFDVS4u" target="_blank" class="card">
             <span class="icon">📝</span>
             <h2>Central de Solicitações</h2>
-            <p>Abertura de chamados internos e acompanhamento.</p>
+            <p>Clique aqui para realizar e acompanhar suas solicitações internas.</p>
         </a>
 
-        <a href="URL_AQUI" target="_blank" class="card" style="border-top-color: #ff4b2b;">
+        <a href="https://forms.office.com/Pages/ResponsePage.aspx?id=fCAtUtXsx0-nbxdGSxFh-f7MDqf4DUBBuOHjox7sxytUNFFQNTgzR1pQV0FLM05aWElXSjlRMjFHRy4u&origin=Invitation&channel=0" target="_blank" class="card" style="border-top-color: #ff4b2b;">
             <span class="icon">🚫</span>
             <h2>Desligamento Shopee</h2>
-            <p>Iniciar processo oficial de desligamento.</p>
+            <p>Formulário oficial para início do processo de desligamento.</p>
         </a>
 
-        <a href="URL_AQUI" target="_blank" class="card" style="border-top-color: #2575fc;">
+        <a href="https://www.appsheet.com/start/53559df4-e3c6-465a-86bc-1f3a70e6735a" target="_blank" class="card" style="border-top-color: #2575fc;">
             <span class="icon">🚗</span>
             <h2>Voucher Uber</h2>
-            <p>Gestão de colaboradores e benefícios Uber.</p>
+            <p>Portal para informar desligados que utilizam o benefício Uber.</p>
         </a>
     </div>
 
-    <footer>© 2026 Apoio ao On-Site - WeCanBR</footer>
+    <footer>© 2026 Apoio ao On-Site | WeCanBR - Interno</footer>
 
     <script>
         function filtrarCards() {
