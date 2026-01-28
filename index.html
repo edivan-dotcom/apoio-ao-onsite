@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Apoio ao On-Site | WeCanBR</title>
+    <title>Portal On-Site | WeCanBR</title>
     <style>
         :root {
             --primary: #6a11cb;
@@ -13,222 +13,158 @@
             --excel: #1e7e34;
         }
 
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #f4f7f6;
-            margin: 0;
-            padding-top: 60px;
-        }
-
-        /* BARRA DE NAVEGAÇÃO */
-        .navbar {
-            background: white;
-            height: 60px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 0 30px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        /* TELA DE LOGIN */
+        #loginOverlay {
             position: fixed;
-            top: 0; width: 100%; z-index: 1000;
-            box-sizing: border-box;
-        }
-
-        .nav-links { display: flex; align-items: center; height: 100%; }
-
-        /* ESTILO DO DROPDOWN CORRIGIDO */
-        .dropdown { 
-            position: relative; 
-            display: inline-block; 
-            height: 100%; /* Ocupa toda a altura da barra */
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
             display: flex;
+            justify-content: center;
             align-items: center;
+            z-index: 9999;
         }
 
-        .dropdown-btn {
-            text-decoration: none;
-            color: var(--dark);
-            margin-left: 25px;
-            font-weight: 600;
-            font-size: 0.9rem;
-            cursor: pointer;
-            border: none;
-            background: none;
-            display: flex;
-            align-items: center;
-            gap: 5px;
-            height: 100%; /* Garante que o botão seja alto */
-        }
-
-        .dropdown-content {
-            display: none;
-            position: absolute;
-            right: 0;
-            background-color: white;
-            min-width: 300px;
-            box-shadow: 0px 8px 16px rgba(0,0,0,0.1);
-            z-index: 1001;
-            border-radius: 0 0 8px 8px;
-            overflow: hidden;
-            top: 60px; /* Alinhado exatamente com o fim da navbar */
-            border-top: 2px solid var(--primary);
-        }
-
-        /* Essa é a "ponte" para o mouse não perder o foco */
-        .dropdown:hover .dropdown-content { display: block; }
-
-        .dropdown-content a {
-            color: #333;
-            padding: 12px 16px;
-            text-decoration: none;
-            display: block;
-            font-size: 0.85rem;
-            border-bottom: 1px solid #f0f0f0;
-            transition: 0.2s;
-        }
-
-        .dropdown-planilhas a:hover { background-color: #e6f4ea; color: var(--excel); border-left: 4px solid var(--excel); }
-        .dropdown-docs a:hover { background-color: #f1f1f1; color: var(--primary); border-left: 4px solid var(--primary); }
-
-        /* CABEÇALHO */
-        header {
-            background: linear-gradient(rgba(106, 17, 203, 0.75), rgba(37, 117, 252, 0.75)), 
-                        url('https://wecanbr.com.br/wp-content/uploads/2021/08/bg-quem-somos.jpg');
-            background-size: cover;
-            background-position: center;
-            color: white;
-            padding: 80px 20px;
+        .login-box {
+            background: white;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.2);
             text-align: center;
+            width: 320px;
         }
 
-        header h1 { font-size: 2.5rem; text-transform: uppercase; letter-spacing: 2px; margin: 0; }
-
-        .search-container { margin-top: 25px; }
-
-        #searchInput {
-            padding: 15px 25px;
-            width: 400px;
-            max-width: 85%;
-            border-radius: 30px;
-            border: none;
-            font-size: 1rem;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        .login-box h2 { color: var(--primary); margin-bottom: 20px; font-family: sans-serif; }
+        
+        .login-box input {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            box-sizing: border-box;
             outline: none;
         }
 
-        /* CARDS */
-        .container {
-            display: flex;
-            justify-content: center;
-            flex-wrap: wrap;
-            gap: 25px;
-            padding: 50px 20px;
-            max-width: 1200px;
-            margin: 0 auto;
+        .login-box button {
+            width: 100%;
+            padding: 12px;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 10px;
         }
 
-        .card {
-            background: white;
-            border-radius: 15px;
-            width: 300px;
-            padding: 30px;
-            text-align: center;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
-            transition: 0.3s;
-            text-decoration: none;
-            color: #333;
-            border-top: 5px solid var(--primary);
-            box-sizing: border-box;
-        }
+        .login-box button:disabled { background: #ccc; cursor: not-allowed; }
 
-        .card:hover { transform: translateY(-5px); box-shadow: 0 10px 25px rgba(0,0,0,0.1); }
-        .card.hidden { display: none; }
+        #loginError { color: var(--danger); font-size: 0.8rem; margin-top: 10px; display: none; font-family: sans-serif; }
 
-        .icon { font-size: 45px; margin-bottom: 15px; display: block; }
-        h2 { font-size: 1.2rem; margin: 10px 0; }
-        p { font-size: 0.9rem; color: #666; line-height: 1.5; }
+        /* ESTILO DO SITE (SÓ APARECE APÓS LOGIN) */
+        #mainContent { display: none; }
+        body.logged-in #mainContent { display: block; }
+        body.logged-in #loginOverlay { display: none; }
 
+        /* REUTILIZANDO SEU ESTILO ANTERIOR DA NAVBAR E CARDS */
+        body { font-family: 'Segoe UI', sans-serif; background-color: #f4f7f6; margin: 0; }
+        .navbar { background: white; height: 60px; display: flex; justify-content: space-between; align-items: center; padding: 0 30px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); position: fixed; top: 0; width: 100%; z-index: 1000; box-sizing: border-box; }
+        .nav-links { display: flex; align-items: center; height: 100%; }
+        .dropdown { position: relative; display: flex; align-items: center; height: 100%; }
+        .dropdown-btn, .nav-item { text-decoration: none; color: var(--dark); margin-left: 25px; font-weight: 600; font-size: 0.9rem; cursor: pointer; border: none; background: none; display: flex; align-items: center; gap: 5px; height: 100%; }
+        .dropdown-content { display: none; position: absolute; right: 0; background-color: white; min-width: 300px; box-shadow: 0px 8px 16px rgba(0,0,0,0.1); z-index: 1001; border-radius: 0 0 8px 8px; overflow: hidden; top: 60px; border-top: 2px solid var(--primary); }
+        .dropdown:hover .dropdown-content { display: block; }
+        .dropdown-content a { color: #333; padding: 12px 16px; text-decoration: none; display: block; font-size: 0.85rem; border-bottom: 1px solid #f0f0f0; }
+        header { background: linear-gradient(rgba(106, 17, 203, 0.75), rgba(37, 117, 252, 0.75)), url('https://wecanbr.com.br/wp-content/uploads/2021/08/bg-quem-somos.jpg'); background-size: cover; background-position: center; color: white; padding: 80px 20px; text-align: center; margin-top: 60px; }
+        .container { display: flex; justify-content: center; flex-wrap: wrap; gap: 25px; padding: 50px 20px; max-width: 1200px; margin: 0 auto; }
+        .card { background: white; border-radius: 15px; width: 300px; padding: 30px; text-align: center; box-shadow: 0 5px 15px rgba(0,0,0,0.05); transition: 0.3s; text-decoration: none; color: #333; border-top: 5px solid var(--primary); box-sizing: border-box; }
         footer { text-align: center; padding: 30px; background: #222; color: white; margin-top: 50px; }
     </style>
 </head>
 <body>
 
-    <nav class="navbar">
-        <div style="font-weight: bold; color: var(--primary); letter-spacing: 1px;">WE CAN BR</div>
-        <div class="nav-links">
-            
-            <div class="dropdown">
-                <button class="dropdown-btn">📊 Planilhas ▼</button>
-                <div class="dropdown-content dropdown-planilhas">
-                    <a href="https://desafiorhcombr-my.sharepoint.com/:x:/r/personal/mirian_oliveira_wecanbr_com_br/_layouts/15/doc2.aspx?sourcedoc=%7B519706C2-BDEF-438C-B037-385F4D8A3488%7D&file=DRIVE%20DE%20RESCISAO%20SHOPEE.xlsx" target="_blank">📈 Drive de Rescisão Shopee</a>
-                    <a href="https://desafiorhcombr-my.sharepoint.com/:x:/r/personal/edivan_costa_wecanbr_com_br/_layouts/15/Doc.aspx?sourcedoc=%7B63D04DA0-C7A8-4059-8591-37DFCED94A93%7D&file=CENTRAL%20DE%20SOLICITA%25u00c7%25u00d5ES.xlsx" target="_blank">📋 Central de Solicitações (Base)</a>
-                    <a href="https://docs.google.com/spreadsheets/d/1WBYOF9AkoS7NpzhqFyqm5PzQRP13yUF2p5ZY8FfZp_c/edit#gid=690743947" target="_blank">🔍 Template Shopee</a>
-                    <a href="https://desafiorhcombr.sharepoint.com/:x:/r/sites/FSWECANBR/_layouts/15/Doc.aspx?sourcedoc=%7B1BA76351-0EC5-4118-9F32-E921659CCCE1%7D&file=01%202026%20REJEITOS%20JANEIRO%20.xlsx" target="_blank">⚠️ Rejeitos 01.2026</a>
-                </div>
-            </div>
-
-            <div class="dropdown">
-                <button class="dropdown-btn">📄 Documentos ▼</button>
-                <div class="dropdown-content dropdown-docs">
-                    <a href="https://drive.google.com/file/d/1qsLtN-HC5488FVQc3n5mcT8zjCdVja0d/view" target="_blank">Carta de Suspensão</a>
-                    <a href="https://drive.google.com/file/d/1lGnjwLz_5i4uASifv2OPlkSb7NUGeaHI/view" target="_blank">Comunicado de Desligamento</a>
-                    <a href="https://drive.google.com/file/d/1zsrlh6KBLvMvEGc13tTA6I7Ybra5iObA/view" target="_blank">Advertência Disciplinar</a>
-                    <a href="https://drive.google.com/file/d/1_Dw1qLl9icW282pkZCNln8908Nfqiasi/view" target="_blank">Advertência - Ponto</a>
-                    <a href="https://drive.google.com/file/d/1aryngzuxX72mOhxchNmQPBA30QT2gNt2/view" target="_blank">Carta Banco Santander</a>
-                    <a href="https://drive.google.com/file/d/1PDp_bhtDB-ZR-wRwFUJ80Xpa4gWu_HkQ/view" target="_blank">Termo de Ciência - EPI</a>
-                    <a href="https://drive.google.com/file/d/1a_D1awqrBGXLaiKba6dc_ruE41dDF3ke/view" target="_blank">Dispensa Justa Causa</a>
-                    <a href="https://docs.google.com/document/d/1pqJ2b7wfCbjdAuKC99cIys9RYnenn2nkACDo33isZFE/edit" target="_blank">Aviso Prévio Indenizado</a>
-                    <a href="https://drive.google.com/file/d/16qsbtlkVBkIqZN_vjXK5T0gOEI7ivXWR/view" target="_blank">Declaração de Vínculo</a>
-                    <a href="https://drive.google.com/file/d/1CQQ3GTIUoOW9SGZ2EZTG8O3Q3ZFHk_El/view" target="_blank">DUT</a>
-                </div>
-            </div>
-
-            <a href="https://www.appsheet.com/start/53559df4-e3c6-465a-86bc-1f3a70e6735a" target="_blank" class="dropdown-btn">🚗 Voucher Uber</a>
+    <div id="loginOverlay">
+        <div class="login-box">
+            <img src="https://wecanbr.com.br/wp-content/uploads/2021/07/logo-wecan-br.png" width="150" alt="Logo"><br><br>
+            <h2>Portal de Apoio</h2>
+            <input type="text" id="cpfInput" placeholder="CPF (apenas números)">
+            <input type="password" id="passInput" placeholder="Senha">
+            <button id="btnEntrar" onclick="verificarLogin()">Entrar</button>
+            <p id="loginError">Acesso negado. Verifique os dados.</p>
         </div>
-    </nav>
-
-    <header>
-        <h1>APOIO AO ONSITE</h1>
-        <div class="search-container">
-            <input type="text" id="searchInput" onkeyup="filtrarCards()" placeholder="O que você está procurando?">
-        </div>
-    </header>
-
-    <div class="container" id="cardContainer">
-        <a href="https://forms.office.com/Pages/ResponsePage.aspx?id=fCAtUtXsx0-nbxdGSxFh-eVAzhwdpsxLmCSGMQwqNIpUM1E2TFRSRkhNWU9IQk9SVFhBSDJNWTFDVS4u" target="_blank" class="card">
-            <span class="icon">📝</span>
-            <h2>Central de Solicitações</h2>
-            <p>Plataforma para realizar e acompanhar suas solicitações internas de forma organizada.</p>
-        </a>
-
-        <a href="https://forms.office.com/Pages/ResponsePage.aspx?id=fCAtUtXsx0-nbxdGSxFh-f7MDqf4DUBBuOHjox7sxytUNFFQNTgzR1pQV0FLM05aWElXSjlRMjFHRy4u&origin=Invitation&channel=0" target="_blank" class="card" style="border-top-color: var(--danger);">
-            <span class="icon">🚫</span>
-            <h2>Desligamento Shopee</h2>
-            <p>Formulário oficial para iniciar o processo de desligamento de colaboradores.</p>
-        </a>
-
-        <a href="https://www.appsheet.com/start/53559df4-e3c6-465a-86bc-1f3a70e6735a" target="_blank" class="card" style="border-top-color: var(--secondary);">
-            <span class="icon">🚗</span>
-            <h2>Voucher Uber</h2>
-            <p>Informe aqui colaboradores desligados que utilizam o benefício do voucher.</p>
-        </a>
     </div>
 
-    <footer>© 2026 Apoio ao On-Site | WeCanBR</footer>
+    <div id="mainContent">
+        <nav class="navbar">
+            <div style="font-weight: bold; color: var(--primary)">WE CAN BR</div>
+            <div class="nav-links">
+                <a href="#" class="nav-item" onclick="logout()">🚪 Sair</a>
+            </div>
+        </nav>
+
+        <header>
+            <h1>APOIO AO ONSITE</h1>
+        </header>
+
+        <div class="container">
+            <div class="card">
+                <h2>Bem-vindo!</h2>
+                <p>Você está logado com segurança via Google Sheets.</p>
+            </div>
+        </div>
+
+        <footer>© 2026 WeCanBR</footer>
+    </div>
 
     <script>
-        function filtrarCards() {
-            let input = document.getElementById('searchInput').value.toLowerCase();
-            let cards = document.getElementsByClassName('card');
-            for (let i = 0; i < cards.length; i++) {
-                let titulo = cards[i].getElementsByTagName('h2')[0].innerText.toLowerCase();
-                let descricao = cards[i].getElementsByTagName('p')[0].innerText.toLowerCase();
-                if (titulo.includes(input) || descricao.includes(input)) {
-                    cards[i].classList.remove('hidden');
-                } else {
-                    cards[i].classList.add('hidden');
-                }
+        // SEU LINK DO GOOGLE APPS SCRIPT
+        const URL_API = "https://script.google.com/macros/s/AKfycbxkIdlDfuztedbbklTNIZPcpMxK23zViCAihPkFtsom18oLWEmdZmaW8DsvV-M0VxnBUA/exec";
+
+        window.onload = function() {
+            if(sessionStorage.getItem("logado") === "true") {
+                document.body.classList.add("logged-in");
             }
+        }
+
+        async function verificarLogin() {
+            const cpf = document.getElementById("cpfInput").value;
+            const senha = document.getElementById("passInput").value;
+            const btn = document.getElementById("btnEntrar");
+            const erro = document.getElementById("loginError");
+
+            if(!cpf || !senha) return;
+
+            btn.disabled = true;
+            btn.innerText = "Verificando...";
+            erro.style.display = "none";
+
+            try {
+                // Chama o seu motor do Google
+                const response = await fetch(URL_API, {
+                    method: "POST",
+                    body: JSON.stringify({ cpf: cpf, senha: senha })
+                });
+
+                const data = await response.json();
+
+                if (data.resultado === "OK") {
+                    sessionStorage.setItem("logado", "true");
+                    document.body.classList.add("logged-in");
+                } else {
+                    erro.style.display = "block";
+                    btn.disabled = false;
+                    btn.innerText = "Entrar";
+                }
+            } catch (e) {
+                alert("Erro ao conectar com o servidor. Tente novamente.");
+                btn.disabled = false;
+                btn.innerText = "Entrar";
+            }
+        }
+
+        function logout() {
+            sessionStorage.removeItem("logado");
+            location.reload();
         }
     </script>
 </body>
