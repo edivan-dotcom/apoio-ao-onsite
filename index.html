@@ -8,21 +8,35 @@
         :root {
             --primary: #6a11cb;
             --secondary: #2575fc;
-            --dark: #333;
+            --bg: #f4f7f6;
+            --card-bg: white;
+            --text: #333;
+            --navbar-bg: white;
             --danger: #ff4b2b;
             --excel: #1e7e34;
         }
 
+        /* VARIAVEIS MODO ESCURO */
+        [data-theme="dark"] {
+            --bg: #121212;
+            --card-bg: #1e1e1e;
+            --text: #e0e0e0;
+            --navbar-bg: #1e1e1e;
+            --dark: #ffffff;
+        }
+
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #f4f7f6;
+            background-color: var(--bg);
+            color: var(--text);
             margin: 0;
             padding-top: 60px;
+            transition: 0.3s;
         }
 
         /* BARRA DE NAVEGAÇÃO */
         .navbar {
-            background: white;
+            background: var(--navbar-bg);
             height: 60px;
             display: flex;
             justify-content: space-between;
@@ -36,16 +50,9 @@
 
         .nav-links { display: flex; align-items: center; height: 100%; }
 
-        .dropdown { 
-            position: relative; 
-            height: 100%;
-            display: flex;
-            align-items: center;
-        }
-
         .dropdown-btn {
             text-decoration: none;
-            color: var(--dark);
+            color: var(--text);
             margin-left: 25px;
             font-weight: 600;
             font-size: 0.9rem;
@@ -62,12 +69,10 @@
             display: none;
             position: absolute;
             right: 0;
-            background-color: white;
+            background-color: var(--card-bg);
             min-width: 300px;
-            box-shadow: 0px 8px 16px rgba(0,0,0,0.1);
+            box-shadow: 0px 8px 16px rgba(0,0,0,0.2);
             z-index: 1001;
-            border-radius: 0 0 8px 8px;
-            overflow: hidden;
             top: 60px;
             border-top: 2px solid var(--primary);
         }
@@ -75,194 +80,116 @@
         .dropdown:hover .dropdown-content { display: block; }
 
         .dropdown-content a {
-            color: #333;
+            color: var(--text);
             padding: 12px 16px;
             text-decoration: none;
             display: block;
             font-size: 0.85rem;
-            border-bottom: 1px solid #f0f0f0;
-            transition: 0.2s;
+            border-bottom: 1px solid rgba(128,128,128,0.2);
         }
-
-        .dropdown-planilhas a:hover { background-color: #e6f4ea; color: var(--excel); border-left: 4px solid var(--excel); }
-        .dropdown-docs a:hover { background-color: #f1f1f1; color: var(--primary); border-left: 4px solid var(--primary); }
 
         /* CABEÇALHO */
         header {
             background: linear-gradient(rgba(106, 17, 203, 0.75), rgba(37, 117, 252, 0.75)), 
                         url('https://wecanbr.com.br/img/quem-somos/main.jpg');
-            background-size: cover;
-            background-position: center;
-            color: white;
-            padding: 80px 20px;
-            text-align: center;
+            background-size: cover; background-position: center;
+            color: white; padding: 80px 20px; text-align: center;
         }
 
-        header h1 { font-size: 2.5rem; text-transform: uppercase; letter-spacing: 2px; margin: 0; }
-
-        .search-container { margin-top: 25px; position: relative; width: 400px; max-width: 85%; margin-left: auto; margin-right: auto; }
+        .search-container { margin-top: 25px; position: relative; width: 400px; max-width: 85%; margin: 0 auto; }
 
         #searchInput {
-            padding: 15px 25px;
-            width: 100%;
-            border-radius: 30px;
-            border: none;
-            font-size: 1rem;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-            outline: none;
-            box-sizing: border-box;
+            padding: 15px 25px; width: 100%; border-radius: 30px; border: none;
+            font-size: 1rem; box-shadow: 0 5px 15px rgba(0,0,0,0.2); outline: none;
+            background: var(--card-bg); color: var(--text);
         }
 
         #searchResults {
-            position: absolute;
-            top: 55px;
-            left: 0;
-            width: 100%;
-            background: white;
-            border-radius: 10px;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
-            display: none;
-            z-index: 2000;
-            max-height: 300px;
-            overflow-y: auto;
+            position: absolute; top: 55px; left: 0; width: 100%;
+            background: var(--card-bg); border-radius: 10px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2); display: none; z-index: 2000;
         }
 
-        .result-item {
-            display: block;
-            padding: 10px 20px;
-            color: #333;
-            text-decoration: none;
-            border-bottom: 1px solid #eee;
-            text-align: left;
-            font-size: 0.9rem;
-        }
-        .result-item:hover { background: #f0f0f0; color: var(--primary); }
+        .result-item { display: block; padding: 10px 20px; color: var(--text); text-decoration: none; border-bottom: 1px solid rgba(128,128,128,0.1); }
 
         /* CARDS */
-        .container {
-            display: flex;
-            justify-content: center;
-            flex-wrap: wrap;
-            gap: 25px;
-            padding: 50px 20px;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
+        .container { display: flex; justify-content: center; flex-wrap: wrap; gap: 25px; padding: 50px 20px; }
         .card {
-            background: white;
-            border-radius: 15px;
-            width: 300px;
-            padding: 30px;
-            text-align: center;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
-            transition: 0.3s;
-            text-decoration: none;
-            color: #333;
-            border-top: 5px solid var(--primary);
-            box-sizing: border-box;
+            background: var(--card-bg); border-radius: 15px; width: 300px; padding: 30px;
+            text-align: center; box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            text-decoration: none; color: var(--text); border-top: 5px solid var(--primary); transition: 0.3s;
         }
+        .card:hover { transform: translateY(-5px); }
 
-        .card:hover { transform: translateY(-5px); box-shadow: 0 10px 25px rgba(0,0,0,0.1); }
-        .card.hidden { display: none; }
-
-        .icon { font-size: 45px; margin-bottom: 15px; display: block; }
-        h2 { font-size: 1.2rem; margin: 10px 0; }
-        p { font-size: 0.9rem; color: #666; line-height: 1.5; }
-
-        /* SEÇÃO DA PLANILHA EDITÁVEL */
+        /* PLANILHA */
         .sheet-section {
-            max-width: 95%;
-            margin: 20px auto 50px;
-            background: white;
-            padding: 10px;
-            border-radius: 15px;
+            max-width: 95%; margin: 20px auto 50px;
+            background: var(--card-bg); padding: 10px; border-radius: 15px;
             box-shadow: 0 10px 30px rgba(0,0,0,0.1);
         }
+        .sheet-container { width: 100%; height: 600px; border-radius: 10px; border: 1px solid #ddd; overflow: hidden; }
 
-        .sheet-container {
-            width: 100%;
-            height: 600px; /* Altura da planilha */
-            overflow: hidden;
-            border-radius: 10px;
-            border: 1px solid #ddd;
+        /* BOTÃO DARK MODE */
+        .theme-switch {
+            position: fixed; bottom: 20px; right: 20px;
+            width: 50px; height: 50px; border-radius: 50%;
+            background: var(--primary); color: white;
+            display: flex; align-items: center; justify-content: center;
+            cursor: pointer; box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+            z-index: 2001; font-size: 20px; border: none;
         }
 
-        iframe {
-            width: 100%;
-            height: 100%;
-            border: none;
-        }
-
-        footer { text-align: center; padding: 30px; background: #222; color: white; margin-top: 50px; }
+        footer { text-align: center; padding: 30px; background: #1a1a1a; color: white; }
     </style>
 </head>
 <body>
 
+    <button class="theme-switch" onclick="toggleTheme()" id="themeBtn">🌙</button>
+
     <nav class="navbar">
-        <div style="font-weight: bold; color: var(--primary); letter-spacing: 1px;">WE CAN BR</div>
+        <div style="font-weight: bold; color: var(--primary);">WE CAN BR</div>
         <div class="nav-links">
-            
             <div class="dropdown">
                 <button class="dropdown-btn">📊 Planilhas ▼</button>
-                <div class="dropdown-content dropdown-planilhas">
-                    <a href="https://desafiorhcombr-my.sharepoint.com/:x:/r/personal/mirian_oliveira_wecanbr_com_br/_layouts/15/doc2.aspx?sourcedoc=%7B519706C2-BDEF-438C-B037-385F4D8A3488%7D&file=DRIVE%20DE%20RESCISAO%20SHOPEE.xlsx" target="_blank">📈 Drive de Rescisão Shopee</a>
-                    <a href="https://desafiorhcombr-my.sharepoint.com/:x:/r/personal/edivan_costa_wecanbr_com_br/_layouts/15/Doc.aspx?sourcedoc=%7B63D04DA0-C7A8-4059-8591-37DFCED94A93%7D&file=CENTRAL%20DE%20SOLICITA%25u00c7%25u00d5ES.xlsx" target="_blank">📋 Central de Solicitações (Base)</a>
+                <div class="dropdown-content">
+                    <a href="https://desafiorhcombr-my.sharepoint.com/:x:/r/personal/mirian_oliveira_wecanbr_com_br/_layouts/15/doc2.aspx?sourcedoc=%7B519706C2-BDEF-438C-B037-385F4D8A3488%7D&file=DRIVE%20DE%20RESCISAO%20SHOPEE.xlsx" target="_blank">📈 Drive de Rescisão</a>
                     <a href="https://docs.google.com/spreadsheets/d/1WBYOF9AkoS7NpzhqFyqm5PzQRP13yUF2p5ZY8FfZp_c/edit#gid=690743947" target="_blank">🔍 Template Shopee</a>
-                    <a href="https://desafiorhcombr.sharepoint.com/:x:/r/sites/FSWECANBR/_layouts/15/Doc.aspx?sourcedoc=%7B1BA76351-0EC5-4118-9F32-E921659CCCE1%7D&file=01%202026%20REJEITOS%20JANEIRO%20.xlsx" target="_blank">⚠️ Rejeitos 01.2026</a>
                 </div>
             </div>
-
             <div class="dropdown">
                 <button class="dropdown-btn">📄 Documentos ▼</button>
-                <div class="dropdown-content dropdown-docs">
-                    <a href="https://drive.google.com/file/d/1qsLtN-HC5488FVQc3n5mcT8zjCdVja0d/view" target="_blank">Carta de Suspensão</a>
-                    <a href="https://drive.google.com/file/d/1lGnjwLz_5i4uASifv2OPlkSb7NUGeaHI/view" target="_blank">Comunicado de Desligamento</a>
-                    <a href="https://drive.google.com/file/d/1zsrlh6KBLvMvEGc13tTA6I7Ybra5iObA/view" target="_blank">Advertência Disciplinar</a>
-                    <a href="https://drive.google.com/file/d/1_Dw1qLl9icW282pkZCNln8908Nfqiasi/view" target="_blank">Advertência - Ponto</a>
-                    <a href="https://drive.google.com/file/d/1aryngzuxX72mOhxchNmQPBA30QT2gNt2/view" target="_blank">Carta Banco Santander</a>
-                    <a href="https://drive.google.com/file/d/1PDp_bhtDB-ZR-wRwFUJ80Xpa4gWu_HkQ/view" target="_blank">Termo de Ciência - EPI</a>
-                    <a href="https://drive.google.com/file/d/1a_D1awqrBGXLaiKba6dc_ruE41dDF3ke/view" target="_blank">Dispensa Justa Causa</a>
-                    <a href="https://docs.google.com/document/d/1pqJ2b7wfCbjdAuKC99cIys9RYnenn2nkACDo33isZFE/edit" target="_blank">Aviso Prévio Indenizado</a>
-                    <a href="https://drive.google.com/file/d/16qsbtlkVBkIqZN_vjXK5T0gOEI7ivXWR/view" target="_blank">Declaração de Vínculo</a>
+                <div class="dropdown-content">
                     <a href="https://drive.google.com/file/d/1CQQ3GTIUoOW9SGZ2EZTG8O3Q3ZFHk_El/view" target="_blank">DUT</a>
+                    <a href="https://drive.google.com/file/d/16qsbtlkVBkIqZN_vjXK5T0gOEI7ivXWR/view" target="_blank">Declaração de Vínculo</a>
                 </div>
             </div>
-
-            <a href="https://www.appsheet.com/start/53559df4-e3c6-465a-86bc-1f3a70e6735a" target="_blank" class="dropdown-btn">🚗 Voucher Uber</a>
+            <a href="https://www.appsheet.com/start/53559df4-e3c6-465a-86bc-1f3a70e6735a" target="_blank" class="dropdown-btn">🚗 Uber</a>
         </div>
     </nav>
 
     <header>
         <h1>APOIO AO ONSITE</h1>
         <div class="search-container">
-            <input type="text" id="searchInput" onkeyup="buscarTudo()" placeholder="Pesquisar em tudo..." autocomplete="off">
+            <input type="text" id="searchInput" onkeyup="buscarTudo()" placeholder="Pesquisar..." autocomplete="off">
             <div id="searchResults"></div>
         </div>
     </header>
 
     <div class="container" id="cardContainer">
         <a href="https://forms.office.com/Pages/ResponsePage.aspx?id=fCAtUtXsx0-nbxdGSxFh-eVAzhwdpsxLmCSGMQwqNIpUM1E2TFRSRkhNWU9IQk9SVFhBSDJNWTFDVS4u" target="_blank" class="card">
-            <span class="icon">📝</span>
+            <span style="font-size:45px">📝</span>
             <h2>Central de Solicitações</h2>
-            <p>Plataforma para realizar e acompanhar suas solicitações internas.</p>
+            <p>Plataforma interna de solicitações.</p>
         </a>
-
-        <a href="https://forms.office.com/Pages/ResponsePage.aspx?id=fCAtUtXsx0-nbxdGSxFh-f7MDqf4DUBBuOHjox7sxytUNFFQNTgzR1pQV0FLM05aWElXSjlRMjFHRy4u&origin=Invitation&channel=0" target="_blank" class="card" style="border-top-color: var(--danger);">
-            <span class="icon">🚫</span>
+        <a href="https://forms.office.com/Pages/ResponsePage.aspx?id=fCAtUtXsx0-nbxdGSxFh-f7MDqf4DUBBuOHjox7sxytUNFFQNTgzR1pQV0FLM05aWElXSjlRMjFHRy4u" target="_blank" class="card" style="border-top-color: var(--danger);">
+            <span style="font-size:45px">🚫</span>
             <h2>Desligamento Shopee</h2>
-            <p>Formulário oficial para processo de desligamento.</p>
-        </a>
-
-        <a href="https://www.appsheet.com/start/53559df4-e3c6-465a-86bc-1f3a70e6735a" target="_blank" class="card" style="border-top-color: var(--secondary);">
-            <span class="icon">🚗</span>
-            <h2>Voucher Uber</h2>
-            <p>Acesse o sistema de Voucher (Login Necessário).</p>
+            <p>Formulário oficial de desligamento.</p>
         </a>
     </div>
 
     <div class="sheet-section">
-        <div style="padding: 10px; font-weight: bold; color: var(--primary);">📊 Planilha Programação de Beneficios</div>
+        <div style="padding: 10px; font-weight: bold; color: var(--primary);">📊 Planilha de Controle</div>
         <div class="sheet-container">
             <iframe src="https://docs.google.com/spreadsheets/d/12MDzWA2N0XE-i1mr1ME6aHsZjp8DqHqY4IpDlkWVL-E/edit?rm=minimal"></iframe>
         </div>
@@ -271,46 +198,49 @@
     <footer>© 2026 Apoio ao On-Site | WeCanBR</footer>
 
     <script>
+        function toggleTheme() {
+            const body = document.documentElement;
+            const btn = document.getElementById('themeBtn');
+            if (body.getAttribute('data-theme') === 'dark') {
+                body.removeAttribute('data-theme');
+                btn.innerHTML = "🌙";
+                localStorage.setItem('theme', 'light');
+            } else {
+                body.setAttribute('data-theme', 'dark');
+                btn.innerHTML = "☀️";
+                localStorage.setItem('theme', 'dark');
+            }
+        }
+
+        // Carregar tema salvo
+        if (localStorage.getItem('theme') === 'dark') {
+            document.documentElement.setAttribute('data-theme', 'dark');
+            document.getElementById('themeBtn').innerHTML = "☀️";
+        }
+
         function buscarTudo() {
             let input = document.getElementById('searchInput').value.toLowerCase();
             let resultsDiv = document.getElementById('searchResults');
             let cards = document.getElementsByClassName('card');
             let dropdownLinks = document.querySelectorAll('.dropdown-content a');
-            
             resultsDiv.innerHTML = "";
-            
             if (input.length < 2) {
                 resultsDiv.style.display = "none";
-                for (let card of cards) card.classList.remove('hidden');
+                for (let card of cards) card.style.display = "block";
                 return;
             }
-
             let achouNoMenu = false;
-
             dropdownLinks.forEach(link => {
                 if (link.innerText.toLowerCase().includes(input)) {
                     achouNoMenu = true;
                     resultsDiv.innerHTML += `<a href="${link.href}" target="_blank" class="result-item">🔗 ${link.innerText}</a>`;
                 }
             });
-
             for (let card of cards) {
-                let texto = card.innerText.toLowerCase();
-                if (texto.includes(input)) {
-                    card.classList.remove('hidden');
-                } else {
-                    card.classList.add('hidden');
-                }
+                card.style.display = card.innerText.toLowerCase().includes(input) ? "block" : "none";
             }
-
             resultsDiv.style.display = achouNoMenu ? "block" : "none";
         }
-
-        document.addEventListener('click', function(e) {
-            if (e.target.id !== 'searchInput') {
-                document.getElementById('searchResults').style.display = "none";
-            }
-        });
     </script>
 </body>
 </html>
