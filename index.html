@@ -3,30 +3,78 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Apoio ao On-Site | Hub de Serviços</title>
+    <title>Apoio ao On-Site | Hub Profissional</title>
     <style>
-        /* Estilo Geral */
+        :root {
+            --primary: #6a11cb;
+            --secondary: #2575fc;
+            --dark: #333;
+        }
+
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Segoe UI', sans-serif;
             background-color: #f4f7f6;
             margin: 0;
+            padding-top: 60px;
+        }
+
+        /* BARRA DE NAVEGAÇÃO */
+        .navbar {
+            background: white;
+            height: 60px;
             display: flex;
-            flex-direction: column;
-            min-height: 100vh;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 30px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: fixed;
+            top: 0; width: 100%; z-index: 1000;
+            box-sizing: border-box;
         }
 
+        .nav-links a {
+            text-decoration: none;
+            color: var(--dark);
+            margin-left: 20px;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        /* CABEÇALHO COM IMAGEM DE FUNDO */
         header {
-            background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+            /* Aqui inserimos a imagem do site que você enviou */
+            background: linear-gradient(rgba(106, 17, 203, 0.7), rgba(37, 117, 252, 0.7)), 
+                        url('https://wecanbr.com.br/wp-content/uploads/2021/08/bg-quem-somos.jpg');
+            background-size: cover;
+            background-position: center;
             color: white;
-            padding: 40px 20px;
+            padding: 100px 20px; /* Aumentei o padding para mostrar mais a foto */
             text-align: center;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            border-bottom: 4px solid var(--primary);
         }
 
-        h1 { margin: 0; font-size: 2.5rem; letter-spacing: 1px; }
-        p.subtitle { opacity: 0.9; margin-top: 10px; }
+        header h1 {
+            font-size: 3rem;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            margin: 0;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        }
 
-        /* Container dos Cards */
+        .search-container { margin-top: 30px; }
+
+        #searchInput {
+            padding: 15px 25px;
+            width: 400px;
+            max-width: 80%;
+            border-radius: 30px;
+            border: none;
+            font-size: 1rem;
+            outline: none;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+        }
+
+        /* CONTAINER E CARDS */
         .container {
             display: flex;
             justify-content: center;
@@ -37,115 +85,82 @@
             margin: 0 auto;
         }
 
-        /* O "Card" Moderno */
         .card {
             background: white;
             border-radius: 15px;
-            width: 300px;
-            padding: 30px;
+            width: 280px;
+            padding: 25px;
             text-align: center;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.05);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            transition: 0.3s;
             text-decoration: none;
             color: #333;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            border-top: 5px solid transparent;
+            border-top: 5px solid var(--primary);
         }
 
-        .card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 15px 30px rgba(0,0,0,0.1);
-        }
+        .card:hover { transform: translateY(-5px); box-shadow: 0 10px 25px rgba(0,0,0,0.1); }
+        .card.hidden { display: none; }
 
-        /* Cores específicas para cada card */
-        .card.solicitacao { border-top-color: #6a11cb; }
-        .card.desligamento { border-top-color: #ff4b2b; }
-        .card.voucher { border-top-color: #2575fc; }
+        .icon { font-size: 40px; margin-bottom: 15px; display: block; }
 
-        .icon {
-            font-size: 50px;
-            margin-bottom: 20px;
-            display: block;
-        }
-
-        h2 { font-size: 1.4rem; margin-bottom: 15px; color: #222; }
-        
-        .card p {
-            font-size: 0.95rem;
-            color: #666;
-            line-height: 1.5;
-            margin-bottom: 20px;
-        }
-
-        .btn {
-            background: #f8f9fa;
-            padding: 10px 20px;
-            border-radius: 8px;
-            font-weight: bold;
-            color: #555;
-            transition: background 0.2s;
-            border: 1px solid #ddd;
-        }
-
-        .card:hover .btn {
-            background: #222;
-            color: white;
-            border-color: #222;
-        }
-
-        footer {
-            margin-top: auto;
-            text-align: center;
-            padding: 20px;
-            background: #333;
-            color: white;
-            font-size: 0.8rem;
-        }
+        footer { text-align: center; padding: 30px; background: #222; color: white; margin-top: 50px; }
     </style>
 </head>
 <body>
 
+    <nav class="navbar">
+        <div style="font-weight: bold; color: var(--primary)">WE CAN BR</div>
+        <div class="nav-links">
+            <a href="LINK_DA_PLANILHA" target="_blank">📊 Planilhas</a>
+            <a href="LINK_DO_DOC" target="_blank">📄 Documentos</a>
+            <a href="#">📞 Suporte</a>
+        </div>
+    </nav>
+
     <header>
-        <h1>APOIO AO ON-SITE</h1>
-        <p class="subtitle">Acesse de forma rápida as principais ferramentas de gestão</p>
+        <h1>APOIO AO ONSITE</h1>
+        <div class="search-container">
+            <input type="text" id="searchInput" onkeyup="filtrarCards()" placeholder="Pesquisar serviços ou ferramentas...">
+        </div>
     </header>
 
-    <div class="container">
-        
-        <a href="https://forms.office.com/Pages/ResponsePage.aspx?id=fCAtUtXsx0-nbxdGSxFh-eVAzhwdpsxLmCSGMQwqNIpUM1E2TFRSRkhNWU9IQk9SVFhBSDJNWTFDVS4u" target="_blank" class="card solicitacao">
-            <div>
-                <span class="icon">📝</span>
-                <h2>Central de Solicitações</h2>
-                <p>Plataforma para realizar e acompanhar suas solicitações internas de forma organizada.</p>
-            </div>
-            <div class="btn">Abrir Chamado</div>
+    <div class="container" id="cardContainer">
+        <a href="URL_AQUI" target="_blank" class="card">
+            <span class="icon">📝</span>
+            <h2>Central de Solicitações</h2>
+            <p>Abertura de chamados internos e acompanhamento.</p>
         </a>
 
-        <a href="https://forms.office.com/Pages/ResponsePage.aspx?id=fCAtUtXsx0-nbxdGSxFh-f7MDqf4DUBBuOHjox7sxytUNFFQNTgzR1pQV0FLM05aWElXSjlRMjFHRy4u&origin=Invitation&channel=0" target="_blank" class="card desligamento">
-            <div>
-                <span class="icon">🚫</span>
-                <h2>Desligamento Shopee</h2>
-                <p>Formulário oficial para iniciar o processo de desligamento de colaboradores.</p>
-            </div>
-            <div class="btn">Solicitar Desligamento</div>
+        <a href="URL_AQUI" target="_blank" class="card" style="border-top-color: #ff4b2b;">
+            <span class="icon">🚫</span>
+            <h2>Desligamento Shopee</h2>
+            <p>Iniciar processo oficial de desligamento.</p>
         </a>
 
-        <a href="https://www.appsheet.com/start/53559df4-e3c6-465a-86bc-1f3a70e6735a" target="_blank" class="card voucher">
-            <div>
-                <span class="icon">🚗</span>
-                <h2>Voucher Uber</h2>
-                <p>Informe aqui colaboradores desligados que utilizam o benefício do voucher.</p>
-            </div>
-            <div class="btn">Gerenciar Voucher</div>
+        <a href="URL_AQUI" target="_blank" class="card" style="border-top-color: #2575fc;">
+            <span class="icon">🚗</span>
+            <h2>Voucher Uber</h2>
+            <p>Gestão de colaboradores e benefícios Uber.</p>
         </a>
-
     </div>
 
-    <footer>
-        © 2026 Apoio ao On-Site - Todos os direitos reservados.
-    </footer>
+    <footer>© 2026 Apoio ao On-Site - WeCanBR</footer>
+
+    <script>
+        function filtrarCards() {
+            let input = document.getElementById('searchInput').value.toLowerCase();
+            let cards = document.getElementsByClassName('card');
+            for (let i = 0; i < cards.length; i++) {
+                let titulo = cards[i].getElementsByTagName('h2')[0].innerText.toLowerCase();
+                let descricao = cards[i].getElementsByTagName('p')[0].innerText.toLowerCase();
+                if (titulo.includes(input) || descricao.includes(input)) {
+                    cards[i].classList.remove('hidden');
+                } else {
+                    cards[i].classList.add('hidden');
+                }
+            }
+        }
+    </script>
 
 </body>
 </html>
