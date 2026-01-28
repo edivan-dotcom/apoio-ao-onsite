@@ -87,7 +87,7 @@
         .dropdown-planilhas a:hover { background-color: #e6f4ea; color: var(--excel); border-left: 4px solid var(--excel); }
         .dropdown-docs a:hover { background-color: #f1f1f1; color: var(--primary); border-left: 4px solid var(--primary); }
 
-        /* CABEÇALHO COM A SUA IMAGEM E FILTRO */
+        /* CABEÇALHO */
         header {
             background: linear-gradient(rgba(106, 17, 203, 0.75), rgba(37, 117, 252, 0.75)), 
                         url('https://wecanbr.com.br/img/quem-somos/main.jpg');
@@ -100,7 +100,6 @@
 
         header h1 { font-size: 2.5rem; text-transform: uppercase; letter-spacing: 2px; margin: 0; }
 
-        /* BUSCA E RESULTADOS */
         .search-container { margin-top: 25px; position: relative; width: 400px; max-width: 85%; margin-left: auto; margin-right: auto; }
 
         #searchInput {
@@ -171,6 +170,30 @@
         h2 { font-size: 1.2rem; margin: 10px 0; }
         p { font-size: 0.9rem; color: #666; line-height: 1.5; }
 
+        /* SEÇÃO DA PLANILHA EDITÁVEL */
+        .sheet-section {
+            max-width: 95%;
+            margin: 20px auto 50px;
+            background: white;
+            padding: 10px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        .sheet-container {
+            width: 100%;
+            height: 600px; /* Altura da planilha */
+            overflow: hidden;
+            border-radius: 10px;
+            border: 1px solid #ddd;
+        }
+
+        iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
         footer { text-align: center; padding: 30px; background: #222; color: white; margin-top: 50px; }
     </style>
 </head>
@@ -222,20 +245,27 @@
         <a href="https://forms.office.com/Pages/ResponsePage.aspx?id=fCAtUtXsx0-nbxdGSxFh-eVAzhwdpsxLmCSGMQwqNIpUM1E2TFRSRkhNWU9IQk9SVFhBSDJNWTFDVS4u" target="_blank" class="card">
             <span class="icon">📝</span>
             <h2>Central de Solicitações</h2>
-            <p>Plataforma para realizar e acompanhar suas solicitações internas de forma organizada.</p>
+            <p>Plataforma para realizar e acompanhar suas solicitações internas.</p>
         </a>
 
         <a href="https://forms.office.com/Pages/ResponsePage.aspx?id=fCAtUtXsx0-nbxdGSxFh-f7MDqf4DUBBuOHjox7sxytUNFFQNTgzR1pQV0FLM05aWElXSjlRMjFHRy4u&origin=Invitation&channel=0" target="_blank" class="card" style="border-top-color: var(--danger);">
             <span class="icon">🚫</span>
             <h2>Desligamento Shopee</h2>
-            <p>Formulário oficial para iniciar o processo de desligamento de colaboradores.</p>
+            <p>Formulário oficial para processo de desligamento.</p>
         </a>
 
         <a href="https://www.appsheet.com/start/53559df4-e3c6-465a-86bc-1f3a70e6735a" target="_blank" class="card" style="border-top-color: var(--secondary);">
             <span class="icon">🚗</span>
             <h2>Voucher Uber</h2>
-            <p>Informe aqui colaboradores desligados que utilizam o benefício do voucher.</p>
+            <p>Acesse o sistema de Voucher (Login Necessário).</p>
         </a>
+    </div>
+
+    <div class="sheet-section">
+        <div style="padding: 10px; font-weight: bold; color: var(--primary);">📊 Planilha de Controle (Edição Direta)</div>
+        <div class="sheet-container">
+            <iframe src="https://docs.google.com/spreadsheets/d/12MDzWA2N0XE-i1mr1ME6aHsZjp8DqHqY4IpDlkWVL-E/edit?rm=minimal"></iframe>
+        </div>
     </div>
 
     <footer>© 2026 Apoio ao On-Site | WeCanBR</footer>
@@ -257,7 +287,6 @@
 
             let achouNoMenu = false;
 
-            // 1. Pesquisa nos links dos Dropdowns
             dropdownLinks.forEach(link => {
                 if (link.innerText.toLowerCase().includes(input)) {
                     achouNoMenu = true;
@@ -265,7 +294,6 @@
                 }
             });
 
-            // 2. Filtra os Cards na tela
             for (let card of cards) {
                 let texto = card.innerText.toLowerCase();
                 if (texto.includes(input)) {
@@ -278,7 +306,6 @@
             resultsDiv.style.display = achouNoMenu ? "block" : "none";
         }
 
-        // Fecha a lista de resultados ao clicar fora da busca
         document.addEventListener('click', function(e) {
             if (e.target.id !== 'searchInput') {
                 document.getElementById('searchResults').style.display = "none";
