@@ -72,7 +72,7 @@
 
         .dropdown-content {
             display: none; position: absolute; right: 0;
-            background-color: var(--card-bg); min-width: 320px;
+            background-color: var(--card-bg); min-width: 350px;
             box-shadow: 0px 8px 16px rgba(0,0,0,0.2); z-index: 1001;
             border-radius: 0 0 8px 8px; top: 60px; border-top: 2px solid var(--primary);
             overflow: hidden;
@@ -82,6 +82,7 @@
             color: var(--text); padding: 12px 16px; text-decoration: none;
             display: block; font-size: 0.85rem; border-bottom: 1px solid rgba(128,128,128,0.1);
         }
+        .dropdown-content a:hover { background: rgba(106, 17, 203, 0.05); }
 
         /* --- HEADER --- */
         header {
@@ -126,20 +127,14 @@
 
         .icon { font-size: 40px; margin-bottom: 15px; display: block; }
 
-        /* --- SEÇÕES EMBUTIDAS --- */
+        /* --- SEÇÕES --- */
         .embedded-section {
             max-width: 95%; margin: 20px auto 40px;
             background: var(--card-bg); padding: 15px; border-radius: 15px;
             box-shadow: 0 10px 30px rgba(0,0,0,0.1);
         }
-        .section-header {
-            padding: 10px; display: flex; justify-content: space-between; align-items: center;
-            border-bottom: 1px solid rgba(128,128,128,0.1); margin-bottom: 15px;
-        }
-        .frame-container { width: 100%; height: 700px; border-radius: 10px; overflow: hidden; border: 1px solid rgba(128,128,128,0.2); }
-        iframe { width: 100%; height: 100%; border: none; }
 
-        .signature { text-align: center; margin: 20px 0; font-family: 'Great Vibes', cursive; font-size: 1.5rem; color: var(--signature); }
+        .signature { text-align: center; margin: 40px 0 20px; font-family: 'Great Vibes', cursive; font-size: 1.5rem; color: var(--signature); }
         footer { text-align: center; padding: 30px; background: #222; color: white; width: 100%; }
 
         .theme-toggle {
@@ -158,18 +153,31 @@
         <div style="font-weight: bold; color: var(--primary); letter-spacing: 1px;">WE CAN BR</div>
         <div class="nav-links">
             <a href="https://portal.office.com" target="_blank" class="login-btn">🔑 Login Microsoft</a>
+            
             <div class="dropdown">
                 <button class="dropdown-btn">📊 Planilhas ▼</button>
                 <div class="dropdown-content">
                     <a href="https://desafiorhcombr-my.sharepoint.com/:x:/r/personal/mirian_oliveira_wecanbr_com_br/_layouts/15/Doc.aspx?sourcedoc=%7B9C5EACCF-57D1-4415-BA2B-D584B9FE2B85%7D" target="_blank">📋 Controle de Atendimento (Excel)</a>
+                    <a href="https://desafiorhcombr-my.sharepoint.com/:x:/r/personal/mirian_oliveira_wecanbr_com_br/_layouts/15/doc2.aspx?sourcedoc=%7B519706C2-BDEF-438C-B037-385F4D8A3488%7D" target="_blank">📈 Drive de Rescisão Shopee</a>
+                    <a href="https://desafiorhcombr-my.sharepoint.com/:x:/r/personal/edivan_costa_wecanbr_com_br/_layouts/15/Doc.aspx?sourcedoc=%7B63D04DA0-C7A8-4059-8591-37DFCED94A93%7D" target="_blank">📋 Central de Solicitações (Base)</a>
                     <a href="https://docs.google.com/spreadsheets/d/1WBYOF9AkoS7NpzhqFyqm5PzQRP13yUF2p5ZY8FfZp_c/edit" target="_blank">🔍 Voucher 2026 (Base Geral)</a>
+                    <a href="https://desafiorhcombr.sharepoint.com/:x:/r/sites/FSWECANBR/_layouts/15/Doc.aspx?sourcedoc=%7B6C34C14E-1ED6-4AA2-BFC8-EB14FD1936EF%7D" target="_blank">⚠️ Rejeitos 02.2026</a>
                 </div>
             </div>
+
             <div class="dropdown">
                 <button class="dropdown-btn">📄 Documentos ▼</button>
                 <div class="dropdown-content">
                     <a href="https://drive.google.com/file/d/1qsLtN-HC5488FVQc3n5mcT8zjCdVja0d/view" target="_blank">📄 Carta de Suspensão</a>
+                    <a href="https://drive.google.com/file/d/1lGnjwLz_5i4uASifv2OPlkSb7NUGeaHI/view" target="_blank">📄 Comunicado de Desligamento</a>
                     <a href="https://drive.google.com/file/d/1zsrlh6KBLvMvEGc13tTA6I7Ybra5iObA/view" target="_blank">📄 Advertência Disciplinar</a>
+                    <a href="https://drive.google.com/file/d/1_Dw1qLl9icW282pkZCNln8908Nfqiasi/view" target="_blank">📄 Advertência - Ponto</a>
+                    <a href="https://drive.google.com/file/d/1aryngzuxX72mOhxchNmQPBA30QT2gNt2/view" target="_blank">📄 Carta Banco Santander</a>
+                    <a href="https://drive.google.com/file/d/1PDp_bhtDB-ZR-wRwFUJ80Xpa4gWu_HkQ/view" target="_blank">📄 Termo de Ciência - EPI</a>
+                    <a href="https://drive.google.com/file/d/1a_D1awqrBGXLaiKba6dc_ruE41dDF3ke/view" target="_blank">📄 Dispensa Justa Causa</a>
+                    <a href="https://docs.google.com/document/d/1pqJ2b7wfCbjdAuKC99cIys9RYnenn2nkACDo33isZFE/edit" target="_blank">📄 Aviso Prévio Indenizado</a>
+                    <a href="https://drive.google.com/file/d/16qsbtlkVBkIqZN_vjXK5T0gOEI7ivXWR/view" target="_blank">📄 Declaração de Vínculo</a>
+                    <a href="https://drive.google.com/file/d/1CQQ3GTIUoOW9SGZ2EZTG8O3Q3ZFHk_El/view" target="_blank">📄 DUT</a>
                 </div>
             </div>
         </div>
@@ -195,6 +203,12 @@
             <p>Formulário oficial para desligamento.</p>
         </div>
 
+        <div onclick="abrirPopup('https://forms.office.com/Pages/ResponsePage.aspx?id=fCAtUtXsx0-nbxdGSxFh-f7MDqf4DUBBuOHjox7sxytUMzdRMTFCOTc2SzZEQzU4NFI2TVMzUjIxWS4u')" class="card" style="border-top-color: var(--warning);">
+            <span class="icon">🎧</span>
+            <h2>Controle de Atendimento</h2>
+            <p>Registro de atendimentos Shopee.</p>
+        </div>
+
         <div onclick="abrirPopup('https://forms.office.com/Pages/ResponsePage.aspx?id=fCAtUtXsx0-nbxdGSxFh-eVAzhwdpsxLmCSGMQwqNIpUQVBSTFlOTUxSUEMwMFhWSTdTTEVOV1lBUy4u')" class="card" style="border-top-color: var(--voucher);">
             <div class="badge-new">Novo!</div>
             <span class="icon">🎫</span>
@@ -206,27 +220,17 @@
     <div class="embedded-section" style="border-top: 5px solid var(--appsheet); text-align: center; padding: 40px 20px;">
         <div style="margin-bottom: 20px;">
             <strong style="color: var(--appsheet); font-size: 1.4rem; display: block;">📱 GESTÃO OPERACIONAL (APPSHEET)</strong>
-            <p style="color: #666; margin-top: 10px;">Clique abaixo para gerenciar desligamentos e inativações via App.</p>
+            <p style="color: #666; margin-top: 10px;">Clique no botão abaixo para inativar colaboradores no sistema.</p>
         </div>
         <button onclick="abrirAppSheet()" style="background: var(--appsheet); color: white; border: none; padding: 15px 40px; border-radius: 30px; font-size: 1.1rem; font-weight: bold; cursor: pointer; box-shadow: 0 4px 15px rgba(26, 115, 232, 0.3); transition: 0.3s;">
             🚀 Abrir Sistema AppSheet
         </button>
     </div>
 
-    <div class="embedded-section">
-        <div class="section-header">
-            <strong style="color: var(--primary);">📊 PLANILHA DE CONTROLE (MIRIAN)</strong>
-        </div>
-        <div class="frame-container">
-            <iframe src="https://desafiorhcombr-my.sharepoint.com/personal/mirian_oliveira_wecanbr_com_br/_layouts/15/Doc.aspx?sourcedoc={9c5eaccf-57d1-4415-ba2b-d584b9fe2b85}&action=embedview"></iframe>
-        </div>
-    </div>
-
     <div class="signature">By: Edivan Costa</div>
     <footer>© 2026 Apoio ao On-Site | WeCanBR</footer>
 
     <script>
-        // Função para os Formulários
         function abrirPopup(url) {
             const largura = 900;
             const altura = 900;
@@ -235,10 +239,33 @@
             window.open(url, 'FormsPopup', `width=${largura},height=${altura},top=${topo},left=${esquerda},scrollbars=yes,resizable=yes`);
         }
 
-        // Função específica para o AppSheet (Formato Mobile)
         function abrirAppSheet() {
             const largura = 500; 
             const altura = 850;
             const esquerda = (screen.width - largura) / 2;
             const topo = (screen.height - altura) / 2;
-            window.open('
+            window.open('https://www.appsheet.com/start/8ba6b59c-c836-4d4e-9a3e-e43d38d2a47e', 'AppSheetPopup', `width=${largura},height=${altura},top=${topo},left=${esquerda},scrollbars=yes,resizable=yes`);
+        }
+
+        function buscarTudo() {
+            let input = document.getElementById('searchInput').value.toLowerCase();
+            let cards = document.getElementsByClassName('card');
+            for (let card of cards) {
+                card.classList.toggle('hidden', !card.innerText.toLowerCase().includes(input));
+            }
+        }
+
+        function toggleTheme() {
+            const html = document.documentElement;
+            const btn = document.getElementById('themeBtn');
+            if (html.getAttribute('data-theme') === 'dark') {
+                html.removeAttribute('data-theme');
+                btn.innerHTML = "🌙";
+            } else {
+                html.setAttribute('data-theme', 'dark');
+                btn.innerHTML = "☀️";
+            }
+        }
+    </script>
+</body>
+</html>
