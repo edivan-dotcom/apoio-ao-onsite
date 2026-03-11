@@ -203,7 +203,7 @@
             <p>Formulário oficial para desligamento.</p>
         </div>
 
-        <div onclick="abrirPopup('https://forms.office.com/Pages/ResponsePage.aspx?id=fCAtUtXsx0-nbxdGSxFh-f7MDqf4DUBBuOHjox7sxytUMzdRMTFCOTc2SzZEQzU4NFI2TVMzUjIxWS4u')" class="card" style="border-top-color: var(--warning);">
+        <div onclick="abrirPopup('https://forms.office.com/Pages/ResponsePage.aspx?id=fCAtUtXsx0-nbxdGSxFh-f7MDqf4DUBBuOHjox7sxytUNZDZNTFCOTc2SzZEQzU4NFI2TVMzUjIxWS4u')" class="card" style="border-top-color: var(--warning);">
             <span class="icon">🎧</span>
             <h2>Controle de Atendimento</h2>
             <p>Registro de atendimentos Shopee.</p>
@@ -219,8 +219,8 @@
 
     <div class="embedded-section" style="border-top: 5px solid var(--appsheet); text-align: center; padding: 40px 20px;">
         <div style="margin-bottom: 20px;">
-            <strong style="color: var(--appsheet); font-size: 1.4rem; display: block;">📱 GESTÃO OPERACIONAL (APPSHEET)</strong>
-            <p style="color: #666; margin-top: 10px;">Clique no botão abaixo para inativar colaboradores no sistema.</p>
+            <strong style="color: var(--appsheet); font-size: 1.4rem; display: block;">📱 INATIVAÇÃO VOUCHER UBER</strong>
+            <p style="color: #666; margin-top: 10px;">Clique no Botão para Inativar um Colaborador Usuario do Voucher, em caso de Desligamento</p>
         </div>
         <button onclick="abrirAppSheet()" style="background: var(--appsheet); color: white; border: none; padding: 15px 40px; border-radius: 30px; font-size: 1.1rem; font-weight: bold; cursor: pointer; box-shadow: 0 4px 15px rgba(26, 115, 232, 0.3); transition: 0.3s;">
             🚀 Abrir Sistema AppSheet
@@ -239,12 +239,15 @@
             window.open(url, 'FormsPopup', `width=${largura},height=${altura},top=${topo},left=${esquerda},scrollbars=yes,resizable=yes`);
         }
 
+        // FUNÇÃO ATUALIZADA PARA TELA CHEIA
         function abrirAppSheet() {
-            const largura = 500; 
-            const altura = 850;
-            const esquerda = (screen.width - largura) / 2;
-            const topo = (screen.height - altura) / 2;
-            window.open('https://www.appsheet.com/start/8ba6b59c-c836-4d4e-9a3e-e43d38d2a47e', 'AppSheetPopup', `width=${largura},height=${altura},top=${topo},left=${esquerda},scrollbars=yes,resizable=yes`);
+            const largura = window.screen.availWidth;
+            const altura = window.screen.availHeight;
+            window.open(
+                'https://www.appsheet.com/start/8ba6b59c-c836-4d4e-9a3e-e43d38d2a47e', 
+                'AppSheetPopup', 
+                `width=${largura},height=${altura},top=0,left=0,scrollbars=yes,resizable=yes`
+            );
         }
 
         function buscarTudo() {
