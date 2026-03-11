@@ -107,6 +107,7 @@
             box-sizing: border-box; cursor: pointer; position: relative;
         }
         .card:hover { transform: translateY(-5px); box-shadow: 0 10px 25px rgba(0,0,0,0.1); }
+        .card.hidden { display: none; }
         
         .badge-new {
             position: absolute; top: -15px; right: -10px;
@@ -125,7 +126,7 @@
 
         .icon { font-size: 40px; margin-bottom: 15px; display: block; }
 
-        /* --- SEÇÕES DE CONTEÚDO EMBUTIDO --- */
+        /* --- SEÇÕES EMBUTIDAS --- */
         .embedded-section {
             max-width: 95%; margin: 20px auto 40px;
             background: var(--card-bg); padding: 15px; border-radius: 15px;
@@ -160,8 +161,15 @@
             <div class="dropdown">
                 <button class="dropdown-btn">📊 Planilhas ▼</button>
                 <div class="dropdown-content">
-                    <a href="https://desafiorhcombr-my.sharepoint.com/:x:/r/personal/mirian_oliveira_wecanbr_com_br/_layouts/15/Doc.aspx?sourcedoc=%7B9C5EACCF-57D1-4415-BA2B-D584B9FE2B85%7D" target="_blank">📋 Controle de Atendimento</a>
-                    <a href="https://docs.google.com/spreadsheets/d/1WBYOF9AkoS7NpzhqFyqm5PzQRP13yUF2p5ZY8FfZp_c/edit" target="_blank">🔍 Template Shopee (Voucher 2026)</a>
+                    <a href="https://desafiorhcombr-my.sharepoint.com/:x:/r/personal/mirian_oliveira_wecanbr_com_br/_layouts/15/Doc.aspx?sourcedoc=%7B9C5EACCF-57D1-4415-BA2B-D584B9FE2B85%7D" target="_blank">📋 Controle de Atendimento (Excel)</a>
+                    <a href="https://docs.google.com/spreadsheets/d/1WBYOF9AkoS7NpzhqFyqm5PzQRP13yUF2p5ZY8FfZp_c/edit" target="_blank">🔍 Voucher 2026 (Base Geral)</a>
+                </div>
+            </div>
+            <div class="dropdown">
+                <button class="dropdown-btn">📄 Documentos ▼</button>
+                <div class="dropdown-content">
+                    <a href="https://drive.google.com/file/d/1qsLtN-HC5488FVQc3n5mcT8zjCdVja0d/view" target="_blank">📄 Carta de Suspensão</a>
+                    <a href="https://drive.google.com/file/d/1zsrlh6KBLvMvEGc13tTA6I7Ybra5iObA/view" target="_blank">📄 Advertência Disciplinar</a>
                 </div>
             </div>
         </div>
@@ -170,7 +178,7 @@
     <header>
         <h1>APOIO AO ONSITE</h1>
         <div class="search-container">
-            <input type="text" id="searchInput" onkeyup="buscarTudo()" placeholder="Pesquisar formulários..." autocomplete="off">
+            <input type="text" id="searchInput" onkeyup="buscarTudo()" placeholder="Pesquisar..." autocomplete="off">
         </div>
     </header>
 
@@ -178,31 +186,31 @@
         <div onclick="abrirPopup('https://forms.office.com/Pages/ResponsePage.aspx?id=fCAtUtXsx0-nbxdGSxFh-eVAzhwdpsxLmCSGMQwqNIpUM1E2TFRSRkhNWU9IQk9SVFhBSDJNWTFDVS4u')" class="card">
             <span class="icon">📝</span>
             <h2>Central de Solicitações</h2>
-            <p>Abertura de chamados internos.</p>
+            <p>Clique para abrir o formulário interno.</p>
         </div>
 
         <div onclick="abrirPopup('https://forms.office.com/Pages/ResponsePage.aspx?id=fCAtUtXsx0-nbxdGSxFh-f7MDqf4DUBBuOHjox7sxytUNFFQNTgzR1pQV0FLM05aWElXSjlRMjFHRy4u')" class="card" style="border-top-color: var(--danger);">
             <span class="icon">🚫</span>
             <h2>Desligamento Shopee</h2>
-            <p>Fluxo de encerramento de contrato.</p>
+            <p>Formulário oficial para desligamento.</p>
         </div>
 
         <div onclick="abrirPopup('https://forms.office.com/Pages/ResponsePage.aspx?id=fCAtUtXsx0-nbxdGSxFh-eVAzhwdpsxLmCSGMQwqNIpUQVBSTFlOTUxSUEMwMFhWSTdTTEVOV1lBUy4u')" class="card" style="border-top-color: var(--voucher);">
             <div class="badge-new">Novo!</div>
             <span class="icon">🎫</span>
             <h2>Cadastro Voucher</h2>
-            <p>Cadastro de novos colaboradores.</p>
+            <p>Novo Colaborador - Cadastro de Voucher.</p>
         </div>
     </div>
 
-    <div class="embedded-section" style="border-top: 5px solid var(--appsheet);">
-        <div class="section-header">
-            <strong style="color: var(--appsheet); font-size: 1.1rem;">📱 GESTÃO OPERACIONAL (APPSHEET)</strong>
-            <span style="font-size: 0.8rem; color: #666;">Use para inativação e controle de status em tempo real</span>
+    <div class="embedded-section" style="border-top: 5px solid var(--appsheet); text-align: center; padding: 40px 20px;">
+        <div style="margin-bottom: 20px;">
+            <strong style="color: var(--appsheet); font-size: 1.4rem; display: block;">📱 GESTÃO OPERACIONAL (APPSHEET)</strong>
+            <p style="color: #666; margin-top: 10px;">Clique abaixo para gerenciar desligamentos e inativações via App.</p>
         </div>
-        <div class="frame-container" style="height: 850px;">
-            <iframe src="https://www.appsheet.com/start/8ba6b59c-c836-4d4e-9a3e-e43d38d2a47e"></iframe>
-        </div>
+        <button onclick="abrirAppSheet()" style="background: var(--appsheet); color: white; border: none; padding: 15px 40px; border-radius: 30px; font-size: 1.1rem; font-weight: bold; cursor: pointer; box-shadow: 0 4px 15px rgba(26, 115, 232, 0.3); transition: 0.3s;">
+            🚀 Abrir Sistema AppSheet
+        </button>
     </div>
 
     <div class="embedded-section">
@@ -218,6 +226,7 @@
     <footer>© 2026 Apoio ao On-Site | WeCanBR</footer>
 
     <script>
+        // Função para os Formulários
         function abrirPopup(url) {
             const largura = 900;
             const altura = 900;
@@ -226,25 +235,10 @@
             window.open(url, 'FormsPopup', `width=${largura},height=${altura},top=${topo},left=${esquerda},scrollbars=yes,resizable=yes`);
         }
 
-        function buscarTudo() {
-            let input = document.getElementById('searchInput').value.toLowerCase();
-            let cards = document.getElementsByClassName('card');
-            for (let card of cards) {
-                card.classList.toggle('hidden', !card.innerText.toLowerCase().includes(input));
-            }
-        }
-
-        function toggleTheme() {
-            const html = document.documentElement;
-            const btn = document.getElementById('themeBtn');
-            if (html.getAttribute('data-theme') === 'dark') {
-                html.removeAttribute('data-theme');
-                btn.innerHTML = "🌙";
-            } else {
-                html.setAttribute('data-theme', 'dark');
-                btn.innerHTML = "☀️";
-            }
-        }
-    </script>
-</body>
-</html>
+        // Função específica para o AppSheet (Formato Mobile)
+        function abrirAppSheet() {
+            const largura = 500; 
+            const altura = 850;
+            const esquerda = (screen.width - largura) / 2;
+            const topo = (screen.height - altura) / 2;
+            window.open('
