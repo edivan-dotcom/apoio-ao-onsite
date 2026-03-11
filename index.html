@@ -4,6 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Apoio ao On-Site | WeCanBR</title>
+    
+    <link rel="icon" type="image/png" href="https://wecanbr.com.br/wp-content/uploads/2021/10/cropped-favicon-32x32.png">
+    
     <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -16,6 +19,7 @@
             --danger: #ff4b2b;
             --warning: #f39c12;
             --voucher: #00b894;
+            --appsheet: #1a73e8;
             --new-tag: #eb4d4b;
             --signature: rgba(0, 0, 0, 0.2);
         }
@@ -103,7 +107,6 @@
             box-sizing: border-box; cursor: pointer; position: relative;
         }
         .card:hover { transform: translateY(-5px); box-shadow: 0 10px 25px rgba(0,0,0,0.1); }
-        .card.hidden { display: none; }
         
         .badge-new {
             position: absolute; top: -15px; right: -10px;
@@ -122,28 +125,18 @@
 
         .icon { font-size: 40px; margin-bottom: 15px; display: block; }
 
-        /* --- OUTROS FORMS --- */
-        .others-section { max-width: 1200px; margin: 0 auto 30px; padding: 0 20px; }
-        .others-title { font-weight: bold; color: var(--primary); margin-bottom: 15px; display: flex; align-items: center; gap: 10px; border-bottom: 2px solid rgba(106, 17, 203, 0.1); padding-bottom: 10px; }
-        .others-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 15px; }
-        .other-link {
-            background: var(--card-bg); padding: 15px; border-radius: 10px;
-            text-decoration: none; color: var(--text);
-            display: flex; flex-direction: column; gap: 5px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.05); transition: 0.2s;
-            border-left: 5px solid var(--secondary); cursor: pointer;
-        }
-        .other-link strong { font-size: 0.85rem; color: var(--primary); }
-        .other-link span { font-size: 0.75rem; color: #666; line-height: 1.3; }
-
-        /* --- PLANILHA --- */
-        .sheet-section {
+        /* --- SEÇÕES DE CONTEÚDO EMBUTIDO --- */
+        .embedded-section {
             max-width: 95%; margin: 20px auto 40px;
             background: var(--card-bg); padding: 15px; border-radius: 15px;
             box-shadow: 0 10px 30px rgba(0,0,0,0.1);
         }
-        .sheet-container { width: 100%; height: 700px; border-radius: 10px; border: 1px solid rgba(128,128,128,0.2); overflow: hidden; }
-        .sheet-container iframe { width: 100% !important; height: 100% !important; border: none; }
+        .section-header {
+            padding: 10px; display: flex; justify-content: space-between; align-items: center;
+            border-bottom: 1px solid rgba(128,128,128,0.1); margin-bottom: 15px;
+        }
+        .frame-container { width: 100%; height: 700px; border-radius: 10px; overflow: hidden; border: 1px solid rgba(128,128,128,0.2); }
+        iframe { width: 100%; height: 100%; border: none; }
 
         .signature { text-align: center; margin: 20px 0; font-family: 'Great Vibes', cursive; font-size: 1.5rem; color: var(--signature); }
         footer { text-align: center; padding: 30px; background: #222; color: white; width: 100%; }
@@ -167,26 +160,8 @@
             <div class="dropdown">
                 <button class="dropdown-btn">📊 Planilhas ▼</button>
                 <div class="dropdown-content">
-                    <a href="https://desafiorhcombr-my.sharepoint.com/:x:/r/personal/mirian_oliveira_wecanbr_com_br/_layouts/15/Doc.aspx?sourcedoc=%7B9C5EACCF-57D1-4415-BA2B-D584B9FE2B85%7D" target="_blank">📋 Controle de Atendimento (Excel)</a>
-                    <a href="https://desafiorhcombr-my.sharepoint.com/:x:/r/personal/mirian_oliveira_wecanbr_com_br/_layouts/15/doc2.aspx?sourcedoc=%7B519706C2-BDEF-438C-B037-385F4D8A3488%7D" target="_blank">📈 Drive de Rescisão Shopee</a>
-                    <a href="https://desafiorhcombr-my.sharepoint.com/:x:/r/personal/edivan_costa_wecanbr_com_br/_layouts/15/Doc.aspx?sourcedoc=%7B63D04DA0-C7A8-4059-8591-37DFCED94A93%7D" target="_blank">📋 Central de Solicitações (Base)</a>
-                    <a href="https://docs.google.com/spreadsheets/d/1WBYOF9AkoS7NpzhqFyqm5PzQRP13yUF2p5ZY8FfZp_c/edit" target="_blank">🔍 Template Shopee</a>
-                    <a href="https://desafiorhcombr.sharepoint.com/:x:/r/sites/FSWECANBR/_layouts/15/Doc.aspx?sourcedoc=%7B6C34C14E-1ED6-4AA2-BFC8-EB14FD1936EF%7D" target="_blank">⚠️ Rejeitos 02.2026</a>
-                </div>
-            </div>
-            <div class="dropdown">
-                <button class="dropdown-btn">📄 Documentos ▼</button>
-                <div class="dropdown-content">
-                    <a href="https://drive.google.com/file/d/1qsLtN-HC5488FVQc3n5mcT8zjCdVja0d/view" target="_blank">📄 Carta de Suspensão</a>
-                    <a href="https://drive.google.com/file/d/1lGnjwLz_5i4uASifv2OPlkSb7NUGeaHI/view" target="_blank">📄 Comunicado de Desligamento</a>
-                    <a href="https://drive.google.com/file/d/1zsrlh6KBLvMvEGc13tTA6I7Ybra5iObA/view" target="_blank">📄 Advertência Disciplinar</a>
-                    <a href="https://drive.google.com/file/d/1_Dw1qLl9icW282pkZCNln8908Nfqiasi/view" target="_blank">📄 Advertência - Ponto</a>
-                    <a href="https://drive.google.com/file/d/1aryngzuxX72mOhxchNmQPBA30QT2gNt2/view" target="_blank">📄 Carta Banco Santander</a>
-                    <a href="https://drive.google.com/file/d/1PDp_bhtDB-ZR-wRwFUJ80Xpa4gWu_HkQ/view" target="_blank">📄 Termo de Ciência - EPI</a>
-                    <a href="https://drive.google.com/file/d/1a_D1awqrBGXLaiKba6dc_ruE41dDF3ke/view" target="_blank">📄 Dispensa Justa Causa</a>
-                    <a href="https://docs.google.com/document/d/1pqJ2b7wfCbjdAuKC99cIys9RYnenn2nkACDo33isZFE/edit" target="_blank">📄 Aviso Prévio Indenizado</a>
-                    <a href="https://drive.google.com/file/d/16qsbtlkVBkIqZN_vjXK5T0gOEI7ivXWR/view" target="_blank">📄 Declaração de Vínculo</a>
-                    <a href="https://drive.google.com/file/d/1CQQ3GTIUoOW9SGZ2EZTG8O3Q3ZFHk_El/view" target="_blank">📄 DUT</a>
+                    <a href="https://desafiorhcombr-my.sharepoint.com/:x:/r/personal/mirian_oliveira_wecanbr_com_br/_layouts/15/Doc.aspx?sourcedoc=%7B9C5EACCF-57D1-4415-BA2B-D584B9FE2B85%7D" target="_blank">📋 Controle de Atendimento</a>
+                    <a href="https://docs.google.com/spreadsheets/d/1WBYOF9AkoS7NpzhqFyqm5PzQRP13yUF2p5ZY8FfZp_c/edit" target="_blank">🔍 Template Shopee (Voucher 2026)</a>
                 </div>
             </div>
         </div>
@@ -195,51 +170,47 @@
     <header>
         <h1>APOIO AO ONSITE</h1>
         <div class="search-container">
-            <input type="text" id="searchInput" onkeyup="buscarTudo()" placeholder="Pesquisar..." autocomplete="off">
+            <input type="text" id="searchInput" onkeyup="buscarTudo()" placeholder="Pesquisar formulários..." autocomplete="off">
         </div>
     </header>
 
-    <div class="container" id="cardContainer">
+    <div class="container">
         <div onclick="abrirPopup('https://forms.office.com/Pages/ResponsePage.aspx?id=fCAtUtXsx0-nbxdGSxFh-eVAzhwdpsxLmCSGMQwqNIpUM1E2TFRSRkhNWU9IQk9SVFhBSDJNWTFDVS4u')" class="card">
             <span class="icon">📝</span>
             <h2>Central de Solicitações</h2>
-            <p>Clique para abrir o formulário interno.</p>
+            <p>Abertura de chamados internos.</p>
         </div>
 
         <div onclick="abrirPopup('https://forms.office.com/Pages/ResponsePage.aspx?id=fCAtUtXsx0-nbxdGSxFh-f7MDqf4DUBBuOHjox7sxytUNFFQNTgzR1pQV0FLM05aWElXSjlRMjFHRy4u')" class="card" style="border-top-color: var(--danger);">
             <span class="icon">🚫</span>
             <h2>Desligamento Shopee</h2>
-            <p>Formulário oficial para desligamento.</p>
-        </div>
-
-        <div onclick="abrirPopup('https://forms.office.com/Pages/ResponsePage.aspx?id=fCAtUtXsx0-nbxdGSxFh-f7MDqf4DUBBuOHjox7sxytUMzdRMTFCOTc2SzZEQzU4NFI2TVMzUjIxWS4u')" class="card" style="border-top-color: var(--warning);">
-            <span class="icon">🎧</span>
-            <h2>Controle de Atendimento</h2>
-            <p>Registro de atendimentos Shopee.</p>
+            <p>Fluxo de encerramento de contrato.</p>
         </div>
 
         <div onclick="abrirPopup('https://forms.office.com/Pages/ResponsePage.aspx?id=fCAtUtXsx0-nbxdGSxFh-eVAzhwdpsxLmCSGMQwqNIpUQVBSTFlOTUxSUEMwMFhWSTdTTEVOV1lBUy4u')" class="card" style="border-top-color: var(--voucher);">
             <div class="badge-new">Novo!</div>
             <span class="icon">🎫</span>
             <h2>Cadastro Voucher</h2>
-            <p>Novo Colaborador - Cadastro de Voucher.</p>
+            <p>Cadastro de novos colaboradores.</p>
         </div>
     </div>
 
-    <div class="others-section">
-        <div class="others-title">🔗 Outros Formulários</div>
-        <div class="others-grid">
-            <div onclick="abrirPopup('https://forms.office.com/pages/responsepage.aspx?id=fCAtUtXsx0-nbxdGSxFh-f7MDqf4DUBBuOHjox7sxytUM1pLUFZVQjkxV1ZUNkY2RU1CWVQ1MVJZOS4u&route=shorturl')" class="other-link">
-                <strong>REEMBOLSO DE HE / FALTAS E DESCONTOS INDEVIDOS - SHOPEE</strong>
-                <span>Solicite reembolso de faltas descontadas indevidamente, horas extras não pagas e outros ajustes em folha.</span>
-            </div>
+    <div class="embedded-section" style="border-top: 5px solid var(--appsheet);">
+        <div class="section-header">
+            <strong style="color: var(--appsheet); font-size: 1.1rem;">📱 GESTÃO OPERACIONAL (APPSHEET)</strong>
+            <span style="font-size: 0.8rem; color: #666;">Use para inativação e controle de status em tempo real</span>
+        </div>
+        <div class="frame-container" style="height: 850px;">
+            <iframe src="https://www.appsheet.com/start/8ba6b59c-c836-4d4e-9a3e-e43d38d2a47e"></iframe>
         </div>
     </div>
 
-    <div class="sheet-section">
-        <div style="padding: 10px; font-weight: bold; color: var(--primary);">📊 Planilha de Controle</div>
-        <div class="sheet-container">
-            <iframe src="https://desafiorhcombr-my.sharepoint.com/personal/mirian_oliveira_wecanbr_com_br/_layouts/15/Doc.aspx?sourcedoc={9c5eaccf-57d1-4415-ba2b-d584b9fe2b85}&action=embedview&wdAllowInteractivity=False&wdHideGridlines=True&wdHideHeaders=True&wdDownloadButton=True&wdInConfigurator=True"></iframe>
+    <div class="embedded-section">
+        <div class="section-header">
+            <strong style="color: var(--primary);">📊 PLANILHA DE CONTROLE (MIRIAN)</strong>
+        </div>
+        <div class="frame-container">
+            <iframe src="https://desafiorhcombr-my.sharepoint.com/personal/mirian_oliveira_wecanbr_com_br/_layouts/15/Doc.aspx?sourcedoc={9c5eaccf-57d1-4415-ba2b-d584b9fe2b85}&action=embedview"></iframe>
         </div>
     </div>
 
@@ -247,18 +218,12 @@
     <footer>© 2026 Apoio ao On-Site | WeCanBR</footer>
 
     <script>
-        // Função para abrir Pop-up limpo e centralizado
         function abrirPopup(url) {
-            const largura = 800;
+            const largura = 900;
             const altura = 900;
             const esquerda = (screen.width - largura) / 2;
             const topo = (screen.height - altura) / 2;
-            
-            window.open(
-                url, 
-                'FormsPopup', 
-                `width=${largura},height=${altura},top=${topo},left=${esquerda},menubar=no,status=no,toolbar=no,location=no`
-            );
+            window.open(url, 'FormsPopup', `width=${largura},height=${altura},top=${topo},left=${esquerda},scrollbars=yes,resizable=yes`);
         }
 
         function buscarTudo() {
