@@ -20,6 +20,7 @@
             --warning: #f39c12;
             --voucher: #00b894;
             --appsheet: #1a73e8;
+            --glpi: #008080; /* Cor Teal para o GLPI */
             --new-tag: #eb4d4b;
             --signature: rgba(0, 0, 0, 0.2);
         }
@@ -41,7 +42,7 @@
             transition: 0.3s;
         }
 
-        /* --- NAVBAR --- */
+        /* --- NAVBAR (Estrutura e Links Mantidos) --- */
         .navbar {
             background: var(--navbar-bg);
             height: 60px;
@@ -99,7 +100,7 @@
             background: var(--card-bg); color: var(--text); box-sizing: border-box;
         }
 
-        /* --- CARDS --- */
+        /* --- CARDS PRINCIPAIS (Mantidos) --- */
         .container { display: flex; justify-content: center; flex-wrap: wrap; gap: 20px; padding: 40px 20px; max-width: 1400px; margin: 0 auto; }
         .card {
             background: var(--card-bg); border-radius: 15px; width: 280px; padding: 25px;
@@ -127,11 +128,17 @@
 
         .icon { font-size: 40px; margin-bottom: 15px; display: block; }
 
-        /* --- SEÇÕES --- */
+        /* --- SEÇÕES EMBUTIDAS (Ajustadas para consistência) --- */
         .embedded-section {
             max-width: 95%; margin: 20px auto 40px;
             background: var(--card-bg); padding: 15px; border-radius: 15px;
             box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        /* Estilo comum para botões de seção */
+        .section-btn {
+            color: white; border: none; padding: 15px 40px; border-radius: 30px; 
+            font-size: 1.1rem; font-weight: bold; cursor: pointer; transition: 0.3s;
         }
 
         .signature { text-align: center; margin: 40px 0 20px; font-family: 'Great Vibes', cursive; font-size: 1.5rem; color: var(--signature); }
@@ -150,7 +157,7 @@
     <button class="theme-toggle" onclick="toggleTheme()" id="themeBtn">🌙</button>
 
     <nav class="navbar">
-        <div style="font-weight: bold; color: var(--primary); letter-spacing: 1px;">APOIO ONSITE 2.0</div>
+        <div style="font-weight: bold; color: var(--primary); letter-spacing: 1px;">WE CAN BR 2.0</div>
         <div class="nav-links">
             <a href="https://portal.office.com" target="_blank" class="login-btn">🔑 Login Microsoft</a>
             
@@ -161,7 +168,7 @@
                     <a href="https://desafiorhcombr-my.sharepoint.com/:x:/r/personal/mirian_oliveira_wecanbr_com_br/_layouts/15/doc2.aspx?sourcedoc=%7B519706C2-BDEF-438C-B037-385F4D8A3488%7D" target="_blank">📈 Drive de Rescisão Shopee</a>
                     <a href="https://desafiorhcombr-my.sharepoint.com/:x:/r/personal/edivan_costa_wecanbr_com_br/_layouts/15/Doc.aspx?sourcedoc=%7B63D04DA0-C7A8-4059-8591-37DFCED94A93%7D" target="_blank">📋 Central de Solicitações (Base)</a>
                     <a href="https://docs.google.com/spreadsheets/d/1WBYOF9AkoS7NpzhqFyqm5PzQRP13yUF2p5ZY8FfZp_c/edit" target="_blank">🔍 Voucher 2026 (Base Geral)</a>
-                    <a href="https://desafiorhcombr.sharepoint.com/:x:/r/sites/FSWECANBR/_layouts/15/Doc.aspx?sourcedoc=%7B6C34C14E-1ED6-4AA2-BFC8-EB14FD1936EF%7D" target="_blank">⚠️ Rejeitos 02.2026</a>
+                    <a href="https://desafiorhcombr.sharepoint.com/:x:/r/sites/FSWECANBR/_layouts/15/Doc.aspx?sourcedoc=%7B6265A06E-D548-4055-9261-D6A512496567%7D&file=03%202026%20REJEITOS%20MAR%C3%87O%202026.xlsx&action=default&mobileredirect=true" target="_blank">⚠️ Rejeitos 03.2026</a>
                 </div>
             </div>
 
@@ -170,7 +177,6 @@
                 <div class="dropdown-content">
                     <a href="https://drive.google.com/file/d/1qsLtN-HC5488FVQc3n5mcT8zjCdVja0d/view" target="_blank">📄 Carta de Suspensão</a>
                     <a href="https://drive.google.com/file/d/1lGnjwLz_5i4uASifv2OPlkSb7NUGeaHI/view" target="_blank">📄 Comunicado de Desligamento</a>
-                    <a href="https://docs.google.com/document/d/1klkEag9lCwu4WLsNaE125biHuRleWxT6/edit?usp=drive_link&ouid=102259843506581830698&rtpof=true&sd=true"_blank">📄 Termino de Contrato Temp.</a>
                     <a href="https://drive.google.com/file/d/1zsrlh6KBLvMvEGc13tTA6I7Ybra5iObA/view" target="_blank">📄 Advertência Disciplinar</a>
                     <a href="https://drive.google.com/file/d/1_Dw1qLl9icW282pkZCNln8908Nfqiasi/view" target="_blank">📄 Advertência - Ponto</a>
                     <a href="https://drive.google.com/file/d/1aryngzuxX72mOhxchNmQPBA30QT2gNt2/view" target="_blank">📄 Carta Banco Santander</a>
@@ -185,7 +191,7 @@
     </nav>
 
     <header>
-        <h1>TIME SHOPEE 2026 - WeCan</h1>
+        <h1>APOIO AO ONSITE</h1>
         <div class="search-container">
             <input type="text" id="searchInput" onkeyup="buscarTudo()" placeholder="Pesquisar..." autocomplete="off">
         </div>
@@ -204,12 +210,6 @@
             <p>Formulário oficial para desligamento.</p>
         </div>
 
-        <div onclick="abrirPopup('https://forms.office.com/Pages/ResponsePage.aspx?id=fCAtUtXsx0-nbxdGSxFh-f7MDqf4DUBBuOHjox7sxytUMzdRMTFCOTc2SzZEQzU4NFI2TVMzUjIxWS4u&origin=Invitation&channel=0')" class="card" style="border-top-color: var(--warning);">
-            <span class="icon">🎧</span>
-            <h2>Controle de Atendimento</h2>
-            <p>Registro de atendimentos Shopee.</p>
-        </div>
-
         <div onclick="abrirPopup('https://forms.office.com/Pages/ResponsePage.aspx?id=fCAtUtXsx0-nbxdGSxFh-eVAzhwdpsxLmCSGMQwqNIpUQVBSTFlOTUxSUEMwMFhWSTdTTEVOV1lBUy4u')" class="card" style="border-top-color: var(--voucher);">
             <div class="badge-new">Em Construção!</div>
             <span class="icon">🎫</span>
@@ -223,15 +223,28 @@
             <strong style="color: var(--appsheet); font-size: 1.4rem; display: block;">📱 INATIVAÇÃO VOUCHER UBER</strong>
             <p style="color: #666; margin-top: 10px;">Clique no Botão para Inativar um Colaborador Usuario do Voucher, em caso de Desligamento</p>
         </div>
-        <button onclick="abrirAppSheet()" style="background: var(--appsheet); color: white; border: none; padding: 15px 40px; border-radius: 30px; font-size: 1.1rem; font-weight: bold; cursor: pointer; box-shadow: 0 4px 15px rgba(26, 115, 232, 0.3); transition: 0.3s;">
+        <button onclick="abrirAppSheet()" class="section-btn" style="background: var(--appsheet); box-shadow: 0 4px 15px rgba(26, 115, 232, 0.3);">
             🚀 Abrir Sistema de Inativação
         </button>
+    </div>
+
+    <div class="embedded-section" style="border-top: 5px solid var(--glpi); text-align: center; padding: 40px 20px;">
+        <div style="margin-bottom: 20px;">
+            <strong style="color: var(--glpi); font-size: 1.4rem; display: block;">🛠️ CHAMADOS - GLPI</strong>
+            <p style="color: #666; margin-top: 10px;">Clique no Botão abaixo para abrir ou consultar chamados</p>
+        </div>
+        <a href="https://glpi.wecanbr.com.br/index.php?noAUTO=1" target="_blank" style="text-decoration: none;">
+            <button class="section-btn" style="background: var(--glpi); box-shadow: 0 4px 15px rgba(0, 128, 128, 0.3);">
+                🎫 Acessar GLPI WeCanBR
+            </button>
+        </a>
     </div>
 
     <div class="signature">By: Edivan Costa</div>
     <footer>© 2026 Apoio ao On-Site | WeCanBR</footer>
 
     <script>
+        // Funções JavaScript mantidas e sem exclusões
         function abrirPopup(url) {
             const largura = 900;
             const altura = 900;
@@ -240,7 +253,7 @@
             window.open(url, 'FormsPopup', `width=${largura},height=${altura},top=${topo},left=${esquerda},scrollbars=yes,resizable=yes`);
         }
 
-        // FUNÇÃO ATUALIZADA PARA TELA CHEIA
+        // Função AppSheet mantida em Tela Cheia
         function abrirAppSheet() {
             const largura = window.screen.availWidth;
             const altura = window.screen.availHeight;
