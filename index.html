@@ -20,7 +20,7 @@
             --warning: #f39c12;
             --voucher: #00b894;
             --appsheet: #1a73e8;
-            --glpi: #008080; /* Cor Teal para o GLPI */
+            --glpi: #008080;
             --new-tag: #eb4d4b;
             --signature: rgba(0, 0, 0, 0.2);
         }
@@ -42,7 +42,7 @@
             transition: 0.3s;
         }
 
-        /* --- NAVBAR (Estrutura e Links Mantidos) --- */
+        /* --- NAVBAR --- */
         .navbar {
             background: var(--navbar-bg);
             height: 60px;
@@ -100,7 +100,7 @@
             background: var(--card-bg); color: var(--text); box-sizing: border-box;
         }
 
-        /* --- CARDS PRINCIPAIS (Mantidos) --- */
+        /* --- CARDS PRINCIPAIS (TODOS OS 4 ESTÃO AQUI) --- */
         .container { display: flex; justify-content: center; flex-wrap: wrap; gap: 20px; padding: 40px 20px; max-width: 1400px; margin: 0 auto; }
         .card {
             background: var(--card-bg); border-radius: 15px; width: 280px; padding: 25px;
@@ -128,14 +128,13 @@
 
         .icon { font-size: 40px; margin-bottom: 15px; display: block; }
 
-        /* --- SEÇÕES EMBUTIDAS (Ajustadas para consistência) --- */
+        /* --- SEÇÕES EMBUTIDAS --- */
         .embedded-section {
             max-width: 95%; margin: 20px auto 40px;
             background: var(--card-bg); padding: 15px; border-radius: 15px;
             box-shadow: 0 10px 30px rgba(0,0,0,0.1);
         }
 
-        /* Estilo comum para botões de seção */
         .section-btn {
             color: white; border: none; padding: 15px 40px; border-radius: 30px; 
             font-size: 1.1rem; font-weight: bold; cursor: pointer; transition: 0.3s;
@@ -168,7 +167,7 @@
                     <a href="https://desafiorhcombr-my.sharepoint.com/:x:/r/personal/mirian_oliveira_wecanbr_com_br/_layouts/15/doc2.aspx?sourcedoc=%7B519706C2-BDEF-438C-B037-385F4D8A3488%7D" target="_blank">📈 Drive de Rescisão Shopee</a>
                     <a href="https://desafiorhcombr-my.sharepoint.com/:x:/r/personal/edivan_costa_wecanbr_com_br/_layouts/15/Doc.aspx?sourcedoc=%7B63D04DA0-C7A8-4059-8591-37DFCED94A93%7D" target="_blank">📋 Central de Solicitações (Base)</a>
                     <a href="https://docs.google.com/spreadsheets/d/1WBYOF9AkoS7NpzhqFyqm5PzQRP13yUF2p5ZY8FfZp_c/edit" target="_blank">🔍 Voucher 2026 (Base Geral)</a>
-                    <a href="https://desafiorhcombr.sharepoint.com/:x:/r/sites/FSWECANBR/_layouts/15/Doc.aspx?sourcedoc=%7B6265A06E-D548-4055-9261-D6A512496567%7D&file=03%202026%20REJEITOS%20MAR%C3%87O%202026.xlsx&action=default&mobileredirect=true" target="_blank">⚠️ Rejeitos 03.2026</a>
+                    <a href="https://desafiorhcombr.sharepoint.com/:x:/r/sites/FSWECANBR/_layouts/15/Doc.aspx?sourcedoc=%7B6C34C14E-1ED6-4AA2-BFC8-EB14FD1936EF%7D" target="_blank">⚠️ Rejeitos 02.2026</a>
                 </div>
             </div>
 
@@ -191,7 +190,7 @@
     </nav>
 
     <header>
-        <h1>APOIO AO ONSITE</h1>
+        <h1>TIME SHOPEE 2026</h1>
         <div class="search-container">
             <input type="text" id="searchInput" onkeyup="buscarTudo()" placeholder="Pesquisar..." autocomplete="off">
         </div>
@@ -208,6 +207,12 @@
             <span class="icon">🚫</span>
             <h2>Desligamento Shopee</h2>
             <p>Formulário oficial para desligamento.</p>
+        </div>
+
+        <div onclick="abrirPopup('https://forms.office.com/Pages/ResponsePage.aspx?id=fCAtUtXsx0-nbxdGSxFh-f7MDqf4DUBBuOHjox7sxytUMzdRMTFCOTc2SzZEQzU4NFI2TVMzUjIxWS4u')" class="card" style="border-top-color: var(--warning);">
+            <span class="icon">🎧</span>
+            <h2>Controle de Atendimento</h2>
+            <p>Registro de atendimentos Shopee.</p>
         </div>
 
         <div onclick="abrirPopup('https://forms.office.com/Pages/ResponsePage.aspx?id=fCAtUtXsx0-nbxdGSxFh-eVAzhwdpsxLmCSGMQwqNIpUQVBSTFlOTUxSUEMwMFhWSTdTTEVOV1lBUy4u')" class="card" style="border-top-color: var(--voucher);">
@@ -244,7 +249,6 @@
     <footer>© 2026 Apoio ao On-Site | WeCanBR</footer>
 
     <script>
-        // Funções JavaScript mantidas e sem exclusões
         function abrirPopup(url) {
             const largura = 900;
             const altura = 900;
@@ -253,7 +257,6 @@
             window.open(url, 'FormsPopup', `width=${largura},height=${altura},top=${topo},left=${esquerda},scrollbars=yes,resizable=yes`);
         }
 
-        // Função AppSheet mantida em Tela Cheia
         function abrirAppSheet() {
             const largura = window.screen.availWidth;
             const altura = window.screen.availHeight;
