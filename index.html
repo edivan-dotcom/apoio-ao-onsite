@@ -7,6 +7,10 @@
     
     <link rel="icon" type="image/png" href="https://wecanbr.com.br/wp-content/uploads/2021/10/cropped-favicon-32x32.png">
     <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet">
+    
+    <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+    <script>mermaid.initialize({ startOnLoad: true, theme: 'default' });</script>
+
     <style>
         :root {
             --primary: #6a11cb;
@@ -138,13 +142,19 @@
             flex: 1; min-width: 300px; max-width: 400px; text-align: center;
         }
 
-        .embedded-section strong { font-size: 1.2rem; display: block; }
-        .embedded-section p { color: #666; margin-top: 10px; font-size: 0.9rem; line-height: 1.4; }
-
         .section-btn {
             color: white; border: none; padding: 12px 25px; border-radius: 25px; 
             font-size: 0.9rem; font-weight: bold; cursor: pointer; transition: 0.3s; margin-top: 15px;
         }
+
+        /* --- SEÇÃO FAQ / FLUXOGRAMA --- */
+        .faq-section {
+            max-width: 1200px; margin: 20px auto 60px;
+            background: var(--card-bg); padding: 40px; border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+        .faq-section h2 { text-align: center; color: var(--primary); margin-bottom: 30px; }
+        .mermaid { display: flex; justify-content: center; background: white; padding: 20px; border-radius: 10px; }
 
         .signature { text-align: center; margin: 40px 0 20px; font-family: 'Great Vibes', cursive; font-size: 1.5rem; color: var(--signature); }
         footer { text-align: center; padding: 30px; background: #222; color: white; width: 100%; }
@@ -162,7 +172,7 @@
     <button class="theme-toggle" onclick="toggleTheme()" id="themeBtn">🌙</button>
 
     <nav class="navbar">
-        <div style="font-weight: bold; color: var(--primary); letter-spacing: 1px;">WE CAN BR 2.0</div>
+        <div style="font-weight: bold; color: var(--primary); letter-spacing: 1px;">WE CAN BR</div>
         <div class="nav-links">
             <a href="https://portal.office.com" target="_blank" class="login-btn">🔑 Login Microsoft</a>
             <a href="https://desafiorhcombr.sharepoint.com/sites/wecanbr" target="_blank" class="intranet-btn">🌐 Intranet</a>
@@ -198,7 +208,7 @@
     </nav>
 
     <header>
-        <h1>TIME SHOPEE 2026</h1>
+        <h1>APOIO AO ONSITE</h1>
         <div class="search-container">
             <input type="text" id="searchInput" onkeyup="buscarTudo()" placeholder="Pesquisar..." autocomplete="off">
         </div>
@@ -211,29 +221,29 @@
             <p>Clique para abrir o formulário interno.</p>
         </div>
 
-        <div onclick="abrirPopup('https://forms.office.com/Pages/ResponsePage.aspx?id=fCAtUtXsx0-nbxdGSxFh-eVAzhwdpsxLmCSGMQwqNIpUM1E2TFRSRkhNWU9IQk9SVFhBSDJNWTFDVS4u')" class="card" style="border-top-color: var(--danger);">
+        <div onclick="abrirPopup('https://forms.office.com/Pages/ResponsePage.aspx?id=fCAtUtXsx0-nbxdGSxFh-f7MDqf4DUBBuOHjox7sxytUNFFQNTgzR1pQV0FLM05aWElXSjlRMjFHRy4u')" class="card" style="border-top-color: var(--danger);">
             <span class="icon">🚫</span>
             <h2>Desligamento Shopee</h2>
             <p>Formulário oficial para desligamento Shopee.</p>
         </div>
 
-        <div onclick="abrirPopup('https://forms.office.com/Pages/ResponsePage.aspx?id=fCAtUtXsx0-nbxdGSxFh-eVAzhwdpsxLmCSGMQwqNIpUM1E2TFRSRkhNWU9IQk9SVFhBSDJNWTFDVS4u')" class="card" style="border-top-color: var(--warning);">
+        <div onclick="abrirPopup('https://forms.office.com/Pages/ResponsePage.aspx?id=fCAtUtXsx0-nbxdGSxFh-f7MDqf4DUBBuOHjox7sxytUMzdRMTFCOTc2SzZEQzU4NFI2TVMzUjIxWS4u')" class="card" style="border-top-color: var(--warning);">
             <span class="icon">🎧</span>
             <h2>Controle de Atendimento</h2>
             <p>Registro de atendimentos Shopee.</p>
         </div>
 
         <div onclick="abrirPopup('https://forms.office.com/Pages/ResponsePage.aspx?id=fCAtUtXsx0-nbxdGSxFh-eVAzhwdpsxLmCSGMQwqNIpUQVBSTFlOTUxSUEMwMFhWSTdTTEVOV1lBUy4u')" class="card" style="border-top-color: var(--voucher);">
-            <div class="badge-new">Em construção!</div>
+            <div class="badge-new">Novo!</div>
             <span class="icon">🎫</span>
             <h2>Cadastro Voucher</h2>
             <p>Novo Colaborador - Cadastro de Voucher Uber.</p>
         </div>
 
         <div onclick="window.open('https://spxresolve.atlassian.net/jira/for-you', '_blank')" class="card" style="border-top-color: var(--jira);">
-            <span class="icon">🟨</span>
+            <span class="icon">🟦</span>
             <h2>JIRA</h2>
-            <p>Gestão de solicitações SHOPEE.</p>
+            <p>Gestão de chamados e projetos JIRA.</p>
         </div>
     </div>
 
@@ -241,21 +251,21 @@
         <div class="embedded-section" style="border-top: 5px solid var(--appsheet);">
             <div>
                 <strong style="color: var(--appsheet);">📱 INATIVAÇÃO VOUCHER UBER</strong>
-                <p>Clique no Botão para Inativar um Colaborador Usuario do Voucher, em caso de Desligamento</p>
+                <p>Inativação de usuários Uber em caso de desligamento.</p>
             </div>
             <button onclick="abrirAppSheet()" class="section-btn" style="background: var(--appsheet); box-shadow: 0 4px 15px rgba(26, 115, 232, 0.3);">
-                🚀 Abrir Sistema de Inativação
+                🚀 Abrir AppSheet
             </button>
         </div>
 
         <div class="embedded-section" style="border-top: 5px solid var(--glpi);">
             <div>
                 <strong style="color: var(--glpi);">🛠️ CHAMADOS - GLPI</strong>
-                <p>Clique no Botão abaixo para abrir ou consultar chamados.</p>
+                <p>Abertura e consulta de chamados técnicos WeCanBR.</p>
             </div>
             <a href="https://glpi.wecanbr.com.br/index.php?noAUTO=1" target="_blank" style="text-decoration: none;">
                 <button class="section-btn" style="background: var(--glpi); box-shadow: 0 4px 15px rgba(0, 128, 128, 0.3);">
-                    🎫 Acessar GLPI WeCanBR
+                    🎫 Acessar GLPI
                 </button>
             </a>
         </div>
@@ -263,13 +273,44 @@
         <div class="embedded-section" style="border-top: 5px solid var(--pontomais);">
             <div>
                 <strong style="color: var(--pontomais);">⏱️ PONTOMAIS</strong>
-                <p>Clique no Botão abaixo para acessar a lista de colaboradores e controlar o ponto.</p>
+                <p>Gestão de colaboradores e conferência de ponto.</p>
             </div>
             <a href="https://app2.pontomais.com.br/controle-de-ponto/colaboradores/lista" target="_blank" style="text-decoration: none;">
                 <button class="section-btn" style="background: var(--pontomais); box-shadow: 0 4px 15px rgba(0, 168, 168, 0.3);">
-                    🔍 Acessar Lista Pontomais
+                    🔍 Abrir Pontomais
                 </button>
             </a>
+        </div>
+    </div>
+
+    <div class="faq-section">
+        <h2>📌 Fluxo de Processos e Solicitações</h2>
+        <div class="mermaid">
+            graph TD
+                %% Canais de Entrada
+                Start((Início do Pedido)) --> Channel{Origem?}
+                
+                Channel -- "Onsite (Direto)" --> Form[Preenchimento do FORMS]
+                Channel -- "Colaborador (Chat Shopee)" --> Chat[Atendente do Chat] --> Form
+                Channel -- "Outros Setores (E-mail)" --> Manual[Redirecionar para o FORMS] --> Form
+
+                %% Regras de Negócio no Forms
+                Form --> Type{Tipo de Ajuste?}
+                
+                Type -- "Troca de Horário" --> OnsiteResp[Responsabilidade do Onsite]
+                OnsiteResp --> Refund{Precisa de Reembolso?}
+                
+                Refund -- "Sim" --> TickBox[Marcar Opção de Reembolso no Forms] --> Process
+                Refund -- "Não" --> Process
+                
+                Type -- "Outros Ajustes" --> Process[Sua Planilha de Gestão]
+
+                %% Execução Final
+                Process --> Ginfor[[Atualização no Sistema GINFOR]]
+                Ginfor --> End((Solicitação Finalizada))
+
+                %% Bloqueio de Segurança
+                NoForm{Solicitação via E-mail/Chat?} -.-> |PROIBIDO| Deny((NÃO REALIZAR))
         </div>
     </div>
 
