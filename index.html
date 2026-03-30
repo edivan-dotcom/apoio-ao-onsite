@@ -6,7 +6,6 @@
     <title>Apoio ao On-Site | WeCanBR</title>
     
     <link rel="icon" type="image/png" href="https://wecanbr.com.br/wp-content/uploads/2021/10/cropped-favicon-32x32.png">
-    
     <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -19,9 +18,10 @@
             --danger: #ff4b2b;
             --warning: #f39c12;
             --voucher: #00b894;
+            --jira: #0052CC;
             --appsheet: #1a73e8;
-            --glpi: #008080; /* Teal para o GLPI */
-            --pontomais: #00a8a8; /* Teal mais claro para o Pontomais */
+            --glpi: #008080;
+            --pontomais: #00a8a8;
             --new-tag: #eb4d4b;
             --signature: rgba(0, 0, 0, 0.2);
         }
@@ -43,7 +43,6 @@
             transition: 0.3s;
         }
 
-        /* --- NAVBAR (Estrutura e Links Mantidos) --- */
         .navbar {
             background: var(--navbar-bg);
             height: 60px;
@@ -59,15 +58,16 @@
 
         .nav-links { display: flex; align-items: center; height: 100%; }
         
-        .login-btn {
-            text-decoration: none; background: #0078d4; color: white !important;
-            padding: 6px 15px; border-radius: 5px; font-size: 0.8rem;
-            font-weight: bold; margin-left: 15px; transition: 0.3s;
+        .login-btn, .intranet-btn {
+            text-decoration: none; padding: 6px 15px; border-radius: 5px; 
+            font-size: 0.8rem; font-weight: bold; margin-left: 10px; transition: 0.3s;
         }
+        .login-btn { background: #0078d4; color: white !important; }
+        .intranet-btn { background: #ff5722; color: white !important; }
 
         .dropdown { position: relative; display: flex; align-items: center; height: 100%; }
         .dropdown-btn {
-            text-decoration: none; color: var(--text); margin-left: 25px;
+            text-decoration: none; color: var(--text); margin-left: 20px;
             font-weight: 600; font-size: 0.9rem; cursor: pointer;
             border: none; background: none; display: flex; align-items: center; gap: 5px; height: 100%;
         }
@@ -86,7 +86,6 @@
         }
         .dropdown-content a:hover { background: rgba(106, 17, 203, 0.05); }
 
-        /* --- HEADER --- */
         header {
             background: linear-gradient(rgba(106, 17, 203, 0.75), rgba(37, 117, 252, 0.75)), 
                         url('https://wecanbr.com.br/img/quem-somos/main.jpg');
@@ -101,10 +100,9 @@
             background: var(--card-bg); color: var(--text); box-sizing: border-box;
         }
 
-        /* --- CARDS PRINCIPAIS (TODOS OS 4 ESTÃO AQUI) --- */
         .container { display: flex; justify-content: center; flex-wrap: wrap; gap: 20px; padding: 40px 20px; max-width: 1400px; margin: 0 auto; }
         .card {
-            background: var(--card-bg); border-radius: 15px; width: 280px; padding: 25px;
+            background: var(--card-bg); border-radius: 15px; width: 260px; padding: 25px;
             text-align: center; box-shadow: 0 5px 15px rgba(0,0,0,0.05); transition: 0.3s;
             text-decoration: none; color: var(--text); border-top: 5px solid var(--primary); 
             box-sizing: border-box; cursor: pointer; position: relative;
@@ -129,24 +127,23 @@
 
         .icon { font-size: 40px; margin-bottom: 15px; display: block; }
 
-        /* --- SEÇÕES EMBUTIDAS (Funil com 3 colunas) --- */
         .funnel-container {
-            display: flex; justify-content: space-around; flex-wrap: wrap; gap: 20px;
+            display: flex; justify-content: center; flex-wrap: wrap; gap: 20px;
             max-width: 95%; margin: 20px auto 40px; padding: 0 20px;
         }
 
         .embedded-section {
             background: var(--card-bg); padding: 25px; border-radius: 15px;
             box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-            flex: 1; min-width: 320px; max-width: 450px; text-align: center;
+            flex: 1; min-width: 300px; max-width: 400px; text-align: center;
         }
 
-        .embedded-section strong { font-size: 1.4rem; display: block; }
-        .embedded-section p { color: #666; margin-top: 10px; font-size: 0.95rem; line-height: 1.4; }
+        .embedded-section strong { font-size: 1.2rem; display: block; }
+        .embedded-section p { color: #666; margin-top: 10px; font-size: 0.9rem; line-height: 1.4; }
 
         .section-btn {
-            color: white; border: none; padding: 12px 30px; border-radius: 25px; 
-            font-size: 1rem; font-weight: bold; cursor: pointer; transition: 0.3s; margin-top: 15px;
+            color: white; border: none; padding: 12px 25px; border-radius: 25px; 
+            font-size: 0.9rem; font-weight: bold; cursor: pointer; transition: 0.3s; margin-top: 15px;
         }
 
         .signature { text-align: center; margin: 40px 0 20px; font-family: 'Great Vibes', cursive; font-size: 1.5rem; color: var(--signature); }
@@ -165,9 +162,10 @@
     <button class="theme-toggle" onclick="toggleTheme()" id="themeBtn">🌙</button>
 
     <nav class="navbar">
-        <div style="font-weight: bold; color: var(--primary); letter-spacing: 1px;">WE CAN BR</div>
+        <div style="font-weight: bold; color: var(--primary); letter-spacing: 1px;">WE CAN BR 2.0</div>
         <div class="nav-links">
             <a href="https://portal.office.com" target="_blank" class="login-btn">🔑 Login Microsoft</a>
+            <a href="https://desafiorhcombr.sharepoint.com/sites/wecanbr" target="_blank" class="intranet-btn">🌐 Intranet</a>
             
             <div class="dropdown">
                 <button class="dropdown-btn">📊 Planilhas ▼</button>
@@ -176,7 +174,8 @@
                     <a href="https://desafiorhcombr-my.sharepoint.com/:x:/r/personal/mirian_oliveira_wecanbr_com_br/_layouts/15/doc2.aspx?sourcedoc=%7B519706C2-BDEF-438C-B037-385F4D8A3488%7D" target="_blank">📈 Drive de Rescisão Shopee</a>
                     <a href="https://desafiorhcombr-my.sharepoint.com/:x:/r/personal/edivan_costa_wecanbr_com_br/_layouts/15/Doc.aspx?sourcedoc=%7B63D04DA0-C7A8-4059-8591-37DFCED94A93%7D" target="_blank">📋 Central de Solicitações (Base)</a>
                     <a href="https://docs.google.com/spreadsheets/d/1WBYOF9AkoS7NpzhqFyqm5PzQRP13yUF2p5ZY8FfZp_c/edit" target="_blank">🔍 Voucher 2026 (Base Geral)</a>
-                    <a href="https://desafiorhcombr.sharepoint.com/:x:/r/sites/FSWECANBR/_layouts/15/Doc.aspx?sourcedoc=%7B6C34C14E-1ED6-4AA2-BFC8-EB14FD1936EF%7D" target="_blank">⚠️ Rejeitos 02.2026</a>
+                    <a href="https://docs.google.com/spreadsheets/d/1WBYOF9AkoS7NpzhqFyqm5PzQRP13yUF2p5ZY8FfZp_c/edit?gid=690743947#gid=690743947" target="_blank">📊 Template Shopee</a>
+                    <a href="https://desafiorhcombr.sharepoint.com/:x:/r/sites/FSWECANBR/_layouts/15/Doc.aspx?sourcedoc=%7B6265A06E-D548-4055-9261-D6A512496567%7D&file=03%202026%20REJEITOS%20MAR%C3%87O%202026.xlsx&action=default&mobileredirect=true" target="_blank">⚠️ Rejeitos 03.2026</a>
                 </div>
             </div>
 
@@ -199,7 +198,7 @@
     </nav>
 
     <header>
-        <h1>APOIO AO ONSITE</h1>
+        <h1>TIME SHOPEE 2026</h1>
         <div class="search-container">
             <input type="text" id="searchInput" onkeyup="buscarTudo()" placeholder="Pesquisar..." autocomplete="off">
         </div>
@@ -220,15 +219,21 @@
 
         <div onclick="abrirPopup('https://forms.office.com/Pages/ResponsePage.aspx?id=fCAtUtXsx0-nbxdGSxFh-eVAzhwdpsxLmCSGMQwqNIpUM1E2TFRSRkhNWU9IQk9SVFhBSDJNWTFDVS4u')" class="card" style="border-top-color: var(--warning);">
             <span class="icon">🎧</span>
-            <h2>Controle de Atendimento Shopee</h2>
+            <h2>Controle de Atendimento</h2>
             <p>Registro de atendimentos Shopee.</p>
         </div>
 
         <div onclick="abrirPopup('https://forms.office.com/Pages/ResponsePage.aspx?id=fCAtUtXsx0-nbxdGSxFh-eVAzhwdpsxLmCSGMQwqNIpUQVBSTFlOTUxSUEMwMFhWSTdTTEVOV1lBUy4u')" class="card" style="border-top-color: var(--voucher);">
-            <div class="badge-new">Novo!</div>
+            <div class="badge-new">Em construção!</div>
             <span class="icon">🎫</span>
             <h2>Cadastro Voucher</h2>
             <p>Novo Colaborador - Cadastro de Voucher Uber.</p>
+        </div>
+
+        <div onclick="window.open('https://spxresolve.atlassian.net/jira/for-you', '_blank')" class="card" style="border-top-color: var(--jira);">
+            <span class="icon">🟦</span>
+            <h2>JIRA</h2>
+            <p>Gestão de solicitações SHOPEE.</p>
         </div>
     </div>
 
@@ -239,14 +244,14 @@
                 <p>Clique no Botão para Inativar um Colaborador Usuario do Voucher, em caso de Desligamento</p>
             </div>
             <button onclick="abrirAppSheet()" class="section-btn" style="background: var(--appsheet); box-shadow: 0 4px 15px rgba(26, 115, 232, 0.3);">
-                🚀 Abrir Sistema AppSheet
+                🚀 Abrir Sistema de Inativação
             </button>
         </div>
 
         <div class="embedded-section" style="border-top: 5px solid var(--glpi);">
             <div>
                 <strong style="color: var(--glpi);">🛠️ CHAMADOS - GLPI</strong>
-                <p>Clique no Botão abaixo para abrir ou consultar chamados técnicos.</p>
+                <p>Clique no Botão abaixo para abrir ou consultar chamados.</p>
             </div>
             <a href="https://glpi.wecanbr.com.br/index.php?noAUTO=1" target="_blank" style="text-decoration: none;">
                 <button class="section-btn" style="background: var(--glpi); box-shadow: 0 4px 15px rgba(0, 128, 128, 0.3);">
@@ -257,7 +262,7 @@
 
         <div class="embedded-section" style="border-top: 5px solid var(--pontomais);">
             <div>
-                <strong style="color: var(--pontomais);">⏱️ PONTOMAIS - CONTROLE DE PONTO</strong>
+                <strong style="color: var(--pontomais);">⏱️ PONTOMAIS</strong>
                 <p>Clique no Botão abaixo para acessar a lista de colaboradores e controlar o ponto.</p>
             </div>
             <a href="https://app2.pontomais.com.br/controle-de-ponto/colaboradores/lista" target="_blank" style="text-decoration: none;">
@@ -280,15 +285,10 @@
             window.open(url, 'FormsPopup', `width=${largura},height=${altura},top=${topo},left=${esquerda},scrollbars=yes,resizable=yes`);
         }
 
-        // Função AppSheet mantida em Tela Cheia
         function abrirAppSheet() {
             const largura = window.screen.availWidth;
             const altura = window.screen.availHeight;
-            window.open(
-                'https://www.appsheet.com/start/8ba6b59c-c836-4d4e-9a3e-e43d38d2a47e', 
-                'AppSheetPopup', 
-                `width=${largura},height=${altura},top=0,left=0,scrollbars=yes,resizable=yes`
-            );
+            window.open('https://www.appsheet.com/start/8ba6b59c-c836-4d4e-9a3e-e43d38d2a47e', 'AppSheetPopup', `width=${largura},height=${altura},top=0,left=0,scrollbars=yes,resizable=yes`);
         }
 
         function buscarTudo() {
