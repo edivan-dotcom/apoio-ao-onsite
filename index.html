@@ -20,7 +20,8 @@
             --warning: #f39c12;
             --voucher: #00b894;
             --appsheet: #1a73e8;
-            --glpi: #008080;
+            --glpi: #008080; /* Teal para o GLPI */
+            --pontomais: #00a8a8; /* Teal mais claro para o Pontomais */
             --new-tag: #eb4d4b;
             --signature: rgba(0, 0, 0, 0.2);
         }
@@ -42,7 +43,7 @@
             transition: 0.3s;
         }
 
-        /* --- NAVBAR --- */
+        /* --- NAVBAR (Estrutura e Links Mantidos) --- */
         .navbar {
             background: var(--navbar-bg);
             height: 60px;
@@ -128,16 +129,24 @@
 
         .icon { font-size: 40px; margin-bottom: 15px; display: block; }
 
-        /* --- SEÇÕES EMBUTIDAS --- */
-        .embedded-section {
-            max-width: 95%; margin: 20px auto 40px;
-            background: var(--card-bg); padding: 15px; border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        /* --- SEÇÕES EMBUTIDAS (Funil com 3 colunas) --- */
+        .funnel-container {
+            display: flex; justify-content: space-around; flex-wrap: wrap; gap: 20px;
+            max-width: 95%; margin: 20px auto 40px; padding: 0 20px;
         }
 
+        .embedded-section {
+            background: var(--card-bg); padding: 25px; border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            flex: 1; min-width: 320px; max-width: 450px; text-align: center;
+        }
+
+        .embedded-section strong { font-size: 1.4rem; display: block; }
+        .embedded-section p { color: #666; margin-top: 10px; font-size: 0.95rem; line-height: 1.4; }
+
         .section-btn {
-            color: white; border: none; padding: 15px 40px; border-radius: 30px; 
-            font-size: 1.1rem; font-weight: bold; cursor: pointer; transition: 0.3s;
+            color: white; border: none; padding: 12px 30px; border-radius: 25px; 
+            font-size: 1rem; font-weight: bold; cursor: pointer; transition: 0.3s; margin-top: 15px;
         }
 
         .signature { text-align: center; margin: 40px 0 20px; font-family: 'Great Vibes', cursive; font-size: 1.5rem; color: var(--signature); }
@@ -156,7 +165,7 @@
     <button class="theme-toggle" onclick="toggleTheme()" id="themeBtn">🌙</button>
 
     <nav class="navbar">
-        <div style="font-weight: bold; color: var(--primary); letter-spacing: 1px;">WE CAN BR 2.0</div>
+        <div style="font-weight: bold; color: var(--primary); letter-spacing: 1px;">WE CAN BR</div>
         <div class="nav-links">
             <a href="https://portal.office.com" target="_blank" class="login-btn">🔑 Login Microsoft</a>
             
@@ -190,7 +199,7 @@
     </nav>
 
     <header>
-        <h1>TIME SHOPEE 2026</h1>
+        <h1>APOIO AO ONSITE</h1>
         <div class="search-container">
             <input type="text" id="searchInput" onkeyup="buscarTudo()" placeholder="Pesquisar..." autocomplete="off">
         </div>
@@ -203,46 +212,60 @@
             <p>Clique para abrir o formulário interno.</p>
         </div>
 
-        <div onclick="abrirPopup('https://forms.office.com/Pages/ResponsePage.aspx?id=fCAtUtXsx0-nbxdGSxFh-f7MDqf4DUBBuOHjox7sxytUNFFQNTgzR1pQV0FLM05aWElXSjlRMjFHRy4u')" class="card" style="border-top-color: var(--danger);">
+        <div onclick="abrirPopup('https://forms.office.com/Pages/ResponsePage.aspx?id=fCAtUtXsx0-nbxdGSxFh-eVAzhwdpsxLmCSGMQwqNIpUM1E2TFRSRkhNWU9IQk9SVFhBSDJNWTFDVS4u')" class="card" style="border-top-color: var(--danger);">
             <span class="icon">🚫</span>
             <h2>Desligamento Shopee</h2>
-            <p>Formulário oficial para desligamento.</p>
+            <p>Formulário oficial para desligamento Shopee.</p>
         </div>
 
-        <div onclick="abrirPopup('https://forms.office.com/Pages/ResponsePage.aspx?id=fCAtUtXsx0-nbxdGSxFh-f7MDqf4DUBBuOHjox7sxytUMzdRMTFCOTc2SzZEQzU4NFI2TVMzUjIxWS4u')" class="card" style="border-top-color: var(--warning);">
+        <div onclick="abrirPopup('https://forms.office.com/Pages/ResponsePage.aspx?id=fCAtUtXsx0-nbxdGSxFh-eVAzhwdpsxLmCSGMQwqNIpUM1E2TFRSRkhNWU9IQk9SVFhBSDJNWTFDVS4u')" class="card" style="border-top-color: var(--warning);">
             <span class="icon">🎧</span>
-            <h2>Controle de Atendimento</h2>
+            <h2>Controle de Atendimento Shopee</h2>
             <p>Registro de atendimentos Shopee.</p>
         </div>
 
         <div onclick="abrirPopup('https://forms.office.com/Pages/ResponsePage.aspx?id=fCAtUtXsx0-nbxdGSxFh-eVAzhwdpsxLmCSGMQwqNIpUQVBSTFlOTUxSUEMwMFhWSTdTTEVOV1lBUy4u')" class="card" style="border-top-color: var(--voucher);">
-            <div class="badge-new">Em Construção!</div>
+            <div class="badge-new">Novo!</div>
             <span class="icon">🎫</span>
             <h2>Cadastro Voucher</h2>
-            <p>Novo Colaborador - Cadastro de Voucher.</p>
+            <p>Novo Colaborador - Cadastro de Voucher Uber.</p>
         </div>
     </div>
 
-    <div class="embedded-section" style="border-top: 5px solid var(--appsheet); text-align: center; padding: 40px 20px;">
-        <div style="margin-bottom: 20px;">
-            <strong style="color: var(--appsheet); font-size: 1.4rem; display: block;">📱 INATIVAÇÃO VOUCHER UBER</strong>
-            <p style="color: #666; margin-top: 10px;">Clique no Botão para Inativar um Colaborador Usuario do Voucher, em caso de Desligamento</p>
-        </div>
-        <button onclick="abrirAppSheet()" class="section-btn" style="background: var(--appsheet); box-shadow: 0 4px 15px rgba(26, 115, 232, 0.3);">
-            🚀 Abrir Sistema de Inativação
-        </button>
-    </div>
-
-    <div class="embedded-section" style="border-top: 5px solid var(--glpi); text-align: center; padding: 40px 20px;">
-        <div style="margin-bottom: 20px;">
-            <strong style="color: var(--glpi); font-size: 1.4rem; display: block;">🛠️ CHAMADOS - GLPI</strong>
-            <p style="color: #666; margin-top: 10px;">Clique no Botão abaixo para abrir ou consultar chamados</p>
-        </div>
-        <a href="https://glpi.wecanbr.com.br/index.php?noAUTO=1" target="_blank" style="text-decoration: none;">
-            <button class="section-btn" style="background: var(--glpi); box-shadow: 0 4px 15px rgba(0, 128, 128, 0.3);">
-                🎫 Acessar GLPI WeCanBR
+    <div class="funnel-container">
+        <div class="embedded-section" style="border-top: 5px solid var(--appsheet);">
+            <div>
+                <strong style="color: var(--appsheet);">📱 INATIVAÇÃO VOUCHER UBER</strong>
+                <p>Clique no Botão para Inativar um Colaborador Usuario do Voucher, em caso de Desligamento</p>
+            </div>
+            <button onclick="abrirAppSheet()" class="section-btn" style="background: var(--appsheet); box-shadow: 0 4px 15px rgba(26, 115, 232, 0.3);">
+                🚀 Abrir Sistema AppSheet
             </button>
-        </a>
+        </div>
+
+        <div class="embedded-section" style="border-top: 5px solid var(--glpi);">
+            <div>
+                <strong style="color: var(--glpi);">🛠️ CHAMADOS - GLPI</strong>
+                <p>Clique no Botão abaixo para abrir ou consultar chamados técnicos.</p>
+            </div>
+            <a href="https://glpi.wecanbr.com.br/index.php?noAUTO=1" target="_blank" style="text-decoration: none;">
+                <button class="section-btn" style="background: var(--glpi); box-shadow: 0 4px 15px rgba(0, 128, 128, 0.3);">
+                    🎫 Acessar GLPI WeCanBR
+                </button>
+            </a>
+        </div>
+
+        <div class="embedded-section" style="border-top: 5px solid var(--pontomais);">
+            <div>
+                <strong style="color: var(--pontomais);">⏱️ PONTOMAIS - CONTROLE DE PONTO</strong>
+                <p>Clique no Botão abaixo para acessar a lista de colaboradores e controlar o ponto.</p>
+            </div>
+            <a href="https://app2.pontomais.com.br/controle-de-ponto/colaboradores/lista" target="_blank" style="text-decoration: none;">
+                <button class="section-btn" style="background: var(--pontomais); box-shadow: 0 4px 15px rgba(0, 168, 168, 0.3);">
+                    🔍 Acessar Lista Pontomais
+                </button>
+            </a>
+        </div>
     </div>
 
     <div class="signature">By: Edivan Costa</div>
@@ -257,6 +280,7 @@
             window.open(url, 'FormsPopup', `width=${largura},height=${altura},top=${topo},left=${esquerda},scrollbars=yes,resizable=yes`);
         }
 
+        // Função AppSheet mantida em Tela Cheia
         function abrirAppSheet() {
             const largura = window.screen.availWidth;
             const altura = window.screen.availHeight;
