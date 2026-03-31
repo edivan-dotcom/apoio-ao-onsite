@@ -3,354 +3,187 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Apoio ao On-Site | WeCanBR</title>
-    
-    <link rel="icon" type="image/png" href="https://wecanbr.com.br/wp-content/uploads/2021/10/cropped-favicon-32x32.png">
-    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet">
-    
-    <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
-    <script>mermaid.initialize({ startOnLoad: true, theme: 'default' });</script>
-
+    <title>Apoio ao On-Site | WeCan</title>
     <style>
         :root {
-            --primary: #6a11cb;
-            --secondary: #2575fc;
-            --bg: #f4f7f6;
-            --card-bg: white;
+            --primary: #ee4d2d; /* Laranja Shopee/WeCan */
+            --bg: #f5f5f5;
             --text: #333;
-            --navbar-bg: white;
-            --danger: #ff4b2b;
-            --warning: #f39c12;
-            --voucher: #00b894;
-            --jira: #0052CC;
-            --appsheet: #1a73e8;
-            --glpi: #008080;
-            --pontomais: #00a8a8;
-            --new-tag: #eb4d4b;
-            --signature: rgba(0, 0, 0, 0.2);
         }
-
-        [data-theme="dark"] {
-            --bg: #121212;
-            --card-bg: #1e1e1e;
-            --text: #e0e0e0;
-            --navbar-bg: #1e1e1e;
-            --signature: rgba(255, 255, 255, 0.05);
-        }
-
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: var(--bg);
-            color: var(--text);
-            margin: 0;
-            padding-top: 60px;
-            transition: 0.3s;
-        }
-
-        .navbar {
-            background: var(--navbar-bg);
-            height: 60px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 0 30px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-            position: fixed;
-            top: 0; width: 100%; z-index: 1000;
-            box-sizing: border-box;
-        }
-
-        .nav-links { display: flex; align-items: center; height: 100%; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: var(--bg); margin: 0; }
         
-        .login-btn, .intranet-btn {
-            text-decoration: none; padding: 6px 15px; border-radius: 5px; 
-            font-size: 0.8rem; font-weight: bold; margin-left: 10px; transition: 0.3s;
+        /* Dashboard Discreto */
+        .dash-bar {
+            background: #fff; padding: 10px 20px; border-bottom: 1px solid #ddd;
+            display: flex; align-items: center; gap: 20px; font-size: 14px; color: #666;
         }
-        .login-btn { background: #0078d4; color: white !important; }
-        .intranet-btn { background: #ff5722; color: white !important; }
+        .status-badge { background: #eee; padding: 4px 10px; border-radius: 20px; font-weight: bold; }
+        .status-alert { color: var(--primary); font-weight: bold; }
 
-        .dropdown { position: relative; display: flex; align-items: center; height: 100%; }
-        .dropdown-btn {
-            text-decoration: none; color: var(--text); margin-left: 20px;
-            font-weight: 600; font-size: 0.9rem; cursor: pointer;
-            border: none; background: none; display: flex; align-items: center; gap: 5px; height: 100%;
+        /* Navegação */
+        nav { background: #333; display: flex; padding: 0 10px; }
+        nav button { 
+            background: none; border: none; color: #fff; padding: 15px 20px; 
+            cursor: pointer; border-bottom: 3px solid transparent;
         }
+        nav button.active { border-bottom: 3px solid var(--primary); color: var(--primary); }
 
-        .dropdown-content {
-            display: none; position: absolute; right: 0;
-            background-color: var(--card-bg); min-width: 350px;
-            box-shadow: 0px 8px 16px rgba(0,0,0,0.2); z-index: 1001;
-            border-radius: 0 0 8px 8px; top: 60px; border-top: 2px solid var(--primary);
-            overflow: hidden;
-        }
-        .dropdown:hover .dropdown-content { display: block; }
-        .dropdown-content a {
-            color: var(--text); padding: 12px 16px; text-decoration: none;
-            display: block; font-size: 0.85rem; border-bottom: 1px solid rgba(128,128,128,0.1);
-        }
-        .dropdown-content a:hover { background: rgba(106, 17, 203, 0.05); }
+        /* Conteúdo */
+        .tab-content { display: none; padding: 20px; max-width: 1000px; margin: auto; }
+        .tab-content.active { display: block; }
 
-        header {
-            background: linear-gradient(rgba(106, 17, 203, 0.75), rgba(37, 117, 252, 0.75)), 
-                        url('https://wecanbr.com.br/img/quem-somos/main.jpg');
-            background-size: cover; background-position: center;
-            color: white; padding: 60px 20px; text-align: center;
+        /* Cards do Onsite */
+        .grid-cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 15px; }
+        .card { 
+            background: #fff; border-left: 5px solid #ccc; padding: 15px; 
+            border-radius: 5px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); 
         }
-
-        .search-container { margin-top: 25px; position: relative; width: 450px; max-width: 90%; margin: 20px auto 0; }
-        #searchInput {
-            padding: 15px 25px; width: 100%; border-radius: 30px; border: none;
-            font-size: 1rem; box-shadow: 0 5px 15px rgba(0,0,0,0.2); outline: none;
-            background: var(--card-bg); color: var(--text); box-sizing: border-box;
+        .card.pendente { border-left-color: #f1c40f; }
+        .card h4 { margin: 0 0 10px 0; display: flex; justify-content: space-between; }
+        .btn-acao { 
+            display: inline-block; margin-top: 10px; padding: 8px 12px; 
+            background: var(--primary); color: #fff; text-decoration: none; 
+            border-radius: 4px; font-size: 12px; border: none; cursor: pointer;
         }
 
-        .container { display: flex; justify-content: center; flex-wrap: wrap; gap: 20px; padding: 40px 20px; max-width: 1400px; margin: 0 auto; }
-        .card {
-            background: var(--card-bg); border-radius: 15px; width: 260px; padding: 25px;
-            text-align: center; box-shadow: 0 5px 15px rgba(0,0,0,0.05); transition: 0.3s;
-            text-decoration: none; color: var(--text); border-top: 5px solid var(--primary); 
-            box-sizing: border-box; cursor: pointer; position: relative;
-        }
-        .card:hover { transform: translateY(-5px); box-shadow: 0 10px 25px rgba(0,0,0,0.1); }
-        .card.hidden { display: none; }
-        
-        .badge-new {
-            position: absolute; top: -15px; right: -10px;
-            background: var(--new-tag); color: white;
-            padding: 4px 12px; border-radius: 20px;
-            font-size: 0.75rem; font-weight: bold;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-            animation: bounce 2s infinite;
-        }
-
-        @keyframes bounce {
-            0%, 20%, 50%, 80%, 100% {transform: translateY(0);}
-            40% {transform: translateY(-5px);}
-            60% {transform: translateY(-3px);}
-        }
-
-        .icon { font-size: 40px; margin-bottom: 15px; display: block; }
-
-        .funnel-container {
-            display: flex; justify-content: center; flex-wrap: wrap; gap: 20px;
-            max-width: 95%; margin: 20px auto 40px; padding: 0 20px;
-        }
-
-        .embedded-section {
-            background: var(--card-bg); padding: 25px; border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-            flex: 1; min-width: 300px; max-width: 400px; text-align: center;
-        }
-
-        .section-btn {
-            color: white; border: none; padding: 12px 25px; border-radius: 25px; 
-            font-size: 0.9rem; font-weight: bold; cursor: pointer; transition: 0.3s; margin-top: 15px;
-        }
-
-        /* --- SEÇÃO FAQ / FLUXOGRAMA --- */
-        .faq-section {
-            max-width: 1200px; margin: 20px auto 60px;
-            background: var(--card-bg); padding: 40px; border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-        }
-        .faq-section h2 { text-align: center; color: var(--primary); margin-bottom: 30px; }
-        .mermaid { display: flex; justify-content: center; background: white; padding: 20px; border-radius: 10px; }
-
-        .signature { text-align: center; margin: 40px 0 20px; font-family: 'Great Vibes', cursive; font-size: 1.5rem; color: var(--signature); }
-        footer { text-align: center; padding: 30px; background: #222; color: white; width: 100%; }
-
-        .theme-toggle {
-            position: fixed; bottom: 20px; right: 20px; width: 50px; height: 50px;
-            border-radius: 50%; background: var(--primary); color: white;
-            border: none; cursor: pointer; box-shadow: 0 4px 15px rgba(0,0,0,0.3);
-            z-index: 2001; font-size: 20px;
-        }
+        /* Formulário */
+        .form-group { margin-bottom: 15px; }
+        label { display: block; margin-bottom: 5px; font-weight: bold; }
+        input, select { width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 4px; }
+        .alerta-instrucao { background: #fff3cd; color: #856404; padding: 10px; border-radius: 4px; margin-top: 5px; font-size: 13px; display: none; }
     </style>
 </head>
 <body>
 
-    <button class="theme-toggle" onclick="toggleTheme()" id="themeBtn">🌙</button>
-
-    <nav class="navbar">
-        <div style="font-weight: bold; color: var(--primary); letter-spacing: 1px;">WE CAN BR</div>
-        <div class="nav-links">
-            <a href="https://portal.office.com" target="_blank" class="login-btn">🔑 Login Microsoft</a>
-            <a href="https://desafiorhcombr.sharepoint.com/sites/wecanbr" target="_blank" class="intranet-btn">🌐 Intranet</a>
-            
-            <div class="dropdown">
-                <button class="dropdown-btn">📊 Planilhas ▼</button>
-                <div class="dropdown-content">
-                    <a href="https://desafiorhcombr-my.sharepoint.com/:x:/r/personal/mirian_oliveira_wecanbr_com_br/_layouts/15/Doc.aspx?sourcedoc=%7B9C5EACCF-57D1-4415-BA2B-D584B9FE2B85%7D" target="_blank">📋 Controle de Atendimento (Excel)</a>
-                    <a href="https://desafiorhcombr-my.sharepoint.com/:x:/r/personal/mirian_oliveira_wecanbr_com_br/_layouts/15/doc2.aspx?sourcedoc=%7B519706C2-BDEF-438C-B037-385F4D8A3488%7D" target="_blank">📈 Drive de Rescisão Shopee</a>
-                    <a href="https://desafiorhcombr-my.sharepoint.com/:x:/r/personal/edivan_costa_wecanbr_com_br/_layouts/15/Doc.aspx?sourcedoc=%7B63D04DA0-C7A8-4059-8591-37DFCED94A93%7D" target="_blank">📋 Central de Solicitações (Base)</a>
-                    <a href="https://docs.google.com/spreadsheets/d/1WBYOF9AkoS7NpzhqFyqm5PzQRP13yUF2p5ZY8FfZp_c/edit" target="_blank">🔍 Voucher 2026 (Base Geral)</a>
-                    <a href="https://docs.google.com/spreadsheets/d/1WBYOF9AkoS7NpzhqFyqm5PzQRP13yUF2p5ZY8FfZp_c/edit?gid=690743947#gid=690743947" target="_blank">📊 Template Shopee</a>
-                    <a href="https://desafiorhcombr.sharepoint.com/:x:/r/sites/FSWECANBR/_layouts/15/Doc.aspx?sourcedoc=%7B6265A06E-D548-4055-9261-D6A512496567%7D&file=03%202026%20REJEITOS%20MAR%C3%87O%202026.xlsx&action=default&mobileredirect=true" target="_blank">⚠️ Rejeitos 03.2026</a>
-                </div>
-            </div>
-
-            <div class="dropdown">
-                <button class="dropdown-btn">📄 Documentos ▼</button>
-                <div class="dropdown-content">
-                    <a href="https://drive.google.com/file/d/1qsLtN-HC5488FVQc3n5mcT8zjCdVja0d/view" target="_blank">📄 Carta de Suspensão</a>
-                    <a href="https://drive.google.com/file/d/1lGnjwLz_5i4uASifv2OPlkSb7NUGeaHI/view" target="_blank">📄 Comunicado de Desligamento</a>
-                    <a href="https://drive.google.com/file/d/1zsrlh6KBLvMvEGc13tTA6I7Ybra5iObA/view" target="_blank">📄 Advertência Disciplinar</a>
-                    <a href="https://drive.google.com/file/d/1_Dw1qLl9icW282pkZCNln8908Nfqiasi/view" target="_blank">📄 Advertência - Ponto</a>
-                    <a href="https://drive.google.com/file/d/1aryngzuxX72mOhxchNmQPBA30QT2gNt2/view" target="_blank">📄 Carta Banco Santander</a>
-                    <a href="https://drive.google.com/file/d/1PDp_bhtDB-ZR-wRwFUJ80Xpa4gWu_HkQ/view" target="_blank">📄 Termo de Ciência - EPI</a>
-                    <a href="https://drive.google.com/file/d/1a_D1awqrBGXLaiKba6dc_ruE41dDF3ke/view" target="_blank">📄 Dispensa Justa Causa</a>
-                    <a href="https://docs.google.com/document/d/1pqJ2b7wfCbjdAuKC99cIys9RYnenn2nkACDo33isZFE/edit" target="_blank">📄 Aviso Prévio Indenizado</a>
-                    <a href="https://drive.google.com/file/d/16qsbtlkVBkIqZN_vjXK5T0gOEI7ivXWR/view" target="_blank">📄 Declaração de Vínculo</a>
-                    <a href="https://drive.google.com/file/d/1CQQ3GTIUoOW9SGZ2EZTG8O3Q3ZFHk_El/view" target="_blank">📄 DUT</a>
-                </div>
-            </div>
+<div class="dash-bar" id="dashboard">
+    <span>Solicitações Pendentes: <span id="total-pendentes" class="status-badge">0</span></span>
+    <div id="onsites-alerta" style="display: flex; gap: 10px;">
         </div>
-    </nav>
+</div>
 
-    <header>
-        <h1>APOIO AO ONSITE</h1>
-        <div class="search-container">
-            <input type="text" id="searchInput" onkeyup="buscarTudo()" placeholder="Pesquisar..." autocomplete="off">
+<nav>
+    <button onclick="openTab('dashboard-home')" class="active" id="btn-dash">🏠 Início</button>
+    <button onclick="openTab('solicitar')">📝 Solicitar Benefício</button>
+    <button onclick="openTab('gestao')">📋 Meus Cards (Onsite)</button>
+</nav>
+
+<div id="dashboard-home" class="tab-content active">
+    <h3>Bem-vindo ao Apoio On-site</h3>
+    <p>Utilize as abas acima para gerenciar as solicitações de benefícios.</p>
+</div>
+
+<div id="solicitar" class="tab-content">
+    <h3>Nova Solicitação</h3>
+    <form id="formSolicitacao">
+        <div class="form-group">
+            <label>Matrícula (Apenas números):</label>
+            <input type="text" id="matricula" placeholder="Ex: 769297" required>
         </div>
-    </header>
-
-    <div class="container">
-        <div onclick="abrirPopup('https://forms.office.com/Pages/ResponsePage.aspx?id=fCAtUtXsx0-nbxdGSxFh-eVAzhwdpsxLmCSGMQwqNIpUM1E2TFRSRkhNWU9IQk9SVFhBSDJNWTFDVS4u')" class="card">
-            <span class="icon">📝</span>
-            <h2>Central de Solicitações</h2>
-            <p>Clique para abrir o formulário interno.</p>
+        <div class="form-group">
+            <label>Tipo de Solicitação:</label>
+            <select id="tipo" required onchange="atualizarOpcoes()">
+                <option value="">Selecione...</option>
+                <option value="TROCA DE BENEFICIO">TROCA DE BENEFICIO</option>
+                <option value="AJUSTE VALOR DA PASSAGEM">AJUSTE VALOR DA PASSAGEM</option>
+                <option value="PEDIDO DE DEMISSÃO">PEDIDO DE DEMISSÃO</option>
+            </select>
+        </div>
+        <div class="form-group" id="group-beneficio">
+            <label>Qual Benefício?</label>
+            <select id="beneficio" onchange="verificarLogicaValor()">
+                <option value="">Selecione...</option>
+                <option value="VT para FRETADO">VT para FRETADO</option>
+                <option value="FRETADO para VT">FRETADO para VT</option>
+                <option value="para MOBILIDADE">... para MOBILIDADE</option>
+                <option value="para VOUCHER UBER">... para VOUCHER UBER</option>
+            </select>
         </div>
 
-        <div onclick="abrirPopup('https://forms.office.com/Pages/ResponsePage.aspx?id=fCAtUtXsx0-nbxdGSxFh-f7MDqf4DUBBuOHjox7sxytUNFFQNTgzR1pQV0FLM05aWElXSjlRMjFHRy4u')" class="card" style="border-top-color: var(--danger);">
-            <span class="icon">🚫</span>
-            <h2>Desligamento Shopee</h2>
-            <p>Formulário oficial para desligamento Shopee.</p>
+        <div class="form-group" id="group-valor" style="display:none;">
+            <label id="label-valor">Valor VT:</label>
+            <input type="number" id="valor_vt" step="0.01">
+            <div id="instrucao-valor" class="alerta-instrucao"></div>
         </div>
 
-        <div onclick="abrirPopup('https://forms.office.com/Pages/ResponsePage.aspx?id=fCAtUtXsx0-nbxdGSxFh-f7MDqf4DUBBuOHjox7sxytUMzdRMTFCOTc2SzZEQzU4NFI2TVMzUjIxWS4u')" class="card" style="border-top-color: var(--warning);">
-            <span class="icon">🎧</span>
-            <h2>Controle de Atendimento</h2>
-            <p>Registro de atendimentos Shopee.</p>
+        <div class="form-group" id="group-telefone" style="display:none;">
+            <label>Telefone Atualizado (Para Voucher):</label>
+            <input type="text" id="telefone" placeholder="(00) 00000-0000">
         </div>
 
-        <div onclick="abrirPopup('https://forms.office.com/Pages/ResponsePage.aspx?id=fCAtUtXsx0-nbxdGSxFh-eVAzhwdpsxLmCSGMQwqNIpUQVBSTFlOTUxSUEMwMFhWSTdTTEVOV1lBUy4u')" class="card" style="border-top-color: var(--voucher);">
-            <div class="badge-new">Novo!</div>
-            <span class="icon">🎫</span>
-            <h2>Cadastro Voucher</h2>
-            <p>Novo Colaborador - Cadastro de Voucher Uber.</p>
-        </div>
+        <button type="button" class="btn-acao" onclick="enviarDados()">Enviar Solicitação</button>
+    </form>
+</div>
 
-        <div onclick="window.open('https://spxresolve.atlassian.net/jira/for-you', '_blank')" class="card" style="border-top-color: var(--jira);">
-            <span class="icon">🟦</span>
-            <h2>JIRA</h2>
-            <p>Gestão de chamados e projetos JIRA.</p>
-        </div>
+<div id="gestao" class="tab-content">
+    <div style="margin-bottom: 20px;">
+        <label>Selecione seu nome para ver seus cards:</label>
+        <select id="filtro-onsite" onchange="renderizarCards()">
+            <option value="">Escolher Onsite...</option>
+            <option value="Aline Santos">Aline Santos</option>
+            <option value="Luis Pessanha">Luis Pessanha</option>
+            </select>
     </div>
-
-    <div class="funnel-container">
-        <div class="embedded-section" style="border-top: 5px solid var(--appsheet);">
-            <div>
-                <strong style="color: var(--appsheet);">📱 INATIVAÇÃO VOUCHER UBER</strong>
-                <p>Inativação de usuários Uber em caso de desligamento.</p>
-            </div>
-            <button onclick="abrirAppSheet()" class="section-btn" style="background: var(--appsheet); box-shadow: 0 4px 15px rgba(26, 115, 232, 0.3);">
-                🚀 Abrir AppSheet
-            </button>
+    <div class="grid-cards" id="container-cards">
         </div>
+</div>
 
-        <div class="embedded-section" style="border-top: 5px solid var(--glpi);">
-            <div>
-                <strong style="color: var(--glpi);">🛠️ CHAMADOS - GLPI</strong>
-                <p>Abertura e consulta de chamados técnicos WeCanBR.</p>
-            </div>
-            <a href="https://glpi.wecanbr.com.br/index.php?noAUTO=1" target="_blank" style="text-decoration: none;">
-                <button class="section-btn" style="background: var(--glpi); box-shadow: 0 4px 15px rgba(0, 128, 128, 0.3);">
-                    🎫 Acessar GLPI
-                </button>
-            </a>
-        </div>
+<script>
+    const SCRIPT_URL = "SUA_URL_DO_APP_SCRIPT_AQUI";
 
-        <div class="embedded-section" style="border-top: 5px solid var(--pontomais);">
-            <div>
-                <strong style="color: var(--pontomais);">⏱️ PONTOMAIS</strong>
-                <p>Gestão de colaboradores e conferência de ponto.</p>
-            </div>
-            <a href="https://app2.pontomais.com.br/controle-de-ponto/colaboradores/lista" target="_blank" style="text-decoration: none;">
-                <button class="section-btn" style="background: var(--pontomais); box-shadow: 0 4px 15px rgba(0, 168, 168, 0.3);">
-                    🔍 Abrir Pontomais
-                </button>
-            </a>
-        </div>
-    </div>
+    function openTab(tabId) {
+        document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+        document.querySelectorAll('nav button').forEach(b => b.classList.remove('active'));
+        document.getElementById(tabId).classList.add('active');
+        event.currentTarget.classList.add('active');
+        if(tabId === 'gestao' || tabId === 'dashboard-home') atualizarDashboard();
+    }
 
-    <div class="faq-section">
-        <h2>📌 Fluxo de Processos e Solicitações</h2>
-        <div class="mermaid">
-            graph TD
-                %% Canais de Entrada
-                Start((Início do Pedido)) --> Channel{Origem?}
-                
-                Channel -- "Onsite (Direto)" --> Form[Preenchimento do FORMS]
-                Channel -- "Colaborador (Chat Shopee)" --> Chat[Atendente do Chat] --> Form
-                Channel -- "Outros Setores (E-mail)" --> Manual[Redirecionar para o FORMS] --> Form
+    function verificarLogicaValor() {
+        const beneficio = document.getElementById('beneficio').value;
+        const divValor = document.getElementById('group-valor');
+        const divTel = document.getElementById('group-telefone');
+        const instrucao = document.getElementById('instrucao-valor');
+        
+        divValor.style.display = 'none';
+        divTel.style.display = 'none';
+        instrucao.style.display = 'none';
 
-                %% Regras de Negócio no Forms
-                Form --> Type{Tipo de Ajuste?}
-                
-                Type -- "Troca de Horário" --> OnsiteResp[Responsabilidade do Onsite]
-                OnsiteResp --> Refund{Precisa de Reembolso?}
-                
-                Refund -- "Sim" --> TickBox[Marcar Opção de Reembolso no Forms] --> Process
-                Refund -- "Não" --> Process
-                
-                Type -- "Outros Ajustes" --> Process[Sua Planilha de Gestão]
-
-                %% Execução Final
-                Process --> Ginfor[[Atualização no Sistema GINFOR]]
-                Ginfor --> End((Solicitação Finalizada))
-
-                %% Bloqueio de Segurança
-                NoForm{Solicitação via E-mail/Chat?} -.-> |PROIBIDO| Deny((NÃO REALIZAR))
-        </div>
-    </div>
-
-    <div class="signature">By: Edivan Costa</div>
-    <footer>© 2026 Apoio ao On-Site | WeCanBR</footer>
-
-    <script>
-        function abrirPopup(url) {
-            const largura = 900;
-            const altura = 900;
-            const esquerda = (screen.width - largura) / 2;
-            const topo = (screen.height - altura) / 2;
-            window.open(url, 'FormsPopup', `width=${largura},height=${altura},top=${topo},left=${esquerda},scrollbars=yes,resizable=yes`);
+        if (beneficio.includes('para VT')) {
+            divValor.style.display = 'block';
+            instrucao.style.display = 'block';
+            instrucao.innerHTML = "<strong>⚠️ Atenção:</strong> Informe o Gasto DIÁRIO TOTAL (Ida + Volta).";
+        } else if (beneficio.includes('VOUCHER')) {
+            divValor.style.display = 'block';
+            divTel.style.display = 'block';
+            instrucao.style.display = 'block';
+            instrucao.innerHTML = "<strong>⚠️ Atenção:</strong> Informe o Valor de apenas UM TRECHO (Só Ida ou Só Volta).";
+        } else if (beneficio.includes('MOBILIDADE')) {
+            divValor.style.display = 'block';
+            instrucao.style.display = 'block';
+            instrucao.innerHTML = "ℹ️ Valor Fixo de Mobilidade: R$ 440,00.";
+            document.getElementById('valor_vt').value = 440;
         }
+    }
 
-        function abrirAppSheet() {
-            const largura = window.screen.availWidth;
-            const altura = window.screen.availHeight;
-            window.open('https://www.appsheet.com/start/8ba6b59c-c836-4d4e-9a3e-e43d38d2a47e', 'AppSheetPopup', `width=${largura},height=${altura},top=0,left=0,scrollbars=yes,resizable=yes`);
-        }
+    async function enviarDados() {
+        const data = {
+            matricula: document.getElementById('matricula').value,
+            tipo_solicitacao: document.getElementById('tipo').value,
+            qual_beneficio: document.getElementById('beneficio').value,
+            valor_vt: document.getElementById('valor_vt').value,
+            telefone: document.getElementById('telefone').value
+        };
 
-        function buscarTudo() {
-            let input = document.getElementById('searchInput').value.toLowerCase();
-            let cards = document.getElementsByClassName('card');
-            for (let card of cards) {
-                card.classList.toggle('hidden', !card.innerText.toLowerCase().includes(input));
-            }
-        }
+        // Aqui vai o fetch para o seu App Script
+        alert("Enviando solicitação para " + data.matricula);
+        // Implementar o fetch(SCRIPT_URL, {method: 'POST'...})
+    }
 
-        function toggleTheme() {
-            const html = document.documentElement;
-            const btn = document.getElementById('themeBtn');
-            if (html.getAttribute('data-theme') === 'dark') {
-                html.removeAttribute('data-theme');
-                btn.innerHTML = "🌙";
-            } else {
-                html.setAttribute('data-theme', 'dark');
-                btn.innerHTML = "☀️";
-            }
-        }
-    </script>
+    async function atualizarDashboard() {
+        // Fetch GET no App Script para pegar os totais
+        // Atualiza o elemento 'total-pendentes' e 'onsites-alerta'
+    }
+
+</script>
 </body>
 </html>
