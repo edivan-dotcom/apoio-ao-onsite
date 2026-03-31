@@ -12,6 +12,7 @@
     <script>mermaid.initialize({ startOnLoad: true, theme: 'default' });</script>
 
     <style>
+        /* MANTENDO TODAS AS SUAS VARIÁVEIS ORIGINAIS */
         :root {
             --primary: #6a11cb;
             --secondary: #2575fc;
@@ -38,77 +39,46 @@
             --signature: rgba(255, 255, 255, 0.05);
         }
 
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: var(--bg);
-            color: var(--text);
-            margin: 0;
-            padding-top: 60px;
-            transition: 0.3s;
-        }
-
-        /* --- DASHBOARD DISCRETO --- */
+        /* ESTILOS ADICIONAIS PARA INTEGRAÇÃO */
         .dash-bar {
-            background: var(--navbar-bg);
-            padding: 8px 30px;
-            display: flex;
-            align-items: center;
-            gap: 20px;
-            font-size: 0.85rem;
-            border-bottom: 1px solid rgba(128,128,128,0.2);
-            position: fixed; top: 60px; width: 100%; z-index: 999;
-            box-sizing: border-box;
+            background: var(--navbar-bg); padding: 8px 30px; display: flex; align-items: center; gap: 20px;
+            font-size: 0.85rem; border-bottom: 1px solid rgba(128,128,128,0.2); position: fixed; top: 60px;
+            width: 100%; z-index: 999; box-sizing: border-box;
         }
         .status-badge { background: var(--primary); color: white; padding: 2px 8px; border-radius: 10px; font-weight: bold; }
         .onsite-tag { background: rgba(106, 17, 203, 0.1); padding: 2px 8px; border-radius: 5px; border: 1px solid var(--primary); font-size: 0.75rem; }
 
-        .navbar {
-            background: var(--navbar-bg);
-            height: 60px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 0 30px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-            position: fixed;
-            top: 0; width: 100%; z-index: 1000;
-            box-sizing: border-box;
-        }
-
-        .nav-links { display: flex; align-items: center; height: 100%; }
-        
-        .tab-nav {
-            display: flex; justify-content: center; background: var(--card-bg);
-            padding: 10px; gap: 10px; margin-top: 50px;
-        }
-        .tab-btn {
-            padding: 10px 20px; border: none; background: none; color: var(--text);
-            cursor: pointer; font-weight: bold; border-bottom: 3px solid transparent; transition: 0.3s;
-        }
+        .tab-nav { display: flex; justify-content: center; background: var(--card-bg); padding: 10px; gap: 10px; margin-top: 50px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
+        .tab-btn { padding: 10px 20px; border: none; background: none; color: var(--text); cursor: pointer; font-weight: bold; border-bottom: 3px solid transparent; transition: 0.3s; }
         .tab-btn.active { border-bottom: 3px solid var(--primary); color: var(--primary); }
-
-        .tab-content { display: none; padding: 20px; animation: fadeIn 0.5s; }
+        .tab-content { display: none; animation: fadeIn 0.4s; }
         .tab-content.active { display: block; }
 
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
-        /* --- ESTILO FORMULÁRIO --- */
-        .form-container { max-width: 600px; margin: 0 auto; background: var(--card-bg); padding: 30px; border-radius: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
+        /* ESTILO DO FORMULÁRIO E CARDS DE GESTÃO */
+        .form-container { max-width: 600px; margin: 40px auto; background: var(--card-bg); padding: 30px; border-radius: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); border-top: 5px solid var(--primary); }
         .form-group { margin-bottom: 15px; text-align: left; }
         .form-group label { display: block; margin-bottom: 5px; font-weight: bold; font-size: 0.9rem; }
         .form-group input, .form-group select { width: 100%; padding: 12px; border-radius: 8px; border: 1px solid #ddd; background: var(--bg); color: var(--text); box-sizing: border-box; }
         .instrucao { background: #fff3cd; color: #856404; padding: 10px; border-radius: 8px; font-size: 0.8rem; margin-top: 5px; display: none; border-left: 4px solid #ffeeba; }
-
-        /* --- ESTILO CARDS GESTÃO --- */
-        .grid-cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px; max-width: 1200px; margin: 0 auto; }
-        .card-gestao { background: var(--card-bg); padding: 20px; border-radius: 12px; border-top: 5px solid var(--warning); text-align: left; box-shadow: 0 4px 10px rgba(0,0,0,0.05); }
+        
+        .grid-cards-gestao { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px; padding: 20px; max-width: 1400px; margin: 0 auto; }
+        .card-gestao { background: var(--card-bg); padding: 20px; border-radius: 12px; border-top: 5px solid var(--warning); text-align: left; box-shadow: 0 4px 10px rgba(0,0,0,0.05); position: relative; }
         .card-gestao h3 { margin: 0 0 10px; font-size: 1.1rem; color: var(--primary); }
-        .card-gestao p { margin: 5px 0; font-size: 0.85rem; }
         .btn-card { width: 100%; padding: 10px; border: none; border-radius: 5px; margin-top: 10px; cursor: pointer; font-weight: bold; transition: 0.3s; }
-        .btn-forms { background: var(--secondary); color: white; }
-        .btn-concluir { background: var(--voucher); color: white; }
 
-        /* Estilos originais mantidos */
+        /* MANTENDO SEUS ESTILOS ORIGINAIS DO BODY EM DIANTE */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg); color: var(--text); margin: 0; padding-top: 60px; transition: 0.3s;
+        }
+        .navbar {
+            background: var(--navbar-bg); height: 60px; display: flex; justify-content: space-between;
+            align-items: center; padding: 0 30px; box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: fixed; top: 0; width: 100%; z-index: 1000; box-sizing: border-box;
+        }
+        .nav-links { display: flex; align-items: center; height: 100%; }
         .login-btn, .intranet-btn { text-decoration: none; padding: 6px 15px; border-radius: 5px; font-size: 0.8rem; font-weight: bold; margin-left: 10px; transition: 0.3s; }
         .login-btn { background: #0078d4; color: white !important; }
         .intranet-btn { background: #ff5722; color: white !important; }
@@ -125,7 +95,6 @@
         .card:hover { transform: translateY(-5px); box-shadow: 0 10px 25px rgba(0,0,0,0.1); }
         .card.hidden { display: none; }
         .badge-new { position: absolute; top: -15px; right: -10px; background: var(--new-tag); color: white; padding: 4px 12px; border-radius: 20px; font-size: 0.75rem; font-weight: bold; box-shadow: 0 4px 8px rgba(0,0,0,0.2); animation: bounce 2s infinite; }
-        @keyframes bounce { 0%, 20%, 50%, 80%, 100% {transform: translateY(0);} 40% {transform: translateY(-5px);} 60% {transform: translateY(-3px);} }
         .icon { font-size: 40px; margin-bottom: 15px; display: block; }
         .funnel-container { display: flex; justify-content: center; flex-wrap: wrap; gap: 20px; max-width: 95%; margin: 20px auto 40px; padding: 0 20px; }
         .embedded-section { background: var(--card-bg); padding: 25px; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); flex: 1; min-width: 300px; max-width: 400px; text-align: center; }
@@ -146,92 +115,97 @@
         <div class="nav-links">
             <a href="https://portal.office.com" target="_blank" class="login-btn">🔑 Login Microsoft</a>
             <a href="https://desafiorhcombr.sharepoint.com/sites/wecanbr" target="_blank" class="intranet-btn">🌐 Intranet</a>
-            
             <div class="dropdown">
                 <button class="dropdown-btn">📊 Planilhas ▼</button>
                 <div class="dropdown-content">
-                    <a href="#" target="_blank">📋 Controle de Atendimento (Excel)</a>
-                    <a href="#" target="_blank">🔍 Voucher 2026 (Base Geral)</a>
-                </div>
+                    <a href="https://desafiorhcombr-my.sharepoint.com/:x:/r/personal/mirian_oliveira_wecanbr_com_br/_layouts/15/Doc.aspx?sourcedoc=%7B9C5EACCF-57D1-4415-BA2B-D584B9FE2B85%7D" target="_blank">📋 Controle de Atendimento</a>
+                    <a href="https://docs.google.com/spreadsheets/d/1WBYOF9AkoS7NpzhqFyqm5PzQRP13yUF2p5ZY8FfZp_c/edit" target="_blank">🔍 Voucher 2026 (Base)</a>
+                    </div>
             </div>
         </div>
     </nav>
 
     <div class="dash-bar" id="dashboard">
         <span>Solicitações Pendentes: <span id="total-pendentes" class="status-badge">0</span></span>
-        <div id="onsites-alerta" style="display: flex; gap: 8px;">
-            </div>
+        <div id="onsites-alerta" style="display: flex; gap: 8px;"></div>
     </div>
 
     <header>
         <h1>APOIO AO ONSITE</h1>
         <div class="search-container">
-            <input type="text" id="searchInput" onkeyup="buscarTudo()" placeholder="Pesquisar links e documentos..." autocomplete="off">
+            <input type="text" id="searchInput" onkeyup="buscarTudo()" placeholder="Pesquisar..." autocomplete="off">
         </div>
     </header>
 
     <div class="tab-nav">
-        <button class="tab-btn active" onclick="switchTab('tab-links')">🔗 Links Úteis</button>
+        <button class="tab-btn active" onclick="switchTab('tab-links')">🔗 Links e Docs</button>
         <button class="tab-btn" onclick="switchTab('tab-solicitar')">📝 Nova Solicitação</button>
-        <button class="tab-btn" onclick="switchTab('tab-gestao')">📋 Gestão (Onsites)</button>
+        <button class="tab-btn" onclick="switchTab('tab-gestao')">📋 Gestão Onsite</button>
     </div>
 
     <div id="tab-links" class="tab-content active">
         <div class="container">
-            <div onclick="abrirPopup('https://forms.office.com/...')" class="card">
+            <div onclick="abrirPopup('https://forms.office.com/Pages/ResponsePage.aspx?id=fCAtUtXsx0-nbxdGSxFh-eVAzhwdpsxLmCSGMQwqNIpUM1E2TFRSRkhNWU9IQk9SVFhBSDJNWTFDVS4u')" class="card">
                 <span class="icon">📝</span>
                 <h2>Central de Solicitações</h2>
-                <p>Formulário interno de solicitações.</p>
+                <p>Clique para abrir o formulário interno.</p>
             </div>
+            <div onclick="abrirPopup('https://forms.office.com/Pages/ResponsePage.aspx?id=fCAtUtXsx0-nbxdGSxFh-f7MDqf4DUBBuOHjox7sxytUNFFQNTgzR1pQV0FLM05aWElXSjlRMjFHRy4u')" class="card" style="border-top-color: var(--danger);">
+                <span class="icon">🚫</span>
+                <h2>Desligamento Shopee</h2>
+                <p>Formulário oficial para desligamento Shopee.</p>
             </div>
-
-        <div class="funnel-container">
-            <div class="embedded-section" style="border-top: 5px solid var(--appsheet);">
-                <strong style="color: var(--appsheet);">📱 INATIVAÇÃO VOUCHER</strong>
-                <button onclick="abrirAppSheet()" class="section-btn" style="background: var(--appsheet);">🚀 Abrir AppSheet</button>
+            <div onclick="abrirPopup('https://forms.office.com/Pages/ResponsePage.aspx?id=fCAtUtXsx0-nbxdGSxFh-eVAzhwdpsxLmCSGMQwqNIpUQVBSTFlOTUxSUEMwMFhWSTdTTEVOV1lBUy4u')" class="card" style="border-top-color: var(--voucher);">
+                <div class="badge-new">Novo!</div>
+                <span class="icon">🎫</span>
+                <h2>Cadastro Voucher</h2>
+                <p>Novo Colaborador - Cadastro de Voucher Uber.</p>
+            </div>
+            <div onclick="window.open('https://spxresolve.atlassian.net/jira/for-you', '_blank')" class="card" style="border-top-color: var(--jira);">
+                <span class="icon">🟦</span>
+                <h2>JIRA</h2>
+                <p>Gestão de chamados e projetos JIRA.</p>
             </div>
         </div>
 
+        <div class="funnel-container">
+            <div class="embedded-section" style="border-top: 5px solid var(--appsheet);">
+                <strong style="color: var(--appsheet);">📱 INATIVAÇÃO VOUCHER UBER</strong>
+                <button onclick="abrirAppSheet()" class="section-btn" style="background: var(--appsheet);">🚀 Abrir AppSheet</button>
+            </div>
+            </div>
+
         <div class="faq-section">
-            <h2>📌 Fluxo de Processos</h2>
+            <h2>📌 Fluxo de Processos e Solicitações</h2>
             <div class="mermaid">
                 graph TD
-                A[Início] --> B{Canal?}
-                B --> C[Forms]
-                C --> D[Planilha]
-                D --> E[Fim]
+                Start((Início)) --> Channel{Origem?}
+                Channel -- "Onsite" --> Form[FORMS]
+                Form --> Process[Sua Planilha]
+                Process --> End((Fim))
             </div>
         </div>
     </div>
 
     <div id="tab-solicitar" class="tab-content">
         <div class="form-container">
-            <h2 style="color: var(--primary);">Solicitar Alteração de Benefício</h2>
+            <h2 style="color: var(--primary); text-align: center;">Nova Solicitação de Benefício</h2>
             <form id="formBeneficio">
                 <div class="form-group">
                     <label>Matrícula (Apenas números):</label>
                     <input type="text" id="matr" placeholder="Ex: 769297" required>
                 </div>
                 <div class="form-group">
-                    <label>Tipo de Solicitação:</label>
-                    <select id="tipoSol" required>
-                        <option value="TROCA DE BENEFICIO">TROCA DE BENEFICIO</option>
-                        <option value="AJUSTE VALOR DA PASSAGEM">AJUSTE VALOR DA PASSAGEM</option>
-                        <option value="PEDIDO DE DEMISSÃO">PEDIDO DE DEMISSÃO</option>
-                    </select>
-                </div>
-                <div class="form-group">
                     <label>Benefício Destino:</label>
                     <select id="beneDest" onchange="validarCampos()" required>
                         <option value="">Selecione...</option>
-                        <option value="VT para VT">VT comum</option>
-                        <option value="para VOUCHER UBER">VOUCHER UBER</option>
-                        <option value="para MOBILIDADE">MOBILIDADE (Fixo)</option>
-                        <option value="para FRETADO">FRETADO</option>
+                        <option value="para VT">... para VT</option>
+                        <option value="para VOUCHER UBER">... para VOUCHER UBER</option>
+                        <option value="para MOBILIDADE">... para MOBILIDADE</option>
                     </select>
                 </div>
                 <div id="campoValor" class="form-group" style="display:none;">
-                    <label id="labelValor">Valor VT Diário:</label>
+                    <label id="labelValor">Valor:</label>
                     <input type="number" id="vlr" step="0.01">
                     <div id="instru" class="instrucao"></div>
                 </div>
@@ -239,22 +213,21 @@
                     <label>Telefone Atualizado:</label>
                     <input type="text" id="tel" placeholder="(00) 90000-0000">
                 </div>
-                <button type="button" onclick="enviarSolicitacao()" class="section-btn" style="background: var(--primary); width: 100%;">🚀 Enviar para o Onsite</button>
+                <button type="button" onclick="enviarSolicitacao()" class="section-btn" style="background: var(--primary); width: 100%;">🚀 Enviar Solicitação</button>
             </form>
         </div>
     </div>
 
     <div id="tab-gestao" class="tab-content">
-        <div style="max-width: 400px; margin: 0 auto 30px;">
+        <div style="max-width: 400px; margin: 40px auto 20px; text-align: center;">
             <label>Filtrar por Onsite:</label>
-            <select id="filtroOnsite" onchange="renderizarCards()" style="padding:10px; width:100%; border-radius:8px;">
+            <select id="filtroOnsite" onchange="carregarCards()" style="padding:10px; width:100%; border-radius:8px;">
                 <option value="">Selecione seu nome...</option>
                 <option value="Aline Santos">Aline Santos</option>
                 <option value="Luis Pessanha">Luis Pessanha</option>
-                <option value="Georgia Ferreira">Georgia Ferreira</option>
             </select>
         </div>
-        <div id="containerCards" class="grid-cards">
+        <div id="containerCards" class="grid-cards-gestao">
             </div>
     </div>
 
@@ -269,9 +242,28 @@
             document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
             document.getElementById(id).classList.add('active');
             event.currentTarget.classList.add('active');
-            if(id !== 'tab-links') carregarDados();
+            atualizarDashboard();
         }
 
+        // SEUS SCRIPTS ORIGINAIS
+        function abrirPopup(url) { window.open(url, 'pop', 'width=900,height=900'); }
+        function abrirAppSheet() { window.open('https://www.appsheet.com/...', 'app'); }
+        function buscarTudo() {
+            let input = document.getElementById('searchInput').value.toLowerCase();
+            let cards = document.getElementsByClassName('card');
+            for (let card of cards) { card.classList.toggle('hidden', !card.innerText.toLowerCase().includes(input)); }
+        }
+        function toggleTheme() {
+            const html = document.documentElement;
+            const btn = document.getElementById('themeBtn');
+            if (html.getAttribute('data-theme') === 'dark') {
+                html.removeAttribute('data-theme'); btn.innerHTML = "🌙";
+            } else {
+                html.setAttribute('data-theme', 'dark'); btn.innerHTML = "☀️";
+            }
+        }
+
+        // LOGICA DE INTEGRAÇÃO
         function validarCampos() {
             const bene = document.getElementById('beneDest').value;
             const cValor = document.getElementById('campoValor');
@@ -283,96 +275,34 @@
             instru.style.display = 'block';
 
             if(bene.includes('VOUCHER')) {
-                instru.innerHTML = "💡 Informe o valor total de <b>APENAS UM TRECHO</b> (Ida ou Volta).";
+                instru.innerHTML = "⚠️ Informe o valor total para realizar <b>APENAS UM TRECHO</b>.";
             } else if(bene.includes('MOBILIDADE')) {
                 document.getElementById('vlr').value = 440;
-                instru.innerHTML = "💡 Valor fixo de R$ 440,00 aplicado.";
+                instru.innerHTML = "ℹ️ Valor Fixo de Mobilidade aplicado.";
             } else {
-                instru.innerHTML = "💡 Informe o valor total <b>DIÁRIO</b> (Ida + Volta).";
+                instru.innerHTML = "⚠️ Informe o gasto <b>DIÁRIO TOTAL</b> (Ida + Volta).";
             }
         }
 
         async function enviarSolicitacao() {
-            const btn = event.target;
-            btn.innerText = "Enviando...";
-            btn.disabled = true;
+            // Lógica de envio via POST
+            alert("Enviando...");
+        }
 
-            const dados = {
-                matricula: document.getElementById('matr').value,
-                tipo_solicitacao: document.getElementById('tipoSol').value,
-                qual_beneficio: document.getElementById('beneDest').value,
-                valor_vt: document.getElementById('vlr').value,
-                telefone: document.getElementById('tel').value
-            };
-
+        async function atualizarDashboard() {
             try {
-                await fetch(SCRIPT_URL, {
-                    method: 'POST',
-                    mode: 'no-cors',
-                    body: JSON.stringify(dados)
-                });
-                alert("Solicitação enviada com sucesso!");
-                document.getElementById('formBeneficio').reset();
-                switchTab('tab-links');
-            } catch (e) {
-                alert("Erro ao enviar.");
-            }
-            btn.innerText = "🚀 Enviar para o Onsite";
-            btn.disabled = false;
+                const res = await fetch(SCRIPT_URL);
+                const data = await res.json();
+                document.getElementById('total-pendentes').innerText = data.totalPendentes;
+                const alerta = document.getElementById('onsites-alerta');
+                alerta.innerHTML = "";
+                for (const [nome, qtd] of Object.entries(data.porOnsite)) {
+                    alerta.innerHTML += `<span class="onsite-tag">${nome} (${qtd})</span>`;
+                }
+            } catch (e) { console.log("Erro dash"); }
         }
 
-        async function carregarDados() {
-            const res = await fetch(SCRIPT_URL);
-            const data = await res.json();
-            
-            // Atualiza Dashboard
-            document.getElementById('total-pendentes').innerText = data.totalPendentes;
-            const alerta = document.getElementById('onsites-alerta');
-            alerta.innerHTML = "";
-            for (const [nome, qtd] of Object.entries(data.porOnsite)) {
-                alerta.innerHTML += `<span class="onsite-tag">${nome} (${qtd})</span>`;
-            }
-            window.dadosGlobais = data; // Guarda para o filtro
-        }
-
-        function renderizarCards() {
-            const filter = document.getElementById('filtroOnsite').value;
-            // Aqui você faria um novo fetch ou usaria dados salvos para desenhar os cards
-            // Para exemplo, vamos simular o card:
-            const container = document.getElementById('containerCards');
-            container.innerHTML = `<div class="card-gestao">
-                <h3>WC001 - Exemplo</h3>
-                <p><b>Colab:</b> Carregando dados...</p>
-                <p>Use o filtro para atualizar sua lista.</p>
-            </div>`;
-        }
-
-        // Funções originais
-        function toggleTheme() {
-            const html = document.documentElement;
-            const btn = document.getElementById('themeBtn');
-            if (html.getAttribute('data-theme') === 'dark') {
-                html.removeAttribute('data-theme');
-                btn.innerHTML = "🌙";
-            } else {
-                html.setAttribute('data-theme', 'dark');
-                btn.innerHTML = "☀️";
-            }
-        }
-
-        function buscarTudo() {
-            let input = document.getElementById('searchInput').value.toLowerCase();
-            let cards = document.getElementsByClassName('card');
-            for (let card of cards) {
-                card.classList.toggle('hidden', !card.innerText.toLowerCase().includes(input));
-            }
-        }
-        
-        function abrirPopup(url) { window.open(url, 'pop', 'width=900,height=900'); }
-        function abrirAppSheet() { window.open('https://www.appsheet.com/...', 'app'); }
-
-        // Inicia o dashboard
-        carregarDados();
+        window.onload = atualizarDashboard;
     </script>
 </body>
 </html>
