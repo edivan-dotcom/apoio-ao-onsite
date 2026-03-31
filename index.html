@@ -12,7 +12,6 @@
     <script>mermaid.initialize({ startOnLoad: true, theme: 'default' });</script>
 
     <style>
-        /* MANTENDO TODAS AS SUAS VARIÁVEIS ORIGINAIS */
         :root {
             --primary: #6a11cb;
             --secondary: #2575fc;
@@ -39,7 +38,7 @@
             --signature: rgba(255, 255, 255, 0.05);
         }
 
-        /* ESTILOS ADICIONAIS PARA INTEGRAÇÃO */
+        /* --- ESTILOS DE INTEGRAÇÃO (ABAS E DASHBOARD) --- */
         .dash-bar {
             background: var(--navbar-bg); padding: 8px 30px; display: flex; align-items: center; gap: 20px;
             font-size: 0.85rem; border-bottom: 1px solid rgba(128,128,128,0.2); position: fixed; top: 60px;
@@ -56,28 +55,17 @@
 
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
-        /* ESTILO DO FORMULÁRIO E CARDS DE GESTÃO */
+        /* ESTILO FORMULÁRIO E CARDS GESTÃO */
         .form-container { max-width: 600px; margin: 40px auto; background: var(--card-bg); padding: 30px; border-radius: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); border-top: 5px solid var(--primary); }
         .form-group { margin-bottom: 15px; text-align: left; }
         .form-group label { display: block; margin-bottom: 5px; font-weight: bold; font-size: 0.9rem; }
         .form-group input, .form-group select { width: 100%; padding: 12px; border-radius: 8px; border: 1px solid #ddd; background: var(--bg); color: var(--text); box-sizing: border-box; }
         .instrucao { background: #fff3cd; color: #856404; padding: 10px; border-radius: 8px; font-size: 0.8rem; margin-top: 5px; display: none; border-left: 4px solid #ffeeba; }
-        
         .grid-cards-gestao { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px; padding: 20px; max-width: 1400px; margin: 0 auto; }
-        .card-gestao { background: var(--card-bg); padding: 20px; border-radius: 12px; border-top: 5px solid var(--warning); text-align: left; box-shadow: 0 4px 10px rgba(0,0,0,0.05); position: relative; }
-        .card-gestao h3 { margin: 0 0 10px; font-size: 1.1rem; color: var(--primary); }
-        .btn-card { width: 100%; padding: 10px; border: none; border-radius: 5px; margin-top: 10px; cursor: pointer; font-weight: bold; transition: 0.3s; }
 
-        /* MANTENDO SEUS ESTILOS ORIGINAIS DO BODY EM DIANTE */
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: var(--bg); color: var(--text); margin: 0; padding-top: 60px; transition: 0.3s;
-        }
-        .navbar {
-            background: var(--navbar-bg); height: 60px; display: flex; justify-content: space-between;
-            align-items: center; padding: 0 30px; box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-            position: fixed; top: 0; width: 100%; z-index: 1000; box-sizing: border-box;
-        }
+        /* --- ESTILOS ORIGINAIS --- */
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: var(--bg); color: var(--text); margin: 0; padding-top: 60px; transition: 0.3s; }
+        .navbar { background: var(--navbar-bg); height: 60px; display: flex; justify-content: space-between; align-items: center; padding: 0 30px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); position: fixed; top: 0; width: 100%; z-index: 1000; box-sizing: border-box; }
         .nav-links { display: flex; align-items: center; height: 100%; }
         .login-btn, .intranet-btn { text-decoration: none; padding: 6px 15px; border-radius: 5px; font-size: 0.8rem; font-weight: bold; margin-left: 10px; transition: 0.3s; }
         .login-btn { background: #0078d4; color: white !important; }
@@ -87,6 +75,7 @@
         .dropdown-content { display: none; position: absolute; right: 0; background-color: var(--card-bg); min-width: 350px; box-shadow: 0px 8px 16px rgba(0,0,0,0.2); z-index: 1001; border-radius: 0 0 8px 8px; top: 60px; border-top: 2px solid var(--primary); overflow: hidden; }
         .dropdown:hover .dropdown-content { display: block; }
         .dropdown-content a { color: var(--text); padding: 12px 16px; text-decoration: none; display: block; font-size: 0.85rem; border-bottom: 1px solid rgba(128,128,128,0.1); }
+        .dropdown-content a:hover { background: rgba(106, 17, 203, 0.05); }
         header { background: linear-gradient(rgba(106, 17, 203, 0.75), rgba(37, 117, 252, 0.75)), url('https://wecanbr.com.br/img/quem-somos/main.jpg'); background-size: cover; background-position: center; color: white; padding: 60px 20px; text-align: center; }
         .search-container { margin-top: 25px; position: relative; width: 450px; max-width: 90%; margin: 20px auto 0; }
         #searchInput { padding: 15px 25px; width: 100%; border-radius: 30px; border: none; font-size: 1rem; box-shadow: 0 5px 15px rgba(0,0,0,0.2); outline: none; background: var(--card-bg); color: var(--text); box-sizing: border-box; }
@@ -101,6 +90,7 @@
         .section-btn { color: white; border: none; padding: 12px 25px; border-radius: 25px; font-size: 0.9rem; font-weight: bold; cursor: pointer; transition: 0.3s; margin-top: 15px; }
         .faq-section { max-width: 1200px; margin: 20px auto 60px; background: var(--card-bg); padding: 40px; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); }
         .faq-section h2 { text-align: center; color: var(--primary); margin-bottom: 30px; }
+        .mermaid { display: flex; justify-content: center; background: white; padding: 20px; border-radius: 10px; }
         .signature { text-align: center; margin: 40px 0 20px; font-family: 'Great Vibes', cursive; font-size: 1.5rem; color: var(--signature); }
         footer { text-align: center; padding: 30px; background: #222; color: white; width: 100%; }
         .theme-toggle { position: fixed; bottom: 20px; right: 20px; width: 50px; height: 50px; border-radius: 50%; background: var(--primary); color: white; border: none; cursor: pointer; box-shadow: 0 4px 15px rgba(0,0,0,0.3); z-index: 2001; font-size: 20px; }
@@ -115,17 +105,38 @@
         <div class="nav-links">
             <a href="https://portal.office.com" target="_blank" class="login-btn">🔑 Login Microsoft</a>
             <a href="https://desafiorhcombr.sharepoint.com/sites/wecanbr" target="_blank" class="intranet-btn">🌐 Intranet</a>
+            
             <div class="dropdown">
                 <button class="dropdown-btn">📊 Planilhas ▼</button>
                 <div class="dropdown-content">
-                    <a href="https://desafiorhcombr-my.sharepoint.com/:x:/r/personal/mirian_oliveira_wecanbr_com_br/_layouts/15/Doc.aspx?sourcedoc=%7B9C5EACCF-57D1-4415-BA2B-D584B9FE2B85%7D" target="_blank">📋 Controle de Atendimento</a>
-                    <a href="https://docs.google.com/spreadsheets/d/1WBYOF9AkoS7NpzhqFyqm5PzQRP13yUF2p5ZY8FfZp_c/edit" target="_blank">🔍 Voucher 2026 (Base)</a>
-                    </div>
+                    <a href="https://desafiorhcombr-my.sharepoint.com/:x:/r/personal/mirian_oliveira_wecanbr_com_br/_layouts/15/Doc.aspx?sourcedoc=%7B9C5EACCF-57D1-4415-BA2B-D584B9FE2B85%7D" target="_blank">📋 Controle de Atendimento (Excel)</a>
+                    <a href="https://desafiorhcombr-my.sharepoint.com/:x:/r/personal/mirian_oliveira_wecanbr_com_br/_layouts/15/doc2.aspx?sourcedoc=%7B519706C2-BDEF-438C-B037-385F4D8A3488%7D" target="_blank">📈 Drive de Rescisão Shopee</a>
+                    <a href="https://desafiorhcombr-my.sharepoint.com/:x:/r/personal/edivan_costa_wecanbr_com_br/_layouts/15/Doc.aspx?sourcedoc=%7B63D04DA0-C7A8-4059-8591-37DFCED94A93%7D" target="_blank">📋 Central de Solicitações (Base)</a>
+                    <a href="https://docs.google.com/spreadsheets/d/1WBYOF9AkoS7NpzhqFyqm5PzQRP13yUF2p5ZY8FfZp_c/edit" target="_blank">🔍 Voucher 2026 (Base Geral)</a>
+                    <a href="https://docs.google.com/spreadsheets/d/1WBYOF9AkoS7NpzhqFyqm5PzQRP13yUF2p5ZY8FfZp_c/edit?gid=690743947#gid=690743947" target="_blank">📊 Template Shopee</a>
+                    <a href="https://desafiorhcombr.sharepoint.com/:x:/r/sites/FSWECANBR/_layouts/15/Doc.aspx?sourcedoc=%7B6265A06E-D548-4055-9261-D6A512496567%7D&file=03%202026%20REJEITOS%20MAR%C3%87O%202026.xlsx&action=default&mobileredirect=true" target="_blank">⚠️ Rejeitos 03.2026</a>
+                </div>
+            </div>
+
+            <div class="dropdown">
+                <button class="dropdown-btn">📄 Documentos ▼</button>
+                <div class="dropdown-content">
+                    <a href="https://drive.google.com/file/d/1qsLtN-HC5488FVQc3n5mcT8zjCdVja0d/view" target="_blank">📄 Carta de Suspensão</a>
+                    <a href="https://drive.google.com/file/d/1lGnjwLz_5i4uASifv2OPlkSb7NUGeaHI/view" target="_blank">📄 Comunicado de Desligamento</a>
+                    <a href="https://drive.google.com/file/d/1zsrlh6KBLvMvEGc13tTA6I7Ybra5iObA/view" target="_blank">📄 Advertência Disciplinar</a>
+                    <a href="https://drive.google.com/file/d/1_Dw1qLl9icW282pkZCNln8908Nfqiasi/view" target="_blank">📄 Advertência - Ponto</a>
+                    <a href="https://drive.google.com/file/d/1aryngzuxX72mOhxchNmQPBA30QT2gNt2/view" target="_blank">📄 Carta Banco Santander</a>
+                    <a href="https://drive.google.com/file/d/1PDp_bhtDB-ZR-wRwFUJ80Xpa4gWu_HkQ/view" target="_blank">📄 Termo de Ciência - EPI</a>
+                    <a href="https://drive.google.com/file/d/1a_D1awqrBGXLaiKba6dc_ruE41dDF3ke/view" target="_blank">📄 Dispensa Justa Causa</a>
+                    <a href="https://docs.google.com/document/d/1pqJ2b7wfCbjdAuKC99cIys9RYnenn2nkACDo33isZFE/edit" target="_blank">📄 Aviso Prévio Indenizado</a>
+                    <a href="https://drive.google.com/file/d/16qsbtlkVBkIqZN_vjXK5T0gOEI7ivXWR/view" target="_blank">📄 Declaração de Vínculo</a>
+                    <a href="https://drive.google.com/file/d/1CQQ3GTIUoOW9SGZ2EZTG8O3Q3ZFHk_El/view" target="_blank">📄 DUT</a>
+                </div>
             </div>
         </div>
     </nav>
 
-    <div class="dash-bar" id="dashboard">
+    <div class="dash-bar">
         <span>Solicitações Pendentes: <span id="total-pendentes" class="status-badge">0</span></span>
         <div id="onsites-alerta" style="display: flex; gap: 8px;"></div>
     </div>
@@ -138,7 +149,7 @@
     </header>
 
     <div class="tab-nav">
-        <button class="tab-btn active" onclick="switchTab('tab-links')">🔗 Links e Docs</button>
+        <button class="tab-btn active" onclick="switchTab('tab-links')">🔗 Cards de Atalho</button>
         <button class="tab-btn" onclick="switchTab('tab-solicitar')">📝 Nova Solicitação</button>
         <button class="tab-btn" onclick="switchTab('tab-gestao')">📋 Gestão Onsite</button>
     </div>
@@ -150,17 +161,26 @@
                 <h2>Central de Solicitações</h2>
                 <p>Clique para abrir o formulário interno.</p>
             </div>
+
             <div onclick="abrirPopup('https://forms.office.com/Pages/ResponsePage.aspx?id=fCAtUtXsx0-nbxdGSxFh-f7MDqf4DUBBuOHjox7sxytUNFFQNTgzR1pQV0FLM05aWElXSjlRMjFHRy4u')" class="card" style="border-top-color: var(--danger);">
                 <span class="icon">🚫</span>
                 <h2>Desligamento Shopee</h2>
                 <p>Formulário oficial para desligamento Shopee.</p>
             </div>
+
+            <div onclick="abrirPopup('https://forms.office.com/Pages/ResponsePage.aspx?id=fCAtUtXsx0-nbxdGSxFh-f7MDqf4DUBBuOHjox7sxytUMzdRMTFCOTc2SzZEQzU4NFI2TVMzUjIxWS4u')" class="card" style="border-top-color: var(--warning);">
+                <span class="icon">🎧</span>
+                <h2>Controle de Atendimento</h2>
+                <p>Registro de atendimentos Shopee.</p>
+            </div>
+
             <div onclick="abrirPopup('https://forms.office.com/Pages/ResponsePage.aspx?id=fCAtUtXsx0-nbxdGSxFh-eVAzhwdpsxLmCSGMQwqNIpUQVBSTFlOTUxSUEMwMFhWSTdTTEVOV1lBUy4u')" class="card" style="border-top-color: var(--voucher);">
                 <div class="badge-new">Novo!</div>
                 <span class="icon">🎫</span>
                 <h2>Cadastro Voucher</h2>
                 <p>Novo Colaborador - Cadastro de Voucher Uber.</p>
             </div>
+
             <div onclick="window.open('https://spxresolve.atlassian.net/jira/for-you', '_blank')" class="card" style="border-top-color: var(--jira);">
                 <span class="icon">🟦</span>
                 <h2>JIRA</h2>
@@ -170,19 +190,50 @@
 
         <div class="funnel-container">
             <div class="embedded-section" style="border-top: 5px solid var(--appsheet);">
-                <strong style="color: var(--appsheet);">📱 INATIVAÇÃO VOUCHER UBER</strong>
+                <div>
+                    <strong style="color: var(--appsheet);">📱 INATIVAÇÃO VOUCHER UBER</strong>
+                    <p>Inativação de usuários Uber em caso de desligamento.</p>
+                </div>
                 <button onclick="abrirAppSheet()" class="section-btn" style="background: var(--appsheet);">🚀 Abrir AppSheet</button>
             </div>
+
+            <div class="embedded-section" style="border-top: 5px solid var(--glpi);">
+                <div>
+                    <strong style="color: var(--glpi);">🛠️ CHAMADOS - GLPI</strong>
+                    <p>Abertura e consulta de chamados técnicos WeCanBR.</p>
+                </div>
+                <a href="https://glpi.wecanbr.com.br/index.php?noAUTO=1" target="_blank" style="text-decoration: none;">
+                    <button class="section-btn" style="background: var(--glpi);">🎫 Acessar GLPI</button>
+                </a>
             </div>
+
+            <div class="embedded-section" style="border-top: 5px solid var(--pontomais);">
+                <div>
+                    <strong style="color: var(--pontomais);">⏱️ PONTOMAIS</strong>
+                    <p>Gestão de colaboradores e conferência de ponto.</p>
+                </div>
+                <a href="https://app2.pontomais.com.br/controle-de-ponto/colaboradores/lista" target="_blank" style="text-decoration: none;">
+                    <button class="section-btn" style="background: var(--pontomais);">🔍 Abrir Pontomais</button>
+                </a>
+            </div>
+        </div>
 
         <div class="faq-section">
             <h2>📌 Fluxo de Processos e Solicitações</h2>
             <div class="mermaid">
                 graph TD
-                Start((Início)) --> Channel{Origem?}
-                Channel -- "Onsite" --> Form[FORMS]
-                Form --> Process[Sua Planilha]
-                Process --> End((Fim))
+                    Start((Início do Pedido)) --> Channel{Origem?}
+                    Channel -- "Onsite (Direto)" --> Form[Preenchimento do FORMS]
+                    Channel -- "Colaborador (Chat Shopee)" --> Chat[Atendente do Chat] --> Form
+                    Channel -- "Outros Setores (E-mail)" --> Manual[Redirecionar para o FORMS] --> Form
+                    Form --> Type{Tipo de Ajuste?}
+                    Type -- "Troca de Horário" --> OnsiteResp[Responsabilidade do Onsite]
+                    OnsiteResp --> Refund{Precisa de Reembolso?}
+                    Refund -- "Sim" --> TickBox[Marcar Opção de Reembolso no Forms] --> Process
+                    Refund -- "Não" --> Process
+                    Type -- "Outros Ajustes" --> Process[Sua Planilha de Gestão]
+                    Process --> Ginfor[[Atualização no Sistema GINFOR]]
+                    Ginfor --> End((Solicitação Finalizada))
             </div>
         </div>
     </div>
@@ -191,17 +242,22 @@
         <div class="form-container">
             <h2 style="color: var(--primary); text-align: center;">Nova Solicitação de Benefício</h2>
             <form id="formBeneficio">
+                <div class="form-group"><label>Matrícula (Apenas números):</label><input type="text" id="matr" placeholder="Ex: 769297" required></div>
                 <div class="form-group">
-                    <label>Matrícula (Apenas números):</label>
-                    <input type="text" id="matr" placeholder="Ex: 769297" required>
+                    <label>Tipo de Solicitação:</label>
+                    <select id="tipoSol">
+                        <option value="TROCA DE BENEFICIO">TROCA DE BENEFICIO</option>
+                        <option value="AJUSTE VALOR">AJUSTE VALOR DA PASSAGEM</option>
+                        <option value="PEDIDO DE DEMISSAO">PEDIDO DE DEMISSÃO</option>
+                    </select>
                 </div>
                 <div class="form-group">
                     <label>Benefício Destino:</label>
                     <select id="beneDest" onchange="validarCampos()" required>
                         <option value="">Selecione...</option>
-                        <option value="para VT">... para VT</option>
-                        <option value="para VOUCHER UBER">... para VOUCHER UBER</option>
-                        <option value="para MOBILIDADE">... para MOBILIDADE</option>
+                        <option value="VT">... para VT</option>
+                        <option value="VOUCHER UBER">... para VOUCHER UBER</option>
+                        <option value="MOBILIDADE">... para MOBILIDADE</option>
                     </select>
                 </div>
                 <div id="campoValor" class="form-group" style="display:none;">
@@ -209,26 +265,16 @@
                     <input type="number" id="vlr" step="0.01">
                     <div id="instru" class="instrucao"></div>
                 </div>
-                <div id="campoTel" class="form-group" style="display:none;">
-                    <label>Telefone Atualizado:</label>
-                    <input type="text" id="tel" placeholder="(00) 90000-0000">
-                </div>
+                <div id="campoTel" class="form-group" style="display:none;"><label>Telefone Atualizado:</label><input type="text" id="tel" placeholder="(00) 90000-0000"></div>
                 <button type="button" onclick="enviarSolicitacao()" class="section-btn" style="background: var(--primary); width: 100%;">🚀 Enviar Solicitação</button>
             </form>
         </div>
     </div>
 
     <div id="tab-gestao" class="tab-content">
-        <div style="max-width: 400px; margin: 40px auto 20px; text-align: center;">
-            <label>Filtrar por Onsite:</label>
-            <select id="filtroOnsite" onchange="carregarCards()" style="padding:10px; width:100%; border-radius:8px;">
-                <option value="">Selecione seu nome...</option>
-                <option value="Aline Santos">Aline Santos</option>
-                <option value="Luis Pessanha">Luis Pessanha</option>
-            </select>
-        </div>
         <div id="containerCards" class="grid-cards-gestao">
-            </div>
+            <p style="text-align: center; width: 100%;">Carregando solicitações...</p>
+        </div>
     </div>
 
     <div class="signature">By: Edivan Costa</div>
@@ -242,12 +288,11 @@
             document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
             document.getElementById(id).classList.add('active');
             event.currentTarget.classList.add('active');
-            atualizarDashboard();
         }
 
-        // SEUS SCRIPTS ORIGINAIS
+        // --- FUNÇÕES ORIGINAIS (MANTIDAS) ---
         function abrirPopup(url) { window.open(url, 'pop', 'width=900,height=900'); }
-        function abrirAppSheet() { window.open('https://www.appsheet.com/...', 'app'); }
+        function abrirAppSheet() { window.open('https://www.appsheet.com/start/8ba6b59c-c836-4d4e-9a3e-e43d38d2a47e', 'AppSheetPopup', 'width=900,height=900'); }
         function buscarTudo() {
             let input = document.getElementById('searchInput').value.toLowerCase();
             let cards = document.getElementsByClassName('card');
@@ -256,53 +301,50 @@
         function toggleTheme() {
             const html = document.documentElement;
             const btn = document.getElementById('themeBtn');
-            if (html.getAttribute('data-theme') === 'dark') {
-                html.removeAttribute('data-theme'); btn.innerHTML = "🌙";
-            } else {
-                html.setAttribute('data-theme', 'dark'); btn.innerHTML = "☀️";
-            }
+            if (html.getAttribute('data-theme') === 'dark') { html.removeAttribute('data-theme'); btn.innerHTML = "🌙"; }
+            else { html.setAttribute('data-theme', 'dark'); btn.innerHTML = "☀️"; }
         }
 
-        // LOGICA DE INTEGRAÇÃO
+        // --- FUNÇÕES NOVAS ---
         function validarCampos() {
             const bene = document.getElementById('beneDest').value;
             const cValor = document.getElementById('campoValor');
             const cTel = document.getElementById('campoTel');
             const instru = document.getElementById('instru');
-            
             cValor.style.display = bene ? 'block' : 'none';
-            cTel.style.display = bene.includes('VOUCHER') ? 'block' : 'none';
+            cTel.style.display = (bene === 'VOUCHER UBER') ? 'block' : 'none';
             instru.style.display = 'block';
-
-            if(bene.includes('VOUCHER')) {
-                instru.innerHTML = "⚠️ Informe o valor total para realizar <b>APENAS UM TRECHO</b>.";
-            } else if(bene.includes('MOBILIDADE')) {
-                document.getElementById('vlr').value = 440;
-                instru.innerHTML = "ℹ️ Valor Fixo de Mobilidade aplicado.";
-            } else {
-                instru.innerHTML = "⚠️ Informe o gasto <b>DIÁRIO TOTAL</b> (Ida + Volta).";
-            }
+            if(bene === 'VOUCHER UBER') { instru.innerHTML = "⚠️ Informe o valor de <b>APENAS UM TRECHO</b>."; }
+            else if(bene === 'MOBILIDADE') { document.getElementById('vlr').value = 440; instru.innerHTML = "ℹ️ Valor fixo de R$ 440,00."; }
+            else { instru.innerHTML = "⚠️ Informe o valor <b>DIÁRIO TOTAL</b>."; }
         }
 
         async function enviarSolicitacao() {
-            // Lógica de envio via POST
-            alert("Enviando...");
+            const btn = event.target; btn.disabled = true; btn.innerText = "Enviando...";
+            const payload = {
+                matricula: document.getElementById('matr').value,
+                tipo_solicitacao: document.getElementById('tipoSol').value,
+                qual_beneficio: document.getElementById('beneDest').value,
+                valor_vt: document.getElementById('vlr').value,
+                telefone: document.getElementById('tel').value
+            };
+            try {
+                await fetch(SCRIPT_URL, { method: 'POST', mode: 'no-cors', body: JSON.stringify(payload) });
+                alert("Sucesso!"); document.getElementById('formBeneficio').reset(); switchTab('tab-links');
+            } catch (e) { alert("Erro ao enviar."); }
+            btn.disabled = false; btn.innerText = "🚀 Enviar Solicitação";
         }
 
-        async function atualizarDashboard() {
+        async function carregarDash() {
             try {
-                const res = await fetch(SCRIPT_URL);
-                const data = await res.json();
+                const res = await fetch(SCRIPT_URL); const data = await res.json();
                 document.getElementById('total-pendentes').innerText = data.totalPendentes;
-                const alerta = document.getElementById('onsites-alerta');
-                alerta.innerHTML = "";
-                for (const [nome, qtd] of Object.entries(data.porOnsite)) {
-                    alerta.innerHTML += `<span class="onsite-tag">${nome} (${qtd})</span>`;
-                }
+                const alerta = document.getElementById('onsites-alerta'); alerta.innerHTML = "";
+                for (const [nome, qtd] of Object.entries(data.porOnsite)) { alerta.innerHTML += `<span class="onsite-tag">${nome} (${qtd})</span>`; }
             } catch (e) { console.log("Erro dash"); }
         }
 
-        window.onload = atualizarDashboard;
+        window.onload = carregarDash;
     </script>
 </body>
 </html>
