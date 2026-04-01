@@ -147,15 +147,6 @@
             font-size: 0.9rem; font-weight: bold; cursor: pointer; transition: 0.3s; margin-top: 15px;
         }
 
-        /* --- SEÇÃO FAQ / FLUXOGRAMA --- */
-        .faq-section {
-            max-width: 1200px; margin: 20px auto 60px;
-            background: var(--card-bg); padding: 40px; border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-        }
-        .faq-section h2 { text-align: center; color: var(--primary); margin-bottom: 30px; }
-        .mermaid { display: flex; justify-content: center; background: white; padding: 20px; border-radius: 10px; }
-
         .signature { text-align: center; margin: 40px 0 20px; font-family: 'Great Vibes', cursive; font-size: 1.5rem; color: var(--signature); }
         footer { text-align: center; padding: 30px; background: #222; color: white; width: 100%; }
 
@@ -167,10 +158,9 @@
         }
 
         /* =========================================================
-           NOVOS ESTILOS ADICIONADOS PARA O FORMULÁRIO E GESTÃO
+           ESTILOS DO FORMULÁRIO E GESTÃO
            ========================================================= */
-        .form-section { max-width: 800px; margin: 40px auto; background: var(--card-bg); padding: 30px; border-radius: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); border-top: 5px solid var(--primary); }
-        .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; text-align: left; }
+        .form-section { max-width: 600px; margin: 40px auto; background: var(--card-bg); padding: 30px; border-radius: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); border-top: 5px solid var(--primary); }
         .form-group { margin-bottom: 15px; text-align: left; }
         .form-group label { display: block; margin-bottom: 5px; font-weight: bold; }
         .form-group input, .form-group select { width: 100%; padding: 12px; border-radius: 8px; border: 1px solid #ddd; background: var(--bg); color: var(--text); box-sizing: border-box; }
@@ -179,7 +169,11 @@
         .grid-gestao { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px; }
         .card-gestao { background: var(--card-bg); padding: 15px; border-radius: 10px; border-left: 5px solid var(--warning); box-shadow: 0 2px 5px rgba(0,0,0,0.1); text-align: left; }
         
-        #contadorSolicitacoes { background: #e67e22; color: white; padding: 3px 12px; border-radius: 20px; font-size: 0.75rem; font-weight: 800; margin-left: 15px; display: none; }
+        #contadorSolicitacoes { 
+            background: #e67e22; color: white; padding: 3px 12px; border-radius: 20px; 
+            font-size: 0.75rem; font-weight: 800; margin-left: 15px; display: none; 
+            max-width: 50vw; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; 
+        }
         /* ========================================================= */
     </style>
 </head>
@@ -270,34 +264,30 @@
     <div class="form-section">
         <h2 style="text-align: center; color: var(--primary); margin-top: 0;">Solicitação de Ajuste</h2>
         <form id="formBeneficio">
-            <div class="form-grid">
-                <div class="form-group">
-                    <label>Matrícula:</label>
-                    <input type="text" id="matr" required placeholder="Ex: 123456">
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label>Tipo de Solicitação:</label>
-                    <select id="tipoSol" onchange="atualizarOpcoesBeneficio()" required>
-                        <option value="">Selecione...</option>
-                        <option value="TROCA DE BENEFICIO">TROCA DE BENEFICIO</option>
-                        <option value="AJUSTE VALOR">AJUSTE VALOR DA PASSAGEM</option>
-                        <option value="AJUSTE VALOR">PEDIDO DE DEMISSÃO</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label>Qual Benefício?</label>
-                    <select id="beneDest" required>
-                        <option value="">Selecione o tipo acima primeiro...</option>
-                    </select>
-                </div>
+            <div class="form-group">
+                <label>Matrícula:</label>
+                <input type="text" id="matr" required placeholder="Ex: 123456">
+            </div>
+            <div class="form-group">
+                <label>Tipo de Solicitação:</label>
+                <select id="tipoSol" onchange="atualizarOpcoesBeneficio()" required>
+                    <option value="">Selecione...</option>
+                    <option value="TROCA DE BENEFICIO">TROCA DE BENEFICIO</option>
+                    <option value="AJUSTE VALOR">AJUSTE VALOR DA PASSAGEM</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Qual Benefício?</label>
+                <select id="beneDest" required>
+                    <option value="">Selecione o tipo acima primeiro...</option>
+                </select>
             </div>
             <div class="form-group">
                 <label>Valor (se aplicável):</label>
                 <input type="number" id="vlr" step="0.01">
             </div>
             
-            <button type="button" onclick="enviarSolicitacao()" id="btnEnviar" style="background: var(--primary); color: white; width: 100%; padding: 15px; border-radius: 8px; border: none; cursor: pointer; font-weight: bold;">🚀 Enviar Solicitação</button>
+            <button type="button" onclick="enviarSolicitacao()" id="btnEnviar" style="background: var(--primary); color: white; width: 100%; padding: 15px; border-radius: 8px; border: none; cursor: pointer; font-weight: bold; margin-top: 10px;">🚀 Enviar Solicitação</button>
         </form>
     </div>
 
@@ -343,37 +333,6 @@
         </div>
     </div>
 
-    <div class="faq-section">
-        <h2>📌 Fluxo de Processos e Solicitações</h2>
-        <div class="mermaid">
-            graph TD
-                %% Canais de Entrada
-                Start((Início do Pedido)) --> Channel{Origem?}
-                
-                Channel -- "Onsite (Direto)" --> Form[Preenchimento do FORMS]
-                Channel -- "Colaborador (Chat Shopee)" --> Chat[Atendente do Chat] --> Form
-                Channel -- "Outros Setores (E-mail)" --> Manual[Redirecionar para o FORMS] --> Form
-
-                %% Regras de Negócio no Forms
-                Form --> Type{Tipo de Ajuste?}
-                
-                Type -- "Troca de Horário" --> OnsiteResp[Responsabilidade do Onsite]
-                OnsiteResp --> Refund{Precisa de Reembolso?}
-                
-                Refund -- "Sim" --> TickBox[Marcar Opção de Reembolso no Forms] --> Process
-                Refund -- "Não" --> Process
-                
-                Type -- "Outros Ajustes" --> Process[Sua Planilha de Gestão]
-
-                %% Execução Final
-                Process --> Ginfor[[Atualização no Sistema GINFOR]]
-                Ginfor --> End((Solicitação Finalizada))
-
-                %% Bloqueio de Segurança
-                NoForm{Solicitação via E-mail/Chat?} -.-> |PROIBIDO| Deny((NÃO REALIZAR))
-        </div>
-    </div>
-
     <div class="signature">By: Edivan Costa</div>
     <footer>© 2026 Apoio ao On-Site | WeCanBR</footer>
 
@@ -413,7 +372,7 @@
         }
 
         /* =========================================================
-           NOVAS FUNÇÕES ADICIONADAS PARA O FORMULÁRIO
+           NOVAS FUNÇÕES ADICIONADAS PARA O FORMULÁRIO E GESTÃO
            ========================================================= */
         const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxupjNwDDgxLULbLOPUVd2jc4hRUxI9JYYeqy7riYGBg5ymoqAfLeJn6IwRqLH7aozH/exec"; // Coloque a URL de Deploy do seu AppScript
 
@@ -472,16 +431,22 @@
                 container.innerHTML = "";
 
                 if (dados && dados.length > 0) {
-                    contador.innerText = `${dados.length} Pendentes`;
+                    // Extrai a lista de Onsites únicos para colocar na Navbar
+                    const nomesOnsites = [...new Set(dados.map(sol => sol.onsite))].filter(Boolean).join(', ');
+                    contador.innerText = `${dados.length} Pendentes (${nomesOnsites})`;
                     contador.style.display = "block";
+                    
                     dados.forEach(sol => {
+                        // Verifica se o nome veio preenchido, caso não tenha processado ainda, joga a Matrícula
+                        const nomeColaborador = sol.nome && sol.nome !== "Não Localizado" ? sol.nome : `Colaborador não mapeado`;
+                        
                         container.innerHTML += `
                             <div class="card-gestao">
-                                <strong>Matrícula: ${sol.matricula}</strong><br>
-                                <small>Onsite: ${sol.onsite} | Status: ${sol.status}</small><br>
+                                <strong>${nomeColaborador}</strong><br>
+                                <small>Matrícula: ${sol.matricula} | Onsite: ${sol.onsite} | Status: ${sol.status}</small><br>
                                 <hr style="opacity:0.2; border: 1px solid var(--warning);">
-                                <span>${sol.tipo}</span><br>
-                                <small>${sol.detalhe}</small>
+                                <strong>${sol.tipo}</strong><br>
+                                <span>${sol.detalhe}</span>
                             </div>`;
                     });
                 } else {
