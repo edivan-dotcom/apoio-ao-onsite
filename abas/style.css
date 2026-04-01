@@ -55,8 +55,37 @@
 
 .card-desligamento { border-left: 8px solid #ff4b2b !important; background-color: rgba(255, 75, 43, 0.05) !important; }
 .card-movimentacao { border-left: 8px solid #1a73e8 !important; background-color: rgba(26, 115, 232, 0.05) !important; }
-.btn-forms-desligamento { background: #d63031 !important; color: white !important; }
-.btn-central-solicitacao { background: #0984e3 !important; color: white !important; }
+}
+
+/* --- BOTÃO CENTRAL DE SOLICITAÇÕES (ROXO/LILÁS) --- */
+.btn-central-solicitacao { 
+    background: #8e44ad !important; /* Roxo vibrante */
+    color: white !important;
+    border: none !important;
+    padding: 10px !important;
+    font-size: 0.85rem !important;
+}
+
+/* --- ESTILO GERAL DE TODOS OS BOTÕES E EFEITO DE RELEVO --- */
+.btn-jira-link, .btn-concluir, .tab-btn, .login-btn, .intranet-btn, .btn-forms-desligamento, .btn-central-solicitacao {
+    transition: all 0.3s ease !important; /* Faz o movimento ser suave */
+    display: block !important;
+    width: 100% !important;
+    margin-bottom: 8px !important;
+    text-align: center !important;
+    text-decoration: none !important;
+    border-radius: 5px !important;
+    cursor: pointer !important;
+    font-weight: bold !important;
+    box-sizing: border-box !important;
+}
+
+/* Efeito ao passar o mouse (Hover) */
+.btn-jira-link:hover, .btn-concluir:hover, .tab-btn:hover, .login-btn:hover, .intranet-btn:hover, .btn-forms-desligamento:hover, .btn-central-solicitacao:hover {
+    transform: translateY(-4px) !important; /* Sobe o botão (Relevo) */
+    box-shadow: 0 8px 15px rgba(0,0,0,0.3) !important; /* Sombra de profundidade */
+    filter: brightness(1.2) !important; /* Dá um brilho no botão */
+}
 
 /* Garante que os botões de filtro fiquem alinhados */
 .filter-bar { 
