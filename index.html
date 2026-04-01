@@ -396,63 +396,62 @@ button:disabled {
         }
 
         async function enviarSolicitacao() {
+    // 1. Identifica o botão e os campos
     const btn = document.querySelector('button[onclick="enviarSolicitacao()"]');
     const inputMatricula = document.getElementById('matr').value.trim();
-    
-    // Validação simples para não enviar vazio
+    const tipoSolicitacao = document.getElementById('tipoSol').value;
+    const qualBeneficio = document.getElementById('beneDest').value;
+    const valorVt = document.getElementById('vlr').value;
+
     if (!inputMatricula) {
-        alert("Por favor, preencha a matrícula.");
+        alert("Por favor, digite a matrícula.");
         return;
     }
 
-    // --- EFEITO NO BOTÃO ---
+    // 2. EFEITO VISUAL: Desativa o botão e muda o texto
     const textoOriginal = btn.innerText;
     btn.innerText = "⏳ Enviando, Aguarde Confirmação...";
-    btn.style.opacity = "0.7";
-    btn.style.cursor = "not-allowed";
     btn.disabled = true;
 
-    // Trava do WE: Garante que a planilha encontre o colaborador
+    // 3. TRAVA DO WE: Garante que o PROCV da planilha funcione sempre
     let matriculaFormatada = inputMatricula.toUpperCase().startsWith("WE") 
         ? inputMatricula.toUpperCase() 
         : "WE" + inputMatricula;
 
+    // 4. Monta os dados (A planilha usará a matrícula para achar o Onsite automaticamente)
     const data = {
         matricula: matriculaFormatada,
-        tipo_solicitacao: document.getElementById('tipoSol').value,
-        qual_beneficio: document.getElementById('beneDest').value,
-        valor_vt: document.getElementById('vlr').value
-        // Se o seu Apps Script usa o 'Sort Code' para achar o Onsite, 
-        // certifique-se de que o campo correspondente está sendo enviado aqui.
+        tipo_solicitacao: tipoSolicitacao,
+        qual_beneficio: qualBeneficio,
+        valor_vt: valorVt
     };
 
     try {
+        // Envia para o Google Apps Script
         await fetch(SCRIPT_URL, { 
             method: 'POST', 
             mode: 'no-cors', 
             body: JSON.stringify(data) 
         });
 
+        // 5. SUCESSO
         alert("✅ Sucesso! Solicitação de " + matriculaFormatada + " enviada.");
         document.getElementById('formBeneficio').reset();
         
-        // Atualiza os cards de gestão
+        // Atualiza os cards na tela (Gestão Onsite)
         if (typeof carregarCardsGestao === "function") {
             carregarCardsGestao();
         }
 
     } catch (error) {
-        console.error("Erro:", error);
-        alert("❌ Erro ao enviar. Verifique a conexão.");
+        console.error("Erro no envio:", error);
+        alert("❌ Erro ao enviar. Verifique sua conexão.");
     } finally {
-        // --- VOLTA O BOTÃO AO NORMAL ---
+        // 6. VOLTA O BOTÃO AO NORMAL
         btn.innerText = textoOriginal;
-        btn.style.opacity = "1";
-        btn.style.cursor = "pointer";
         btn.disabled = false;
     }
-}
-    
+}    
     // Verifica se já tem WE, se não tiver, ele adiciona
     let matriculaFormatada = matriculaBruta.toUpperCase().startsWith("WE") 
         ? matriculaBruta.toUpperCase() 
