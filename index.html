@@ -104,7 +104,6 @@
             background: var(--card-bg); color: var(--text); box-sizing: border-box;
         }
 
-        /* --- ESTILOS DAS ABAS --- */
         .tabs-container {
             display: flex; justify-content: center; gap: 15px; margin: 30px auto 10px;
         }
@@ -177,9 +176,8 @@
         
         .gestao-section { max-width: 1200px; margin: 40px auto; padding: 0 20px; }
         .grid-gestao { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px; }
-        .card-gestao { background: var(--card-bg); padding: 15px; border-radius: 10px; border-left: 5px solid var(--warning); box-shadow: 0 2px 5px rgba(0,0,0,0.1); text-align: left; position: relative; padding-bottom: 60px; }
+        .card-gestao { background: var(--card-bg); padding: 15px; border-radius: 10px; border-left: 5px solid var(--warning); box-shadow: 0 2px 5px rgba(0,0,0,0.1); text-align: left; position: relative; padding-bottom: 70px; }
         
-        /* NOVO ESTILO: Contador Animado com Texto Preto */
         #contadorSolicitacoes { 
             background: #e67e22; color: #000; padding: 5px 15px; border-radius: 20px; 
             font-size: 0.8rem; font-weight: 800; margin-left: 15px; display: none; 
@@ -207,6 +205,11 @@
             transform: scale(1.3); margin-right: 8px; cursor: pointer;
         }
         .valor-destaque { color: var(--voucher); font-weight: bold; }
+        .link-anexo {
+            display: inline-block; margin-top: 8px; padding: 5px 10px; background: #e3f2fd; 
+            color: #1976d2; text-decoration: none; border-radius: 5px; font-weight: bold; font-size: 0.85rem;
+        }
+        .link-anexo:hover { background: #bbdefb; }
     </style>
 </head>
 <body>
@@ -350,17 +353,24 @@
                         <option value="">Selecione...</option>
                         <option value="TROCA DE BENEFICIO">TROCA DE BENEFICIO</option>
                         <option value="AJUSTE VALOR">AJUSTE VALOR DA PASSAGEM</option>
+                        <option value="DESLIGAMENTO" style="color: red; font-weight: bold;">SOLICITAÇÃO DE DESLIGAMENTO</option>
                     </select>
                 </div>
-                <div class="form-group">
+                
+                <div class="form-group" id="grupoBeneficio">
                     <label>Qual Benefício?</label>
                     <select id="beneDest" required>
                         <option value="">Selecione o tipo acima primeiro...</option>
                     </select>
                 </div>
-                <div class="form-group">
+                <div class="form-group" id="grupoValor">
                     <label>Valor (se aplicável):</label>
                     <input type="number" id="vlr" step="0.01">
+                </div>
+
+                <div class="form-group" id="grupoAnexo" style="display: none;">
+                    <label style="color: var(--danger);">📎 Anexar Documento (Obrigatório para Desligamento):</label>
+                    <input type="file" id="arquivoAnexo" accept=".pdf,.png,.jpg,.jpeg">
                 </div>
                 
                 <button type="button" onclick="enviarSolicitacao()" id="btnEnviar" style="background: var(--primary); color: white; width: 100%; padding: 15px; border-radius: 8px; border: none; cursor: pointer; font-weight: bold; margin-top: 10px;">🚀 Enviar Solicitação</button>
@@ -424,42 +434,94 @@
 
         function atualizarOpcoesBeneficio() {
             const tipo = document.getElementById('tipoSol').value;
-            const select = document.getElementById('beneDest');
-            select.innerHTML = '<option value="">Escolha uma opção...</option>';
-            
-            if (tipo === "TROCA DE BENEFICIO") {
-                const trocas = ["VT para FRETADO", "VT para VT + VOUCHER", "VT para MOBILIDADE", "MOBILIDADE para VT", "FRETADO para VT"];
-                trocas.forEach(t => select.innerHTML += `<option value="${t}">${t}</option>`);
+            const selectBene = document.getElementById('beneDest');
+            const grupoBene = document.getElementById('grupoBeneficio');
+            const grupoValor = document.getElementById('grupoValor');
+            const grupoAnexo = document.getElementById('grupoAnexo');
+
+            selectBene.innerHTML = '<option value="">Escolha uma opção...</option>';
+
+            if (tipo === "DESLIGAMENTO") {
+                grupoBene.style.display = 'none';
+                grupoValor.style.display = 'none';
+                grupoAnexo.style.display = 'block';
+                selectBene.required = false;
             } else {
-                const padrao = ["VT", "VOUCHER UBER", "MOBILIDADE"];
-                padrao.forEach(p => select.innerHTML += `<option value="${p}">${p}</option>`);
+                grupoBene.style.display = 'block';
+                grupoValor.style.display = 'block';
+                grupoAnexo.style.display = 'none';
+                selectBene.required = true;
+
+                if (tipo === "TROCA DE BENEFICIO") {
+                    const trocas = ["VT para FRETADO", "VT para VT + VOUCHER", "VT para MOBILIDADE", "MOBILIDADE para VT", "FRETADO para VT"];
+                    trocas.forEach(t => selectBene.innerHTML += `<option value="${t}">${t}</option>`);
+                } else if (tipo === "AJUSTE VALOR") {
+                    const padrao = ["VT", "VOUCHER UBER", "MOBILIDADE"];
+                    padrao.forEach(p => selectBene.innerHTML += `<option value="${p}">${p}</option>`);
+                }
             }
+        }
+
+        // Função para converter arquivo em Base64
+        function lerArquivoBase64(file) {
+            return new Promise((resolve, reject) => {
+                const reader = new FileReader();
+                reader.onload = () => resolve(reader.result.split(',')[1]); 
+                reader.onerror = error => reject(error);
+                reader.readAsDataURL(file);
+            });
         }
 
         async function enviarSolicitacao() {
             const btn = document.getElementById('btnEnviar');
-            
-            const data = {
-                acao: "criar",
-                matricula: document.getElementById('matr').value.trim().toUpperCase().startsWith("WE") ? document.getElementById('matr').value.trim().toUpperCase() : "WE" + document.getElementById('matr').value.trim(),
-                tipo: document.getElementById('tipoSol').value,
-                beneficio: document.getElementById('beneDest').value,
-                valor: document.getElementById('vlr').value
-            };
+            const tipo = document.getElementById('tipoSol').value;
+            const matr = document.getElementById('matr').value.trim();
+            const fileInput = document.getElementById('arquivoAnexo');
 
-            if (!data.matricula || !data.tipo || !data.beneficio) {
-                alert("Preencha todos os campos obrigatórios!");
+            if (!matr || !tipo) {
+                alert("Preencha Matrícula e Tipo de Solicitação.");
                 return;
             }
 
-            btn.innerText = "⏳ Gravando na Planilha...";
+            if (tipo !== "DESLIGAMENTO" && !document.getElementById('beneDest').value) {
+                alert("Selecione qual o benefício.");
+                return;
+            }
+
+            if (tipo === "DESLIGAMENTO" && fileInput.files.length === 0) {
+                alert("É obrigatório anexar um documento para Desligamento.");
+                return;
+            }
+
+            const data = {
+                acao: "criar",
+                matricula: matr.toUpperCase().startsWith("WE") ? matr.toUpperCase() : "WE" + matr,
+                tipo: tipo,
+                beneficio: tipo === "DESLIGAMENTO" ? "-" : document.getElementById('beneDest').value,
+                valor: tipo === "DESLIGAMENTO" ? "-" : document.getElementById('vlr').value
+            };
+
+            btn.innerText = "⏳ Processando...";
             btn.disabled = true;
 
             try {
+                // Se for desligamento, processa o arquivo
+                if (tipo === "DESLIGAMENTO" && fileInput.files.length > 0) {
+                    btn.innerText = "⏳ Fazendo upload do arquivo...";
+                    const file = fileInput.files[0];
+                    data.arquivoBase64 = await lerArquivoBase64(file);
+                    data.nomeArquivo = file.name;
+                    data.mimeType = file.type;
+                }
+
+                btn.innerText = "⏳ Gravando na Planilha...";
                 await fetch(SCRIPT_URL, { method: 'POST', mode: 'no-cors', body: JSON.stringify(data) });
+                
                 alert("✅ Solicitação enviada com sucesso!");
                 document.getElementById('formBeneficio').reset();
+                atualizarOpcoesBeneficio(); // reseta a view do formulário
                 carregarCardsGestao();
+
             } catch (error) {
                 alert("❌ Erro ao enviar solicitação.");
             } finally {
@@ -489,7 +551,6 @@
             }
         }
 
-        // --- SISTEMA DE TICKER (CARROSSEL NO CONTADOR) ---
         let tickerInterval;
         let tickerIndex = 0;
         let tickerMessages = [];
@@ -511,11 +572,11 @@
 
             if (tickerMessages.length > 1) {
                 tickerInterval = setInterval(() => {
-                    contador.style.opacity = 0; // Inicia o fade out
+                    contador.style.opacity = 0; 
                     setTimeout(() => {
                         tickerIndex = (tickerIndex + 1) % tickerMessages.length;
                         contador.innerText = tickerMessages[tickerIndex];
-                        contador.style.opacity = 1; // Inicia o fade in
+                        contador.style.opacity = 1; 
                     }, 500); 
                 }, 3500); 
             }
@@ -540,7 +601,6 @@
                     });
 
                     const mensagensCarrossel = [];
-                    // Adiciona a estrutura `(Total) - Onsite: Qtd`
                     for (const [onsite, qtd] of Object.entries(contagemPorOnsite)) {
                         mensagensCarrossel.push(`(${totalPendentes}) - ${onsite}: ${qtd}`);
                     }
@@ -550,15 +610,19 @@
                     // Renderização dos cards
                     dados.forEach(sol => {
                         const nomeColaborador = sol.nome && sol.nome !== "Não Localizado" ? sol.nome : `Colaborador não mapeado`;
-                        const exibicaoValor = sol.valor ? `<br><span class="valor-destaque">Valor: R$ ${sol.valor}</span>` : '';
+                        
+                        // Lógica de exibição condicional (Valor e Anexo)
+                        const exibicaoValor = sol.valor && sol.valor !== "-" ? `<br><span class="valor-destaque">Valor: R$ ${sol.valor}</span>` : '';
+                        const linkAnexoHTML = sol.anexo && sol.anexo.includes("http") ? `<br><a href="${sol.anexo}" target="_blank" class="link-anexo">📎 Baixar Anexo</a>` : '';
+                        const detalheHTML = sol.detalhe && sol.detalhe !== "-" ? `<span>${sol.detalhe}</span>` : '';
                         
                         container.innerHTML += `
                             <div class="card-gestao" id="card-${sol.id}">
                                 <strong>${nomeColaborador}</strong><br>
                                 <small>Matrícula: ${sol.matricula} | Onsite: ${sol.onsite} | Status: ${sol.status}</small><br>
                                 <hr style="opacity:0.2; border: 1px solid var(--warning);">
-                                <strong>${sol.tipo}</strong><br>
-                                <span>${sol.detalhe}</span>${exibicaoValor}
+                                <strong style="color: ${sol.tipo === 'DESLIGAMENTO' ? 'var(--danger)' : 'inherit'}">${sol.tipo}</strong><br>
+                                ${detalheHTML}${exibicaoValor}${linkAnexoHTML}
                                 
                                 <button class="btn-concluir" id="btn-concluir-${sol.id}" onclick="iniciarConclusao('${sol.id}')">✅ CONCLUIR</button>
                                 
