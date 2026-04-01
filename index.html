@@ -65,6 +65,14 @@
         .btn-filtro { padding: 8px 20px; border-radius: 20px; border: 2px solid transparent; cursor: pointer; font-weight: bold; transition: 0.3s; font-size: 0.9rem; }
         .tag-ponto { background: var(--warning); color: #000; text-align: center; font-weight: bold; padding: 6px; border-radius: 5px; margin-bottom: 10px; animation: pulse 2s infinite; font-size: 0.85rem;}
         @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.02); } 100% { transform: scale(1); } }
+        /* Cores de destaque para os tipos de ticket */
+.card-desligamento { border-left: 8px solid #ff4b2b !important; background-color: rgba(255, 75, 43, 0.05) !important; }
+.card-movimentacao { border-left: 8px solid #1a73e8 !important; background-color: rgba(26, 115, 232, 0.05) !important; }
+
+/* Botões específicos */
+.btn-forms-desligamento { background: #d63031; color: white; }
+.btn-central-solicitacao { background: #0984e3; color: white; }
+        
     </style>
 </head>
 <body>
@@ -202,20 +210,66 @@
         async function enviarParaPonto(chave) { await fetch(SCRIPT_URL, { method: 'POST', mode: 'no-cors', body: JSON.stringify({ acao: "marcar_ponto", chave: chave }) }); carregarCardsGestao(); }
         async function concluirPonto(chave) { await fetch(SCRIPT_URL, { method: 'POST', mode: 'no-cors', body: JSON.stringify({ acao: "concluir_ponto", chave: chave }) }); carregarCardsGestao(); }
         
-        function mostrarTicketsDoOnsite(onsite, filtro) {
-            document.getElementById('viewAgrupadaJira').style.display = 'none';
-            document.getElementById('viewDetalhadaJira').style.display = 'block';
-            document.getElementById('tituloOperacaoJira').innerText = `Gestão: ${onsite}`;
-            const container = document.getElementById('containerCardsJira');
-            container.innerHTML = "";
+        function mostrarTicketsDoOnsite(onsite, filtroAtivo = 'TODOS') {
+    document.getElementById('viewAgrupadaJira').style.display = 'none';
+    document.getElementById('viewDetalhadaJira').style.display = 'block';
+    document.getElementById('tituloOperacaoJira').innerText = `Gestão: ${onsite}`;
+    
+    const container = document.getElementById('containerCardsJira');
+    
+    // Limpa o conteúdo e adiciona os botões de filtro no topo
+    container.innerHTML = `
+        <div style="grid-column: 1 / -1; display: flex; gap: 10px; justify-content: center; margin-bottom: 20px; width: 100%;">
+            <button class="btn-filtro" style="background: ${filtroAtivo === 'TODOS' ? 'var(--primary)' : 'var(--card-bg)'}; color: ${filtroAtivo === 'TODOS' ? 'white' : 'var(--text)'}" onclick="mostrarTicketsDoOnsite('${onsite}', 'TODOS')">TUDO</button>
+            <button class="btn-filtro" style="background: ${filtroAtivo === 'DESLIGAMENTO' ? '#d63031' : 'var(--card-bg)'}; color: ${filtroAtivo === 'DESLIGAMENTO' ? 'white' : 'var(--text)'}" onclick="mostrarTicketsDoOnsite('${onsite}', 'DESLIGAMENTO')">🚫 DESLIGAMENTOS</button>
+            <button class="btn-filtro" style="background: ${filtroAtivo === 'MOVIMENTACAO' ? '#0984e3' : 'var(--card-bg)'}; color: ${filtroAtivo === 'MOVIMENTACAO' ? 'white' : 'var(--text)'}" onclick="mostrarTicketsDoOnsite('${onsite}', 'MOVIMENTACAO')">🔄 MOVIMENTAÇÕES</button>
+        </div>
+    `;
 
-            const tickets = (onsite === 'TIME DE PONTO') ? ticketsJiraGlobais.filter(t => t.pendentePonto) : ticketsJiraGlobais.filter(t => t.onsite === onsite);
-            
-            tickets.forEach(t => {
-                let statusTag = t.pendentePonto ? `<div class="tag-ponto">⏰ PENDENTE NO PONTOMAIS</div>` : '';
-                container.innerHTML += `<div class="card-gestao" style="padding-bottom: 150px;">${statusTag}<strong>${t.nome}</strong><br><small>${t.chave}</small><br><hr style="opacity:0.2;"><span>${t.resumo}</span><div style="position: absolute; bottom: 15px; left: 15px; right: 15px; display: flex; flex-direction: column; gap: 5px;"><a href="https://spxresolve.atlassian.net/browse/${t.chave}" target="_blank" class="btn-jira-link" style="background: var(--jira); padding: 8px;">🔗 ABRIR JIRA</a>${t.pendentePonto ? `<button onclick="concluirPonto('${t.chave}')" class="btn-jira-link" style="background: #333; padding: 8px;">✔️ CONCLUIR PONTO</button>` : `<button onclick="enviarParaPonto('${t.chave}')" class="btn-jira-link" style="background: #f1c40f; color:#000; padding: 8px;">➡️ ENVIAR PARA O PONTO</button>`}</div></div>`;
-            });
+    // Filtra os tickets baseados no Onsite ou se é Ponto
+    let tickets = (onsite === 'TIME DE PONTO') 
+        ? ticketsJiraGlobais.filter(t => t.pendentePonto) 
+        : ticketsJiraGlobais.filter(t => t.onsite === onsite);
+    
+    // Aplica o filtro de categoria (Desligamento / Movimentação)
+    if(filtroAtivo !== 'TODOS') {
+        tickets = tickets.filter(t => t.resumo.toUpperCase().includes(filtroAtivo));
+    }
+
+    tickets.forEach(t => {
+        const resumo = t.resumo.toUpperCase();
+        const isDesligamento = resumo.includes("DESLIGAMENTO");
+        const isMovimentacao = resumo.includes("MOVIMENTAÇÃO") || resumo.includes("MOVIMENTACAO");
+        
+        let classeDestaque = isDesligamento ? "card-desligamento" : (isMovimentacao ? "card-movimentacao" : "");
+        let statusTag = t.pendentePonto ? `<div class="tag-ponto">⏰ PENDENTE NO PONTOMAIS</div>` : '';
+
+        // Lógica dos Botões
+        let botoesExtras = "";
+        if (isDesligamento) {
+            botoesExtras = `<button class="btn-jira-link btn-forms-desligamento" onclick="window.open('URL_DO_FORMS_AQUI', '_blank')">📋 ENVIAR FORMS DE DESLIGAMENTO</button>`;
+        } else if (isMovimentacao) {
+            botoesExtras = `
+                <button class="btn-jira-link btn-central-solicitacao" onclick="window.open('URL_DA_CENTRAL_AQUI', '_blank')">📥 ENVIAR CENTRAL DE SOLICITAÇÃO</button>
+                <button onclick="enviarParaPonto('${t.chave}')" class="btn-jira-link" style="background: #f1c40f; color:#000; padding: 8px;">➡️ ENVIAR PARA O PONTO</button>
+            `;
+        } else {
+            botoesExtras = `<button onclick="enviarParaPonto('${t.chave}')" class="btn-jira-link" style="background: #f1c40f; color:#000; padding: 8px;">➡️ ENVIAR PARA O PONTO</button>`;
         }
+
+        container.innerHTML += `
+            <div class="card-gestao ${classeDestaque}" style="padding-bottom: 160px;">
+                ${statusTag}
+                <strong>${t.nome}</strong><br><small>${t.chave}</small><br>
+                <hr style="opacity:0.2;">
+                <span>${t.resumo}</span>
+                <div style="position: absolute; bottom: 15px; left: 15px; right: 15px; display: flex; flex-direction: column; gap: 5px;">
+                    <a href="https://spxresolve.atlassian.net/browse/${t.chave}" target="_blank" class="btn-jira-link" style="background: var(--jira); padding: 8px;">🔗 ABRIR JIRA</a>
+                    ${botoesExtras}
+                </div>
+            </div>`;
+    });
+}
         function voltarParaAgrupamentoJira() { document.getElementById('viewDetalhadaJira').style.display = 'none'; document.getElementById('viewAgrupadaJira').style.display = 'grid'; }
     </script>
 </body>
