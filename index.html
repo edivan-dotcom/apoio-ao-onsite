@@ -36,9 +36,9 @@
         .dropdown-content a { color: var(--text); padding: 12px 16px; text-decoration: none; display: block; font-size: 0.85rem; border-bottom: 1px solid rgba(128,128,128,0.1); }
         .dropdown-content a:hover { background: rgba(106, 17, 203, 0.05); }
 
-        /* HEADER */
+        /* HEADER & SEARCH */
         header { background: linear-gradient(rgba(106, 17, 203, 0.75), rgba(37, 117, 252, 0.75)), url('https://wecanbr.com.br/img/quem-somos/main.jpg'); background-size: cover; background-position: center; color: white; padding: 60px 20px; text-align: center; }
-        .search-container { margin: 20px auto 0; position: relative; width: 450px; max-width: 90%; }
+        .search-container { margin-top: 25px; position: relative; width: 450px; max-width: 90%; margin: 20px auto 0; }
         #searchInput { padding: 15px 25px; width: 100%; border-radius: 30px; border: none; font-size: 1rem; box-shadow: 0 5px 15px rgba(0,0,0,0.2); outline: none; background: var(--card-bg); color: var(--text); box-sizing: border-box; }
         
         /* TABS */
@@ -46,45 +46,24 @@
         .tab-btn { padding: 12px 30px; border: none; border-radius: 25px; cursor: pointer; font-weight: bold; font-size: 1rem; background: var(--card-bg); color: var(--text); box-shadow: 0 4px 10px rgba(0,0,0,0.1); transition: 0.3s; }
         .tab-btn.active { background: var(--primary); color: white; }
 
-        /* GRID CONFIGURATION - 4 COLUMNS */
-        .container, .grid-gestao { 
-            display: grid; 
-            grid-template-columns: repeat(4, 1fr); /* FORÇA 4 COLUNAS */
-            gap: 20px; 
-            padding: 20px; 
-            max-width: 1400px; 
-            margin: 0 auto; 
-        }
-
-        /* FUNNEL (RODAPÉ DA HOME) - 4 COLUMNS */
-        .funnel-container { 
-            display: grid; 
-            grid-template-columns: repeat(4, 1fr); /* FORÇA 4 COLUNAS */
-            gap: 20px; 
-            max-width: 1400px; 
-            margin: 40px auto; 
-            padding: 0 20px; 
+        /* GRIDS CONFIGURATION - 4 COLUMNS */
+        .container, .funnel-container, .grid-gestao { 
+            display: grid !important; 
+            grid-template-columns: repeat(4, 1fr) !important; 
+            gap: 20px; padding: 20px; max-width: 1400px; margin: 0 auto; 
         }
 
         /* CARD STYLES (RESTAURADOS) */
         .card, .embedded-section, .card-jira-agrupado, .card-gestao { 
-            background: var(--card-bg); 
-            border-radius: 15px; 
-            padding: 25px; 
-            text-align: center; 
-            box-shadow: 0 5px 15px rgba(0,0,0,0.05); 
-            transition: 0.3s; 
-            border-top: 5px solid var(--primary); 
-            box-sizing: border-box; 
+            background: var(--card-bg); border-radius: 15px; padding: 25px; text-align: center; 
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05); transition: 0.3s; 
+            border-top: 5px solid var(--primary); box-sizing: border-box; 
         }
         .card:hover, .card-jira-agrupado:hover { transform: translateY(-5px); box-shadow: 0 10px 25px rgba(0,0,0,0.1); cursor: pointer; }
         
-        .embedded-section { min-width: unset; flex: unset; border-top-width: 5px; } /* Ajuste para o grid */
-        .section-btn { color: white; border: none; padding: 12px 25px; border-radius: 25px; font-size: 0.9rem; font-weight: bold; cursor: pointer; transition: 0.3s; margin-top: 15px; text-decoration: none; display: inline-block; }
-        
+        .section-btn { color: white; border: none; padding: 12px 25px; border-radius: 25px; font-size: 0.9rem; font-weight: bold; cursor: pointer; transition: 0.3s; margin-top: 15px; display: inline-block; text-decoration: none; }
         .card-gestao { text-align: left; border-left: 5px solid var(--warning); border-top: none; position: relative; padding-bottom: 120px; }
         .btn-jira-link, .btn-concluir { border: none; border-radius: 5px; cursor: pointer; font-weight: bold; transition: 0.3s; text-decoration: none; text-align: center; color: white; display: block; width: 100%; box-sizing: border-box; margin-top: 5px; padding: 8px; }
-        .btn-concluir { position: absolute; bottom: 15px; left: 15px; right: 15px; background: var(--primary); }
         .btn-filtro { padding: 8px 20px; border-radius: 20px; border: 2px solid transparent; cursor: pointer; font-weight: bold; transition: 0.3s; font-size: 0.9rem; margin: 5px; }
         
         .tag-ponto { background: var(--warning); color: #000; text-align: center; font-weight: bold; padding: 6px; border-radius: 5px; margin-bottom: 10px; font-size: 0.85rem; animation: pulse 2s infinite; }
@@ -94,10 +73,7 @@
         footer { text-align: center; padding: 30px; background: #222; color: white; width: 100%; }
         .theme-toggle { position: fixed; bottom: 20px; right: 20px; width: 50px; height: 50px; border-radius: 50%; background: var(--primary); color: white; border: none; cursor: pointer; z-index: 2001; font-size: 20px; }
 
-        /* RESPONSIVO (OPCIONAL: CAI PARA 1 COLUNA NO CELULAR) */
-        @media (max-width: 900px) {
-            .container, .grid-gestao, .funnel-container { grid-template-columns: 1fr; }
-        }
+        @media (max-width: 900px) { .container, .grid-gestao, .funnel-container { grid-template-columns: 1fr !important; } }
     </style>
 </head>
 <body>
@@ -142,10 +118,7 @@
         </div>
     </nav>
 
-    <header>
-        <h1>APOIO AO ONSITE</h1>
-        <div class="search-container"><input type="text" id="searchInput" onkeyup="buscarTudo()" placeholder="Pesquisar..."></div>
-    </header>
+    <header><h1>APOIO AO ONSITE</h1><div class="search-container"><input type="text" id="searchInput" onkeyup="buscarTudo()" placeholder="Pesquisar..."></div></header>
 
     <div class="tabs-container">
         <button class="tab-btn active" onclick="switchTab('home')" id="btnTabHome">🏠 HOME</button>
@@ -165,10 +138,7 @@
         const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxupjNwDDgxLULbLOPUVd2jc4hRUxI9JYYeqy7riYGBg5ymoqAfLeJn6IwRqLH7aozH/exec"; 
 
         async function carregarAba(url, idElemento) {
-            try {
-                const res = await fetch(url);
-                if (res.ok) document.getElementById(idElemento).innerHTML = await res.text();
-            } catch(e) { console.error("Erro ao carregar módulo."); }
+            try { const res = await fetch(url); if (res.ok) document.getElementById(idElemento).innerHTML = await res.text(); } catch(e) { console.error("Erro."); }
         }
 
         async function montarSite() {
@@ -180,7 +150,7 @@
         window.onload = montarSite;
 
         function switchTab(tab) {
-            document.getElementById('homeView').style.display = tab === 'home' ? 'block' : 'none';
+            document.getElementById('homeView').style.display = tab === 'home' ? 'grid' : 'none';
             document.getElementById('solicitacoesView').style.display = tab === 'solicitacoes' ? 'block' : 'none';
             document.getElementById('jiraView').style.display = tab === 'jira' ? 'block' : 'none';
             document.getElementById('btnTabHome').classList.toggle('active', tab === 'home');
@@ -193,8 +163,7 @@
             const containerJira = document.getElementById('viewAgrupadaJira');
             try {
                 const res = await fetch(SCRIPT_URL); const dados = await res.json();
-                if(containerSol) containerSol.innerHTML = ""; 
-                if(containerJira) containerJira.innerHTML = "";
+                if(containerSol) containerSol.innerHTML = ""; if(containerJira) containerJira.innerHTML = "";
 
                 if (dados.jira && containerJira) {
                     ticketsJiraGlobais = dados.jira;
@@ -204,7 +173,7 @@
                         else { let ons = t.onsite || "Não Mapeado"; contagem[ons] = (contagem[ons] || 0) + 1; }
                     });
                     if (pendPonto > 0) {
-                        containerJira.innerHTML += `<div class="card-jira-agrupado" style="border-top-color: var(--pontomais); box-shadow: 0 4px 15px rgba(0, 168, 168, 0.3);" onclick="mostrarTicketsDoOnsite('TIME DE PONTO', 'TODOS')"><span style="font-size: 30px;">⏱️</span><h3 style="color: var(--pontomais);">TIME DE PONTO</h3><span style="font-weight: bold; color: var(--warning);">${pendPonto} Ticket(s) Pendente(s)</span></div>`;
+                        containerJira.innerHTML += `<div class="card-jira-agrupado" style="border-top-color: var(--pontomais);" onclick="mostrarTicketsDoOnsite('TIME DE PONTO', 'TODOS')"><span style="font-size: 30px;">⏱️</span><h3 style="color: var(--pontomais);">TIME DE PONTO</h3><span style="font-weight: bold; color: var(--warning);">${pendPonto} Ticket(s) Pendente(s)</span></div>`;
                     }
                     for (const [onsite, qtd] of Object.entries(contagem)) {
                         if (qtd > 0) {
@@ -212,7 +181,6 @@
                         }
                     }
                 }
-                
                 if (dados.solicitacoes && containerSol) {
                     dados.solicitacoes.forEach(sol => {
                         containerSol.innerHTML += `<div class="card-gestao"><strong>${sol.nome}</strong><br><small>${sol.matricula}</small><br><strong>${sol.tipo}</strong><button class="btn-concluir" onclick="finalizarSolicitacao('${sol.id}')">✅ CONCLUIR</button></div>`;
@@ -223,21 +191,45 @@
 
         function toggleTheme() { const html = document.documentElement; if (html.getAttribute('data-theme') === 'dark') html.removeAttribute('data-theme'); else html.setAttribute('data-theme', 'dark'); }
         function abrirPopup(url) { window.open(url, 'Popup', 'width=900,height=900,top=50,left=300,scrollbars=yes,resizable=yes'); }
-        function abrirAppSheet() { window.open('https://www.appsheet.com/start/8ba6b59c-c836-4d4e-9a3e-e43d38d2a47e', 'AppSheetPopup', `width=${window.screen.availWidth},height=${window.screen.availHeight},top=0,left=0,scrollbars=yes,resizable=yes`); }
+        function abrirAppSheet() { window.open('https://www.appsheet.com/start/8ba6b59c-c836-4d4e-9a3e-e43d38d2a47e', 'AppSheetPopup', 'width=1200,height=900'); }
         function buscarTudo() { let input = document.getElementById('searchInput').value.toLowerCase(); let cards = document.getElementsByClassName('card'); for (let card of cards) card.classList.toggle('hidden', !card.innerText.toLowerCase().includes(input)); }
-        
         async function enviarParaPonto(chave) { await fetch(SCRIPT_URL, { method: 'POST', mode: 'no-cors', body: JSON.stringify({ acao: "marcar_ponto", chave: chave }) }); carregarCardsGestao(); }
         async function concluirPonto(chave) { await fetch(SCRIPT_URL, { method: 'POST', mode: 'no-cors', body: JSON.stringify({ acao: "concluir_ponto", chave: chave }) }); carregarCardsGestao(); }
         function finalizarSolicitacao(id) { fetch(SCRIPT_URL, { method: 'POST', mode: 'no-cors', body: JSON.stringify({ acao: "atualizar", id: id }) }).then(() => carregarCardsGestao()); }
         function voltarParaAgrupamentoJira() { document.getElementById('viewDetalhadaJira').style.display = 'none'; document.getElementById('viewAgrupadaJira').style.display = 'grid'; }
 
         function mostrarTicketsDoOnsite(onsite, filtroAtivo) {
-            document.getElementById('viewAgrupadaJira').style.display = 'none';
-            document.getElementById('viewDetalhadaJira').style.display = 'block';
+            document.getElementById('viewAgrupadaJira').style.display = 'none'; document.getElementById('viewDetalhadaJira').style.display = 'block';
             document.getElementById('tituloOperacaoJira').innerText = `Gestão: ${onsite}`;
-            const containerFiltros = document.getElementById('containerFiltrosJira');
-            const containerCards = document.getElementById('containerCardsJira');
+            const containerFiltros = document.getElementById('containerFiltrosJira'); const containerCards = document.getElementById('containerCardsJira');
             containerFiltros.innerHTML = ""; containerCards.innerHTML = "";
 
-            const baseTickets = (onsite === 'TIME DE PONTO') 
-                ? ticketsJiraGlobais.
+            const baseTickets = (onsite === 'TIME DE PONTO') ? ticketsJiraGlobais.filter(t => t.pendentePonto) : ticketsJiraGlobais.filter(t => t.onsite === onsite && !t.pendentePonto);
+            
+            let qtdDeslig = 0, qtdMov = 0;
+            baseTickets.forEach(t => { let tipo = t.tipoItem.toLowerCase(); if (tipo.includes("deslig") || tipo.includes("offboarding")) qtdDeslig++; else if (tipo.includes("moviment") || tipo.includes("mudança")) qtdMov++; });
+
+            containerFiltros.innerHTML = `<button class="btn-filtro" style="${filtroAtivo === 'TODOS' ? 'background: var(--primary); color: white;' : 'background: #eee; color: #333;'}" onclick="mostrarTicketsDoOnsite('${onsite}', 'TODOS')">📋 Todos (${baseTickets.length})</button>`;
+            if (qtdDeslig > 0) containerFiltros.innerHTML += `<button class="btn-filtro" style="${filtroAtivo === 'DESLIG' ? 'background: var(--danger); color: white;' : 'color: var(--danger);'}" onclick="mostrarTicketsDoOnsite('${onsite}', 'DESLIG')">🚫 Desligamentos (${qtdDeslig})</button>`;
+            if (qtdMov > 0) containerFiltros.innerHTML += `<button class="btn-filtro" style="${filtroAtivo === 'MOV' ? 'background: var(--secondary); color: white;' : 'color: var(--secondary);'}" onclick="mostrarTicketsDoOnsite('${onsite}', 'MOV')">🔄 Movimentações (${qtdMov})</button>`;
+
+            baseTickets.filter(t => {
+                if (filtroAtivo === 'TODOS') return true; let tipo = t.tipoItem.toLowerCase();
+                if (filtroAtivo === 'DESLIG') return tipo.includes("deslig") || tipo.includes("offboarding");
+                if (filtroAtivo === 'MOV') return tipo.includes("moviment") || tipo.includes("mudança");
+                return false;
+            }).forEach(t => {
+                const tipoLower = t.tipoItem.toLowerCase(); const isMov = tipoLower.includes("moviment") || tipoLower.includes("mudança"); const isDeslig = tipoLower.includes("deslig") || tipoLower.includes("offboarding");
+                let statusTag = t.pendentePonto ? `<div class="tag-ponto">⏰ PENDENTE NO PONTOMAIS</div>` : '';
+                let urlForms = 'https://forms.office.com/Pages/ResponsePage.aspx?id=fCAtUtXsx0-nbxdGSxFh-eVAzhwdpsxLmCSGMQwqNIpUM1E2TFRSRkhNWU9IQk9SVFhBSDJNWTFDVS4u';
+                let nomeForms = '📝 CENTRAL SOLICITAÇÕES', corForms = 'var(--primary)';
+                if (isDeslig) { urlForms = 'https://forms.office.com/Pages/ResponsePage.aspx?id=fCAtUtXsx0-nbxdGSxFh-f7MDqf4DUBBuOHjox7sxytUNFFQNTgzR1pQV0FLM05aWElXSjlRMjFHRy4u'; nomeForms = '📝 FORMS DESLIGAMENTO'; corForms = 'var(--danger)'; }
+                let infoData = (isDeslig && t.dataDesligamento) ? `<br><span style="color: var(--danger); font-weight: bold;">📅 Data de Desligamento: ${t.dataDesligamento}</span>` : '';
+                let areaBotoes = t.pendentePonto ? `<a href="https://spxresolve.atlassian.net/browse/${t.chave}" target="_blank" class="btn-jira-link" style="background: var(--jira);">🔗 ABRIR JIRA</a><a href="https://app2.pontomais.com.br/controle-de-ponto/colaboradores/lista" target="_blank" class="btn-jira-link" style="background: var(--pontomais);">✅ ACESSAR PONTOMAIS</a><button onclick="concluirPonto('${t.chave}')" class="btn-jira-link" style="background: #333;">✔️ CONCLUIR PONTO</button>` : `<a href="https://spxresolve.atlassian.net/browse/${t.chave}" target="_blank" class="btn-jira-link" style="background: var(--jira);">🔗 ABRIR JIRA</a><button onclick="abrirPopup('${urlForms}')" class="btn-jira-link" style="background: ${corForms};">${nomeForms}</button>${isMov ? `<button onclick="enviarParaPonto('${t.chave}')" class="btn-jira-link" style="background: #f1c40f; color:#000;">➡️ ENVIAR PARA O PONTO</button>` : ''}`;
+
+                containerCards.innerHTML += `<div class="card-gestao">${statusTag}<strong>${t.nome}</strong><br><small>${t.chave} | Onsite: ${t.onsite}</small>${infoData}<br><hr style="opacity:0.2;"><span>${t.resumo}</span><div style="position: absolute; bottom: 15px; left: 15px; right: 15px; display: flex; flex-direction: column; gap: 5px;">${areaBotoes}</div></div>`;
+            });
+        }
+    </script>
+</body>
+</html>
