@@ -8,81 +8,75 @@
     <link rel="icon" type="image/png" href="https://wecanbr.com.br/wp-content/uploads/2021/10/cropped-favicon-32x32.png">
     <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet">
     
-    <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
-    <script>mermaid.initialize({ startOnLoad: true, theme: 'default' });</script>
-
     <style>
         :root {
             --primary: #6a11cb; --secondary: #2575fc; --bg: #f4f7f6; --card-bg: white; --text: #333;
-            --navbar-bg: white; --danger: #ff4b2b; --warning: #f39c12; --voucher: #00b894;
-            --jira: #0052CC; --appsheet: #1a73e8; --glpi: #008080; --pontomais: #00a8a8;
-            --new-tag: #eb4d4b; --signature: rgba(0, 0, 0, 0.2);
+            --navbar-bg: white; --danger: #ff4b2b; --warning: #f39c12;
+            --jira: #0052CC; --pontomais: #00a8a8; --signature: rgba(0, 0, 0, 0.2);
         }
-        [data-theme="dark"] {
-            --bg: #121212; --card-bg: #1e1e1e; --text: #e0e0e0; --navbar-bg: #1e1e1e;
-            --signature: rgba(255, 255, 255, 0.05);
-        }
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: var(--bg); color: var(--text); margin: 0; padding-top: 60px; transition: 0.3s; }
+        [data-theme="dark"] { --bg: #121212; --card-bg: #1e1e1e; --text: #e0e0e0; --navbar-bg: #1e1e1e; }
         
-        /* NAVBAR FIX */
+        body { font-family: 'Segoe UI', sans-serif; background-color: var(--bg); color: var(--text); margin: 0; padding-top: 60px; transition: 0.3s; }
+        
+        /* NAVBAR */
         .navbar { background: var(--navbar-bg); height: 60px; display: flex; justify-content: space-between; align-items: center; padding: 0 30px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); position: fixed; top: 0; width: 100%; z-index: 1000; box-sizing: border-box; }
-        .logo-container { display: flex; align-items: center; gap: 15px; }
-        #contadorSolicitacoes { background: #e67e22; color: #fff; padding: 4px 12px; border-radius: 20px; font-size: 0.75rem; font-weight: 800; cursor: pointer; display: none; }
+        .logo-box { display: flex; align-items: center; gap: 10px; }
+        #contadorSolicitacoes { background: #e67e22; color: white; padding: 3px 10px; border-radius: 20px; font-size: 0.7rem; font-weight: bold; display: none; cursor: pointer; }
         
-        .nav-links { display: flex; align-items: center; height: 100%; }
-        .login-btn, .intranet-btn { text-decoration: none; padding: 6px 15px; border-radius: 5px; font-size: 0.8rem; font-weight: bold; margin-left: 10px; transition: 0.3s; }
-        .login-btn { background: #0078d4; color: white !important; } .intranet-btn { background: #ff5722; color: white !important; }
+        .nav-links { display: flex; align-items: center; gap: 15px; }
+        .btn-nav { text-decoration: none; padding: 6px 12px; border-radius: 5px; font-size: 0.8rem; font-weight: bold; color: white !important; transition: 0.3s; }
         
-        .dropdown { position: relative; display: flex; align-items: center; height: 100%; }
-        .dropdown-btn { text-decoration: none; color: var(--text); margin-left: 20px; font-weight: 600; font-size: 0.9rem; cursor: pointer; border: none; background: none; display: flex; align-items: center; gap: 5px; height: 100%; }
-        .dropdown-content { display: none; position: absolute; right: 0; background-color: var(--card-bg); min-width: 320px; box-shadow: 0px 8px 16px rgba(0,0,0,0.2); z-index: 1001; border-radius: 0 0 8px 8px; top: 60px; border-top: 2px solid var(--primary); }
+        .dropdown { position: relative; cursor: pointer; }
+        .dropdown-content { display: none; position: absolute; right: 0; background: var(--card-bg); min-width: 280px; box-shadow: 0 8px 16px rgba(0,0,0,0.2); border-radius: 0 0 8px 8px; border-top: 3px solid var(--primary); }
         .dropdown:hover .dropdown-content { display: block; }
-        .dropdown-content a { color: var(--text); padding: 12px 16px; text-decoration: none; display: block; font-size: 0.85rem; border-bottom: 1px solid rgba(128,128,128,0.1); }
+        .dropdown-content a { color: var(--text); padding: 10px 15px; text-decoration: none; display: block; font-size: 0.8rem; border-bottom: 1px solid rgba(0,0,0,0.05); }
 
-        header { background: linear-gradient(rgba(106, 17, 203, 0.75), rgba(37, 117, 252, 0.75)), url('https://wecanbr.com.br/img/quem-somos/main.jpg'); background-size: cover; background-position: center; color: white; padding: 40px 20px; text-align: center; }
-        .search-container { margin: 15px auto 0; width: 450px; max-width: 90%; }
-        #searchInput { padding: 12px 25px; width: 100%; border-radius: 30px; border: none; outline: none; background: var(--card-bg); color: var(--text); box-sizing: border-box; }
+        /* HEADER */
+        header { background: linear-gradient(rgba(106,17,203,0.8), rgba(37,117,252,0.8)), url('https://wecanbr.com.br/img/quem-somos/main.jpg'); background-size: cover; padding: 50px 20px; text-align: center; color: white; }
+        #searchInput { width: 400px; max-width: 90%; padding: 12px 25px; border-radius: 30px; border: none; margin-top: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.2); outline: none; }
 
-        .tabs-container { display: flex; justify-content: center; gap: 15px; margin: 20px auto; }
-        .tab-btn { padding: 10px 25px; border: none; border-radius: 25px; cursor: pointer; font-weight: bold; background: var(--card-bg); color: var(--text); box-shadow: 0 4px 10px rgba(0,0,0,0.1); transition: 0.3s; }
+        /* HOME LAYOUT (5x3) */
+        .tabs-container { display: flex; justify-content: center; gap: 15px; margin: 25px 0; }
+        .tab-btn { padding: 10px 30px; border: none; border-radius: 25px; cursor: pointer; font-weight: bold; background: var(--card-bg); color: var(--text); box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
         .tab-btn.active { background: var(--primary); color: white; }
 
-        /* LAYOUT HOME: 5x3 */
-        .home-grid-top { display: grid; grid-template-columns: repeat(5, 1fr); gap: 20px; padding: 20px; max-width: 1400px; margin: 0 auto; }
-        .home-grid-bottom { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; padding: 0 20px 40px; max-width: 1000px; margin: 0 auto; }
+        .home-row-5 { display: grid; grid-template-columns: repeat(5, 1fr); gap: 20px; padding: 20px; max-width: 1400px; margin: 0 auto; }
+        .home-row-3 { display: flex; justify-content: center; gap: 20px; padding: 20px 40px; }
 
-        /* LAYOUT TICKETS: 4 colunas */
-        .grid-gestao { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; padding: 20px; max-width: 1400px; margin: 0 auto; }
+        /* CARDS VISUAL */
+        .card, .card-jira-agrupado, .card-gestao { 
+            background: var(--card-bg); border-radius: 15px; padding: 25px; text-align: center; 
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08); border-top: 5px solid var(--primary); transition: 0.3s;
+        }
+        .card:hover, .card-jira-agrupado:hover { transform: translateY(-5px); box-shadow: 0 10px 25px rgba(0,0,0,0.15); }
+        
+        /* TICKETS (4 COLUNAS) */
+        .grid-tickets { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; padding: 20px; max-width: 1400px; margin: 0 auto; }
+        .card-gestao { text-align: left; border-left: 5px solid var(--warning); border-top: none; position: relative; padding-bottom: 140px; min-height: 280px; }
 
-        .card, .card-jira-agrupado, .card-gestao { background: var(--card-bg); border-radius: 15px; padding: 20px; text-align: center; box-shadow: 0 5px 15px rgba(0,0,0,0.05); transition: 0.3s; border-top: 5px solid var(--primary); box-sizing: border-box; }
-        .card:hover, .card-jira-agrupado:hover { transform: translateY(-5px); box-shadow: 0 10px 25px rgba(0,0,0,0.1); cursor: pointer; }
-        .card-gestao { text-align: left; border-left: 5px solid var(--warning); border-top: none; position: relative; padding-bottom: 110px; }
-
-        .btn-jira-link, .btn-concluir, .section-btn { border: none; border-radius: 5px; cursor: pointer; font-weight: bold; text-decoration: none; text-align: center; color: white; display: block; width: 100%; padding: 8px; box-sizing: border-box; margin-top: 5px; }
-        .section-btn { border-radius: 25px; width: auto; padding: 10px 25px; margin: 15px auto 0; }
-
+        .btn-action { display: block; width: 100%; padding: 8px; margin-top: 5px; border-radius: 5px; font-weight: bold; text-decoration: none; text-align: center; color: white; border: none; cursor: pointer; font-size: 0.85rem; }
+        
         .tag-ponto { background: var(--warning); color: #000; text-align: center; font-weight: bold; padding: 5px; border-radius: 5px; margin-bottom: 10px; font-size: 0.8rem; animation: pulse 2s infinite; }
         @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.02); } 100% { transform: scale(1); } }
-        
-        .signature { text-align: center; margin: 30px 0 15px; font-family: 'Great Vibes', cursive; font-size: 1.3rem; color: var(--signature); }
-        footer { text-align: center; padding: 20px; background: #222; color: white; }
-        .theme-toggle { position: fixed; bottom: 20px; right: 20px; width: 45px; height: 45px; border-radius: 50%; background: var(--primary); color: white; border: none; cursor: pointer; z-index: 2001; }
 
-        @media (max-width: 1200px) { .home-grid-top { grid-template-columns: repeat(3, 1fr); } .grid-gestao { grid-template-columns: repeat(2, 1fr); } }
-        @media (max-width: 800px) { .home-grid-top, .home-grid-bottom, .grid-gestao { grid-template-columns: 1fr !important; } }
+        footer { text-align: center; padding: 25px; background: #222; color: white; margin-top: 40px; }
+        .signature { font-family: 'Great Vibes', cursive; font-size: 1.5rem; text-align: center; margin: 20px 0; color: var(--signature); }
+        .theme-toggle { position: fixed; bottom: 20px; right: 20px; width: 50px; height: 50px; border-radius: 50%; background: var(--primary); color: white; border: none; cursor: pointer; z-index: 2000; }
     </style>
 </head>
 <body>
+    <button class="theme-toggle" onclick="toggleTheme()">🌙</button>
+
     <nav class="navbar">
-        <div class="logo-container">
-            <div style="font-weight: bold; color: var(--primary); letter-spacing: 1px;">WE CAN BR</div>
-            <div id="contadorSolicitacoes" onclick="switchTab('home')">0 Pendentes</div>
+        <div class="logo-box">
+            <span style="font-weight: 800; color: var(--primary);">WE CAN BR</span>
+            <span id="contadorSolicitacoes">0 Pendentes</span>
         </div>
         <div class="nav-links">
-            <a href="https://portal.office.com" target="_blank" class="login-btn">🔑 Login Microsoft</a>
-            <a href="https://desafiorhcombr.sharepoint.com/sites/wecanbr" target="_blank" class="intranet-btn">🌐 Intranet</a>
+            <a href="https://portal.office.com" target="_blank" class="btn-nav" style="background:#0078d4">🔑 Login Microsoft</a>
+            <a href="https://desafiorhcombr.sharepoint.com/sites/wecanbr" target="_blank" class="btn-nav" style="background:#ff5722">🌐 Intranet</a>
             <div class="dropdown">
-                <button class="dropdown-btn">📊 Planilhas ▼</button>
+                <span class="dropdown-btn" style="font-weight:bold">📊 Planilhas ▼</span>
                 <div class="dropdown-content">
                     <a href="https://desafiorhcombr-my.sharepoint.com/:x:/r/personal/mirian_oliveira_wecanbr_com_br/_layouts/15/Doc.aspx?sourcedoc=%7B9C5EACCF-57D1-4415-BA2B-D584B9FE2B85%7D" target="_blank">📋 Controle de Atendimento</a>
                     <a href="https://desafiorhcombr-my.sharepoint.com/:x:/r/personal/edivan_costa_wecanbr_com_br/_layouts/15/Doc.aspx?sourcedoc=%7B63D04DA0-C7A8-4059-8591-37DFCED94A93%7D" target="_blank">📋 Central de Solicitações</a>
@@ -90,7 +84,7 @@
                 </div>
             </div>
             <div class="dropdown">
-                <button class="dropdown-btn">📄 Documentos ▼</button>
+                <span class="dropdown-btn" style="font-weight:bold">📄 Documentos ▼</span>
                 <div class="dropdown-content">
                     <a href="https://drive.google.com/file/d/1qsLtN-HC5488FVQc3n5mcT8zjCdVja0d/view" target="_blank">📄 Carta de Suspensão</a>
                     <a href="https://drive.google.com/file/d/1lGnjwLz_5i4uASifv2OPlkSb7NUGeaHI/view" target="_blank">📄 Comunicado de Desligamento</a>
@@ -107,7 +101,10 @@
         </div>
     </nav>
 
-    <header><h1>APOIO AO ONSITE</h1><div class="search-container"><input type="text" id="searchInput" onkeyup="buscarTudo()" placeholder="Pesquisar..."></div></header>
+    <header>
+        <h1>APOIO AO ONSITE</h1>
+        <input type="text" id="searchInput" onkeyup="buscarTudo()" placeholder="Pesquisar cards ou nomes...">
+    </header>
 
     <div class="tabs-container">
         <button class="tab-btn active" onclick="switchTab('home')" id="btnTabHome">🏠 HOME</button>
@@ -116,49 +113,56 @@
     </div>
 
     <div id="homeView">
-        <div class="home-grid-top" id="homeTopContent"></div>
-        <div class="home-grid-bottom" id="homeBottomContent"></div>
+        <div class="home-row-5" id="homeTopGrid"></div>
+        <div class="home-row-3" id="homeBottomGrid"></div>
     </div>
-    <div id="solicitacoesView" style="display: none;"></div>
-    <div id="jiraView" style="display: none;"></div>
+    
+    <div id="solicitacoesView" style="display:none"></div>
+
+    <div id="jiraView" style="display:none">
+        <div class="grid-tickets" id="viewAgrupadaJira"></div>
+        <div id="viewDetalhadaJira" style="display:none">
+            <button onclick="voltarParaAgrupamentoJira()" style="margin:20px; padding:10px 20px; cursor:pointer">← Voltar para a lista</button>
+            <h2 id="tituloOperacaoJira" style="text-align:center; color:var(--primary)"></h2>
+            <div id="containerFiltrosJira" style="text-align:center; margin-bottom:20px"></div>
+            <div class="grid-tickets" id="containerCardsJira"></div>
+        </div>
+    </div>
 
     <div class="signature">By: Edivan Costa</div>
     <footer>© 2026 Apoio ao On-Site | WeCanBR</footer>
 
     <script>
         let ticketsJiraGlobais = [];
-        const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxupjNwDDgxLULbLOPUVd2jc4hRUxI9JYYeqy7riYGBg5ymoqAfLeJn6IwRqLH7aozH/exec"; 
+        const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxupjNwDDgxLULbLOPUVd2jc4hRUxI9JYYeqy7riYGBg5ymoqAfLeJn6IwRqLH7aozH/exec";
 
-        async function carregarAba(url, idElemento) {
-            try { 
-                const res = await fetch(url); 
-                if (res.ok) {
-                    const html = await res.text();
-                    if (idElemento === 'homeView') {
-                        const tempDiv = document.createElement('div'); tempDiv.innerHTML = html;
-                        const cards = Array.from(tempDiv.querySelectorAll('.card, .embedded-section'));
-                        document.getElementById('homeTopContent').append(...cards.slice(0, 5));
-                        document.getElementById('homeBottomContent').append(...cards.slice(5));
-                    } else { document.getElementById(idElemento).innerHTML = html; }
-                }
+        async function carregarAba(url, containerId) {
+            try {
+                const res = await fetch(url);
+                const html = await res.text();
+                if (containerId === 'homeView') {
+                    const temp = document.createElement('div'); temp.innerHTML = html;
+                    const cards = Array.from(temp.querySelectorAll('.card, .embedded-section'));
+                    document.getElementById('homeTopGrid').append(...cards.slice(0, 5));
+                    document.getElementById('homeBottomGrid').append(...cards.slice(5));
+                } else { document.getElementById(containerId).innerHTML = html; }
             } catch(e) { console.error("Erro."); }
         }
 
-        async function montarSite() {
+        async function init() {
             await carregarAba('abas/home.html', 'homeView');
             await carregarAba('abas/solicitacoes.html', 'solicitacoesView');
             await carregarAba('abas/jira.html', 'jiraView');
             carregarCardsGestao();
         }
-        window.onload = montarSite;
+        window.onload = init;
 
         function switchTab(tab) {
             document.getElementById('homeView').style.display = tab === 'home' ? 'block' : 'none';
             document.getElementById('solicitacoesView').style.display = tab === 'solicitacoes' ? 'block' : 'none';
             document.getElementById('jiraView').style.display = tab === 'jira' ? 'block' : 'none';
-            document.getElementById('btnTabHome').classList.toggle('active', tab === 'home');
-            document.getElementById('btnTabSol').classList.toggle('active', tab === 'solicitacoes');
-            document.getElementById('btnTabJira').classList.toggle('active', tab === 'jira');
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+            document.getElementById('btnTab' + tab.charAt(0).toUpperCase() + tab.slice(1)).classList.add('active');
             if (tab === 'jira') voltarParaAgrupamentoJira();
         }
 
@@ -167,7 +171,7 @@
             const contador = document.getElementById('contadorSolicitacoes');
             try {
                 const res = await fetch(SCRIPT_URL); const dados = await res.json();
-                if(containerJira) containerJira.innerHTML = "";
+                if(!containerJira) return; containerJira.innerHTML = "";
                 if (dados.jira) {
                     ticketsJiraGlobais = dados.jira;
                     const contagem = {}; let pendPonto = 0;
@@ -177,38 +181,61 @@
                     });
                     if (pendPonto > 0) {
                         contador.innerText = `${pendPonto} Pendentes`; contador.style.display = "block";
-                        containerJira.innerHTML += `<div class="card-jira-agrupado" style="border-top-color: var(--pontomais);" onclick="mostrarTicketsDoOnsite('TIME DE PONTO', 'TODOS')"><span style="font-size: 30px;">⏱️</span><h3 style="color: var(--pontomais);">TIME DE PONTO</h3><span style="font-weight: bold; color: var(--warning);">${pendPonto} Ticket(s) Pendente(s)</span></div>`;
+                        containerJira.innerHTML += `<div class="card-jira-agrupado" style="border-top-color: var(--pontomais)" onclick="mostrarTicketsDoOnsite('TIME DE PONTO')">⏱️<h3>TIME DE PONTO</h3><strong>${pendPonto} Tickets</strong></div>`;
                     } else { contador.style.display = "none"; }
-                    for (const [onsite, qtd] of Object.entries(contagem)) {
-                        if (qtd > 0) {
-                            containerJira.innerHTML += `<div class="card-jira-agrupado" onclick="mostrarTicketsDoOnsite('${onsite}', 'TODOS')"><span style="font-size: 30px;">🧑‍💻</span><h3 style="color: var(--primary);">${onsite}</h3><span style="font-weight: bold; color: var(--danger);">${qtd} Ticket(s) Pendente(s)</span></div>`;
-                        }
-                    }
+                    Object.entries(contagem).forEach(([nome, qtd]) => {
+                        containerJira.innerHTML += `<div class="card-jira-agrupado" onclick="mostrarTicketsDoOnsite('${nome}')">🧑‍💻<h3>${nome}</h3><strong>${qtd} Tickets Pendentes</strong></div>`;
+                    });
                 }
             } catch(e) { console.error(e); }
         }
 
-        function mostrarTicketsDoOnsite(onsite, filtroAtivo) {
-            const gridNomes = document.getElementById('viewAgrupadaJira');
-            const areaTickets = document.getElementById('viewDetalhadaJira');
-            gridNomes.style.display = 'none'; areaTickets.style.display = 'block';
-
+        function mostrarTicketsDoOnsite(onsite) {
+            document.getElementById('viewAgrupadaJira').style.display = 'none';
+            document.getElementById('viewDetalhadaJira').style.display = 'block';
             document.getElementById('tituloOperacaoJira').innerText = `Gestão: ${onsite}`;
-            const containerFiltros = document.getElementById('containerFiltrosJira');
-            const containerCards = document.getElementById('containerCardsJira');
-            containerFiltros.innerHTML = ""; containerCards.innerHTML = "";
+            const container = document.getElementById('containerCardsJira');
+            container.innerHTML = "";
 
             const tickets = (onsite === 'TIME DE PONTO') ? ticketsJiraGlobais.filter(t => t.pendentePonto) : ticketsJiraGlobais.filter(t => t.onsite === onsite && !t.pendentePonto);
             
-            // ... (Restante da lógica de renderização dos cards detalhados)
+            tickets.forEach(t => {
+                const isDeslig = t.tipoItem.toLowerCase().includes("deslig");
+                const isMov = t.tipoItem.toLowerCase().includes("moviment") || t.tipoItem.toLowerCase().includes("mudança");
+                
+                let btnCentral = `<button onclick="abrirPopup('https://forms.office.com/Pages/ResponsePage.aspx?id=fCAtUtXsx0-nbxdGSxFh-eVAzhwdpsxLmCSGMQwqNIpUM1E2TFRSRkhNWU9IQk9SVFhBSDJNWTFDVS4u')" class="btn-action" style="background:var(--primary)">📝 ENVIAR PARA CENTRAL</button>`;
+                if (isDeslig) btnCentral = `<button onclick="abrirPopup('https://forms.office.com/Pages/ResponsePage.aspx?id=fCAtUtXsx0-nbxdGSxFh-f7MDqf4DUBBuOHjox7sxytUNFFQNTgzR1pQV0FLM05aWElXSjlRMjFHRy4u')" class="btn-action" style="background:var(--danger)">📝 FORMS DESLIGAMENTO</button>`;
+                
+                const btnPonto = isMov ? `<button onclick="enviarParaPonto('${t.chave}')" class="btn-action" style="background:var(--warning); color:black">➡️ ENVIAR PARA PONTOMAIS</button>` : '';
+                const btnJira = `<a href="https://spxresolve.atlassian.net/browse/${t.chave}" target="_blank" class="btn-action" style="background:var(--jira)">🔗 ABRIR NO JIRA</a>`;
+                const btnConcluirPonto = t.pendentePonto ? `<button onclick="concluirPonto('${t.chave}')" class="btn-action" style="background:#333">✔️ CONCLUIR NO PONTO</button>` : '';
+
+                let cardHtml = `<div class="card-gestao">
+                    ${t.pendentePonto ? '<div class="tag-ponto">⏰ PENDENTE NO PONTOMAIS</div>' : ''}
+                    <strong>${t.nome}</strong><br><small>${t.chave}</small>
+                    ${isDeslig ? `<br><b style="color:var(--danger)">📅 Data: ${t.dataDesligamento}</b>` : ''}
+                    <hr style="opacity:0.1"><span>${t.resumo}</span>
+                    <div style="position:absolute; bottom:15px; left:15px; right:15px">
+                        ${btnJira} ${t.pendentePonto ? '' : btnCentral} ${btnPonto} ${btnConcluirPonto}
+                    </div>
+                </div>`;
+                container.innerHTML += cardHtml;
+            });
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
         function voltarParaAgrupamentoJira() {
-            const gridNomes = document.getElementById('viewAgrupadaJira');
-            const areaTickets = document.getElementById('viewDetalhadaJira');
-            if(areaTickets) areaTickets.style.display = 'none';
-            if(gridNomes) gridNomes.style.display = 'grid';
+            document.getElementById('viewDetalhadaJira').style.display = 'none';
+            document.getElementById('viewAgrupadaJira').style.display = 'grid';
+        }
+
+        async function enviarParaPonto(chave) { await fetch(SCRIPT_URL, { method: 'POST', mode: 'no-cors', body: JSON.stringify({ acao: "marcar_ponto", chave: chave }) }); carregarCardsGestao(); }
+        async function concluirPonto(chave) { await fetch(SCRIPT_URL, { method: 'POST', mode: 'no-cors', body: JSON.stringify({ acao: "concluir_ponto", chave: chave }) }); carregarCardsGestao(); }
+        function abrirPopup(url) { window.open(url, 'Popup', 'width=900,height=900,top=50,left=300'); }
+        function toggleTheme() { document.documentElement.setAttribute('data-theme', document.documentElement.getAttribute('data-theme') === 'dark' ? '' : 'dark'); }
+        function buscarTudo() { 
+            let q = document.getElementById('searchInput').value.toLowerCase();
+            document.querySelectorAll('.card, .card-jira-agrupado, .card-gestao').forEach(c => c.style.display = c.innerText.toLowerCase().includes(q) ? "block" : "none");
         }
     </script>
 </body>
