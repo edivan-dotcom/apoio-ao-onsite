@@ -1,0 +1,43 @@
+<div class="form-section">
+    <h2 style="text-align: center; color: var(--primary); margin-top: 0;">Solicitação de Ajuste</h2>
+    <form id="formBeneficio">
+        <div class="form-group">
+            <label>Matrícula:</label>
+            <input type="text" id="matr" required placeholder="Ex: 123456">
+        </div>
+        <div class="form-group">
+            <label>Tipo de Solicitação:</label>
+            <select id="tipoSol" onchange="atualizarOpcoesBeneficio()" required>
+                <option value="">Selecione...</option>
+                <option value="TROCA DE BENEFICIO">TROCA DE BENEFICIO</option>
+                <option value="AJUSTE VALOR">AJUSTE VALOR DA PASSAGEM</option>
+                <option value="DESLIGAMENTO" style="color: red; font-weight: bold;">SOLICITAÇÃO DE DESLIGAMENTO</option>
+            </select>
+        </div>
+        
+        <div class="form-group" id="grupoBeneficio">
+            <label>Qual Benefício?</label>
+            <select id="beneDest" required>
+                <option value="">Selecione o tipo acima primeiro...</option>
+            </select>
+        </div>
+        <div class="form-group" id="grupoValor">
+            <label>Valor (se aplicável):</label>
+            <input type="number" id="vlr" step="0.01">
+        </div>
+
+        <div class="form-group" id="grupoAnexo" style="display: none;">
+            <label style="color: var(--danger);">📎 Anexar Documento:</label>
+            <input type="file" id="arquivoAnexo" accept=".pdf,.png,.jpg,.jpeg">
+        </div>
+        
+        <button type="button" onclick="enviarSolicitacao()" id="btnEnviar" style="background: var(--primary); color: white; width: 100%; padding: 15px; border-radius: 8px; border: none; cursor: pointer; font-weight: bold; margin-top: 10px;">🚀 Enviar Solicitação</button>
+    </form>
+</div>
+
+<div class="gestao-section">
+    <h2 style="text-align: center; color: var(--primary);">📋 Gestão de Solicitações Pendentes</h2>
+    <div id="containerCardsGestao" class="grid-gestao">
+         <p style="text-align: center; width: 100%;">Carregando solicitações da planilha...</p>
+    </div>
+</div>
