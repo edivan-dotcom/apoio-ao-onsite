@@ -38,57 +38,144 @@
             --signature: rgba(255, 255, 255, 0.05);
         }
 
-        /* DASHBOARD */
-        .dash-bar {
-            background: var(--navbar-bg); padding: 8px 30px; display: flex; align-items: center; gap: 20px;
-            font-size: 0.85rem; border-bottom: 1px solid rgba(128,128,128,0.2); position: fixed; top: 60px;
-            width: 100%; z-index: 999; box-sizing: border-box;
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            margin: 0;
+            padding-top: 60px;
+            transition: 0.3s;
         }
-        .status-badge { background: var(--primary); color: white; padding: 2px 8px; border-radius: 10px; font-weight: bold; }
-        
-        /* ABAS */
-        .tab-nav { display: flex; justify-content: center; background: var(--card-bg); padding: 10px; gap: 10px; margin-top: 50px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
-        .tab-btn { padding: 10px 20px; border: none; background: none; color: var(--text); cursor: pointer; font-weight: bold; border-bottom: 3px solid transparent; transition: 0.3s; }
-        .tab-btn.active { border-bottom: 3px solid var(--primary); color: var(--primary); }
-        .tab-content { display: none; animation: fadeIn 0.4s; }
-        .tab-content.active { display: block; }
 
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        .navbar {
+            background: var(--navbar-bg);
+            height: 60px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 30px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: fixed;
+            top: 0; width: 100%; z-index: 1000;
+            box-sizing: border-box;
+        }
 
-        /* GESTÃO CARDS */
-        .grid-cards-gestao { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px; padding: 20px; max-width: 1400px; margin: 0 auto; }
-        .card-gestao { background: var(--card-bg); padding: 20px; border-radius: 12px; border-top: 5px solid var(--warning); box-shadow: 0 4px 10px rgba(0,0,0,0.05); text-align: left; }
-
-        /* FORMULÁRIO */
-        .form-container { max-width: 600px; margin: 40px auto; background: var(--card-bg); padding: 30px; border-radius: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); border-top: 5px solid var(--primary); }
-        .form-group { margin-bottom: 15px; text-align: left; }
-        .form-group label { display: block; margin-bottom: 5px; font-weight: bold; font-size: 0.9rem; }
-        .form-group input, .form-group select { width: 100%; padding: 12px; border-radius: 8px; border: 1px solid #ddd; background: var(--bg); color: var(--text); box-sizing: border-box; }
-
-        /* ESTILOS GERAIS */
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: var(--bg); color: var(--text); margin: 0; padding-top: 60px; transition: 0.3s; }
-        .navbar { background: var(--navbar-bg); height: 60px; display: flex; justify-content: space-between; align-items: center; padding: 0 30px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); position: fixed; top: 0; width: 100%; z-index: 1000; box-sizing: border-box; }
         .nav-links { display: flex; align-items: center; height: 100%; }
-        .login-btn { text-decoration: none; padding: 6px 15px; border-radius: 5px; font-size: 0.8rem; font-weight: bold; background: #0078d4; color: white !important; }
+        
+        .login-btn, .intranet-btn {
+            text-decoration: none; padding: 6px 15px; border-radius: 5px; 
+            font-size: 0.8rem; font-weight: bold; margin-left: 10px; transition: 0.3s;
+        }
+        .login-btn { background: #0078d4; color: white !important; }
+        .intranet-btn { background: #ff5722; color: white !important; }
+
         .dropdown { position: relative; display: flex; align-items: center; height: 100%; }
-        .dropdown-btn { text-decoration: none; color: var(--text); margin-left: 20px; font-weight: 600; font-size: 0.9rem; cursor: pointer; border: none; background: none; display: flex; align-items: center; gap: 5px; height: 100%; }
-        .dropdown-content { display: none; position: absolute; right: 0; background-color: var(--card-bg); min-width: 350px; box-shadow: 0px 8px 16px rgba(0,0,0,0.2); z-index: 1001; border-radius: 0 0 8px 8px; top: 60px; border-top: 2px solid var(--primary); overflow: hidden; }
+        .dropdown-btn {
+            text-decoration: none; color: var(--text); margin-left: 20px;
+            font-weight: 600; font-size: 0.9rem; cursor: pointer;
+            border: none; background: none; display: flex; align-items: center; gap: 5px; height: 100%;
+        }
+
+        .dropdown-content {
+            display: none; position: absolute; right: 0;
+            background-color: var(--card-bg); min-width: 350px;
+            box-shadow: 0px 8px 16px rgba(0,0,0,0.2); z-index: 1001;
+            border-radius: 0 0 8px 8px; top: 60px; border-top: 2px solid var(--primary);
+            overflow: hidden;
+        }
         .dropdown:hover .dropdown-content { display: block; }
-        .dropdown-content a { color: var(--text); padding: 12px 16px; text-decoration: none; display: block; font-size: 0.85rem; border-bottom: 1px solid rgba(128,128,128,0.1); }
-        
-        header { background: linear-gradient(rgba(106, 17, 203, 0.75), rgba(37, 117, 252, 0.75)), url('https://wecanbr.com.br/img/quem-somos/main.jpg'); background-size: cover; background-position: center; color: white; padding: 60px 20px; text-align: center; }
+        .dropdown-content a {
+            color: var(--text); padding: 12px 16px; text-decoration: none;
+            display: block; font-size: 0.85rem; border-bottom: 1px solid rgba(128,128,128,0.1);
+        }
+        .dropdown-content a:hover { background: rgba(106, 17, 203, 0.05); }
+
+        header {
+            background: linear-gradient(rgba(106, 17, 203, 0.75), rgba(37, 117, 252, 0.75)), 
+                        url('https://wecanbr.com.br/img/quem-somos/main.jpg');
+            background-size: cover; background-position: center;
+            color: white; padding: 60px 20px; text-align: center;
+        }
+
         .search-container { margin-top: 25px; position: relative; width: 450px; max-width: 90%; margin: 20px auto 0; }
-        #searchInput { padding: 15px 25px; width: 100%; border-radius: 30px; border: none; font-size: 1rem; box-shadow: 0 5px 15px rgba(0,0,0,0.2); outline: none; background: var(--card-bg); color: var(--text); box-sizing: border-box; }
-        
+        #searchInput {
+            padding: 15px 25px; width: 100%; border-radius: 30px; border: none;
+            font-size: 1rem; box-shadow: 0 5px 15px rgba(0,0,0,0.2); outline: none;
+            background: var(--card-bg); color: var(--text); box-sizing: border-box;
+        }
+
         .container { display: flex; justify-content: center; flex-wrap: wrap; gap: 20px; padding: 40px 20px; max-width: 1400px; margin: 0 auto; }
-        .card { background: var(--card-bg); border-radius: 15px; width: 260px; padding: 25px; text-align: center; box-shadow: 0 5px 15px rgba(0,0,0,0.05); transition: 0.3s; text-decoration: none; color: var(--text); border-top: 5px solid var(--primary); box-sizing: border-box; cursor: pointer; position: relative; }
+        .card {
+            background: var(--card-bg); border-radius: 15px; width: 260px; padding: 25px;
+            text-align: center; box-shadow: 0 5px 15px rgba(0,0,0,0.05); transition: 0.3s;
+            text-decoration: none; color: var(--text); border-top: 5px solid var(--primary); 
+            box-sizing: border-box; cursor: pointer; position: relative;
+        }
         .card:hover { transform: translateY(-5px); box-shadow: 0 10px 25px rgba(0,0,0,0.1); }
+        .card.hidden { display: none; }
+        
+        .badge-new {
+            position: absolute; top: -15px; right: -10px;
+            background: var(--new-tag); color: white;
+            padding: 4px 12px; border-radius: 20px;
+            font-size: 0.75rem; font-weight: bold;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {transform: translateY(0);}
+            40% {transform: translateY(-5px);}
+            60% {transform: translateY(-3px);}
+        }
+
         .icon { font-size: 40px; margin-bottom: 15px; display: block; }
 
-        .faq-section { max-width: 1200px; margin: 40px auto; background: var(--card-bg); padding: 40px; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); }
+        .funnel-container {
+            display: flex; justify-content: center; flex-wrap: wrap; gap: 20px;
+            max-width: 95%; margin: 20px auto 40px; padding: 0 20px;
+        }
+
+        .embedded-section {
+            background: var(--card-bg); padding: 25px; border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            flex: 1; min-width: 300px; max-width: 400px; text-align: center;
+        }
+
+        .section-btn {
+            color: white; border: none; padding: 12px 25px; border-radius: 25px; 
+            font-size: 0.9rem; font-weight: bold; cursor: pointer; transition: 0.3s; margin-top: 15px;
+        }
+
+        /* --- NOVOS ESTILOS ADICIONADOS PARA SOLICITAÇÃO E GESTÃO --- */
+        .form-section { max-width: 600px; margin: 40px auto; background: var(--card-bg); padding: 30px; border-radius: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); border-top: 5px solid var(--primary); }
+        .form-group { margin-bottom: 15px; text-align: left; }
+        .form-group label { display: block; margin-bottom: 5px; font-weight: bold; }
+        .form-group input, .form-group select { width: 100%; padding: 12px; border-radius: 8px; border: 1px solid #ddd; box-sizing: border-box; background: var(--bg); color: var(--text); }
+        
+        .gestao-section { max-width: 1200px; margin: 40px auto; padding: 0 20px; }
+        .grid-gestao { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px; }
+        .card-gestao { background: var(--card-bg); padding: 15px; border-radius: 10px; border-left: 5px solid var(--warning); box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+        .status-badge { background: var(--primary); color: white; padding: 2px 8px; border-radius: 10px; font-size: 0.75rem; }
+
+        /* --- SEÇÃO FAQ / FLUXOGRAMA --- */
+        .faq-section {
+            max-width: 1200px; margin: 20px auto 60px;
+            background: var(--card-bg); padding: 40px; border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+        .faq-section h2 { text-align: center; color: var(--primary); margin-bottom: 30px; }
+        .mermaid { display: flex; justify-content: center; background: white; padding: 20px; border-radius: 10px; }
+
         .signature { text-align: center; margin: 40px 0 20px; font-family: 'Great Vibes', cursive; font-size: 1.5rem; color: var(--signature); }
         footer { text-align: center; padding: 30px; background: #222; color: white; width: 100%; }
-        .theme-toggle { position: fixed; bottom: 20px; right: 20px; width: 50px; height: 50px; border-radius: 50%; background: var(--primary); color: white; border: none; cursor: pointer; box-shadow: 0 4px 15px rgba(0,0,0,0.3); z-index: 2001; font-size: 20px; }
+
+        .theme-toggle {
+            position: fixed; bottom: 20px; right: 20px; width: 50px; height: 50px;
+            border-radius: 50%; background: var(--primary); color: white;
+            border: none; cursor: pointer; box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+            z-index: 2001; font-size: 20px;
+        }
     </style>
 </head>
 <body>
@@ -99,14 +186,17 @@
         <div style="font-weight: bold; color: var(--primary); letter-spacing: 1px;">WE CAN BR</div>
         <div class="nav-links">
             <a href="https://portal.office.com" target="_blank" class="login-btn">🔑 Login Microsoft</a>
+            <a href="https://desafiorhcombr.sharepoint.com/sites/wecanbr" target="_blank" class="intranet-btn">🌐 Intranet</a>
             
             <div class="dropdown">
                 <button class="dropdown-btn">📊 Planilhas ▼</button>
                 <div class="dropdown-content">
-                    <a href="https://desafiorhcombr-my.sharepoint.com/:x:/r/personal/mirian_oliveira_wecanbr_com_br/_layouts/15/Doc.aspx?sourcedoc=%7B9C5EACCF-57D1-4415-BA2B-D584B9FE2B85%7D" target="_blank">📋 Controle de Atendimento</a>
+                    <a href="https://desafiorhcombr-my.sharepoint.com/:x:/r/personal/mirian_oliveira_wecanbr_com_br/_layouts/15/Doc.aspx?sourcedoc=%7B9C5EACCF-57D1-4415-BA2B-D584B9FE2B85%7D" target="_blank">📋 Controle de Atendimento (Excel)</a>
                     <a href="https://desafiorhcombr-my.sharepoint.com/:x:/r/personal/mirian_oliveira_wecanbr_com_br/_layouts/15/doc2.aspx?sourcedoc=%7B519706C2-BDEF-438C-B037-385F4D8A3488%7D" target="_blank">📈 Drive de Rescisão Shopee</a>
+                    <a href="https://desafiorhcombr-my.sharepoint.com/:x:/r/personal/edivan_costa_wecanbr_com_br/_layouts/15/Doc.aspx?sourcedoc=%7B63D04DA0-C7A8-4059-8591-37DFCED94A93%7D" target="_blank">📋 Central de Solicitações (Base)</a>
                     <a href="https://docs.google.com/spreadsheets/d/1WBYOF9AkoS7NpzhqFyqm5PzQRP13yUF2p5ZY8FfZp_c/edit" target="_blank">🔍 Voucher 2026 (Base Geral)</a>
                     <a href="https://docs.google.com/spreadsheets/d/1WBYOF9AkoS7NpzhqFyqm5PzQRP13yUF2p5ZY8FfZp_c/edit?gid=690743947#gid=690743947" target="_blank">📊 Template Shopee</a>
+                    <a href="https://desafiorhcombr.sharepoint.com/:x:/r/sites/FSWECANBR/_layouts/15/Doc.aspx?sourcedoc=%7B6265A06E-D548-4055-9261-D6A512496567%7D&file=03%202026%20REJEITOS%20MAR%C3%87O%202026.xlsx&action=default&mobileredirect=true" target="_blank">⚠️ Rejeitos 03.2026</a>
                 </div>
             </div>
 
@@ -128,10 +218,6 @@
         </div>
     </nav>
 
-    <div class="dash-bar">
-        <span>Solicitações Pendentes: <span id="total-pendentes" class="status-badge">0</span></span>
-    </div>
-
     <header>
         <h1>APOIO AO ONSITE</h1>
         <div class="search-container">
@@ -139,89 +225,150 @@
         </div>
     </header>
 
-    <div class="tab-nav">
-        <button class="tab-btn active" onclick="switchTab('tab-links')">🔗 Cards de Atalho</button>
-        <button class="tab-btn" onclick="switchTab('tab-solicitar')">📝 Nova Solicitação</button>
-        <button class="tab-btn" onclick="switchTab('tab-gestao')">📋 Gestão Onsite</button>
-    </div>
-
-    <div id="tab-links" class="tab-content active">
-        <div class="container">
-            <div onclick="window.open('https://forms.office.com/Pages/ResponsePage.aspx?id=fCAtUtXsx0-nbxdGSxFh-eVAzhwdpsxLmCSGMQwqNIpUM1E2TFRSRkhNWU9IQk9SVFhBSDJNWTFDVS4u')" class="card">
-                <span class="icon">📝</span>
-                <h2>Central de Solicitações</h2>
-            </div>
-            <div onclick="window.open('https://forms.office.com/Pages/ResponsePage.aspx?id=fCAtUtXsx0-nbxdGSxFh-f7MDqf4DUBBuOHjox7sxytUNFFQNTgzR1pQV0FLM05aWElXSjlRMjFHRy4u')" class="card" style="border-top-color: var(--danger);">
-                <span class="icon">🚫</span>
-                <h2>Desligamento Shopee</h2>
-            </div>
-            <div onclick="window.open('https://www.appsheet.com/start/8ba6b59c-c836-4d4e-9a3e-e43d38d2a47e')" class="card" style="border-top-color: var(--appsheet);">
-                <span class="icon">📱</span>
-                <h2>AppSheet Inativação</h2>
-            </div>
+    <div class="container">
+        <div onclick="abrirPopup('https://forms.office.com/Pages/ResponsePage.aspx?id=fCAtUtXsx0-nbxdGSxFh-eVAzhwdpsxLmCSGMQwqNIpUM1E2TFRSRkhNWU9IQk9SVFhBSDJNWTFDVS4u')" class="card">
+            <span class="icon">📝</span>
+            <h2>Central de Solicitações</h2>
+            <p>Clique para abrir o formulário interno.</p>
         </div>
 
-        <div class="faq-section">
-            <div class="mermaid">
-                graph TD
-                    Start((Início)) --> Form[Preenchimento do FORMS]
-                    Form --> Type{Tipo?}
-                    Type -- "Troca" --> OnsiteResp[Ajuste Onsite]
-                    OnsiteResp --> End((Fim))
-            </div>
+        <div onclick="abrirPopup('https://forms.office.com/Pages/ResponsePage.aspx?id=fCAtUtXsx0-nbxdGSxFh-f7MDqf4DUBBuOHjox7sxytUNFFQNTgzR1pQV0FLM05aWElXSjlRMjFHRy4u')" class="card" style="border-top-color: var(--danger);">
+            <span class="icon">🚫</span>
+            <h2>Desligamento Shopee</h2>
+            <p>Formulário oficial para desligamento Shopee.</p>
         </div>
-    </div>
 
-    <div id="tab-solicitar" class="tab-content">
-        <div class="form-container">
-            <h2 style="color: var(--primary); text-align: center;">Nova Solicitação</h2>
-            <form id="formBeneficio">
-                <div class="form-group"><label>Matrícula:</label><input type="text" id="matr" required></div>
-                <div class="form-group">
-                    <label>Tipo de Solicitação:</label>
-                    <select id="tipoSol" onchange="atualizarOpcoesBeneficio()">
-                        <option value="">Selecione...</option>
-                        <option value="TROCA DE BENEFICIO">TROCA DE BENEFICIO</option>
-                        <option value="AJUSTE VALOR">AJUSTE VALOR DA PASSAGEM</option>
-                        <option value="PEDIDO DE DEMISSAO">PEDIDO DE DEMISSÃO</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label>Qual Benefício?</label>
-                    <select id="beneDest" required>
-                        <option value="">Aguardando tipo...</option>
-                    </select>
-                </div>
-                <div class="form-group"><label>Valor:</label><input type="number" id="vlr" step="0.01"></div>
-                <button type="button" onclick="enviarSolicitacao()" style="background: var(--primary); color: white; width: 100%; padding: 15px; border-radius: 8px; border: none; cursor: pointer; font-weight: bold;">🚀 Enviar</button>
-            </form>
+        <div onclick="abrirPopup('https://forms.office.com/Pages/ResponsePage.aspx?id=fCAtUtXsx0-nbxdGSxFh-f7MDqf4DUBBuOHjox7sxytUNzdRMTFCOTc2SzZEQzU4NFI2TVMzUjIxWS4u')" class="card" style="border-top-color: var(--warning);">
+            <span class="icon">🎧</span>
+            <h2>Controle de Atendimento</h2>
+            <p>Registro de atendimentos Shopee.</p>
+        </div>
+
+        <div onclick="abrirPopup('https://forms.office.com/Pages/ResponsePage.aspx?id=fCAtUtXsx0-nbxdGSxFh-eVAzhwdpsxLmCSGMQwqNIpUQVBSTFlOTUxSUEMwMFhWSTdTTEVOV1lBUy4u')" class="card" style="border-top-color: var(--voucher);">
+            <div class="badge-new">Novo!</div>
+            <span class="icon">🎫</span>
+            <h2>Cadastro Voucher</h2>
+            <p>Novo Colaborador - Cadastro de Voucher Uber.</p>
+        </div>
+
+        <div onclick="window.open('https://spxresolve.atlassian.net/jira/for-you', '_blank')" class="card" style="border-top-color: var(--jira);">
+            <span class="icon">🟦</span>
+            <h2>JIRA</h2>
+            <p>Gestão de chamados e projetos JIRA.</p>
         </div>
     </div>
 
-    <div id="tab-gestao" class="tab-content">
-        <div id="containerCards" class="grid-cards-gestao"></div>
+    <div class="form-section">
+        <h2 style="text-align: center; color: var(--primary);">Solicitação de Ajuste</h2>
+        <form id="formBeneficio">
+            <div class="form-group"><label>Matrícula:</label><input type="text" id="matr" required></div>
+            <div class="form-group">
+                <label>Tipo de Solicitação:</label>
+                <select id="tipoSol" onchange="atualizarOpcoesBeneficio()">
+                    <option value="">Selecione...</option>
+                    <option value="TROCA DE BENEFICIO">TROCA DE BENEFICIO</option>
+                    <option value="AJUSTE VALOR">AJUSTE VALOR DA PASSAGEM</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Qual Benefício?</label>
+                <select id="beneDest" required><option value="">Aguardando...</option></select>
+            </div>
+            <div class="form-group"><label>Valor:</label><input type="number" id="vlr" step="0.01"></div>
+            <button type="button" onclick="enviarSolicitacao()" style="background: var(--primary); color: white; width: 100%; padding: 15px; border-radius: 8px; border: none; cursor: pointer; font-weight: bold;">🚀 Enviar Solicitação</button>
+        </form>
+    </div>
+
+    <div class="gestao-section">
+        <h2 style="text-align: center; color: var(--primary);">Gestão de Solicitações</h2>
+        <div id="containerCardsGestao" class="grid-gestao">
+            </div>
+    </div>
+
+    <div class="funnel-container">
+        <div class="embedded-section" style="border-top: 5px solid var(--appsheet);">
+            <div>
+                <strong style="color: var(--appsheet);">📱 INATIVAÇÃO VOUCHER UBER</strong>
+                <p>Inativação de usuários Uber em caso de desligamento.</p>
+            </div>
+            <button onclick="abrirAppSheet()" class="section-btn" style="background: var(--appsheet); box-shadow: 0 4px 15px rgba(26, 115, 232, 0.3);">
+                🚀 Abrir AppSheet
+            </button>
+        </div>
+
+        <div class="embedded-section" style="border-top: 5px solid var(--glpi);">
+            <div>
+                <strong style="color: var(--glpi);">🛠️ CHAMADOS - GLPI</strong>
+                <p>Abertura e consulta de chamados técnicos WeCanBR.</p>
+            </div>
+            <a href="https://glpi.wecanbr.com.br/index.php?noAUTO=1" target="_blank" style="text-decoration: none;">
+                <button class="section-btn" style="background: var(--glpi); box-shadow: 0 4px 15px rgba(0, 128, 128, 0.3);">
+                    🎫 Acessar GLPI
+                </button>
+            </a>
+        </div>
+
+        <div class="embedded-section" style="border-top: 5px solid var(--pontomais);">
+            <div>
+                <strong style="color: var(--pontomais);">⏱️ PONTOMAIS</strong>
+                <p>Gestão de colaboradores e conferência de ponto.</p>
+            </div>
+            <a href="https://app2.pontomais.com.br/controle-de-ponto/colaboradores/lista" target="_blank" style="text-decoration: none;">
+                <button class="section-btn" style="background: var(--pontomais); box-shadow: 0 4px 15px rgba(0, 168, 168, 0.3);">
+                    🔍 Abrir Pontomais
+                </button>
+            </a>
+        </div>
+    </div>
+
+
+        </div>
     </div>
 
     <div class="signature">By: Edivan Costa</div>
     <footer>© 2026 Apoio ao On-Site | WeCanBR</footer>
 
     <script>
-        const SCRIPT_URL = "SUA_URL_AQUI";
+        const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxupjNwDDgxLULbLOPUVd2jc4hRUxI9JYYeqy7riYGBg5ymoqAfLeJn6IwRqLH7aozH/exec"; // Lembre de colocar o seu URL aqui
 
-        function switchTab(id) {
-            document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
-            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-            document.getElementById(id).classList.add('active');
-            event.currentTarget.classList.add('active');
-            if(id === 'tab-gestao') carregarCards();
+        function abrirPopup(url) {
+            const largura = 900; const altura = 900;
+            const esquerda = (screen.width - largura) / 2;
+            const topo = (screen.height - altura) / 2;
+            window.open(url, 'FormsPopup', `width=${largura},height=${altura},top=${topo},left=${esquerda},scrollbars=yes,resizable=yes`);
         }
 
-        function atualizarOpcoesBeneficio() {
-            const tipoSol = document.getElementById('tipoSol').value;
-            const beneDest = document.getElementById('beneDest');
-            beneDest.innerHTML = '<option value="">Selecione...</option>';
+        function abrirAppSheet() {
+            const largura = window.screen.availWidth;
+            const altura = window.screen.availHeight;
+            window.open('https://www.appsheet.com/start/8ba6b59c-c836-4d4e-9a3e-e43d38d2a47e', 'AppSheetPopup', `width=${largura},height=${altura},top=0,left=0,scrollbars=yes,resizable=yes`);
+        }
 
-            if (tipoSol === "TROCA DE BENEFICIO") {
+        function buscarTudo() {
+            let input = document.getElementById('searchInput').value.toLowerCase();
+            let cards = document.getElementsByClassName('card');
+            for (let card of cards) {
+                card.classList.toggle('hidden', !card.innerText.toLowerCase().includes(input));
+            }
+        }
+
+        function toggleTheme() {
+            const html = document.documentElement;
+            const btn = document.getElementById('themeBtn');
+            if (html.getAttribute('data-theme') === 'dark') {
+                html.removeAttribute('data-theme'); btn.innerHTML = "🌙";
+            } else {
+                html.setAttribute('data-theme', 'dark'); btn.innerHTML = "☀️";
+            }
+        }
+
+        // --- NOVAS FUNÇÕES ---
+        function atualizarOpcoesBeneficio() {
+            const tipo = document.getElementById('tipoSol').value;
+            const select = document.getElementById('beneDest');
+            select.innerHTML = '<option value="">Selecione...</option>';
+            
+            if (tipo === "TROCA DE BENEFICIO") {
                 const trocas = [
                     "ATUALIZAR valor de VT DIÁRIO", "VT para FRETADO", "VT para VT + VOUCHER",
                     "VT para MOBILIDADE", "MOBILIDADE para VT+VOUCHER", "MOBILIDADE para VT",
@@ -230,10 +377,10 @@
                     "FRETADO para VT", "FRETADO para VT + VOUCHER",
                     "FRETADO para MOBILIDADE", "FRETADO para VT + FRETADO"
                 ];
-                trocas.forEach(t => beneDest.innerHTML += `<option value="${t}">${t}</option>`);
+                trocas.forEach(t => select.innerHTML += `<option value="${t}">${t}</option>`);
             } else {
                 const padrao = ["VT", "VOUCHER UBER", "MOBILIDADE"];
-                padrao.forEach(p => beneDest.innerHTML += `<option value="${p}">${p}</option>`);
+                padrao.forEach(p => select.innerHTML += `<option value="${p}">${p}</option>`);
             }
         }
 
@@ -245,33 +392,30 @@
                 valor_vt: document.getElementById('vlr').value
             };
             await fetch(SCRIPT_URL, { method: 'POST', mode: 'no-cors', body: JSON.stringify(data) });
-            alert("Enviado com sucesso!");
+            alert("Solicitação enviada!");
             document.getElementById('formBeneficio').reset();
-            switchTab('tab-links');
+            carregarCardsGestao();
         }
 
-        async function carregarCards() {
-            const container = document.getElementById('containerCards');
-            container.innerHTML = "Carregando...";
-            const res = await fetch(SCRIPT_URL);
-            const dados = await res.json();
-            container.innerHTML = "";
-            dados.forEach(sol => {
-                container.innerHTML += `
-                    <div class="card-gestao">
-                        <h3>${sol.nome}</h3>
-                        <p>ID: ${sol.id} | Matrícula: ${sol.matricula}</p>
-                        <p>Solicitação: ${sol.tipo}</p>
-                        <p>Detalhe: ${sol.beneficio}</p>
-                        <span class="status-badge">${sol.status}</span>
-                    </div>`;
-            });
-            document.getElementById('total-pendentes').innerText = dados.length;
+        async function carregarCardsGestao() {
+            const container = document.getElementById('containerCardsGestao');
+            try {
+                const res = await fetch(SCRIPT_URL);
+                const dados = await res.json();
+                container.innerHTML = "";
+                dados.forEach(sol => {
+                    container.innerHTML += `
+                        <div class="card-gestao">
+                            <strong>${sol.nome}</strong><br>
+                            <small>Mat: ${sol.matricula} | ID: ${sol.id}</small><br>
+                            <span>${sol.tipo}</span><br>
+                            <span class="status-badge">${sol.status}</span>
+                        </div>`;
+                });
+            } catch(e) { container.innerHTML = "Aguardando dados da planilha..."; }
         }
 
-        function toggleTheme() { document.documentElement.toggleAttribute('data-theme'); }
-        function buscarTudo() { /* lógica original */ }
-        window.onload = carregarCards;
+        window.onload = carregarCardsGestao;
     </script>
 </body>
 </html>
