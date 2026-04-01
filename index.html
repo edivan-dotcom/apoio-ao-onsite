@@ -59,7 +59,6 @@
         .card-gestao { background: var(--card-bg); padding: 15px; border-radius: 10px; border-left: 5px solid var(--warning); box-shadow: 0 2px 5px rgba(0,0,0,0.1); text-align: left; position: relative; padding-bottom: 110px; }
         #contadorSolicitacoes { background: #e67e22; color: #000; padding: 5px 15px; border-radius: 20px; font-size: 0.8rem; font-weight: 800; margin-left: 15px; display: none; cursor: pointer; }
         .btn-concluir { position: absolute; bottom: 15px; left: 15px; right: 15px; background: var(--primary); color: white; border: none; padding: 8px 15px; border-radius: 5px; cursor: pointer; font-weight: bold; transition: 0.3s; }
-        .btn-concluir:hover { background: var(--secondary); }
         .card-jira-agrupado { background: var(--card-bg); padding: 25px; border-radius: 10px; border-top: 5px solid var(--primary); box-shadow: 0 4px 10px rgba(0,0,0,0.1); text-align: center; cursor: pointer; transition: 0.3s; }
         .btn-jira-link { border: none; border-radius: 5px; cursor: pointer; font-weight: bold; transition: 0.3s; text-decoration: none; text-align: center; color: white; display: block; width: 100%; box-sizing: border-box; }
         .btn-filtro { padding: 8px 20px; border-radius: 20px; border: 2px solid transparent; cursor: pointer; font-weight: bold; transition: 0.3s; font-size: 0.9rem; }
@@ -142,44 +141,49 @@
                 if(containerSol) containerSol.innerHTML = ""; 
                 if(containerJira) containerJira.innerHTML = "";
 
-                // SOLICITAÇÕES
                 if (dados.solicitacoes && containerSol) {
                     dados.solicitacoes.forEach(sol => {
                         containerSol.innerHTML += `<div class="card-gestao"><strong>${sol.nome}</strong><br><small>${sol.matricula}</small><br><strong>${sol.tipo}</strong><button class="btn-concluir" onclick="finalizarSolicitacao('${sol.id}')">✅ CONCLUIR</button></div>`;
                     });
                 }
 
-                // JIRA TICKETS (Onde entra a pasta Time de Ponto)
                 if (dados.jira && containerJira) {
                     ticketsJiraGlobais = dados.jira;
                     const contagem = {}; let pendPonto = 0;
+                    
+                    // Conta tickets totais e pendentes no ponto
                     dados.jira.forEach(t => { 
-                        let ons = t.onsite || "Não Mapeado"; contagem[ons] = (contagem[ons] || 0) + 1;
-                        if(t.pendentePonto) pendPonto++;
+                        if(t.pendentePonto) {
+                            pendPonto++;
+                        } else {
+                            // Só conta para o Onsite se NÃO estiver pendente no ponto
+                            let ons = t.onsite || "Não Mapeado"; 
+                            contagem[ons] = (contagem[ons] || 0) + 1;
+                        }
                     });
 
-                    // PASTA TIME DE PONTO (Só aparece na aba TICKETS SHOPEE)
                     if (pendPonto > 0) {
                         containerJira.innerHTML += `
-                            <div class="card-jira-agrupado" style="border-top-color: var(--pontomais);" onclick="mostrarTicketsDoOnsite('TIME DE PONTO', 'TODOS')">
+                            <div class="card-jira-agrupado" style="border-top-color: var(--pontomais); box-shadow: 0 4px 15px rgba(0, 168, 168, 0.3);" onclick="mostrarTicketsDoOnsite('TIME DE PONTO', 'TODOS')">
                                 <span style="font-size: 30px;">⏱️</span><h3 style="color: var(--pontomais);">TIME DE PONTO</h3>
                                 <span style="font-weight: bold; color: var(--warning);">${pendPonto} Ticket(s) Pendente(s)</span>
                             </div>`;
                     }
 
                     for (const [onsite, qtd] of Object.entries(contagem)) {
-                        containerJira.innerHTML += `<div class="card-jira-agrupado" onclick="mostrarTicketsDoOnsite('${onsite}', 'TODOS')"><span style="font-size: 30px;">🧑‍💻</span><h3 style="color: var(--primary);">${onsite}</h3><span style="font-weight: bold; color: var(--danger);">${qtd} Ticket(s) Pendente(s)</span></div>`;
+                        // Só mostra a pasta do Onsite se ele ainda tiver tickets que NÃO foram pro ponto
+                        if (qtd > 0) {
+                            containerJira.innerHTML += `<div class="card-jira-agrupado" onclick="mostrarTicketsDoOnsite('${onsite}', 'TODOS')"><span style="font-size: 30px;">🧑‍💻</span><h3 style="color: var(--primary);">${onsite}</h3><span style="font-weight: bold; color: var(--danger);">${qtd} Ticket(s) Pendente(s)</span></div>`;
+                        }
                     }
                 }
             } catch(e) { console.error(e); }
         }
 
-        // Funções auxiliares mantidas ( switchTab, toggleTheme, buscarTudo, etc... )
         function toggleTheme() { const html = document.documentElement; if (html.getAttribute('data-theme') === 'dark') html.removeAttribute('data-theme'); else html.setAttribute('data-theme', 'dark'); }
         function abrirPopup(url) { window.open(url, 'Popup', 'width=900,height=900'); }
         function buscarTudo() { let input = document.getElementById('searchInput').value.toLowerCase(); let cards = document.getElementsByClassName('card'); for (let card of cards) card.classList.toggle('hidden', !card.innerText.toLowerCase().includes(input)); }
         
-        // Funções de ação (enviarParaPonto, concluirPonto, etc) permanecem as mesmas que você já tem no motor original
         async function enviarParaPonto(chave) { await fetch(SCRIPT_URL, { method: 'POST', mode: 'no-cors', body: JSON.stringify({ acao: "marcar_ponto", chave: chave }) }); carregarCardsGestao(); }
         async function concluirPonto(chave) { await fetch(SCRIPT_URL, { method: 'POST', mode: 'no-cors', body: JSON.stringify({ acao: "concluir_ponto", chave: chave }) }); carregarCardsGestao(); }
         
@@ -190,7 +194,10 @@
             const container = document.getElementById('containerCardsJira');
             container.innerHTML = "";
 
-            const tickets = (onsite === 'TIME DE PONTO') ? ticketsJiraGlobais.filter(t => t.pendentePonto) : ticketsJiraGlobais.filter(t => t.onsite === onsite);
+            // FILTRO INTELIGENTE: Se for Onsite, esconde o que já foi enviado ao ponto
+            const tickets = (onsite === 'TIME DE PONTO') 
+                ? ticketsJiraGlobais.filter(t => t.pendentePonto) 
+                : ticketsJiraGlobais.filter(t => t.onsite === onsite && !t.pendentePonto);
             
             tickets.forEach(t => {
                 let statusTag = t.pendentePonto ? `<div class="tag-ponto">⏰ PENDENTE NO PONTOMAIS</div>` : '';
