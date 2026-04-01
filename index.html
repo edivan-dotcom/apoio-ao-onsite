@@ -43,19 +43,10 @@
         .card { background: var(--card-bg); border-radius: 15px; width: 260px; padding: 25px; text-align: center; box-shadow: 0 5px 15px rgba(0,0,0,0.05); transition: 0.3s; color: var(--text); border-top: 5px solid var(--primary); box-sizing: border-box; cursor: pointer; position: relative; }
         .card:hover { transform: translateY(-5px); box-shadow: 0 10px 25px rgba(0,0,0,0.1); }
         .card.hidden { display: none; }
-        .badge-new { position: absolute; top: -15px; right: -10px; background: var(--new-tag); color: white; padding: 4px 12px; border-radius: 20px; font-size: 0.75rem; font-weight: bold; animation: bounce 2s infinite; }
-        @keyframes bounce { 0%, 20%, 50%, 80%, 100% {transform: translateY(0);} 40% {transform: translateY(-5px);} 60% {transform: translateY(-3px);} }
         .icon { font-size: 40px; margin-bottom: 15px; display: block; }
-        .funnel-container { display: flex; justify-content: center; flex-wrap: wrap; gap: 20px; max-width: 95%; margin: 0px auto 40px; padding: 0 20px; }
-        .embedded-section { background: var(--card-bg); padding: 25px; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); flex: 1; min-width: 300px; max-width: 400px; text-align: center; }
-        .section-btn { color: white; border: none; padding: 12px 25px; border-radius: 25px; font-size: 0.9rem; font-weight: bold; cursor: pointer; transition: 0.3s; margin-top: 15px; }
         .signature { text-align: center; margin: 40px 0 20px; font-family: 'Great Vibes', cursive; font-size: 1.5rem; color: var(--signature); }
         footer { text-align: center; padding: 30px; background: #222; color: white; width: 100%; }
         .theme-toggle { position: fixed; bottom: 20px; right: 20px; width: 50px; height: 50px; border-radius: 50%; background: var(--primary); color: white; border: none; cursor: pointer; box-shadow: 0 4px 15px rgba(0,0,0,0.3); z-index: 2001; font-size: 20px; }
-        .form-section { max-width: 600px; margin: 20px auto 40px; background: var(--card-bg); padding: 30px; border-radius: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); border-top: 5px solid var(--primary); }
-        .form-group { margin-bottom: 15px; text-align: left; } .form-group label { display: block; margin-bottom: 5px; font-weight: bold; } .form-group input, .form-group select { width: 100%; padding: 12px; border-radius: 8px; border: 1px solid #ddd; background: var(--bg); color: var(--text); box-sizing: border-box; }
-        .gestao-section { max-width: 1200px; margin: 40px auto; padding: 0 20px; }
-        .grid-gestao { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px; align-items: start; }
         .card-gestao { background: var(--card-bg); padding: 15px; border-radius: 10px; border-left: 5px solid var(--warning); box-shadow: 0 2px 5px rgba(0,0,0,0.1); text-align: left; position: relative; padding-bottom: 110px; }
         #contadorSolicitacoes { background: #e67e22; color: #000; padding: 5px 15px; border-radius: 20px; font-size: 0.8rem; font-weight: 800; margin-left: 15px; display: none; cursor: pointer; }
         .btn-concluir { position: absolute; bottom: 15px; left: 15px; right: 15px; background: var(--primary); color: white; border: none; padding: 8px 15px; border-radius: 5px; cursor: pointer; font-weight: bold; transition: 0.3s; }
@@ -77,6 +68,7 @@
         <div class="nav-links">
             <a href="https://portal.office.com" target="_blank" class="login-btn">🔑 Login Microsoft</a>
             <a href="https://desafiorhcombr.sharepoint.com/sites/wecanbr" target="_blank" class="intranet-btn">🌐 Intranet</a>
+            
             <div class="dropdown">
                 <button class="dropdown-btn">📊 Planilhas ▼</button>
                 <div class="dropdown-content">
@@ -88,6 +80,7 @@
                     <a href="https://desafiorhcombr.sharepoint.com/:x:/r/sites/FSWECANBR/_layouts/15/Doc.aspx?sourcedoc=%7B6265A06E-D548-4055-9261-D6A512496567%7D&file=03%202026%20REJEITOS%20MAR%C3%87O%202026.xlsx&action=default&mobileredirect=true" target="_blank">⚠️ Rejeitos 03.2026</a>
                 </div>
             </div>
+
             <div class="dropdown">
                 <button class="dropdown-btn">📄 Documentos ▼</button>
                 <div class="dropdown-content">
@@ -241,8 +234,8 @@
                     nomeForms = '📝 FORMS DESLIGAMENTO'; corForms = 'var(--danger)';
                 }
 
-                // MOSTRA A DATA SE FOR DESLIGAMENTO
-                let infoData = (isDeslig && t.dataDesligamento) ? `<br><span style="color: var(--danger); font-weight: bold;">📅 Solicitado em: ${t.dataDesligamento}</span>` : '';
+                // MOSTRA A DATA SE FOR DESLIGAMENTO (Puxando a data desejada da Coluna K)
+                let infoData = (isDeslig && t.dataDesligamento) ? `<br><span style="color: var(--danger); font-weight: bold;">📅 Data de Desligamento: ${t.dataDesligamento}</span>` : '';
 
                 let areaBotoes = '';
                 if (t.pendentePonto) {
