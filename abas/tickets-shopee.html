@@ -64,7 +64,6 @@
             const container = document.getElementById('containerPrincipalJira');
             document.getElementById('tituloPagina').innerText = `Gestão: ${onsite}`;
             
-            // Filtros aparecendo "dentro" da área do Onsite
             let htmlBase = `
                 <div style="grid-column: 1 / -1; width: 100%;">
                     <button onclick="mostrarPainelGeral()" style="margin-bottom:20px; cursor:pointer; background:none; border:none; color:var(--primary); font-weight:bold;">⬅️ Voltar ao Painel Geral</button>
@@ -78,24 +77,30 @@
             container.innerHTML = htmlBase;
 
             let tickets = todosTickets.filter(t => t.onsite === onsite);
-            if(filtroAtivo !== 'TODOS') {
-                tickets = tickets.filter(t => t.resumo.toUpperCase().includes(filtroAtivo));
+            
+            // Ajuste no Filtro: Busca por variações da palavra
+            if(filtroAtivo === 'DESLIGAMENTO') {
+                tickets = tickets.filter(t => t.resumo.toUpperCase().includes("DESLIGAMENTO"));
+            } else if(filtroAtivo === 'MOVIMENTACAO') {
+                tickets = tickets.filter(t => t.resumo.toUpperCase().includes("MOVIMENTAÇ") || t.resumo.toUpperCase().includes("MOVIMENTAC"));
             }
 
             tickets.forEach(t => {
                 const resumo = t.resumo.toUpperCase();
                 const isDesligamento = resumo.includes("DESLIGAMENTO");
-                const isMovimentacao = resumo.includes("MOVIMENTAÇÃO") || resumo.includes("MOVIMENTACAO");
+                const isMovimentacao = resumo.includes("MOVIMENTAÇ") || resumo.includes("MOVIMENTAC");
                 
                 let classeDestaque = isDesligamento ? "card-desligamento" : (isMovimentacao ? "card-movimentacao" : "");
                 
-                // 3. Lógica do botão Central de Solicitações para Movimentação
                 let botoesExtras = "";
+                const linkFormsDesligamento = "https://forms.office.com/Pages/ResponsePage.aspx?id=fCAtUtXsx0-nbxdGSxFh-f7MDqf4DUBBuOHjox7sxytUNFFQNTgzR1pQV0FLM05aWElXSjlRMjFHRy4u&origin=Invitation&channel=0";
+                const linkFormsMovimentacao = "https://forms.office.com/Pages/ResponsePage.aspx?id=fCAtUtXsx0-nbxdGSxFh-eVAzhwdpsxLmCSGMQwqNIpUM1E2TFRSRkhNWU9IQk9SVFhBSDJNWTFDVS4u";
+
                 if (isDesligamento) {
-                    botoesExtras = `<button class="btn-jira-link btn-forms-desligamento" onclick="window.open('URL_FORMS', '_blank')">📋 ENVIAR FORMS DE DESLIGAMENTO</button>`;
+                    botoesExtras = `<button class="btn-jira-link btn-forms-desligamento" onclick="abrirPopup('${linkFormsDesligamento}')">📋 ENVIAR FORMS DE DESLIGAMENTO</button>`;
                 } else if (isMovimentacao) {
                     botoesExtras = `
-                        <button class="btn-jira-link btn-central-solicitacao" onclick="window.open('URL_CENTRAL', '_blank')">📥 CENTRAL DE SOLICITAÇÕES</button>
+                        <button class="btn-jira-link btn-central-solicitacao" onclick="abrirPopup('${linkFormsMovimentacao}')">📥 CENTRAL DE SOLICITAÇÕES</button>
                         <button onclick="enviarParaPonto('${t.chave}')" class="btn-jira-link" style="background: #f1c40f; color:#000; padding: 8px;">➡️ ENVIAR PARA O PONTO</button>
                     `;
                 } else {
@@ -113,6 +118,15 @@
                         </div>
                     </div>`;
             });
+        }
+
+        // Função para abrir os Forms em Pop-up
+        function abrirPopup(url) {
+            const largura = 900;
+            const altura = 800;
+            const esquerda = (screen.width - largura) / 2;
+            const topo = (screen.height - altura) / 2;
+            window.open(url, 'MicrosoftForms', `width=${largura},height=${altura},top=${topo},left=${esquerda},scrollbars=yes,resizable=yes`);
         }
 
         window.onload = carregarDados;
