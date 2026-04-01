@@ -36,9 +36,9 @@
         .dropdown-content a { color: var(--text); padding: 12px 16px; text-decoration: none; display: block; font-size: 0.85rem; border-bottom: 1px solid rgba(128,128,128,0.1); }
         .dropdown-content a:hover { background: rgba(106, 17, 203, 0.05); }
 
-        /* HEADER & SEARCH */
+        /* HEADER */
         header { background: linear-gradient(rgba(106, 17, 203, 0.75), rgba(37, 117, 252, 0.75)), url('https://wecanbr.com.br/img/quem-somos/main.jpg'); background-size: cover; background-position: center; color: white; padding: 60px 20px; text-align: center; }
-        .search-container { margin-top: 25px; position: relative; width: 450px; max-width: 90%; margin: 20px auto 0; }
+        .search-container { margin: 20px auto 0; position: relative; width: 450px; max-width: 90%; }
         #searchInput { padding: 15px 25px; width: 100%; border-radius: 30px; border: none; font-size: 1rem; box-shadow: 0 5px 15px rgba(0,0,0,0.2); outline: none; background: var(--card-bg); color: var(--text); box-sizing: border-box; }
         
         /* TABS */
@@ -46,32 +46,58 @@
         .tab-btn { padding: 12px 30px; border: none; border-radius: 25px; cursor: pointer; font-weight: bold; font-size: 1rem; background: var(--card-bg); color: var(--text); box-shadow: 0 4px 10px rgba(0,0,0,0.1); transition: 0.3s; }
         .tab-btn.active { background: var(--primary); color: white; }
 
-        /* CARDS GERAIS */
-        .container { display: flex; justify-content: center; flex-wrap: wrap; gap: 20px; padding: 20px 20px 40px; max-width: 1400px; margin: 0 auto; }
-        .card { background: var(--card-bg); border-radius: 15px; width: 260px; padding: 25px; text-align: center; box-shadow: 0 5px 15px rgba(0,0,0,0.05); transition: 0.3s; color: var(--text); border-top: 5px solid var(--primary); box-sizing: border-box; cursor: pointer; position: relative; }
-        .card:hover { transform: translateY(-5px); box-shadow: 0 10px 25px rgba(0,0,0,0.1); }
-        .card.hidden { display: none; }
-        .icon { font-size: 40px; margin-bottom: 15px; display: block; }
+        /* GRID CONFIGURATION - 4 COLUMNS */
+        .container, .grid-gestao { 
+            display: grid; 
+            grid-template-columns: repeat(4, 1fr); /* FORÇA 4 COLUNAS */
+            gap: 20px; 
+            padding: 20px; 
+            max-width: 1400px; 
+            margin: 0 auto; 
+        }
 
-        /* FUNIL (RODAPÉ HOME) */
-        .funnel-container { display: flex; justify-content: center; flex-wrap: wrap; gap: 20px; max-width: 95%; margin: 40px auto; padding: 0 20px; }
-        .embedded-section { background: var(--card-bg); padding: 25px; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); flex: 1; min-width: 300px; max-width: 400px; text-align: center; box-sizing: border-box; display: flex; flex-direction: column; justify-content: space-between; }
-        .section-btn { color: white; border: none; padding: 12px 25px; border-radius: 25px; font-size: 0.9rem; font-weight: bold; cursor: pointer; transition: 0.3s; margin-top: 15px; text-decoration: none; display: inline-block; }
+        /* FUNNEL (RODAPÉ DA HOME) - 4 COLUMNS */
+        .funnel-container { 
+            display: grid; 
+            grid-template-columns: repeat(4, 1fr); /* FORÇA 4 COLUNAS */
+            gap: 20px; 
+            max-width: 1400px; 
+            margin: 40px auto; 
+            padding: 0 20px; 
+        }
 
-        /* GESTÃO */
-        .grid-gestao { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px; align-items: start; padding: 20px; }
-        .card-gestao { background: var(--card-bg); padding: 15px; border-radius: 10px; border-left: 5px solid var(--warning); box-shadow: 0 2px 5px rgba(0,0,0,0.1); text-align: left; position: relative; padding-bottom: 120px; }
-        #contadorSolicitacoes { background: #e67e22; color: #000; padding: 5px 15px; border-radius: 20px; font-size: 0.8rem; font-weight: 800; margin-left: 15px; display: none; cursor: pointer; }
-        .btn-concluir { position: absolute; bottom: 15px; left: 15px; right: 15px; background: var(--primary); color: white; border: none; padding: 8px 15px; border-radius: 5px; cursor: pointer; font-weight: bold; transition: 0.3s; }
-        .card-jira-agrupado { background: var(--card-bg); padding: 25px; border-radius: 10px; border-top: 5px solid var(--primary); box-shadow: 0 4px 10px rgba(0,0,0,0.1); text-align: center; cursor: pointer; transition: 0.3s; }
-        .btn-jira-link { border: none; border-radius: 5px; cursor: pointer; font-weight: bold; transition: 0.3s; text-decoration: none; text-align: center; color: white; display: block; width: 100%; box-sizing: border-box; margin-top: 5px; }
-        .btn-filtro { padding: 8px 20px; border-radius: 20px; border: 2px solid transparent; cursor: pointer; font-weight: bold; transition: 0.3s; font-size: 0.9rem; margin: 5px; }
-        .tag-ponto { background: var(--warning); color: #000; text-align: center; font-weight: bold; padding: 6px; border-radius: 5px; margin-bottom: 10px; animation: pulse 2s infinite; font-size: 0.85rem;}
-        @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.02); } 100% { transform: scale(1); } }
+        /* CARD STYLES (RESTAURADOS) */
+        .card, .embedded-section, .card-jira-agrupado, .card-gestao { 
+            background: var(--card-bg); 
+            border-radius: 15px; 
+            padding: 25px; 
+            text-align: center; 
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05); 
+            transition: 0.3s; 
+            border-top: 5px solid var(--primary); 
+            box-sizing: border-box; 
+        }
+        .card:hover, .card-jira-agrupado:hover { transform: translateY(-5px); box-shadow: 0 10px 25px rgba(0,0,0,0.1); cursor: pointer; }
         
+        .embedded-section { min-width: unset; flex: unset; border-top-width: 5px; } /* Ajuste para o grid */
+        .section-btn { color: white; border: none; padding: 12px 25px; border-radius: 25px; font-size: 0.9rem; font-weight: bold; cursor: pointer; transition: 0.3s; margin-top: 15px; text-decoration: none; display: inline-block; }
+        
+        .card-gestao { text-align: left; border-left: 5px solid var(--warning); border-top: none; position: relative; padding-bottom: 120px; }
+        .btn-jira-link, .btn-concluir { border: none; border-radius: 5px; cursor: pointer; font-weight: bold; transition: 0.3s; text-decoration: none; text-align: center; color: white; display: block; width: 100%; box-sizing: border-box; margin-top: 5px; padding: 8px; }
+        .btn-concluir { position: absolute; bottom: 15px; left: 15px; right: 15px; background: var(--primary); }
+        .btn-filtro { padding: 8px 20px; border-radius: 20px; border: 2px solid transparent; cursor: pointer; font-weight: bold; transition: 0.3s; font-size: 0.9rem; margin: 5px; }
+        
+        .tag-ponto { background: var(--warning); color: #000; text-align: center; font-weight: bold; padding: 6px; border-radius: 5px; margin-bottom: 10px; font-size: 0.85rem; animation: pulse 2s infinite; }
+        @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.02); } 100% { transform: scale(1); } }
+
         .signature { text-align: center; margin: 40px 0 20px; font-family: 'Great Vibes', cursive; font-size: 1.5rem; color: var(--signature); }
         footer { text-align: center; padding: 30px; background: #222; color: white; width: 100%; }
         .theme-toggle { position: fixed; bottom: 20px; right: 20px; width: 50px; height: 50px; border-radius: 50%; background: var(--primary); color: white; border: none; cursor: pointer; z-index: 2001; font-size: 20px; }
+
+        /* RESPONSIVO (OPCIONAL: CAI PARA 1 COLUNA NO CELULAR) */
+        @media (max-width: 900px) {
+            .container, .grid-gestao, .funnel-container { grid-template-columns: 1fr; }
+        }
     </style>
 </head>
 <body>
@@ -101,7 +127,7 @@
             <div class="dropdown">
                 <button class="dropdown-btn">📄 Documentos ▼</button>
                 <div class="dropdown-content">
-                  <a href="https://drive.google.com/file/d/1qsLtN-HC5488FVQc3n5mcT8zjCdVja0d/view" target="_blank">📄 Carta de Suspensão</a>
+                    <a href="https://drive.google.com/file/d/1qsLtN-HC5488FVQc3n5mcT8zjCdVja0d/view" target="_blank">📄 Carta de Suspensão</a>
                     <a href="https://drive.google.com/file/d/1lGnjwLz_5i4uASifv2OPlkSb7NUGeaHI/view" target="_blank">📄 Comunicado de Desligamento</a>
                     <a href="https://drive.google.com/file/d/1zsrlh6KBLvMvEGc13tTA6I7Ybra5iObA/view" target="_blank">📄 Advertência Disciplinar</a>
                     <a href="https://drive.google.com/file/d/1_Dw1qLl9icW282pkZCNln8908Nfqiasi/view" target="_blank">📄 Advertência - Ponto</a>
@@ -178,11 +204,7 @@
                         else { let ons = t.onsite || "Não Mapeado"; contagem[ons] = (contagem[ons] || 0) + 1; }
                     });
                     if (pendPonto > 0) {
-                        containerJira.innerHTML += `
-                            <div class="card-jira-agrupado" style="border-top-color: var(--pontomais); box-shadow: 0 4px 15px rgba(0, 168, 168, 0.3);" onclick="mostrarTicketsDoOnsite('TIME DE PONTO', 'TODOS')">
-                                <span style="font-size: 30px;">⏱️</span><h3 style="color: var(--pontomais);">TIME DE PONTO</h3>
-                                <span style="font-weight: bold; color: var(--warning);">${pendPonto} Ticket(s) Pendente(s)</span>
-                            </div>`;
+                        containerJira.innerHTML += `<div class="card-jira-agrupado" style="border-top-color: var(--pontomais); box-shadow: 0 4px 15px rgba(0, 168, 168, 0.3);" onclick="mostrarTicketsDoOnsite('TIME DE PONTO', 'TODOS')"><span style="font-size: 30px;">⏱️</span><h3 style="color: var(--pontomais);">TIME DE PONTO</h3><span style="font-weight: bold; color: var(--warning);">${pendPonto} Ticket(s) Pendente(s)</span></div>`;
                     }
                     for (const [onsite, qtd] of Object.entries(contagem)) {
                         if (qtd > 0) {
@@ -218,54 +240,4 @@
             containerFiltros.innerHTML = ""; containerCards.innerHTML = "";
 
             const baseTickets = (onsite === 'TIME DE PONTO') 
-                ? ticketsJiraGlobais.filter(t => t.pendentePonto) 
-                : ticketsJiraGlobais.filter(t => t.onsite === onsite && !t.pendentePonto);
-
-            let qtdDeslig = 0, qtdMov = 0;
-            baseTickets.forEach(t => {
-                let tipo = t.tipoItem.toLowerCase();
-                if (tipo.includes("deslig") || tipo.includes("offboarding")) qtdDeslig++;
-                else if (tipo.includes("moviment") || tipo.includes("mudança") || tipo.includes("horário")) qtdMov++;
-            });
-
-            containerFiltros.innerHTML = `<button class="btn-filtro" style="${filtroAtivo === 'TODOS' ? 'background: var(--primary); color: white;' : 'background: #eee; color: #333;'}" onclick="mostrarTicketsDoOnsite('${onsite}', 'TODOS')">📋 Todos (${baseTickets.length})</button>`;
-            if (qtdDeslig > 0) containerFiltros.innerHTML += `<button class="btn-filtro" style="${filtroAtivo === 'DESLIG' ? 'background: var(--danger); color: white;' : 'border-color: var(--danger); color: var(--danger);'}" onclick="mostrarTicketsDoOnsite('${onsite}', 'DESLIG')">🚫 Desligamentos (${qtdDeslig})</button>`;
-            if (qtdMov > 0) containerFiltros.innerHTML += `<button class="btn-filtro" style="${filtroAtivo === 'MOV' ? 'background: var(--secondary); color: white;' : 'border-color: var(--secondary); color: var(--secondary);'}" onclick="mostrarTicketsDoOnsite('${onsite}', 'MOV')">🔄 Movimentações (${qtdMov})</button>`;
-
-            let ticketsExibicao = baseTickets.filter(t => {
-                if (filtroAtivo === 'TODOS') return true;
-                let tipo = t.tipoItem.toLowerCase();
-                if (filtroAtivo === 'DESLIG') return tipo.includes("deslig") || tipo.includes("offboarding");
-                if (filtroAtivo === 'MOV') return tipo.includes("moviment") || tipo.includes("mudança") || tipo.includes("horário");
-                return false;
-            });
-
-            ticketsExibicao.forEach(t => {
-                const tipoLower = t.tipoItem.toLowerCase();
-                const isMov = tipoLower.includes("moviment") || tipoLower.includes("mudança") || tipoLower.includes("horário");
-                const isDeslig = tipoLower.includes("deslig") || tipoLower.includes("offboarding");
-                let statusTag = t.pendentePonto ? `<div class="tag-ponto">⏰ PENDENTE NO PONTOMAIS</div>` : '';
-                
-                let urlForms = 'https://forms.office.com/Pages/ResponsePage.aspx?id=fCAtUtXsx0-nbxdGSxFh-eVAzhwdpsxLmCSGMQwqNIpUM1E2TFRSRkhNWU9IQk9SVFhBSDJNWTFDVS4u';
-                let nomeForms = '📝 CENTRAL SOLICITAÇÕES', corForms = 'var(--primary)';
-
-                if (isDeslig) {
-                    urlForms = 'https://forms.office.com/Pages/ResponsePage.aspx?id=fCAtUtXsx0-nbxdGSxFh-f7MDqf4DUBBuOHjox7sxytUNFFQNTgzR1pQV0FLM05aWElXSjlRMjFHRy4u';
-                    nomeForms = '📝 FORMS DESLIGAMENTO'; corForms = 'var(--danger)';
-                }
-
-                let infoData = (isDeslig && t.dataDesligamento) ? `<br><span style="color: var(--danger); font-weight: bold;">📅 Data de Desligamento: ${t.dataDesligamento}</span>` : '';
-
-                let areaBotoes = '';
-                if (t.pendentePonto) {
-                    areaBotoes = `<a href="https://spxresolve.atlassian.net/browse/${t.chave}" target="_blank" class="btn-jira-link" style="background: var(--jira); padding: 8px;">🔗 ABRIR JIRA</a><a href="https://app2.pontomais.com.br/controle-de-ponto/colaboradores/lista" target="_blank" class="btn-jira-link" style="background: var(--pontomais); padding: 8px;">✅ ACESSAR PONTOMAIS</a><button onclick="concluirPonto('${t.chave}')" class="btn-jira-link" style="background: #333; padding: 8px;">✔️ CONCLUIR PONTO</button>`;
-                } else {
-                    areaBotoes = `<a href="https://spxresolve.atlassian.net/browse/${t.chave}" target="_blank" class="btn-jira-link" style="background: var(--jira); padding: 8px;">🔗 ABRIR JIRA</a><button onclick="abrirPopup('${urlForms}')" class="btn-jira-link" style="background: ${corForms}; padding: 8px;">${nomeForms}</button>${isMov ? `<button onclick="enviarParaPonto('${t.chave}')" class="btn-jira-link" style="background: #f1c40f; color:#000; padding: 8px;">➡️ ENVIAR PARA O PONTO</button>` : ''}`;
-                }
-
-                containerCards.innerHTML += `<div class="card-gestao" style="padding-bottom: 150px;">${statusTag}<strong>${t.nome}</strong><br><small>${t.chave} | Onsite: ${t.onsite}</small>${infoData}<br><hr style="opacity:0.2;"><span>${t.resumo}</span><div style="position: absolute; bottom: 15px; left: 15px; right: 15px; display: flex; flex-direction: column; gap: 5px;">${areaBotoes}</div></div>`;
-            });
-        }
-    </script>
-</body>
-</html>
+                ? ticketsJiraGlobais.
