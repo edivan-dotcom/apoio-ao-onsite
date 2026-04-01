@@ -151,12 +151,9 @@
                     ticketsJiraGlobais = dados.jira;
                     const contagem = {}; let pendPonto = 0;
                     
-                    // Conta tickets totais e pendentes no ponto
                     dados.jira.forEach(t => { 
-                        if(t.pendentePonto) {
-                            pendPonto++;
-                        } else {
-                            // Só conta para o Onsite se NÃO estiver pendente no ponto
+                        if(t.pendentePonto) { pendPonto++; } 
+                        else {
                             let ons = t.onsite || "Não Mapeado"; 
                             contagem[ons] = (contagem[ons] || 0) + 1;
                         }
@@ -164,14 +161,13 @@
 
                     if (pendPonto > 0) {
                         containerJira.innerHTML += `
-                            <div class="card-jira-agrupado" style="border-top-color: var(--pontomais); box-shadow: 0 4px 15px rgba(0, 168, 168, 0.3);" onclick="mostrarTicketsDoOnsite('TIME DE PONTO', 'TODOS')">
+                            <div class="card-jira-agrupado" style="border-top-color: var(--pontomais);" onclick="mostrarTicketsDoOnsite('TIME DE PONTO', 'TODOS')">
                                 <span style="font-size: 30px;">⏱️</span><h3 style="color: var(--pontomais);">TIME DE PONTO</h3>
                                 <span style="font-weight: bold; color: var(--warning);">${pendPonto} Ticket(s) Pendente(s)</span>
                             </div>`;
                     }
 
                     for (const [onsite, qtd] of Object.entries(contagem)) {
-                        // Só mostra a pasta do Onsite se ele ainda tiver tickets que NÃO foram pro ponto
                         if (qtd > 0) {
                             containerJira.innerHTML += `<div class="card-jira-agrupado" onclick="mostrarTicketsDoOnsite('${onsite}', 'TODOS')"><span style="font-size: 30px;">🧑‍💻</span><h3 style="color: var(--primary);">${onsite}</h3><span style="font-weight: bold; color: var(--danger);">${qtd} Ticket(s) Pendente(s)</span></div>`;
                         }
@@ -194,14 +190,34 @@
             const container = document.getElementById('containerCardsJira');
             container.innerHTML = "";
 
-            // FILTRO INTELIGENTE: Se for Onsite, esconde o que já foi enviado ao ponto
             const tickets = (onsite === 'TIME DE PONTO') 
                 ? ticketsJiraGlobais.filter(t => t.pendentePonto) 
                 : ticketsJiraGlobais.filter(t => t.onsite === onsite && !t.pendentePonto);
             
             tickets.forEach(t => {
                 let statusTag = t.pendentePonto ? `<div class="tag-ponto">⏰ PENDENTE NO PONTOMAIS</div>` : '';
-                container.innerHTML += `<div class="card-gestao" style="padding-bottom: 150px;">${statusTag}<strong>${t.nome}</strong><br><small>${t.chave}</small><br><hr style="opacity:0.2;"><span>${t.resumo}</span><div style="position: absolute; bottom: 15px; left: 15px; right: 15px; display: flex; flex-direction: column; gap: 5px;"><a href="https://spxresolve.atlassian.net/browse/${t.chave}" target="_blank" class="btn-jira-link" style="background: var(--jira); padding: 8px;">🔗 ABRIR JIRA</a>${t.pendentePonto ? `<button onclick="concluirPonto('${t.chave}')" class="btn-jira-link" style="background: #333; padding: 8px;">✔️ CONCLUIR PONTO</button>` : `<button onclick="enviarParaPonto('${t.chave}')" class="btn-jira-link" style="background: #f1c40f; color:#000; padding: 8px;">➡️ ENVIAR PARA O PONTO</button>`}</div></div>`;
+                const tipoLower = t.tipoItem.toLowerCase();
+                const isMovimentacao = tipoLower.includes("moviment") || tipoLower.includes("mudança") || tipoLower.includes("horário");
+                const isDesligamento = tipoLower.includes("deslig") || tipoLower.includes("offboarding");
+
+                let urlForms = 'https://forms.office.com/Pages/ResponsePage.aspx?id=fCAtUtXsx0-nbxdGSxFh-eVAzhwdpsxLmCSGMQwqNIpUM1E2TFRSRkhNWU9IQk9SVFhBSDJNWTFDVS4u';
+                let nomeForms = '📝 CENTRAL SOLICITAÇÕES';
+                let corForms = 'var(--primary)';
+
+                if (isDesligamento) {
+                    urlForms = 'https://forms.office.com/Pages/ResponsePage.aspx?id=fCAtUtXsx0-nbxdGSxFh-f7MDqf4DUBBuOHjox7sxytUNFFQNTgzR1pQV0FLM05aWElXSjlRMjFHRy4u';
+                    nomeForms = '📝 FORMS DESLIGAMENTO';
+                    corForms = 'var(--danger)';
+                }
+
+                let areaBotoes = '';
+                if (t.pendentePonto) {
+                    areaBotoes = `<a href="https://spxresolve.atlassian.net/browse/${t.chave}" target="_blank" class="btn-jira-link" style="background: var(--jira); padding: 8px;">🔗 ABRIR JIRA</a><a href="https://app2.pontomais.com.br/controle-de-ponto/colaboradores/lista" target="_blank" class="btn-jira-link" style="background: var(--pontomais); padding: 8px; margin-top: 5px;">✅ ACESSAR PONTOMAIS</a><button onclick="concluirPonto('${t.chave}')" class="btn-jira-link" style="background: #333; padding: 8px; margin-top: 5px;">✔️ CONCLUIR PONTO</button>`;
+                } else {
+                    areaBotoes = `<a href="https://spxresolve.atlassian.net/browse/${t.chave}" target="_blank" class="btn-jira-link" style="background: var(--jira); padding: 8px;">🔗 ABRIR JIRA</a><button onclick="abrirPopup('${urlForms}')" class="btn-jira-link" style="background: ${corForms}; padding: 8px; margin-top: 5px;">${nomeForms}</button>${isMovimentacao ? `<button onclick="enviarParaPonto('${t.chave}')" class="btn-jira-link" style="background: #f1c40f; color:#000; padding: 8px; margin-top: 5px;">➡️ ENVIAR PARA O PONTO</button>` : ''}`;
+                }
+
+                container.innerHTML += `<div class="card-gestao" style="padding-bottom: 150px;">${statusTag}<strong>${t.nome}</strong><br><small>${t.chave}</small><br><hr style="opacity:0.2;"><span>${t.resumo}</span><div style="position: absolute; bottom: 15px; left: 15px; right: 15px; display: flex; flex-direction: column; gap: 5px;">${areaBotoes}</div></div>`;
             });
         }
         function voltarParaAgrupamentoJira() { document.getElementById('viewDetalhadaJira').style.display = 'none'; document.getElementById('viewAgrupadaJira').style.display = 'grid'; }
