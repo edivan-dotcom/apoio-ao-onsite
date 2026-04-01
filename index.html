@@ -288,10 +288,38 @@
         </div>
     </header>
 
-    <div class="tabs-container">
-        <button class="tab-btn active" onclick="switchTab('home')" id="btnTabHome">🏠 HOME</button>
-        <button class="tab-btn" onclick="switchTab('solicitacoes')" id="btnTabSol">📝 SOLICITAÇÕES</button>
-        <button class="tab-btn" onclick="switchTab('jira')" id="btnTabJira">🎫 TICKETS SHOPEE</button>
+   <div class="container">
+            <div onclick="abrirPopup('https://forms.office.com/Pages/ResponsePage.aspx?id=fCAtUtXsx0-nbxdGSxFh-eVAzhwdpsxLmCSGMQwqNIpUM1E2TFRSRkhNWU9IQk9SVFhBSDJNWTFDVS4u')" class="card">
+                <span class="icon">📝</span>
+                <h2>Central de Solicitações</h2>
+                <p>Clique para abrir o formulário interno.</p>
+            </div>
+
+            <div onclick="abrirPopup('https://forms.office.com/Pages/ResponsePage.aspx?id=fCAtUtXsx0-nbxdGSxFh-f7MDqf4DUBBuOHjox7sxytUNFFQNTgzR1pQV0FLM05aWElXSjlRMjFHRy4u')" class="card" style="border-top-color: var(--danger);">
+                <span class="icon">🚫</span>
+                <h2>Desligamento Shopee</h2>
+                <p>Formulário oficial para desligamento Shopee.</p>
+            </div>
+
+            <div onclick="abrirPopup('https://forms.office.com/Pages/ResponsePage.aspx?id=fCAtUtXsx0-nbxdGSxFh-f7MDqf4DUBBuOHjox7sxytUMzdRMTFCOTc2SzZEQzU4NFI2TVMzUjIxWS4u')" class="card" style="border-top-color: var(--warning);">
+                <span class="icon">🎧</span>
+                <h2>Controle de Atendimento</h2>
+                <p>Registro de atendimentos Shopee.</p>
+            </div>
+
+            <div onclick="abrirPopup('https://forms.office.com/Pages/ResponsePage.aspx?id=fCAtUtXsx0-nbxdGSxFh-eVAzhwdpsxLmCSGMQwqNIpUQVBSTFlOTUxSUEMwMFhWSTdTTEVOV1lBUy4u')" class="card" style="border-top-color: var(--voucher);">
+                <div class="badge-new">Novo!</div>
+                <span class="icon">🎫</span>
+                <h2>Cadastro Voucher</h2>
+                <p>Novo Colaborador - Cadastro de Voucher Uber.</p>
+            </div>
+
+            <div onclick="window.open('https://spxresolve.atlassian.net/jira/for-you', '_blank')" class="card" style="border-top-color: var(--jira);">
+                <span class="icon">🟦</span>
+                <h2>JIRA</h2>
+                <p>Gestão de chamados e projetos JIRA.</p>
+            </div>
+        </div>
     </div>
 
     <div id="homeView">
