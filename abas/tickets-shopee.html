@@ -15,17 +15,11 @@
     </nav>
 
     <header>
-        <h1>GESTÃO DE TICKETS SHOPEE</h1>
+        <h1 id="tituloPagina">TICKETS SHOPEE - GERAL</h1>
     </header>
 
-    <div class="tabs-container" id="filtrosContainer">
-        <button class="tab-btn active" onclick="filtrarCategoria('TODOS')">TUDO</button>
-        <button class="tab-btn" onclick="filtrarCategoria('DESLIGAMENTO')" style="border-bottom: 3px solid #d63031;">🚫 DESLIGAMENTOS</button>
-        <button class="tab-btn" onclick="filtrarCategoria('MOVIMENTACAO')" style="border-bottom: 3px solid #0984e3;">🔄 MOVIMENTAÇÕES</button>
-    </div>
-
-    <div class="container" id="containerCardsJira">
-        <p style="text-align:center;">Carregando tickets...</p>
+    <div class="container" id="containerPrincipalJira">
+        <p style="text-align:center; width: 100%;">Carregando painel de Onsites...</p>
     </div>
 
     <script>
@@ -33,56 +27,92 @@
         let todosTickets = [];
 
         async function carregarDados() {
-            const res = await fetch(SCRIPT_URL);
-            const dados = await res.json();
-            todosTickets = dados.jira;
-            renderizarCards('TODOS');
+            try {
+                const res = await fetch(SCRIPT_URL);
+                const dados = await res.json();
+                todosTickets = dados.jira;
+                mostrarPainelGeral();
+            } catch (e) {
+                console.error("Erro ao carregar dados:", e);
+            }
         }
 
-        function renderizarCards(filtro) {
-            const container = document.getElementById('containerCardsJira');
+        // 1. VISÃO INICIAL: CARDS DOS ONSITES
+        function mostrarPainelGeral() {
+            const container = document.getElementById('containerPrincipalJira');
+            document.getElementById('tituloPagina').innerText = "TICKETS SHOPEE - GERAL";
             container.innerHTML = "";
+
+            const contagem = {};
+            todosTickets.forEach(t => {
+                let ons = t.onsite || "Não Mapeado";
+                contagem[ons] = (contagem[ons] || 0) + 1;
+            });
+
+            for (const [onsite, qtd] of Object.entries(contagem)) {
+                container.innerHTML += `
+                    <div class="card-jira-agrupado" onclick="mostrarDetalhesOnsite('${onsite}')">
+                        <span style="font-size: 30px;">🧑‍💻</span>
+                        <h3 style="color: var(--primary);">${onsite}</h3>
+                        <span style="font-weight: bold; color: var(--danger);">${qtd} Ticket(s) Pendente(s)</span>
+                    </div>`;
+            }
+        }
+
+        // 2. VISÃO DETALHADA: TICKETS + FILTROS DENTRO DO ONSITE
+        function mostrarDetalhesOnsite(onsite, filtroAtivo = 'TODOS') {
+            const container = document.getElementById('containerPrincipalJira');
+            document.getElementById('tituloPagina').innerText = `Gestão: ${onsite}`;
             
-            let filtrados = todosTickets;
-            if(filtro !== 'TODOS') {
-                filtrados = todosTickets.filter(t => t.resumo.toUpperCase().includes(filtro));
+            // Filtros aparecendo "dentro" da área do Onsite
+            let htmlBase = `
+                <div style="grid-column: 1 / -1; width: 100%;">
+                    <button onclick="mostrarPainelGeral()" style="margin-bottom:20px; cursor:pointer; background:none; border:none; color:var(--primary); font-weight:bold;">⬅️ Voltar ao Painel Geral</button>
+                    <div class="tabs-container" style="margin-bottom: 25px;">
+                        <button class="tab-btn ${filtroAtivo === 'TODOS' ? 'active' : ''}" onclick="mostrarDetalhesOnsite('${onsite}', 'TODOS')">TUDO</button>
+                        <button class="tab-btn ${filtroAtivo === 'DESLIGAMENTO' ? 'active' : ''}" onclick="mostrarDetalhesOnsite('${onsite}', 'DESLIGAMENTO')">🚫 DESLIGAMENTOS</button>
+                        <button class="tab-btn ${filtroAtivo === 'MOVIMENTACAO' ? 'active' : ''}" onclick="mostrarDetalhesOnsite('${onsite}', 'MOVIMENTACAO')">🔄 MOVIMENTAÇÕES</button>
+                    </div>
+                </div>
+            `;
+            container.innerHTML = htmlBase;
+
+            let tickets = todosTickets.filter(t => t.onsite === onsite);
+            if(filtroAtivo !== 'TODOS') {
+                tickets = tickets.filter(t => t.resumo.toUpperCase().includes(filtroAtivo));
             }
 
-            filtrados.forEach(t => {
+            tickets.forEach(t => {
                 const resumo = t.resumo.toUpperCase();
                 const isDesligamento = resumo.includes("DESLIGAMENTO");
                 const isMovimentacao = resumo.includes("MOVIMENTAÇÃO") || resumo.includes("MOVIMENTACAO");
                 
-                let classe = isDesligamento ? "card-desligamento" : (isMovimentacao ? "card-movimentacao" : "");
-                let botoes = `<a href="https://spxresolve.atlassian.net/browse/${t.chave}" target="_blank" class="btn-jira-link" style="background: var(--jira); padding: 8px;">🔗 ABRIR JIRA</a>`;
-
+                let classeDestaque = isDesligamento ? "card-desligamento" : (isMovimentacao ? "card-movimentacao" : "");
+                
+                // 3. Lógica do botão Central de Solicitações para Movimentação
+                let botoesExtras = "";
                 if (isDesligamento) {
-                    botoes += `<button class="btn-jira-link btn-forms-desligamento" onclick="window.open('URL_FORMS', '_blank')">📋 ENVIAR FORMS DESLIGAMENTO</button>`;
+                    botoesExtras = `<button class="btn-jira-link btn-forms-desligamento" onclick="window.open('URL_FORMS', '_blank')">📋 ENVIAR FORMS DE DESLIGAMENTO</button>`;
                 } else if (isMovimentacao) {
-                    botoes += `
-                        <button class="btn-jira-link btn-central-solicitacao" onclick="window.open('URL_CENTRAL', '_blank')">📥 ENVIAR CENTRAL</button>
-                        <button class="btn-jira-link" style="background: #f1c40f; color:#000;" onclick="enviarPonto('${t.chave}')">➡️ ENVIAR PONTO</button>`;
+                    botoesExtras = `
+                        <button class="btn-jira-link btn-central-solicitacao" onclick="window.open('URL_CENTRAL', '_blank')">📥 CENTRAL DE SOLICITAÇÕES</button>
+                        <button onclick="enviarParaPonto('${t.chave}')" class="btn-jira-link" style="background: #f1c40f; color:#000; padding: 8px;">➡️ ENVIAR PARA O PONTO</button>
+                    `;
                 } else {
-                    botoes += `<button class="btn-jira-link" style="background: #f1c40f; color:#000;" onclick="enviarPonto('${t.chave}')">➡️ ENVIAR PONTO</button>`;
+                    botoesExtras = `<button onclick="enviarParaPonto('${t.chave}')" class="btn-jira-link" style="background: #f1c40f; color:#000; padding: 8px;">➡️ ENVIAR PARA O PONTO</button>`;
                 }
 
                 container.innerHTML += `
-                    <div class="card ${classe}" style="padding-bottom:160px; min-height: 300px;">
+                    <div class="card ${classeDestaque}" style="padding-bottom: 160px; position:relative;">
                         <strong>${t.nome}</strong><br><small>${t.chave}</small><br>
                         <hr style="opacity:0.1">
-                        <p>${t.resumo}</p>
+                        <p style="font-size:0.9rem;">${t.resumo}</p>
                         <div style="position: absolute; bottom: 15px; left: 15px; right: 15px; display: flex; flex-direction: column; gap: 5px;">
-                            ${botoes}
+                            <a href="https://spxresolve.atlassian.net/browse/${t.chave}" target="_blank" class="btn-jira-link" style="background: var(--jira); padding: 8px;">🔗 ABRIR JIRA</a>
+                            ${botoesExtras}
                         </div>
                     </div>`;
             });
-        }
-
-        function filtrarCategoria(cat) {
-            // Estética dos botões
-            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
-            event.target.classList.add('active');
-            renderizarCards(cat);
         }
 
         window.onload = carregarDados;
