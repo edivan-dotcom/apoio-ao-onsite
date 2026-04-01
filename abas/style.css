@@ -98,3 +98,11 @@ footer { text-align: center; padding: 30px; background: #222; color: white; widt
     margin-bottom: 20px; 
     width: 100%; 
 }
+
+.tabs-container {
+    display: flex;          /* Coloca os itens um ao lado do outro */
+    flex-wrap: wrap;        /* Se não couber na tela, ele joga para a linha de baixo (bom para celular) */
+    gap: 10px;              /* Cria um espacinho entre os botões */
+    justify-content: center; /* Centraliza os botões na tela */
+    width: 100%;            /* Garante que use a largura total */
+}
