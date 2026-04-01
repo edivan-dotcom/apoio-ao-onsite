@@ -25,7 +25,7 @@
         body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: var(--bg); color: var(--text); margin: 0; padding-top: 60px; transition: 0.3s; }
         
         /* NAVBAR */
-        .navbar { background: var(--navbar-bg); height: 60px; display: flex; justify-content: space-between; align-items: center; padding: 0 30px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); position: fixed; top: 0; width: 100%; z-index: 1000; box-sizing: border-box; }
+        .navbar { background: var(--navbar-bg); height: 60px; display: flex; justify-content: space-between; align-items: center; padding: 0 30px; box-shadow: 0  2px 10px rgba(0,0,0,0.1); position: fixed; top: 0; width: 100%; z-index: 1000; box-sizing: border-box; }
         .nav-links { display: flex; align-items: center; height: 100%; }
         .login-btn, .intranet-btn { text-decoration: none; padding: 6px 15px; border-radius: 5px; font-size: 0.8rem; font-weight: bold; margin-left: 10px; transition: 0.3s; }
         .login-btn { background: #0078d4; color: white !important; } .intranet-btn { background: #ff5722; color: white !important; }
@@ -36,9 +36,9 @@
         .dropdown-content a { color: var(--text); padding: 12px 16px; text-decoration: none; display: block; font-size: 0.85rem; border-bottom: 1px solid rgba(128,128,128,0.1); }
         .dropdown-content a:hover { background: rgba(106, 17, 203, 0.05); }
 
-        /* HEADER & SEARCH */
+        /* HEADER */
         header { background: linear-gradient(rgba(106, 17, 203, 0.75), rgba(37, 117, 252, 0.75)), url('https://wecanbr.com.br/img/quem-somos/main.jpg'); background-size: cover; background-position: center; color: white; padding: 60px 20px; text-align: center; }
-        .search-container { margin-top: 25px; position: relative; width: 450px; max-width: 90%; margin: 20px auto 0; }
+        .search-container { margin: 20px auto 0; position: relative; width: 450px; max-width: 90%; }
         #searchInput { padding: 15px 25px; width: 100%; border-radius: 30px; border: none; font-size: 1rem; box-shadow: 0 5px 15px rgba(0,0,0,0.2); outline: none; background: var(--card-bg); color: var(--text); box-sizing: border-box; }
         
         /* TABS */
@@ -46,19 +46,27 @@
         .tab-btn { padding: 12px 30px; border: none; border-radius: 25px; cursor: pointer; font-weight: bold; font-size: 1rem; background: var(--card-bg); color: var(--text); box-shadow: 0 4px 10px rgba(0,0,0,0.1); transition: 0.3s; }
         .tab-btn.active { background: var(--primary); color: white; }
 
-        /* GRIDS CONFIGURATION - 4 COLUMNS */
-        .container, .funnel-container, .grid-gestao { 
+        /* GRID HOME (VOLTOU AO ORIGINAL FLEXÍVEL) */
+        .container, .funnel-container { 
+            display: flex; justify-content: center; flex-wrap: wrap; 
+            gap: 20px; padding: 20px; max-width: 1400px; margin: 0 auto; 
+        }
+
+        /* GRID TICKETS (EXCLUSIVO 4 COLUNAS) */
+        .grid-gestao { 
             display: grid !important; 
             grid-template-columns: repeat(4, 1fr) !important; 
             gap: 20px; padding: 20px; max-width: 1400px; margin: 0 auto; 
         }
 
-        /* CARD STYLES (RESTAURADOS) */
+        /* CARDS */
         .card, .embedded-section, .card-jira-agrupado, .card-gestao { 
             background: var(--card-bg); border-radius: 15px; padding: 25px; text-align: center; 
             box-shadow: 0 5px 15px rgba(0,0,0,0.05); transition: 0.3s; 
             border-top: 5px solid var(--primary); box-sizing: border-box; 
         }
+        .card { width: 260px; }
+        .embedded-section { min-width: 300px; max-width: 400px; flex: 1; }
         .card:hover, .card-jira-agrupado:hover { transform: translateY(-5px); box-shadow: 0 10px 25px rgba(0,0,0,0.1); cursor: pointer; }
         
         .section-btn { color: white; border: none; padding: 12px 25px; border-radius: 25px; font-size: 0.9rem; font-weight: bold; cursor: pointer; transition: 0.3s; margin-top: 15px; display: inline-block; text-decoration: none; }
@@ -73,7 +81,8 @@
         footer { text-align: center; padding: 30px; background: #222; color: white; width: 100%; }
         .theme-toggle { position: fixed; bottom: 20px; right: 20px; width: 50px; height: 50px; border-radius: 50%; background: var(--primary); color: white; border: none; cursor: pointer; z-index: 2001; font-size: 20px; }
 
-        @media (max-width: 900px) { .container, .grid-gestao, .funnel-container { grid-template-columns: 1fr !important; } }
+        @media (max-width: 1100px) { .grid-gestao { grid-template-columns: repeat(2, 1fr) !important; } }
+        @media (max-width: 700px) { .grid-gestao { grid-template-columns: 1fr !important; } }
     </style>
 </head>
 <body>
@@ -150,7 +159,7 @@
         window.onload = montarSite;
 
         function switchTab(tab) {
-            document.getElementById('homeView').style.display = tab === 'home' ? 'grid' : 'none';
+            document.getElementById('homeView').style.display = tab === 'home' ? 'flex' : 'none';
             document.getElementById('solicitacoesView').style.display = tab === 'solicitacoes' ? 'block' : 'none';
             document.getElementById('jiraView').style.display = tab === 'jira' ? 'block' : 'none';
             document.getElementById('btnTabHome').classList.toggle('active', tab === 'home');
@@ -181,17 +190,11 @@
                         }
                     }
                 }
-                if (dados.solicitacoes && containerSol) {
-                    dados.solicitacoes.forEach(sol => {
-                        containerSol.innerHTML += `<div class="card-gestao"><strong>${sol.nome}</strong><br><small>${sol.matricula}</small><br><strong>${sol.tipo}</strong><button class="btn-concluir" onclick="finalizarSolicitacao('${sol.id}')">✅ CONCLUIR</button></div>`;
-                    });
-                }
             } catch(e) { console.error(e); }
         }
 
         function toggleTheme() { const html = document.documentElement; if (html.getAttribute('data-theme') === 'dark') html.removeAttribute('data-theme'); else html.setAttribute('data-theme', 'dark'); }
         function abrirPopup(url) { window.open(url, 'Popup', 'width=900,height=900,top=50,left=300,scrollbars=yes,resizable=yes'); }
-        function abrirAppSheet() { window.open('https://www.appsheet.com/start/8ba6b59c-c836-4d4e-9a3e-e43d38d2a47e', 'AppSheetPopup', 'width=1200,height=900'); }
         function buscarTudo() { let input = document.getElementById('searchInput').value.toLowerCase(); let cards = document.getElementsByClassName('card'); for (let card of cards) card.classList.toggle('hidden', !card.innerText.toLowerCase().includes(input)); }
         async function enviarParaPonto(chave) { await fetch(SCRIPT_URL, { method: 'POST', mode: 'no-cors', body: JSON.stringify({ acao: "marcar_ponto", chave: chave }) }); carregarCardsGestao(); }
         async function concluirPonto(chave) { await fetch(SCRIPT_URL, { method: 'POST', mode: 'no-cors', body: JSON.stringify({ acao: "concluir_ponto", chave: chave }) }); carregarCardsGestao(); }
