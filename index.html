@@ -402,11 +402,12 @@
                 : "WE" + inputMatricula;
 
             const data = {
-                matricula: matriculaFormatada,
-                tipo_solicitacao: tipoSol,
-                qual_beneficio: beneDest,
-                valor_vt: document.getElementById('vlr').value
-            };
+    matricula: matriculaFormatada,
+    tipo_solicitacao: tipoSol,
+    qual_beneficio: beneDest,
+    valor_vt: document.getElementById('vlr').value,
+    onsite_nome: document.getElementById('nomeOnsite').value // Adicione esta linha!
+};
 
             try {
                 await fetch(SCRIPT_URL, { 
