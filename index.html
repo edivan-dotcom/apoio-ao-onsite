@@ -462,7 +462,6 @@
             }
         }
 
-        // Função para converter arquivo em Base64
         function lerArquivoBase64(file) {
             return new Promise((resolve, reject) => {
                 const reader = new FileReader();
@@ -505,7 +504,6 @@
             btn.disabled = true;
 
             try {
-                // Se for desligamento, processa o arquivo
                 if (tipo === "DESLIGAMENTO" && fileInput.files.length > 0) {
                     btn.innerText = "⏳ Fazendo upload do arquivo...";
                     const file = fileInput.files[0];
@@ -519,7 +517,7 @@
                 
                 alert("✅ Solicitação enviada com sucesso!");
                 document.getElementById('formBeneficio').reset();
-                atualizarOpcoesBeneficio(); // reseta a view do formulário
+                atualizarOpcoesBeneficio(); 
                 carregarCardsGestao();
 
             } catch (error) {
@@ -530,8 +528,19 @@
             }
         }
 
-        function iniciarConclusao(id) {
-            abrirPopup('https://forms.office.com/Pages/ResponsePage.aspx?id=fCAtUtXsx0-nbxdGSxFh-eVAzhwdpsxLmCSGMQwqNIpUM1E2TFRSRkhNWU9IQk9SVFhBSDJNWTFDVS4u');
+        // --- ATUALIZAÇÃO: AGORA ELE RECEBE O TIPO DA SOLICITAÇÃO ---
+        function iniciarConclusao(id, tipoSolicitacao) {
+            let urlForms = '';
+            
+            // Verifica o tipo de solicitação para abrir o forms correto
+            if (tipoSolicitacao === 'DESLIGAMENTO') {
+                urlForms = 'https://forms.office.com/Pages/ResponsePage.aspx?id=fCAtUtXsx0-nbxdGSxFh-f7MDqf4DUBBuOHjox7sxytUNFFQNTgzR1pQV0FLM05aWElXSjlRMjFHRy4u';
+            } else {
+                urlForms = 'https://forms.office.com/Pages/ResponsePage.aspx?id=fCAtUtXsx0-nbxdGSxFh-eVAzhwdpsxLmCSGMQwqNIpUM1E2TFRSRkhNWU9IQk9SVFhBSDJNWTFDVS4u';
+            }
+            
+            abrirPopup(urlForms);
+            
             document.getElementById('btn-concluir-' + id).style.display = 'none';
             document.getElementById('check-box-' + id).style.display = 'block';
         }
@@ -607,15 +616,14 @@
                     
                     iniciarTickerContador(mensagensCarrossel);
                     
-                    // Renderização dos cards
                     dados.forEach(sol => {
                         const nomeColaborador = sol.nome && sol.nome !== "Não Localizado" ? sol.nome : `Colaborador não mapeado`;
                         
-                        // Lógica de exibição condicional (Valor e Anexo)
                         const exibicaoValor = sol.valor && sol.valor !== "-" ? `<br><span class="valor-destaque">Valor: R$ ${sol.valor}</span>` : '';
                         const linkAnexoHTML = sol.anexo && sol.anexo.includes("http") ? `<br><a href="${sol.anexo}" target="_blank" class="link-anexo">📎 Baixar Anexo</a>` : '';
                         const detalheHTML = sol.detalhe && sol.detalhe !== "-" ? `<span>${sol.detalhe}</span>` : '';
                         
+                        // Passando o sol.tipo na função onclick do botão CONCLUIR
                         container.innerHTML += `
                             <div class="card-gestao" id="card-${sol.id}">
                                 <strong>${nomeColaborador}</strong><br>
@@ -624,7 +632,7 @@
                                 <strong style="color: ${sol.tipo === 'DESLIGAMENTO' ? 'var(--danger)' : 'inherit'}">${sol.tipo}</strong><br>
                                 ${detalheHTML}${exibicaoValor}${linkAnexoHTML}
                                 
-                                <button class="btn-concluir" id="btn-concluir-${sol.id}" onclick="iniciarConclusao('${sol.id}')">✅ CONCLUIR</button>
+                                <button class="btn-concluir" id="btn-concluir-${sol.id}" onclick="iniciarConclusao('${sol.id}', '${sol.tipo}')">✅ CONCLUIR</button>
                                 
                                 <div class="check-concluido" id="check-box-${sol.id}">
                                     <label style="cursor: pointer; display: flex; align-items: center; justify-content: center;">
@@ -634,7 +642,7 @@
                             </div>`;
                     });
                 } else {
-                    iniciarTickerContador([]); // Esconde o contador
+                    iniciarTickerContador([]); 
                     container.innerHTML = "<p style='text-align:center; width:100%'>Nenhuma solicitação pendente.</p>";
                 }
             } catch(e) { 
