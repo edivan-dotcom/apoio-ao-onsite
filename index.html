@@ -147,7 +147,6 @@
             font-size: 0.9rem; font-weight: bold; cursor: pointer; transition: 0.3s; margin-top: 15px;
         }
 
-        /* --- NOVOS ESTILOS ADICIONADOS PARA SOLICITAÇÃO E GESTÃO --- */
         .form-section { max-width: 600px; margin: 40px auto; background: var(--card-bg); padding: 30px; border-radius: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); border-top: 5px solid var(--primary); }
         .form-group { margin-bottom: 15px; text-align: left; }
         .form-group label { display: block; margin-bottom: 5px; font-weight: bold; }
@@ -158,15 +157,6 @@
         .card-gestao { background: var(--card-bg); padding: 15px; border-radius: 10px; border-left: 5px solid var(--warning); box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
         .status-badge { background: var(--primary); color: white; padding: 2px 8px; border-radius: 10px; font-size: 0.75rem; }
 
-        /* --- SEÇÃO FAQ / FLUXOGRAMA --- */
-        .faq-section {
-            max-width: 1200px; margin: 20px auto 60px;
-            background: var(--card-bg); padding: 40px; border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-        }
-        .faq-section h2 { text-align: center; color: var(--primary); margin-bottom: 30px; }
-        .mermaid { display: flex; justify-content: center; background: white; padding: 20px; border-radius: 10px; }
-
         .signature { text-align: center; margin: 40px 0 20px; font-family: 'Great Vibes', cursive; font-size: 1.5rem; color: var(--signature); }
         footer { text-align: center; padding: 30px; background: #222; color: white; width: 100%; }
 
@@ -176,17 +166,21 @@
             border: none; cursor: pointer; box-shadow: 0 4px 15px rgba(0,0,0,0.3);
             z-index: 2001; font-size: 20px;
         }
-        /* Efeito de clique no botão */
-button:active {
-    transform: scale(0.98); 
-    box-shadow: inset 0 2px 4px rgba(0,0,0,0.2);
-}
 
-/* Cor do botão quando estiver desativado (enviando) */
-button:disabled {
-    background-color: #a5a5a5 !important;
-    cursor: not-allowed;
-}
+        /* Efeitos de Interação */
+        button:active { transform: scale(0.98); box-shadow: inset 0 2px 4px rgba(0,0,0,0.2); }
+        button:disabled { background-color: #a5a5a5 !important; cursor: not-allowed; }
+        
+        #contadorSolicitacoes {
+            background: #e67e22; 
+            color: white; 
+            padding: 3px 12px; 
+            border-radius: 20px; 
+            font-size: 0.75rem; 
+            font-weight: 800; 
+            margin-left: 15px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
     </style>
 </head>
 <body>
@@ -194,7 +188,10 @@ button:disabled {
     <button class="theme-toggle" onclick="toggleTheme()" id="themeBtn">🌙</button>
 
     <nav class="navbar">
-        <div style="font-weight: bold; color: var(--primary); letter-spacing: 1px;">WE CAN BR</div>
+        <div style="display: flex; align-items: center;">
+            <div style="font-weight: bold; color: var(--primary); letter-spacing: 1px;">WE CAN BR</div>
+            <div id="contadorSolicitacoes" style="display: none;">0 Pendentes</div>
+        </div>
         <div class="nav-links">
             <a href="https://portal.office.com" target="_blank" class="login-btn">🔑 Login Microsoft</a>
             <a href="https://desafiorhcombr.sharepoint.com/sites/wecanbr" target="_blank" class="intranet-btn">🌐 Intranet</a>
@@ -272,7 +269,7 @@ button:disabled {
     <div class="form-section">
         <h2 style="text-align: center; color: var(--primary);">Solicitação de Ajuste</h2>
         <form id="formBeneficio">
-            <div class="form-group"><label>Matrícula:</label><input type="text" id="matr" required></div>
+            <div class="form-group"><label>Matrícula:</label><input type="text" id="matr" required placeholder="Ex: 123456"></div>
             <div class="form-group">
                 <label>Tipo de Solicitação:</label>
                 <select id="tipoSol" onchange="atualizarOpcoesBeneficio()">
@@ -283,56 +280,40 @@ button:disabled {
             </div>
             <div class="form-group">
                 <label>Qual Benefício?</label>
-                <select id="beneDest" required><option value="">Aguardando...</option></select>
+                <select id="beneDest" required>
+                    <option value="">Selecione o tipo acima primeiro...</option>
+                </select>
             </div>
             <div class="form-group"><label>Valor:</label><input type="number" id="vlr" step="0.01"></div>
-                       <button type="button" onclick="enviarSolicitacao()" style="background: var(--primary); color: white; width: 100%; padding: 15px; border-radius: 8px; border: none; cursor: pointer; font-weight: bold;">🚀 Enviar Solicitação</button>
+            <button type="button" onclick="enviarSolicitacao()" style="background: var(--primary); color: white; width: 100%; padding: 15px; border-radius: 8px; border: none; cursor: pointer; font-weight: bold;">🚀 Enviar Solicitação</button>
         </form>
     </div>
 
     <div class="gestao-section">
         <h2 style="text-align: center; color: var(--primary);">Gestão de Solicitações</h2>
         <div id="containerCardsGestao" class="grid-gestao">
-            </div>
+             <p style="text-align: center; width: 100%;">Carregando dados da planilha...</p>
+        </div>
     </div>
 
     <div class="funnel-container">
         <div class="embedded-section" style="border-top: 5px solid var(--appsheet);">
-            <div>
-                <strong style="color: var(--appsheet);">📱 INATIVAÇÃO VOUCHER UBER</strong>
-                <p>Inativação de usuários Uber em caso de desligamento.</p>
-            </div>
-            <button onclick="abrirAppSheet()" class="section-btn" style="background: var(--appsheet); box-shadow: 0 4px 15px rgba(26, 115, 232, 0.3);">
-                🚀 Abrir AppSheet
-            </button>
+            <div><strong style="color: var(--appsheet);">📱 INATIVAÇÃO VOUCHER UBER</strong><p>Inativação de usuários Uber em caso de desligamento.</p></div>
+            <button onclick="abrirAppSheet()" class="section-btn" style="background: var(--appsheet); box-shadow: 0 4px 15px rgba(26, 115, 232, 0.3);">🚀 Abrir AppSheet</button>
         </div>
 
         <div class="embedded-section" style="border-top: 5px solid var(--glpi);">
-            <div>
-                <strong style="color: var(--glpi);">🛠️ CHAMADOS - GLPI</strong>
-                <p>Abertura e consulta de chamados técnicos WeCanBR.</p>
-            </div>
+            <div><strong style="color: var(--glpi);">🛠️ CHAMADOS - GLPI</strong><p>Abertura e consulta de chamados técnicos WeCanBR.</p></div>
             <a href="https://glpi.wecanbr.com.br/index.php?noAUTO=1" target="_blank" style="text-decoration: none;">
-                <button class="section-btn" style="background: var(--glpi); box-shadow: 0 4px 15px rgba(0, 128, 128, 0.3);">
-                    🎫 Acessar GLPI
-                </button>
+                <button class="section-btn" style="background: var(--glpi); box-shadow: 0 4px 15px rgba(0, 128, 128, 0.3);">🎫 Acessar GLPI</button>
             </a>
         </div>
 
         <div class="embedded-section" style="border-top: 5px solid var(--pontomais);">
-            <div>
-                <strong style="color: var(--pontomais);">⏱️ PONTOMAIS</strong>
-                <p>Gestão de colaboradores e conferência de ponto.</p>
-            </div>
+            <div><strong style="color: var(--pontomais);">⏱️ PONTOMAIS</strong><p>Gestão de colaboradores e conferência de ponto.</p></div>
             <a href="https://app2.pontomais.com.br/controle-de-ponto/colaboradores/lista" target="_blank" style="text-decoration: none;">
-                <button class="section-btn" style="background: var(--pontomais); box-shadow: 0 4px 15px rgba(0, 168, 168, 0.3);">
-                    🔍 Abrir Pontomais
-                </button>
+                <button class="section-btn" style="background: var(--pontomais); box-shadow: 0 4px 15px rgba(0, 168, 168, 0.3);">🔍 Abrir Pontomais</button>
             </a>
-        </div>
-    </div>
-
-
         </div>
     </div>
 
@@ -340,7 +321,7 @@ button:disabled {
     <footer>© 2026 Apoio ao On-Site | WeCanBR</footer>
 
     <script>
-        const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxupjNwDDgxLULbLOPUVd2jc4hRUxI9JYYeqy7riYGBg5ymoqAfLeJn6IwRqLH7aozH/exec"; // Lembre de colocar o seu URL aqui
+        const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxupjNwDDgxLULbLOPUVd2jc4hRUxI9JYYeqy7riYGBg5ymoqAfLeJn6IwRqLH7aozH/exec";
 
         function abrirPopup(url) {
             const largura = 900; const altura = 900;
@@ -373,11 +354,17 @@ button:disabled {
             }
         }
 
-        // --- NOVAS FUNÇÕES ---
         function atualizarOpcoesBeneficio() {
             const tipo = document.getElementById('tipoSol').value;
             const select = document.getElementById('beneDest');
-            select.innerHTML = '<option value="">Selecione...</option>';
+            select.innerHTML = '';
+            
+            if (!tipo) {
+                select.innerHTML = '<option value="">Selecione o tipo acima primeiro...</option>';
+                return;
+            }
+
+            select.innerHTML = '<option value="">Escolha uma opção...</option>';
             
             if (tipo === "TROCA DE BENEFICIO") {
                 const trocas = [
@@ -396,96 +383,82 @@ button:disabled {
         }
 
         async function enviarSolicitacao() {
-    // 1. Identifica o botão e os campos
-    const btn = document.querySelector('button[onclick="enviarSolicitacao()"]');
-    const inputMatricula = document.getElementById('matr').value.trim();
-    const tipoSolicitacao = document.getElementById('tipoSol').value;
-    const qualBeneficio = document.getElementById('beneDest').value;
-    const valorVt = document.getElementById('vlr').value;
+            const btn = document.querySelector('button[onclick="enviarSolicitacao()"]');
+            const inputMatricula = document.getElementById('matr').value.trim();
+            const tipoSol = document.getElementById('tipoSol').value;
+            const beneDest = document.getElementById('beneDest').value;
 
-    if (!inputMatricula) {
-        alert("Por favor, digite a matrícula.");
-        return;
-    }
+            if (!inputMatricula || !tipoSol || !beneDest) {
+                alert("Preencha Matrícula, Tipo e Benefício!");
+                return;
+            }
 
-    // 2. EFEITO VISUAL: Desativa o botão e muda o texto
-    const textoOriginal = btn.innerText;
-    btn.innerText = "⏳ Enviando, Aguarde Confirmação...";
-    btn.disabled = true;
+            const textoOriginal = btn.innerText;
+            btn.innerText = "⏳ Enviando, Aguarde Confirmação...";
+            btn.disabled = true;
 
-    // 3. TRAVA DO WE: Garante que o PROCV da planilha funcione sempre
-    let matriculaFormatada = inputMatricula.toUpperCase().startsWith("WE") 
-        ? inputMatricula.toUpperCase() 
-        : "WE" + inputMatricula;
+            let matriculaFormatada = inputMatricula.toUpperCase().startsWith("WE") 
+                ? inputMatricula.toUpperCase() 
+                : "WE" + inputMatricula;
 
-    // 4. Monta os dados (A planilha usará a matrícula para achar o Onsite automaticamente)
-    const data = {
-        matricula: matriculaFormatada,
-        tipo_solicitacao: tipoSolicitacao,
-        qual_beneficio: qualBeneficio,
-        valor_vt: valorVt
-    };
+            const data = {
+                matricula: matriculaFormatada,
+                tipo_solicitacao: tipoSol,
+                qual_beneficio: beneDest,
+                valor_vt: document.getElementById('vlr').value
+            };
 
-    try {
-        // Envia para o Google Apps Script
-        await fetch(SCRIPT_URL, { 
-            method: 'POST', 
-            mode: 'no-cors', 
-            body: JSON.stringify(data) 
-        });
+            try {
+                await fetch(SCRIPT_URL, { 
+                    method: 'POST', 
+                    mode: 'no-cors', 
+                    body: JSON.stringify(data) 
+                });
 
-        // 5. SUCESSO
-        alert("✅ Sucesso! Solicitação de " + matriculaFormatada + " enviada.");
-        document.getElementById('formBeneficio').reset();
-        
-        // Atualiza os cards na tela (Gestão Onsite)
-        if (typeof carregarCardsGestao === "function") {
-            carregarCardsGestao();
+                alert("✅ Sucesso! Solicitação enviada.");
+                document.getElementById('formBeneficio').reset();
+                atualizarOpcoesBeneficio();
+                carregarCardsGestao();
+
+            } catch (error) {
+                alert("❌ Erro ao enviar.");
+            } finally {
+                btn.innerText = textoOriginal;
+                btn.disabled = false;
+            }
         }
-
-    } catch (error) {
-        console.error("Erro no envio:", error);
-        alert("❌ Erro ao enviar. Verifique sua conexão.");
-    } finally {
-        // 6. VOLTA O BOTÃO AO NORMAL
-        btn.innerText = textoOriginal;
-        btn.disabled = false;
-    }
-}    
-    // Verifica se já tem WE, se não tiver, ele adiciona
-    let matriculaFormatada = matriculaBruta.toUpperCase().startsWith("WE") 
-        ? matriculaBruta.toUpperCase() 
-        : "WE" + matriculaBruta;
-
-    const data = {
-        matricula: matriculaFormatada, // Envia com o WE
-        tipo_solicitacao: document.getElementById('tipoSol').value,
-        qual_beneficio: document.getElementById('beneDest').value,
-        valor_vt: document.getElementById('vlr').value
-    };
-    
-    await fetch(SCRIPT_URL, { method: 'POST', mode: 'no-cors', body: JSON.stringify(data) });
-    alert("Solicitação enviada com a matrícula: " + matriculaFormatada);
-    document.getElementById('formBeneficio').reset();
-    carregarCardsGestao();
-}
 
         async function carregarCardsGestao() {
             const container = document.getElementById('containerCardsGestao');
+            const contador = document.getElementById('contadorSolicitacoes');
+
             try {
                 const res = await fetch(SCRIPT_URL);
                 const dados = await res.json();
+                
                 container.innerHTML = "";
+
+                if (dados && dados.length > 0) {
+                    contador.innerText = dados.length + (dados.length === 1 ? " Pendente" : " Pendentes");
+                    contador.style.display = "block";
+                } else {
+                    contador.style.display = "none";
+                    container.innerHTML = "<p style='text-align:center; width:100%'>Nenhuma solicitação pendente.</p>";
+                    return;
+                }
+
                 dados.forEach(sol => {
                     container.innerHTML += `
                         <div class="card-gestao">
-                            <strong>${sol.nome}</strong><br>
+                            <strong>${sol.nome || 'Buscando Nome...'}</strong><br>
                             <small>Mat: ${sol.matricula} | ID: ${sol.id}</small><br>
                             <span>${sol.tipo}</span><br>
                             <span class="status-badge">${sol.status}</span>
                         </div>`;
                 });
-            } catch(e) { container.innerHTML = "Aguardando dados da planilha..."; }
+            } catch(e) { 
+                container.innerHTML = "<p style='color:gray; text-align:center; width:100%'>Aguardando novos dados da planilha...</p>"; 
+            }
         }
 
         window.onload = carregarCardsGestao;
