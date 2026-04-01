@@ -247,10 +247,10 @@
         // Lógica dos Botões
         let botoesExtras = "";
         if (isDesligamento) {
-            botoesExtras = `<button class="btn-jira-link btn-forms-desligamento" onclick="window.open('URL_DO_FORMS_AQUI', '_blank')">📋 ENVIAR FORMS DE DESLIGAMENTO</button>`;
+            botoesExtras = `<button class="btn-jira-link btn-forms-desligamento" onclick="window.open('https://forms.office.com/Pages/ResponsePage.aspx?id=fCAtUtXsx0-nbxdGSxFh-f7MDqf4DUBBuOHjox7sxytUNFFQNTgzR1pQV0FLM05aWElXSjlRMjFHRy4u&origin=Invitation&channel=0', '_blank')">📋 ENVIAR FORMS DE DESLIGAMENTO</button>`;
         } else if (isMovimentacao) {
             botoesExtras = `
-                <button class="btn-jira-link btn-central-solicitacao" onclick="window.open('URL_DA_CENTRAL_AQUI', '_blank')">📥 ENVIAR CENTRAL DE SOLICITAÇÃO</button>
+                <button class="btn-jira-link btn-central-solicitacao" onclick="window.open('https://forms.office.com/Pages/ResponsePage.aspx?id=fCAtUtXsx0-nbxdGSxFh-eVAzhwdpsxLmCSGMQwqNIpUM1E2TFRSRkhNWU9IQk9SVFhBSDJNWTFDVS4u', '_blank')">📥 ENVIAR CENTRAL DE SOLICITAÇÃO</button>
                 <button onclick="enviarParaPonto('${t.chave}')" class="btn-jira-link" style="background: #f1c40f; color:#000; padding: 8px;">➡️ ENVIAR PARA O PONTO</button>
             `;
         } else {
