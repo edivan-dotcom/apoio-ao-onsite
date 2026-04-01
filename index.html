@@ -62,6 +62,7 @@
         .card-jira-agrupado { background: var(--card-bg); padding: 25px; border-radius: 10px; border-top: 5px solid var(--primary); box-shadow: 0 4px 10px rgba(0,0,0,0.1); text-align: center; cursor: pointer; transition: 0.3s; }
         .btn-jira-link { border: none; border-radius: 5px; cursor: pointer; font-weight: bold; transition: 0.3s; text-decoration: none; text-align: center; color: white; display: block; width: 100%; box-sizing: border-box; }
         .btn-filtro { padding: 8px 20px; border-radius: 20px; border: 2px solid transparent; cursor: pointer; font-weight: bold; transition: 0.3s; font-size: 0.9rem; }
+        .btn-filtro:hover { transform: scale(1.05); }
         .tag-ponto { background: var(--warning); color: #000; text-align: center; font-weight: bold; padding: 6px; border-radius: 5px; margin-bottom: 10px; animation: pulse 2s infinite; font-size: 0.85rem;}
         @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.02); } 100% { transform: scale(1); } }
     </style>
@@ -193,51 +194,78 @@
 
         function toggleTheme() { const html = document.documentElement; if (html.getAttribute('data-theme') === 'dark') html.removeAttribute('data-theme'); else html.setAttribute('data-theme', 'dark'); }
         function abrirPopup(url) { window.open(url, 'Popup', 'width=900,height=900,top=50,left=300,scrollbars=yes,resizable=yes'); }
-        function abrirAppSheet() { window.open('https://www.appsheet.com/start/8ba6b59c-c836-4d4e-9a3e-e43d38d2a47e', 'AppSheetPopup', `width=${window.screen.availWidth},height=${window.screen.availHeight},top=0,left=0,scrollbars=yes,resizable=yes`); }
         function buscarTudo() { let input = document.getElementById('searchInput').value.toLowerCase(); let cards = document.getElementsByClassName('card'); for (let card of cards) card.classList.toggle('hidden', !card.innerText.toLowerCase().includes(input)); }
         
         async function enviarParaPonto(chave) { await fetch(SCRIPT_URL, { method: 'POST', mode: 'no-cors', body: JSON.stringify({ acao: "marcar_ponto", chave: chave }) }); carregarCardsGestao(); }
         async function concluirPonto(chave) { await fetch(SCRIPT_URL, { method: 'POST', mode: 'no-cors', body: JSON.stringify({ acao: "concluir_ponto", chave: chave }) }); carregarCardsGestao(); }
-        
-        function mostrarTicketsDoOnsite(onsite, filtro) {
+        function finalizarSolicitacao(id) { fetch(SCRIPT_URL, { method: 'POST', mode: 'no-cors', body: JSON.stringify({ acao: "atualizar", id: id }) }).then(() => carregarCardsGestao()); }
+        function voltarParaAgrupamentoJira() { document.getElementById('viewDetalhadaJira').style.display = 'none'; document.getElementById('viewAgrupadaJira').style.display = 'grid'; }
+
+        // --- FUNÇÃO DETALHADA COM OS FILTROS RECONSTRUIDOS ---
+        function mostrarTicketsDoOnsite(onsite, filtroAtivo) {
             document.getElementById('viewAgrupadaJira').style.display = 'none';
             document.getElementById('viewDetalhadaJira').style.display = 'block';
             document.getElementById('tituloOperacaoJira').innerText = `Gestão: ${onsite}`;
-            const container = document.getElementById('containerCardsJira');
-            container.innerHTML = "";
+            
+            const containerFiltros = document.getElementById('containerFiltrosJira');
+            const containerCards = document.getElementById('containerCardsJira');
+            containerFiltros.innerHTML = ""; containerCards.innerHTML = "";
 
-            const tickets = (onsite === 'TIME DE PONTO') 
+            // 1. Filtragem Inicial (Ponto ou Onsite específico)
+            const baseTickets = (onsite === 'TIME DE PONTO') 
                 ? ticketsJiraGlobais.filter(t => t.pendentePonto) 
                 : ticketsJiraGlobais.filter(t => t.onsite === onsite && !t.pendentePonto);
-            
-            tickets.forEach(t => {
-                let statusTag = t.pendentePonto ? `<div class="tag-ponto">⏰ PENDENTE NO PONTOMAIS</div>` : '';
+
+            // 2. Contagem para os Botões
+            let qtdDeslig = 0, qtdMov = 0, qtdOutros = 0;
+            baseTickets.forEach(t => {
+                let tipo = t.tipoItem.toLowerCase();
+                if (tipo.includes("deslig") || tipo.includes("offboarding")) qtdDeslig++;
+                else if (tipo.includes("moviment") || tipo.includes("mudança") || tipo.includes("horário")) qtdMov++;
+                else qtdOutros++;
+            });
+
+            // 3. Renderizar Botões de Filtro
+            let htmlBotoes = `<button class="btn-filtro" style="${filtroAtivo === 'TODOS' ? 'background: var(--primary); color: white;' : 'background: #eee; color: #333;'}" onclick="mostrarTicketsDoOnsite('${onsite}', 'TODOS')">📋 Todos (${baseTickets.length})</button>`;
+            if (qtdDeslig > 0) htmlBotoes += `<button class="btn-filtro" style="${filtroAtivo === 'DESLIG' ? 'background: var(--danger); color: white;' : 'border-color: var(--danger); color: var(--danger);'}" onclick="mostrarTicketsDoOnsite('${onsite}', 'DESLIG')">🚫 Desligamentos (${qtdDeslig})</button>`;
+            if (qtdMov > 0) htmlBotoes += `<button class="btn-filtro" style="${filtroAtivo === 'MOV' ? 'background: var(--secondary); color: white;' : 'border-color: var(--secondary); color: var(--secondary);'}" onclick="mostrarTicketsDoOnsite('${onsite}', 'MOV')">🔄 Movimentações (${qtdMov})</button>`;
+            if (qtdOutros > 0) htmlBotoes += `<button class="btn-filtro" style="${filtroAtivo === 'OUTROS' ? 'background: var(--jira); color: white;' : 'border-color: var(--jira); color: var(--jira);'}" onclick="mostrarTicketsDoOnsite('${onsite}', 'OUTROS')">🎫 Outros (${qtdOutros})</button>`;
+            containerFiltros.innerHTML = htmlBotoes;
+
+            // 4. Aplicar Filtro no Array Final
+            let ticketsExibicao = baseTickets.filter(t => {
+                if (filtroAtivo === 'TODOS') return true;
+                let tipo = t.tipoItem.toLowerCase();
+                if (filtroAtivo === 'DESLIG') return tipo.includes("deslig") || tipo.includes("offboarding");
+                if (filtroAtivo === 'MOV') return tipo.includes("moviment") || tipo.includes("mudança") || tipo.includes("horário");
+                return !tipo.includes("deslig") && !tipo.includes("offboarding") && !tipo.includes("moviment") && !tipo.includes("mudança") && !tipo.includes("horário");
+            });
+
+            // 5. Renderizar os Cards
+            ticketsExibicao.forEach(t => {
                 const tipoLower = t.tipoItem.toLowerCase();
-                const isMovimentacao = tipoLower.includes("moviment") || tipoLower.includes("mudança") || tipoLower.includes("horário");
-                const isDesligamento = tipoLower.includes("deslig") || tipoLower.includes("offboarding");
+                const isMov = tipoLower.includes("moviment") || tipoLower.includes("mudança") || tipoLower.includes("horário");
+                const isDeslig = tipoLower.includes("deslig") || tipoLower.includes("offboarding");
 
+                let statusTag = t.pendentePonto ? `<div class="tag-ponto">⏰ PENDENTE NO PONTOMAIS</div>` : '';
                 let urlForms = 'https://forms.office.com/Pages/ResponsePage.aspx?id=fCAtUtXsx0-nbxdGSxFh-eVAzhwdpsxLmCSGMQwqNIpUM1E2TFRSRkhNWU9IQk9SVFhBSDJNWTFDVS4u';
-                let nomeForms = '📝 CENTRAL SOLICITAÇÕES';
-                let corForms = 'var(--primary)';
+                let nomeForms = '📝 CENTRAL SOLICITAÇÕES', corForms = 'var(--primary)';
 
-                if (isDesligamento) {
+                if (isDeslig) {
                     urlForms = 'https://forms.office.com/Pages/ResponsePage.aspx?id=fCAtUtXsx0-nbxdGSxFh-f7MDqf4DUBBuOHjox7sxytUNFFQNTgzR1pQV0FLM05aWElXSjlRMjFHRy4u';
-                    nomeForms = '📝 FORMS DESLIGAMENTO';
-                    corForms = 'var(--danger)';
+                    nomeForms = '📝 FORMS DESLIGAMENTO'; corForms = 'var(--danger)';
                 }
 
                 let areaBotoes = '';
                 if (t.pendentePonto) {
                     areaBotoes = `<a href="https://spxresolve.atlassian.net/browse/${t.chave}" target="_blank" class="btn-jira-link" style="background: var(--jira); padding: 8px;">🔗 ABRIR JIRA</a><a href="https://app2.pontomais.com.br/controle-de-ponto/colaboradores/lista" target="_blank" class="btn-jira-link" style="background: var(--pontomais); padding: 8px; margin-top: 5px;">✅ ACESSAR PONTOMAIS</a><button onclick="concluirPonto('${t.chave}')" class="btn-jira-link" style="background: #333; padding: 8px; margin-top: 5px;">✔️ CONCLUIR PONTO</button>`;
                 } else {
-                    areaBotoes = `<a href="https://spxresolve.atlassian.net/browse/${t.chave}" target="_blank" class="btn-jira-link" style="background: var(--jira); padding: 8px;">🔗 ABRIR JIRA</a><button onclick="abrirPopup('${urlForms}')" class="btn-jira-link" style="background: ${corForms}; padding: 8px; margin-top: 5px;">${nomeForms}</button>${isMovimentacao ? `<button onclick="enviarParaPonto('${t.chave}')" class="btn-jira-link" style="background: #f1c40f; color:#000; padding: 8px; margin-top: 5px;">➡️ ENVIAR PARA O PONTO</button>` : ''}`;
+                    areaBotoes = `<a href="https://spxresolve.atlassian.net/browse/${t.chave}" target="_blank" class="btn-jira-link" style="background: var(--jira); padding: 8px;">🔗 ABRIR JIRA</a><button onclick="abrirPopup('${urlForms}')" class="btn-jira-link" style="background: ${corForms}; padding: 8px; margin-top: 5px;">${nomeForms}</button>${isMov ? `<button onclick="enviarParaPonto('${t.chave}')" class="btn-jira-link" style="background: #f1c40f; color:#000; padding: 8px; margin-top: 5px;">➡️ ENVIAR PARA O PONTO</button>` : ''}`;
                 }
 
-                container.innerHTML += `<div class="card-gestao" style="padding-bottom: 150px;">${statusTag}<strong>${t.nome}</strong><br><small>${t.chave}</small><br><hr style="opacity:0.2;"><span>${t.resumo}</span><div style="position: absolute; bottom: 15px; left: 15px; right: 15px; display: flex; flex-direction: column; gap: 5px;">${areaBotoes}</div></div>`;
+                containerCards.innerHTML += `<div class="card-gestao" style="padding-bottom: 150px;">${statusTag}<strong>${t.nome}</strong><br><small>${t.chave} | Onsite: ${t.onsite}</small><br><hr style="opacity:0.2;"><span>${t.resumo}</span><div style="position: absolute; bottom: 15px; left: 15px; right: 15px; display: flex; flex-direction: column; gap: 5px;">${areaBotoes}</div></div>`;
             });
         }
-        function finalizarSolicitacao(id) { fetch(SCRIPT_URL, { method: 'POST', mode: 'no-cors', body: JSON.stringify({ acao: "atualizar", id: id }) }).then(() => carregarCardsGestao()); }
-        function voltarParaAgrupamentoJira() { document.getElementById('viewDetalhadaJira').style.display = 'none'; document.getElementById('viewAgrupadaJira').style.display = 'grid'; }
     </script>
 </body>
 </html>
