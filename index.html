@@ -194,7 +194,6 @@
         }
         .btn-concluir:hover { background: var(--secondary); }
 
-        /* Estilo da Checkbox de Conclusão (Oculta por padrão) */
         .check-concluido {
             display: none;
             position: absolute; bottom: 10px; left: 15px; right: 15px;
@@ -206,6 +205,7 @@
         .check-concluido input {
             transform: scale(1.3); margin-right: 8px; cursor: pointer;
         }
+        .valor-destaque { color: var(--voucher); font-weight: bold; }
     </style>
 </head>
 <body>
@@ -442,7 +442,7 @@
             const btn = document.getElementById('btnEnviar');
             
             const data = {
-                acao: "criar", // Define a ação para o AppScript
+                acao: "criar",
                 matricula: document.getElementById('matr').value.trim().toUpperCase().startsWith("WE") ? document.getElementById('matr').value.trim().toUpperCase() : "WE" + document.getElementById('matr').value.trim(),
                 tipo: document.getElementById('tipoSol').value,
                 beneficio: document.getElementById('beneDest').value,
@@ -474,10 +474,7 @@
         // LÓGICA DE ATUALIZAR STATUS PARA CONCLUIDO
         // =======================================================
         function iniciarConclusao(id) {
-            // 1. Abre o Forms
             abrirPopup('https://forms.office.com/Pages/ResponsePage.aspx?id=fCAtUtXsx0-nbxdGSxFh-eVAzhwdpsxLmCSGMQwqNIpUM1E2TFRSRkhNWU9IQk9SVFhBSDJNWTFDVS4u');
-            
-            // 2. Esconde o botão e mostra a Checkbox
             document.getElementById('btn-concluir-' + id).style.display = 'none';
             document.getElementById('check-box-' + id).style.display = 'block';
         }
@@ -486,14 +483,11 @@
             const checkDiv = document.getElementById('check-box-' + id);
             checkDiv.innerHTML = "⏳ Finalizando na planilha...";
             
-            const payload = {
-                acao: "atualizar",
-                id: id
-            };
+            const payload = { acao: "atualizar", id: id };
 
             try {
                 await fetch(SCRIPT_URL, { method: 'POST', mode: 'no-cors', body: JSON.stringify(payload) });
-                carregarCardsGestao(); // Atualiza os cards (o concluído vai desaparecer)
+                carregarCardsGestao(); 
             } catch (error) {
                 alert("❌ Erro ao comunicar com a planilha.");
                 carregarCardsGestao();
@@ -517,13 +511,16 @@
                     dados.forEach(sol => {
                         const nomeColaborador = sol.nome && sol.nome !== "Não Localizado" ? sol.nome : `Colaborador não mapeado`;
                         
+                        // Lógica para exibir o valor dinamicamente se existir
+                        const exibicaoValor = sol.valor ? `<br><span class="valor-destaque">Valor: R$ ${sol.valor}</span>` : '';
+                        
                         container.innerHTML += `
                             <div class="card-gestao" id="card-${sol.id}">
                                 <strong>${nomeColaborador}</strong><br>
                                 <small>Matrícula: ${sol.matricula} | Onsite: ${sol.onsite} | Status: ${sol.status}</small><br>
                                 <hr style="opacity:0.2; border: 1px solid var(--warning);">
                                 <strong>${sol.tipo}</strong><br>
-                                <span>${sol.detalhe}</span>
+                                <span>${sol.detalhe}</span>${exibicaoValor}
                                 
                                 <button class="btn-concluir" id="btn-concluir-${sol.id}" onclick="iniciarConclusao('${sol.id}')">✅ CONCLUIR</button>
                                 
