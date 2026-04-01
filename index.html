@@ -385,17 +385,25 @@
         }
 
         async function enviarSolicitacao() {
-            const data = {
-                matricula: document.getElementById('matr').value,
-                tipo_solicitacao: document.getElementById('tipoSol').value,
-                qual_beneficio: document.getElementById('beneDest').value,
-                valor_vt: document.getElementById('vlr').value
-            };
-            await fetch(SCRIPT_URL, { method: 'POST', mode: 'no-cors', body: JSON.stringify(data) });
-            alert("Solicitação enviada!");
-            document.getElementById('formBeneficio').reset();
-            carregarCardsGestao();
-        }
+    let matriculaBruta = document.getElementById('matr').value.trim();
+    
+    // Verifica se já tem WE, se não tiver, ele adiciona
+    let matriculaFormatada = matriculaBruta.toUpperCase().startsWith("WE") 
+        ? matriculaBruta.toUpperCase() 
+        : "WE" + matriculaBruta;
+
+    const data = {
+        matricula: matriculaFormatada, // Envia com o WE
+        tipo_solicitacao: document.getElementById('tipoSol').value,
+        qual_beneficio: document.getElementById('beneDest').value,
+        valor_vt: document.getElementById('vlr').value
+    };
+    
+    await fetch(SCRIPT_URL, { method: 'POST', mode: 'no-cors', body: JSON.stringify(data) });
+    alert("Solicitação enviada com a matrícula: " + matriculaFormatada);
+    document.getElementById('formBeneficio').reset();
+    carregarCardsGestao();
+}
 
         async function carregarCardsGestao() {
             const container = document.getElementById('containerCardsGestao');
