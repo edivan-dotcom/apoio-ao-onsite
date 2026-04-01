@@ -8,88 +8,61 @@
     <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
     <script>mermaid.initialize({ startOnLoad: true, theme: 'default' });</script>
-
     <style>
         :root { --primary: #6a11cb; --secondary: #2575fc; --bg: #f4f7f6; --card-bg: white; --text: #333; --navbar-bg: white; --danger: #ff4b2b; --warning: #f39c12; --voucher: #00b894; --jira: #0052CC; --appsheet: #1a73e8; --glpi: #008080; --pontomais: #00a8a8; --new-tag: #eb4d4b; --signature: rgba(0, 0, 0, 0.2); }
         [data-theme="dark"] { --bg: #121212; --card-bg: #1e1e1e; --text: #e0e0e0; --navbar-bg: #1e1e1e; --signature: rgba(255, 255, 255, 0.05); }
-        .dash-bar { background: var(--navbar-bg); padding: 8px 30px; display: flex; align-items: center; gap: 20px; font-size: 0.85rem; border-bottom: 1px solid rgba(128,128,128,0.2); position: fixed; top: 60px; width: 100%; z-index: 999; box-sizing: border-box; }
-        .status-badge { background: var(--primary); color: white; padding: 2px 8px; border-radius: 10px; font-weight: bold; }
-        .onsite-tag { background: rgba(106, 17, 203, 0.1); padding: 2px 8px; border-radius: 5px; border: 1px solid var(--primary); font-size: 0.75rem; }
-        .tab-nav { display: flex; justify-content: center; background: var(--card-bg); padding: 10px; gap: 10px; margin-top: 50px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
-        .tab-btn { padding: 10px 20px; border: none; background: none; color: var(--text); cursor: pointer; font-weight: bold; border-bottom: 3px solid transparent; transition: 0.3s; }
-        .tab-btn.active { border-bottom: 3px solid var(--primary); color: var(--primary); }
-        .tab-content { display: none; animation: fadeIn 0.4s; }
-        .tab-content.active { display: block; }
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-        .form-container { max-width: 600px; margin: 40px auto; background: var(--card-bg); padding: 30px; border-radius: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); border-top: 5px solid var(--primary); }
-        .form-group { margin-bottom: 15px; text-align: left; }
-        .form-group label { display: block; margin-bottom: 5px; font-weight: bold; font-size: 0.9rem; }
-        .form-group input, .form-group select { width: 100%; padding: 12px; border-radius: 8px; border: 1px solid #ddd; background: var(--bg); color: var(--text); box-sizing: border-box; }
-        .instrucao { background: #fff3cd; color: #856404; padding: 10px; border-radius: 8px; font-size: 0.8rem; margin-top: 5px; display: none; border-left: 4px solid #ffeeba; }
-        .grid-cards-gestao { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px; padding: 20px; max-width: 1400px; margin: 0 auto; }
-        .card-gestao { background: var(--card-bg); padding: 20px; border-radius: 12px; border-top: 5px solid var(--warning); text-align: left; box-shadow: 0 4px 10px rgba(0,0,0,0.05); }
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: var(--bg); color: var(--text); margin: 0; padding-top: 60px; transition: 0.3s; }
+        body { font-family: 'Segoe UI', sans-serif; background-color: var(--bg); color: var(--text); margin: 0; padding-top: 60px; }
         .navbar { background: var(--navbar-bg); height: 60px; display: flex; justify-content: space-between; align-items: center; padding: 0 30px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); position: fixed; top: 0; width: 100%; z-index: 1000; box-sizing: border-box; }
         .nav-links { display: flex; align-items: center; height: 100%; }
-        .login-btn, .intranet-btn { text-decoration: none; padding: 6px 15px; border-radius: 5px; font-size: 0.8rem; font-weight: bold; margin-left: 10px; transition: 0.3s; }
-        .login-btn { background: #0078d4; color: white !important; }
-        .intranet-btn { background: #ff5722; color: white !important; }
         .dropdown { position: relative; display: flex; align-items: center; height: 100%; }
-        .dropdown-btn { text-decoration: none; color: var(--text); margin-left: 20px; font-weight: 600; font-size: 0.9rem; cursor: pointer; border: none; background: none; display: flex; align-items: center; gap: 5px; height: 100%; }
-        .dropdown-content { display: none; position: absolute; right: 0; background-color: var(--card-bg); min-width: 350px; box-shadow: 0px 8px 16px rgba(0,0,0,0.2); z-index: 1001; border-radius: 0 0 8px 8px; top: 60px; border-top: 2px solid var(--primary); overflow: hidden; }
+        .dropdown-btn { text-decoration: none; color: var(--text); margin-left: 20px; font-weight: 600; font-size: 0.9rem; cursor: pointer; border: none; background: none; }
+        .dropdown-content { display: none; position: absolute; right: 0; background-color: var(--card-bg); min-width: 300px; box-shadow: 0px 8px 16px rgba(0,0,0,0.2); top: 60px; border-top: 2px solid var(--primary); }
         .dropdown:hover .dropdown-content { display: block; }
         .dropdown-content a { color: var(--text); padding: 12px 16px; text-decoration: none; display: block; font-size: 0.85rem; border-bottom: 1px solid rgba(128,128,128,0.1); }
-        header { background: linear-gradient(rgba(106, 17, 203, 0.75), rgba(37, 117, 252, 0.75)), url('https://wecanbr.com.br/img/quem-somos/main.jpg'); background-size: cover; background-position: center; color: white; padding: 60px 20px; text-align: center; }
-        .search-container { margin-top: 25px; position: relative; width: 450px; max-width: 90%; margin: 20px auto 0; }
-        #searchInput { padding: 15px 25px; width: 100%; border-radius: 30px; border: none; font-size: 1rem; box-shadow: 0 5px 15px rgba(0,0,0,0.2); outline: none; background: var(--card-bg); color: var(--text); box-sizing: border-box; }
-        .container { display: flex; justify-content: center; flex-wrap: wrap; gap: 20px; padding: 40px 20px; max-width: 1400px; margin: 0 auto; }
-        .card { background: var(--card-bg); border-radius: 15px; width: 260px; padding: 25px; text-align: center; box-shadow: 0 5px 15px rgba(0,0,0,0.05); transition: 0.3s; text-decoration: none; color: var(--text); border-top: 5px solid var(--primary); box-sizing: border-box; cursor: pointer; position: relative; }
-        .icon { font-size: 40px; margin-bottom: 15px; display: block; }
-        .signature { text-align: center; margin: 40px 0 20px; font-family: 'Great Vibes', cursive; font-size: 1.5rem; color: var(--signature); }
-        footer { text-align: center; padding: 30px; background: #222; color: white; width: 100%; }
-        .theme-toggle { position: fixed; bottom: 20px; right: 20px; width: 50px; height: 50px; border-radius: 50%; background: var(--primary); color: white; border: none; cursor: pointer; box-shadow: 0 4px 15px rgba(0,0,0,0.3); z-index: 2001; font-size: 20px; }
+        .dash-bar { background: var(--navbar-bg); padding: 8px 30px; display: flex; align-items: center; gap: 20px; font-size: 0.85rem; border-bottom: 1px solid rgba(128,128,128,0.2); position: fixed; top: 60px; width: 100%; z-index: 999; }
+        header { background: linear-gradient(rgba(106,17,203,0.7), rgba(37,117,252,0.7)), url('https://wecanbr.com.br/img/quem-somos/main.jpg'); background-size: cover; color: white; padding: 60px 20px; text-align: center; }
+        .tab-nav { display: flex; justify-content: center; background: var(--card-bg); padding: 10px; gap: 10px; margin-top: 50px; }
+        .tab-btn { padding: 10px 20px; border: none; background: none; color: var(--text); cursor: pointer; font-weight: bold; border-bottom: 3px solid transparent; }
+        .tab-btn.active { border-bottom: 3px solid var(--primary); color: var(--primary); }
+        .tab-content { display: none; padding: 20px; }
+        .tab-content.active { display: block; }
+        .container { display: flex; justify-content: center; flex-wrap: wrap; gap: 20px; padding: 40px; }
+        .card { background: var(--card-bg); border-radius: 15px; width: 250px; padding: 20px; text-align: center; box-shadow: 0 5px 15px rgba(0,0,0,0.05); border-top: 5px solid var(--primary); cursor: pointer; }
+        .grid-cards-gestao { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px; max-width: 1200px; margin: 0 auto; }
+        .card-gestao { background: var(--card-bg); padding: 15px; border-radius: 10px; border-left: 5px solid var(--warning); box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+        .form-container { max-width: 500px; margin: 0 auto; background: var(--card-bg); padding: 30px; border-radius: 15px; }
+        .form-group { margin-bottom: 15px; text-align: left; }
+        .form-group input, .form-group select { width: 100%; padding: 10px; border-radius: 5px; border: 1px solid #ccc; box-sizing: border-box; }
+        .signature { text-align: center; margin: 40px; font-family: 'Great Vibes', cursive; font-size: 1.5rem; color: var(--signature); }
     </style>
 </head>
 <body>
-
-    <button class="theme-toggle" onclick="toggleTheme()" id="themeBtn">🌙</button>
-
     <nav class="navbar">
-        <div style="font-weight: bold; color: var(--primary); letter-spacing: 1px;">WE CAN BR</div>
+        <div style="font-weight: bold; color: var(--primary);">WE CAN BR</div>
         <div class="nav-links">
-            <a href="https://portal.office.com" target="_blank" class="login-btn">🔑 Login Microsoft</a>
-            <a href="https://desafiorhcombr.sharepoint.com/sites/wecanbr" target="_blank" class="intranet-btn">🌐 Intranet</a>
-            
+            <a href="https://portal.office.com" target="_blank" style="text-decoration:none; background:#0078d4; color:white; padding:5px 10px; border-radius:5px;">Login Microsoft</a>
             <div class="dropdown">
                 <button class="dropdown-btn">📊 Planilhas ▼</button>
                 <div class="dropdown-content">
                     <a href="https://desafiorhcombr-my.sharepoint.com/:x:/r/personal/mirian_oliveira_wecanbr_com_br/_layouts/15/Doc.aspx?sourcedoc=%7B9C5EACCF-57D1-4415-BA2B-D584B9FE2B85%7D" target="_blank">📋 Controle de Atendimento</a>
-                    <a href="https://docs.google.com/spreadsheets/d/1WBYOF9AkoS7NpzhqFyqm5PzQRP13yUF2p5ZY8FfZp_c/edit" target="_blank">🔍 Voucher 2026 (Base)</a>
+                    <a href="https://desafiorhcombr-my.sharepoint.com/:x:/r/personal/mirian_oliveira_wecanbr_com_br/_layouts/15/doc2.aspx?sourcedoc=%7B519706C2-BDEF-438C-B037-385F4D8A3488%7D" target="_blank">📈 Drive de Rescisão Shopee</a>
+                    <a href="https://docs.google.com/spreadsheets/d/1WBYOF9AkoS7NpzhqFyqm5PzQRP13yUF2p5ZY8FfZp_c/edit" target="_blank">🔍 Voucher 2026 (Base Geral)</a>
                 </div>
             </div>
-
             <div class="dropdown">
                 <button class="dropdown-btn">📄 Documentos ▼</button>
                 <div class="dropdown-content">
                     <a href="https://drive.google.com/file/d/1qsLtN-HC5488FVQc3n5mcT8zjCdVja0d/view" target="_blank">📄 Carta de Suspensão</a>
                     <a href="https://drive.google.com/file/d/1zsrlh6KBLvMvEGc13tTA6I7Ybra5iObA/view" target="_blank">📄 Advertência Disciplinar</a>
-                    <a href="https://drive.google.com/file/d/1_Dw1qLl9icW282pkZCNln8908Nfqiasi/view" target="_blank">📄 Advertência - Ponto</a>
+                    <a href="https://drive.google.com/file/d/1a_D1awqrBGXLaiKba6dc_ruE41dDF3ke/view" target="_blank">📄 Dispensa Justa Causa</a>
                 </div>
             </div>
         </div>
     </nav>
 
-    <div class="dash-bar">
-        <span>Solicitações Pendentes: <span id="total-pendentes" class="status-badge">0</span></span>
-        <div id="onsites-alerta" style="display: flex; gap: 8px;"></div>
-    </div>
+    <div class="dash-bar">Solicitações Pendentes: <span id="total-pendentes" style="background:var(--primary); color:white; padding:2px 8px; border-radius:10px;">0</span></div>
 
-    <header>
-        <h1>APOIO AO ONSITE</h1>
-        <div class="search-container">
-            <input type="text" id="searchInput" onkeyup="buscarTudo()" placeholder="Pesquisar..." autocomplete="off">
-        </div>
-    </header>
+    <header><h1>APOIO AO ONSITE</h1></header>
 
     <div class="tab-nav">
         <button class="tab-btn active" onclick="switchTab('tab-links')">🔗 Cards de Atalho</button>
@@ -99,60 +72,34 @@
 
     <div id="tab-links" class="tab-content active">
         <div class="container">
-            <div onclick="abrirPopup('https://forms.office.com/Pages/ResponsePage.aspx?id=fCAtUtXsx0-nbxdGSxFh-eVAzhwdpsxLmCSGMQwqNIpUM1E2TFRSRkhNWU9IQk9SVFhBSDJNWTFDVS4u')" class="card">
-                <span class="icon">📝</span>
-                <h2>Central de Solicitações</h2>
-                <p>Clique para abrir o formulário interno.</p>
-            </div>
-            <div onclick="abrirPopup('https://forms.office.com/Pages/ResponsePage.aspx?id=fCAtUtXsx0-nbxdGSxFh-f7MDqf4DUBBuOHjox7sxytUNFFQNTgzR1pQV0FLM05aWElXSjlRMjFHRy4u')" class="card" style="border-top-color: var(--danger);">
-                <span class="icon">🚫</span>
-                <h2>Desligamento Shopee</h2>
-                <p>Formulário oficial para desligamento Shopee.</p>
-            </div>
+            <div class="card" onclick="window.open('https://forms.office.com/Pages/ResponsePage.aspx?id=fCAtUtXsx0-nbxdGSxFh-eVAzhwdpsxLmCSGMQwqNIpUM1E2TFRSRkhNWU9IQk9SVFhBSDJNWTFDVS4u')"><h2>Central de Solicitações</h2></div>
+            <div class="card" style="border-top-color:var(--danger);" onclick="window.open('https://forms.office.com/Pages/ResponsePage.aspx?id=fCAtUtXsx0-nbxdGSxFh-f7MDqf4DUBBuOHjox7sxytUNFFQNTgzR1pQV0FLM05aWElXSjlRMjFHRy4u')"><h2>Desligamento Shopee</h2></div>
         </div>
+        <center>
+            <button onclick="window.open('https://www.appsheet.com/start/8ba6b59c-c836-4d4e-9a3e-e43d38d2a47e')" style="background:var(--appsheet); color:white; border:none; padding:15px; border-radius:10px; cursor:pointer;">📱 Abrir AppSheet Inativação</button>
+        </center>
+        <div class="mermaid" style="margin-top:30px;">graph TD; A[Início] --> B{Origem?}; B --> C[Forms]; B --> D[Chat]; C --> E[Processamento];</div>
     </div>
 
     <div id="tab-solicitar" class="tab-content">
         <div class="form-container">
-            <h2 style="color: var(--primary); text-align: center;">Nova Solicitação</h2>
             <form id="formBeneficio">
-                <div class="form-group"><label>Matrícula:</label><input type="text" id="matr" placeholder="Ex: 769297" required></div>
-                <div class="form-group">
-                    <label>Tipo de Solicitação:</label>
-                    <select id="tipoSol" onchange="atualizarOpcoesBeneficio()">
-                        <option value="">Selecione o tipo...</option>
-                        <option value="TROCA DE BENEFICIO">TROCA DE BENEFICIO</option>
-                        <option value="AJUSTE VALOR">AJUSTE VALOR DA PASSAGEM</option>
-                        <option value="PEDIDO DE DEMISSAO">PEDIDO DE DEMISSÃO</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label>Qual Benefício?</label>
-                    <select id="beneDest" onchange="validarCampos()" required>
-                        <option value="">Aguardando tipo...</option>
-                    </select>
-                </div>
-                <div id="campoValor" class="form-group" style="display:none;">
-                    <label>Valor:</label><input type="number" id="vlr" step="0.01">
-                    <div id="instru" class="instrucao"></div>
-                </div>
-                <button type="button" onclick="enviarSolicitacao()" class="section-btn" style="background: var(--primary); width: 100%; color: white; border: none; padding: 15px; border-radius: 8px; cursor: pointer; font-weight: bold;">🚀 Enviar Solicitação</button>
+                <div class="form-group"><label>Matrícula:</label><input type="text" id="matr" required></div>
+                <div class="form-group"><label>Tipo:</label><select id="tipoSol" onchange="atualizarOpcoesBeneficio()"><option value="">Selecione...</option><option value="TROCA DE BENEFICIO">TROCA DE BENEFICIO</option><option value="AJUSTE VALOR">AJUSTE VALOR</option></select></div>
+                <div class="form-group"><label>Benefício:</label><select id="beneDest" onchange="validarCampos()"><option value="">Aguardando...</option></select></div>
+                <div id="campoValor" class="form-group" style="display:none;"><label>Valor:</label><input type="number" id="vlr"></div>
+                <button type="button" onclick="enviarSolicitacao()" style="width:100%; background:var(--primary); color:white; border:none; padding:12px; border-radius:5px; cursor:pointer;">Enviar</button>
             </form>
         </div>
     </div>
 
-    <div id="tab-gestao" class="tab-content">
-        <div id="containerCards" class="grid-cards-gestao">
-            <p style="text-align: center; width: 100%;">Carregando dados da Gestão...</p>
-        </div>
-    </div>
+    <div id="tab-gestao" class="tab-content"><div id="containerCards" class="grid-cards-gestao"></div></div>
 
     <div class="signature">By: Edivan Costa</div>
     <footer>© 2026 Apoio ao On-Site | WeCanBR</footer>
 
     <script>
-        const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxupjNwDDgxLULbLOPUVd2jc4hRUxI9JYYeqy7riYGBg5ymoqAfLeJn6IwRqLH7aozH/exec"; // Cole o link do Web App aqui!
-
+        const SCRIPT_URL = "SEU_URL_AQUI";
         function switchTab(id) {
             document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
             document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
@@ -160,53 +107,26 @@
             event.currentTarget.classList.add('active');
             if(id === 'tab-gestao') carregarCards();
         }
-
         function atualizarOpcoesBeneficio() {
-            const tipoSol = document.getElementById('tipoSol').value;
-            const beneDest = document.getElementById('beneDest');
-            beneDest.innerHTML = '<option value="">Selecione...</option>';
-
-            if (tipoSol === "TROCA DE BENEFICIO") {
-                const trocas = ["ATUALIZAR valor de VT DIÁRIO", "VT para FRETADO", "VT para VT + VOUCHER", "VT para MOBILIDADE", "MOBILIDADE para VT+VOUCHER", "MOBILIDADE para VT", "MOBILIDADE para FRETADO", "VT + VOUCHER para FRETADO", "VT + VOUCHER para VT + FRETADO", "VT + VOUCHER para MOBILIDADE", "FRETADO para VT", "FRETADO para VT + VOUCHER", "FRETADO para MOBILIDADE", "FRETADO para VT + FRETADO"];
-                trocas.forEach(t => beneDest.innerHTML += `<option value="${t}">${t}</option>`);
-            } else {
-                const padrao = ["VT", "VOUCHER UBER", "MOBILIDADE"];
-                padrao.forEach(p => beneDest.innerHTML += `<option value="${p}">${p}</option>`);
-            }
+            const tipo = document.getElementById('tipoSol').value;
+            const dest = document.getElementById('beneDest');
+            dest.innerHTML = '<option value="">Selecione...</option>';
+            if(tipo === "TROCA DE BENEFICIO") {
+                ["ATUALIZAR valor de VT DIÁRIO", "VT para FRETADO", "VT para VT + VOUCHER", "VT para MOBILIDADE", "MOBILIDADE para VT+VOUCHER", "MOBILIDADE para VT", "MOBILIDADE para FRETADO", "VT + VOUCHER para FRETADO", "VT + VOUCHER para VT + FRETADO", "VT + VOUCHER para MOBILIDADE", "FRETADO para VT", "FRETADO para VT + VOUCHER", "FRETADO para MOBILIDADE", "FRETADO para VT + FRETADO"].forEach(i => dest.innerHTML += `<option value="${i}">${i}</option>`);
+            } else { ["VT", "VOUCHER UBER", "MOBILIDADE"].forEach(i => dest.innerHTML += `<option value="${i}">${i}</option>`); }
         }
-
-        function validarCampos() {
-            const bene = document.getElementById('beneDest').value;
-            document.getElementById('campoValor').style.display = bene ? 'block' : 'none';
-        }
-
+        function validarCampos() { document.getElementById('campoValor').style.display = 'block'; }
         async function enviarSolicitacao() {
-            const payload = {
-                matricula: document.getElementById('matr').value,
-                tipo_solicitacao: document.getElementById('tipoSol').value,
-                qual_beneficio: document.getElementById('beneDest').value,
-                valor_vt: document.getElementById('vlr').value
-            };
-            await fetch(SCRIPT_URL, { method: 'POST', mode: 'no-cors', body: JSON.stringify(payload) });
-            alert("Solicitação enviada com sucesso!");
-            document.getElementById('formBeneficio').reset();
-            switchTab('tab-links');
+            const data = { matricula: document.getElementById('matr').value, tipo_solicitacao: document.getElementById('tipoSol').value, qual_beneficio: document.getElementById('beneDest').value, valor_vt: document.getElementById('vlr').value };
+            await fetch(SCRIPT_URL, { method: 'POST', mode: 'no-cors', body: JSON.stringify(data) });
+            alert("Enviado!"); carregarCards();
         }
-
         async function carregarCards() {
-            const container = document.getElementById('containerCards');
-            const res = await fetch(SCRIPT_URL);
-            const dados = await res.json();
-            container.innerHTML = "";
-            dados.forEach(sol => {
-                container.innerHTML += `<div class="card-gestao"><h3>${sol.nome}</h3><p>ID: ${sol.id} | Tipo: ${sol.tipo}</p><p>Benefício: ${sol.beneficio}</p><span class="status-badge">${sol.status}</span></div>`;
-            });
-            document.getElementById('total-pendentes').innerText = dados.filter(s => s.status === "Pendente").length;
+            const res = await fetch(SCRIPT_URL); const dados = await res.json();
+            const cont = document.getElementById('containerCards'); cont.innerHTML = "";
+            dados.forEach(s => { cont.innerHTML += `<div class="card-gestao"><b>${s.nome}</b><br>ID: ${s.id} | ${s.tipo}<br>${s.beneficio}</div>`; });
+            document.getElementById('total-pendentes').innerText = dados.length;
         }
-
-        function abrirPopup(url) { window.open(url, 'pop', 'width=900,height=900'); }
-        function toggleTheme() { document.documentElement.toggleAttribute('data-theme'); }
-        function buscarTudo() { /* Lógica de pesquisa original */ }
         window.onload = carregarCards;
     </script>
 </body>
