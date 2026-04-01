@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tickets Shopee | WeCanBR</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div style="font-weight: bold; color: var(--primary);">WE CAN BR</div>
+        <div class="nav-links">
+            <a href="index.html" class="login-btn">🏠 Voltar para Home</a>
+        </div>
+    </nav>
+
+    <header>
+        <h1>GESTÃO DE TICKETS SHOPEE</h1>
+    </header>
+
+    <div class="tabs-container" id="filtrosContainer">
+        <button class="tab-btn active" onclick="filtrarCategoria('TODOS')">TUDO</button>
+        <button class="tab-btn" onclick="filtrarCategoria('DESLIGAMENTO')" style="border-bottom: 3px solid #d63031;">🚫 DESLIGAMENTOS</button>
+        <button class="tab-btn" onclick="filtrarCategoria('MOVIMENTACAO')" style="border-bottom: 3px solid #0984e3;">🔄 MOVIMENTAÇÕES</button>
+    </div>
+
+    <div class="container" id="containerCardsJira">
+        <p style="text-align:center;">Carregando tickets...</p>
+    </div>
+
+    <script>
+        const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxupjNwDDgxLULbLOPUVd2jc4hRUxI9JYYeqy7riYGBg5ymoqAfLeJn6IwRqLH7aozH/exec";
+        let todosTickets = [];
+
+        async function carregarDados() {
+            const res = await fetch(SCRIPT_URL);
+            const dados = await res.json();
+            todosTickets = dados.jira;
+            renderizarCards('TODOS');
+        }
+
+        function renderizarCards(filtro) {
+            const container = document.getElementById('containerCardsJira');
+            container.innerHTML = "";
+            
+            let filtrados = todosTickets;
+            if(filtro !== 'TODOS') {
+                filtrados = todosTickets.filter(t => t.resumo.toUpperCase().includes(filtro));
+            }
+
+            filtrados.forEach(t => {
+                const resumo = t.resumo.toUpperCase();
+                const isDesligamento = resumo.includes("DESLIGAMENTO");
+                const isMovimentacao = resumo.includes("MOVIMENTAÇÃO") || resumo.includes("MOVIMENTACAO");
+                
+                let classe = isDesligamento ? "card-desligamento" : (isMovimentacao ? "card-movimentacao" : "");
+                let botoes = `<a href="https://spxresolve.atlassian.net/browse/${t.chave}" target="_blank" class="btn-jira-link" style="background: var(--jira); padding: 8px;">🔗 ABRIR JIRA</a>`;
+
+                if (isDesligamento) {
+                    botoes += `<button class="btn-jira-link btn-forms-desligamento" onclick="window.open('URL_FORMS', '_blank')">📋 ENVIAR FORMS DESLIGAMENTO</button>`;
+                } else if (isMovimentacao) {
+                    botoes += `
+                        <button class="btn-jira-link btn-central-solicitacao" onclick="window.open('URL_CENTRAL', '_blank')">📥 ENVIAR CENTRAL</button>
+                        <button class="btn-jira-link" style="background: #f1c40f; color:#000;" onclick="enviarPonto('${t.chave}')">➡️ ENVIAR PONTO</button>`;
+                } else {
+                    botoes += `<button class="btn-jira-link" style="background: #f1c40f; color:#000;" onclick="enviarPonto('${t.chave}')">➡️ ENVIAR PONTO</button>`;
+                }
+
+                container.innerHTML += `
+                    <div class="card ${classe}" style="padding-bottom:160px; min-height: 300px;">
+                        <strong>${t.nome}</strong><br><small>${t.chave}</small><br>
+                        <hr style="opacity:0.1">
+                        <p>${t.resumo}</p>
+                        <div style="position: absolute; bottom: 15px; left: 15px; right: 15px; display: flex; flex-direction: column; gap: 5px;">
+                            ${botoes}
+                        </div>
+                    </div>`;
+            });
+        }
+
+        function filtrarCategoria(cat) {
+            // Estética dos botões
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+            renderizarCards(cat);
+        }
+
+        window.onload = carregarDados;
+    </script>
+</body>
+</html>
