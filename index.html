@@ -8,9 +8,6 @@
     <link rel="icon" type="image/png" href="https://wecanbr.com.br/wp-content/uploads/2021/10/cropped-favicon-32x32.png">
     <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet">
     
-    <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
-    <script>mermaid.initialize({ startOnLoad: true, theme: 'default' });</script>
-
     <style>
         :root {
             --primary: #6a11cb;
@@ -104,7 +101,22 @@
             background: var(--card-bg); color: var(--text); box-sizing: border-box;
         }
 
-        .container { display: flex; justify-content: center; flex-wrap: wrap; gap: 20px; padding: 40px 20px; max-width: 1400px; margin: 0 auto; }
+        /* =========================================================
+           ESTILOS DAS ABAS (NOVO)
+           ========================================================= */
+        .tabs-container {
+            display: flex; justify-content: center; gap: 15px; margin: 30px auto 10px;
+        }
+        .tab-btn {
+            padding: 12px 30px; border: none; border-radius: 25px; cursor: pointer;
+            font-weight: bold; font-size: 1rem; background: var(--card-bg); color: var(--text);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1); transition: 0.3s;
+        }
+        .tab-btn.active { background: var(--primary); color: white; }
+        .tab-btn:hover { transform: translateY(-3px); box-shadow: 0 6px 15px rgba(0,0,0,0.15); }
+        /* ========================================================= */
+
+        .container { display: flex; justify-content: center; flex-wrap: wrap; gap: 20px; padding: 20px 20px 40px; max-width: 1400px; margin: 0 auto; }
         .card {
             background: var(--card-bg); border-radius: 15px; width: 260px; padding: 25px;
             text-align: center; box-shadow: 0 5px 15px rgba(0,0,0,0.05); transition: 0.3s;
@@ -133,7 +145,7 @@
 
         .funnel-container {
             display: flex; justify-content: center; flex-wrap: wrap; gap: 20px;
-            max-width: 95%; margin: 20px auto 40px; padding: 0 20px;
+            max-width: 95%; margin: 0px auto 40px; padding: 0 20px;
         }
 
         .embedded-section {
@@ -160,20 +172,30 @@
         /* =========================================================
            ESTILOS DO FORMULÁRIO E GESTÃO
            ========================================================= */
-        .form-section { max-width: 600px; margin: 40px auto; background: var(--card-bg); padding: 30px; border-radius: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); border-top: 5px solid var(--primary); }
+        .form-section { max-width: 600px; margin: 20px auto 40px; background: var(--card-bg); padding: 30px; border-radius: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); border-top: 5px solid var(--primary); }
         .form-group { margin-bottom: 15px; text-align: left; }
         .form-group label { display: block; margin-bottom: 5px; font-weight: bold; }
         .form-group input, .form-group select { width: 100%; padding: 12px; border-radius: 8px; border: 1px solid #ddd; background: var(--bg); color: var(--text); box-sizing: border-box; }
         
         .gestao-section { max-width: 1200px; margin: 40px auto; padding: 0 20px; }
         .grid-gestao { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px; }
-        .card-gestao { background: var(--card-bg); padding: 15px; border-radius: 10px; border-left: 5px solid var(--warning); box-shadow: 0 2px 5px rgba(0,0,0,0.1); text-align: left; }
+        .card-gestao { background: var(--card-bg); padding: 15px; border-radius: 10px; border-left: 5px solid var(--warning); box-shadow: 0 2px 5px rgba(0,0,0,0.1); text-align: left; position: relative; padding-bottom: 50px; }
         
+        /* Contador como Link */
         #contadorSolicitacoes { 
             background: #e67e22; color: white; padding: 3px 12px; border-radius: 20px; 
             font-size: 0.75rem; font-weight: 800; margin-left: 15px; display: none; 
-            max-width: 50vw; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; 
+            max-width: 50vw; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+            cursor: pointer; transition: 0.3s;
         }
+        #contadorSolicitacoes:hover { filter: brightness(1.1); transform: scale(1.02); }
+
+        .btn-concluir {
+            position: absolute; bottom: 10px; left: 15px; right: 15px;
+            background: var(--primary); color: white; border: none; padding: 8px 15px; 
+            border-radius: 5px; cursor: pointer; font-weight: bold; transition: 0.3s;
+        }
+        .btn-concluir:hover { background: var(--secondary); }
         /* ========================================================= */
     </style>
 </head>
@@ -184,7 +206,7 @@
     <nav class="navbar">
         <div style="display: flex; align-items: center;">
             <div style="font-weight: bold; color: var(--primary); letter-spacing: 1px;">WE CAN BR</div>
-            <div id="contadorSolicitacoes">0 Pendentes</div>
+            <div id="contadorSolicitacoes" onclick="switchTab('home')" title="Ir para Home">0 Pendentes</div>
         </div>
         
         <div class="nav-links">
@@ -228,115 +250,132 @@
         </div>
     </header>
 
-    <div class="container">
-        <div onclick="abrirPopup('https://forms.office.com/Pages/ResponsePage.aspx?id=fCAtUtXsx0-nbxdGSxFh-eVAzhwdpsxLmCSGMQwqNIpUM1E2TFRSRkhNWU9IQk9SVFhBSDJNWTFDVS4u')" class="card">
-            <span class="icon">📝</span>
-            <h2>Central de Solicitações</h2>
-            <p>Clique para abrir o formulário interno.</p>
-        </div>
-
-        <div onclick="abrirPopup('https://forms.office.com/Pages/ResponsePage.aspx?id=fCAtUtXsx0-nbxdGSxFh-f7MDqf4DUBBuOHjox7sxytUNFFQNTgzR1pQV0FLM05aWElXSjlRMjFHRy4u')" class="card" style="border-top-color: var(--danger);">
-            <span class="icon">🚫</span>
-            <h2>Desligamento Shopee</h2>
-            <p>Formulário oficial para desligamento Shopee.</p>
-        </div>
-
-        <div onclick="abrirPopup('https://forms.office.com/Pages/ResponsePage.aspx?id=fCAtUtXsx0-nbxdGSxFh-f7MDqf4DUBBuOHjox7sxytUMzdRMTFCOTc2SzZEQzU4NFI2TVMzUjIxWS4u')" class="card" style="border-top-color: var(--warning);">
-            <span class="icon">🎧</span>
-            <h2>Controle de Atendimento</h2>
-            <p>Registro de atendimentos Shopee.</p>
-        </div>
-
-        <div onclick="abrirPopup('https://forms.office.com/Pages/ResponsePage.aspx?id=fCAtUtXsx0-nbxdGSxFh-eVAzhwdpsxLmCSGMQwqNIpUQVBSTFlOTUxSUEMwMFhWSTdTTEVOV1lBUy4u')" class="card" style="border-top-color: var(--voucher);">
-            <div class="badge-new">Novo!</div>
-            <span class="icon">🎫</span>
-            <h2>Cadastro Voucher</h2>
-            <p>Novo Colaborador - Cadastro de Voucher Uber.</p>
-        </div>
-
-        <div onclick="window.open('https://spxresolve.atlassian.net/jira/for-you', '_blank')" class="card" style="border-top-color: var(--jira);">
-            <span class="icon">🟦</span>
-            <h2>JIRA</h2>
-            <p>Gestão de chamados e projetos JIRA.</p>
-        </div>
+    <div class="tabs-container">
+        <button class="tab-btn active" onclick="switchTab('home')" id="btnTabHome">🏠 HOME</button>
+        <button class="tab-btn" onclick="switchTab('solicitacoes')" id="btnTabSol">📝 SOLICITAÇÕES</button>
     </div>
 
-    <div class="form-section">
-        <h2 style="text-align: center; color: var(--primary); margin-top: 0;">Solicitação de Ajuste</h2>
-        <form id="formBeneficio">
-            <div class="form-group">
-                <label>Matrícula:</label>
-                <input type="text" id="matr" required placeholder="Ex: 123456">
+    <div id="homeView">
+        <div class="container">
+            <div onclick="abrirPopup('https://forms.office.com/Pages/ResponsePage.aspx?id=fCAtUtXsx0-nbxdGSxFh-eVAzhwdpsxLmCSGMQwqNIpUM1E2TFRSRkhNWU9IQk9SVFhBSDJNWTFDVS4u')" class="card">
+                <span class="icon">📝</span>
+                <h2>Central de Solicitações</h2>
+                <p>Clique para abrir o formulário interno.</p>
             </div>
-            <div class="form-group">
-                <label>Tipo de Solicitação:</label>
-                <select id="tipoSol" onchange="atualizarOpcoesBeneficio()" required>
-                    <option value="">Selecione...</option>
-                    <option value="TROCA DE BENEFICIO">TROCA DE BENEFICIO</option>
-                    <option value="AJUSTE VALOR">AJUSTE VALOR DA PASSAGEM</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <label>Qual Benefício?</label>
-                <select id="beneDest" required>
-                    <option value="">Selecione o tipo acima primeiro...</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <label>Valor (se aplicável):</label>
-                <input type="number" id="vlr" step="0.01">
-            </div>
-            
-            <button type="button" onclick="enviarSolicitacao()" id="btnEnviar" style="background: var(--primary); color: white; width: 100%; padding: 15px; border-radius: 8px; border: none; cursor: pointer; font-weight: bold; margin-top: 10px;">🚀 Enviar Solicitação</button>
-        </form>
-    </div>
 
-    <div class="gestao-section">
-        <h2 style="text-align: center; color: var(--primary);">📋 Gestão de Solicitações Pendentes</h2>
-        <div id="containerCardsGestao" class="grid-gestao">
-             <p style="text-align: center; width: 100%;">Aguardando sincronização com a planilha...</p>
-        </div>
-    </div>
-    <div class="funnel-container">
-        <div class="embedded-section" style="border-top: 5px solid var(--appsheet);">
-            <div>
-                <strong style="color: var(--appsheet);">📱 INATIVAÇÃO VOUCHER UBER</strong>
-                <p>Inativação de usuários Uber em caso de desligamento.</p>
+            <div onclick="abrirPopup('https://forms.office.com/Pages/ResponsePage.aspx?id=fCAtUtXsx0-nbxdGSxFh-f7MDqf4DUBBuOHjox7sxytUNFFQNTgzR1pQV0FLM05aWElXSjlRMjFHRy4u')" class="card" style="border-top-color: var(--danger);">
+                <span class="icon">🚫</span>
+                <h2>Desligamento Shopee</h2>
+                <p>Formulário oficial para desligamento Shopee.</p>
             </div>
-            <button onclick="abrirAppSheet()" class="section-btn" style="background: var(--appsheet); box-shadow: 0 4px 15px rgba(26, 115, 232, 0.3);">
-                🚀 Abrir AppSheet
-            </button>
+
+            <div onclick="abrirPopup('https://forms.office.com/Pages/ResponsePage.aspx?id=fCAtUtXsx0-nbxdGSxFh-f7MDqf4DUBBuOHjox7sxytUMzdRMTFCOTc2SzZEQzU4NFI2TVMzUjIxWS4u')" class="card" style="border-top-color: var(--warning);">
+                <span class="icon">🎧</span>
+                <h2>Controle de Atendimento</h2>
+                <p>Registro de atendimentos Shopee.</p>
+            </div>
+
+            <div onclick="abrirPopup('https://forms.office.com/Pages/ResponsePage.aspx?id=fCAtUtXsx0-nbxdGSxFh-eVAzhwdpsxLmCSGMQwqNIpUQVBSTFlOTUxSUEMwMFhWSTdTTEVOV1lBUy4u')" class="card" style="border-top-color: var(--voucher);">
+                <div class="badge-new">Novo!</div>
+                <span class="icon">🎫</span>
+                <h2>Cadastro Voucher</h2>
+                <p>Novo Colaborador - Cadastro de Voucher Uber.</p>
+            </div>
+
+            <div onclick="window.open('https://spxresolve.atlassian.net/jira/for-you', '_blank')" class="card" style="border-top-color: var(--jira);">
+                <span class="icon">🟦</span>
+                <h2>JIRA</h2>
+                <p>Gestão de chamados e projetos JIRA.</p>
+            </div>
         </div>
 
-        <div class="embedded-section" style="border-top: 5px solid var(--glpi);">
-            <div>
-                <strong style="color: var(--glpi);">🛠️ CHAMADOS - GLPI</strong>
-                <p>Abertura e consulta de chamados técnicos WeCanBR.</p>
-            </div>
-            <a href="https://glpi.wecanbr.com.br/index.php?noAUTO=1" target="_blank" style="text-decoration: none;">
-                <button class="section-btn" style="background: var(--glpi); box-shadow: 0 4px 15px rgba(0, 128, 128, 0.3);">
-                    🎫 Acessar GLPI
+        <div class="funnel-container">
+            <div class="embedded-section" style="border-top: 5px solid var(--appsheet);">
+                <div>
+                    <strong style="color: var(--appsheet);">📱 INATIVAÇÃO VOUCHER UBER</strong>
+                    <p>Inativação de usuários Uber em caso de desligamento.</p>
+                </div>
+                <button onclick="abrirAppSheet()" class="section-btn" style="background: var(--appsheet); box-shadow: 0 4px 15px rgba(26, 115, 232, 0.3);">
+                    🚀 Abrir AppSheet
                 </button>
-            </a>
-        </div>
-
-        <div class="embedded-section" style="border-top: 5px solid var(--pontomais);">
-            <div>
-                <strong style="color: var(--pontomais);">⏱️ PONTOMAIS</strong>
-                <p>Gestão de colaboradores e conferência de ponto.</p>
             </div>
-            <a href="https://app2.pontomais.com.br/controle-de-ponto/colaboradores/lista" target="_blank" style="text-decoration: none;">
-                <button class="section-btn" style="background: var(--pontomais); box-shadow: 0 4px 15px rgba(0, 168, 168, 0.3);">
-                    🔍 Abrir Pontomais
-                </button>
-            </a>
+
+            <div class="embedded-section" style="border-top: 5px solid var(--glpi);">
+                <div>
+                    <strong style="color: var(--glpi);">🛠️ CHAMADOS - GLPI</strong>
+                    <p>Abertura e consulta de chamados técnicos WeCanBR.</p>
+                </div>
+                <a href="https://glpi.wecanbr.com.br/index.php?noAUTO=1" target="_blank" style="text-decoration: none;">
+                    <button class="section-btn" style="background: var(--glpi); box-shadow: 0 4px 15px rgba(0, 128, 128, 0.3);">
+                        🎫 Acessar GLPI
+                    </button>
+                </a>
+            </div>
+
+            <div class="embedded-section" style="border-top: 5px solid var(--pontomais);">
+                <div>
+                    <strong style="color: var(--pontomais);">⏱️ PONTOMAIS</strong>
+                    <p>Gestão de colaboradores e conferência de ponto.</p>
+                </div>
+                <a href="https://app2.pontomais.com.br/controle-de-ponto/colaboradores/lista" target="_blank" style="text-decoration: none;">
+                    <button class="section-btn" style="background: var(--pontomais); box-shadow: 0 4px 15px rgba(0, 168, 168, 0.3);">
+                        🔍 Abrir Pontomais
+                    </button>
+                </a>
+            </div>
         </div>
     </div>
+    <div id="solicitacoesView" style="display: none;">
+        <div class="form-section">
+            <h2 style="text-align: center; color: var(--primary); margin-top: 0;">Solicitação de Ajuste</h2>
+            <form id="formBeneficio">
+                <div class="form-group">
+                    <label>Matrícula:</label>
+                    <input type="text" id="matr" required placeholder="Ex: 123456">
+                </div>
+                <div class="form-group">
+                    <label>Tipo de Solicitação:</label>
+                    <select id="tipoSol" onchange="atualizarOpcoesBeneficio()" required>
+                        <option value="">Selecione...</option>
+                        <option value="TROCA DE BENEFICIO">TROCA DE BENEFICIO</option>
+                        <option value="AJUSTE VALOR">AJUSTE VALOR DA PASSAGEM</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Qual Benefício?</label>
+                    <select id="beneDest" required>
+                        <option value="">Selecione o tipo acima primeiro...</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Valor (se aplicável):</label>
+                    <input type="number" id="vlr" step="0.01">
+                </div>
+                
+                <button type="button" onclick="enviarSolicitacao()" id="btnEnviar" style="background: var(--primary); color: white; width: 100%; padding: 15px; border-radius: 8px; border: none; cursor: pointer; font-weight: bold; margin-top: 10px;">🚀 Enviar Solicitação</button>
+            </form>
+        </div>
 
+        <div class="gestao-section">
+            <h2 style="text-align: center; color: var(--primary);">📋 Gestão de Solicitações Pendentes</h2>
+            <div id="containerCardsGestao" class="grid-gestao">
+                 <p style="text-align: center; width: 100%;">Aguardando sincronização com a planilha...</p>
+            </div>
+        </div>
+    </div>
     <div class="signature">By: Edivan Costa</div>
     <footer>© 2026 Apoio ao On-Site | WeCanBR</footer>
 
     <script>
+        // Função para alternar entre as abas
+        function switchTab(tab) {
+            document.getElementById('homeView').style.display = tab === 'home' ? 'block' : 'none';
+            document.getElementById('solicitacoesView').style.display = tab === 'solicitacoes' ? 'block' : 'none';
+            
+            document.getElementById('btnTabHome').classList.toggle('active', tab === 'home');
+            document.getElementById('btnTabSol').classList.toggle('active', tab === 'solicitacoes');
+        }
+
         function abrirPopup(url) {
             const largura = 900;
             const altura = 900;
@@ -371,10 +410,7 @@
             }
         }
 
-        /* =========================================================
-           NOVAS FUNÇÕES ADICIONADAS PARA O FORMULÁRIO E GESTÃO
-           ========================================================= */
-        const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxupjNwDDgxLULbLOPUVd2jc4hRUxI9JYYeqy7riYGBg5ymoqAfLeJn6IwRqLH7aozH/exec"; // Coloque a URL de Deploy do seu AppScript
+        const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxupjNwDDgxLULbLOPUVd2jc4hRUxI9JYYeqy7riYGBg5ymoqAfLeJn6IwRqLH7aozH/exec";
 
         function atualizarOpcoesBeneficio() {
             const tipo = document.getElementById('tipoSol').value;
@@ -431,15 +467,14 @@
                 container.innerHTML = "";
 
                 if (dados && dados.length > 0) {
-                    // Extrai a lista de Onsites únicos para colocar na Navbar
                     const nomesOnsites = [...new Set(dados.map(sol => sol.onsite))].filter(Boolean).join(', ');
                     contador.innerText = `${dados.length} Pendentes (${nomesOnsites})`;
                     contador.style.display = "block";
                     
                     dados.forEach(sol => {
-                        // Verifica se o nome veio preenchido, caso não tenha processado ainda, joga a Matrícula
                         const nomeColaborador = sol.nome && sol.nome !== "Não Localizado" ? sol.nome : `Colaborador não mapeado`;
                         
+                        // O botão CONCLUIR está injetado na linha abaixo, dentro do card-gestao
                         container.innerHTML += `
                             <div class="card-gestao">
                                 <strong>${nomeColaborador}</strong><br>
@@ -447,6 +482,7 @@
                                 <hr style="opacity:0.2; border: 1px solid var(--warning);">
                                 <strong>${sol.tipo}</strong><br>
                                 <span>${sol.detalhe}</span>
+                                <button class="btn-concluir" onclick="abrirPopup('https://forms.office.com/Pages/ResponsePage.aspx?id=fCAtUtXsx0-nbxdGSxFh-eVAzhwdpsxLmCSGMQwqNIpUM1E2TFRSRkhNWU9IQk9SVFhBSDJNWTFDVS4u')">✅ CONCLUIR</button>
                             </div>`;
                     });
                 } else {
@@ -461,7 +497,6 @@
         window.onload = function() {
             carregarCardsGestao();
         };
-        /* ========================================================= */
     </script>
 </body>
 </html>
