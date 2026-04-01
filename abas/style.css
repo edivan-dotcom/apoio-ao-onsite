@@ -51,10 +51,19 @@
         .btn-filtro { padding: 8px 20px; border-radius: 20px; border: 2px solid transparent; cursor: pointer; font-weight: bold; transition: 0.3s; font-size: 0.9rem; }
         .tag-ponto { background: var(--warning); color: #000; text-align: center; font-weight: bold; padding: 6px; border-radius: 5px; margin-bottom: 10px; animation: pulse 2s infinite; font-size: 0.85rem;}
         @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.02); } 100% { transform: scale(1); } }
-        /* Cores de destaque para os tipos de ticket */
+/* ... Cole aqui todo o seu CSS original e adicione estes no final ... */
+
 .card-desligamento { border-left: 8px solid #ff4b2b !important; background-color: rgba(255, 75, 43, 0.05) !important; }
 .card-movimentacao { border-left: 8px solid #1a73e8 !important; background-color: rgba(26, 115, 232, 0.05) !important; }
+.btn-forms-desligamento { background: #d63031 !important; color: white !important; }
+.btn-central-solicitacao { background: #0984e3 !important; color: white !important; }
 
-/* Botões específicos */
-.btn-forms-desligamento { background: #d63031; color: white; }
-.btn-central-solicitacao { background: #0984e3; color: white; }
+/* Garante que os botões de filtro fiquem alinhados */
+.filter-bar { 
+    grid-column: 1 / -1; 
+    display: flex; 
+    gap: 10px; 
+    justify-content: center; 
+    margin-bottom: 20px; 
+    width: 100%; 
+}
