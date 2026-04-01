@@ -105,7 +105,7 @@
         }
 
         .tabs-container {
-            display: flex; justify-content: center; gap: 15px; margin: 30px auto 10px;
+            display: flex; justify-content: center; flex-wrap: wrap; gap: 15px; margin: 30px auto 10px;
         }
         .tab-btn {
             padding: 12px 30px; border: none; border-radius: 25px; cursor: pointer;
@@ -175,7 +175,7 @@
         .form-group input, .form-group select { width: 100%; padding: 12px; border-radius: 8px; border: 1px solid #ddd; background: var(--bg); color: var(--text); box-sizing: border-box; }
         
         .gestao-section { max-width: 1200px; margin: 40px auto; padding: 0 20px; }
-        .grid-gestao { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px; }
+        .grid-gestao { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px; align-items: start; }
         .card-gestao { background: var(--card-bg); padding: 15px; border-radius: 10px; border-left: 5px solid var(--warning); box-shadow: 0 2px 5px rgba(0,0,0,0.1); text-align: left; position: relative; padding-bottom: 70px; }
         
         #contadorSolicitacoes { 
@@ -210,6 +210,20 @@
             color: #1976d2; text-decoration: none; border-radius: 5px; font-weight: bold; font-size: 0.85rem;
         }
         .link-anexo:hover { background: #bbdefb; }
+
+        /* JIRA CARDS */
+        .card-jira-agrupado {
+            background: var(--card-bg); padding: 25px; border-radius: 10px; border-top: 5px solid var(--jira); 
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1); text-align: center; cursor: pointer; transition: 0.3s;
+        }
+        .card-jira-agrupado:hover { transform: translateY(-5px); box-shadow: 0 8px 20px rgba(0,0,0,0.15); }
+        
+        .btn-jira-link {
+            position: absolute; bottom: 15px; left: 15px; right: 15px;
+            background: var(--jira); color: white; border: none; padding: 8px 15px; 
+            border-radius: 5px; cursor: pointer; font-weight: bold; transition: 0.3s; text-decoration: none; text-align: center;
+        }
+        .btn-jira-link:hover { filter: brightness(1.1); }
     </style>
 </head>
 <body>
@@ -266,6 +280,7 @@
     <div class="tabs-container">
         <button class="tab-btn active" onclick="switchTab('home')" id="btnTabHome">🏠 HOME</button>
         <button class="tab-btn" onclick="switchTab('solicitacoes')" id="btnTabSol">📝 SOLICITAÇÕES</button>
+        <button class="tab-btn" onclick="switchTab('jira')" id="btnTabJira">🎫 TICKETS SHOPEE</button>
     </div>
 
     <div id="homeView">
@@ -385,15 +400,36 @@
         </div>
     </div>
 
+    <div id="jiraView" style="display: none;">
+        <div class="gestao-section">
+            <h2 style="text-align: center; color: var(--jira);">🎫 Tickets Shopee por On-Site</h2>
+            <p style="text-align: center; color: #666; font-size: 0.9rem;">Selecione o seu Site para visualizar as pendências do JIRA.</p>
+            
+            <div id="viewAgrupadaJira" class="grid-gestao"></div>
+            
+            <div id="viewDetalhadaJira" style="display: none; background: var(--card-bg); padding: 25px; border-radius: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.05); margin-top: 20px;">
+                <button onclick="voltarParaAgrupamentoJira()" style="margin-bottom: 20px; padding: 10px 20px; border-radius: 5px; background: #666; color: white; border: none; cursor: pointer; font-weight: bold;">← Voltar para a lista de On-Sites</button>
+                <h3 id="tituloOperacaoJira" style="color: var(--jira); margin-top: 0; text-align: center; font-size: 1.5rem;"></h3>
+                <hr style="opacity: 0.2; margin-bottom: 30px;">
+                <div id="containerCardsJira" class="grid-gestao"></div>
+            </div>
+        </div>
+    </div>
+
     <div class="signature">By: Edivan Costa</div>
     <footer>© 2026 Apoio ao On-Site | WeCanBR</footer>
 
     <script>
+        let ticketsJiraGlobais = [];
+
         function switchTab(tab) {
             document.getElementById('homeView').style.display = tab === 'home' ? 'block' : 'none';
             document.getElementById('solicitacoesView').style.display = tab === 'solicitacoes' ? 'block' : 'none';
+            document.getElementById('jiraView').style.display = tab === 'jira' ? 'block' : 'none';
+            
             document.getElementById('btnTabHome').classList.toggle('active', tab === 'home');
             document.getElementById('btnTabSol').classList.toggle('active', tab === 'solicitacoes');
+            document.getElementById('btnTabJira').classList.toggle('active', tab === 'jira');
         }
 
         function abrirPopup(url) {
@@ -528,19 +564,14 @@
             }
         }
 
-        // --- ATUALIZAÇÃO: AGORA ELE RECEBE O TIPO DA SOLICITAÇÃO ---
         function iniciarConclusao(id, tipoSolicitacao) {
             let urlForms = '';
-            
-            // Verifica o tipo de solicitação para abrir o forms correto
             if (tipoSolicitacao === 'DESLIGAMENTO') {
                 urlForms = 'https://forms.office.com/Pages/ResponsePage.aspx?id=fCAtUtXsx0-nbxdGSxFh-f7MDqf4DUBBuOHjox7sxytUNFFQNTgzR1pQV0FLM05aWElXSjlRMjFHRy4u';
             } else {
                 urlForms = 'https://forms.office.com/Pages/ResponsePage.aspx?id=fCAtUtXsx0-nbxdGSxFh-eVAzhwdpsxLmCSGMQwqNIpUM1E2TFRSRkhNWU9IQk9SVFhBSDJNWTFDVS4u';
             }
-            
             abrirPopup(urlForms);
-            
             document.getElementById('btn-concluir-' + id).style.display = 'none';
             document.getElementById('check-box-' + id).style.display = 'block';
         }
@@ -548,9 +579,7 @@
         async function finalizarSolicitacao(id) {
             const checkDiv = document.getElementById('check-box-' + id);
             checkDiv.innerHTML = "⏳ Finalizando na planilha...";
-            
             const payload = { acao: "atualizar", id: id };
-
             try {
                 await fetch(SCRIPT_URL, { method: 'POST', mode: 'no-cors', body: JSON.stringify(payload) });
                 carregarCardsGestao(); 
@@ -593,18 +622,20 @@
 
         async function carregarCardsGestao() {
             const container = document.getElementById('containerCardsGestao');
+            const containerJiraAgrupado = document.getElementById('viewAgrupadaJira');
             
             try {
                 const res = await fetch(SCRIPT_URL);
                 const dados = await res.json();
                 container.innerHTML = "";
+                containerJiraAgrupado.innerHTML = "";
 
-                if (dados && dados.length > 0) {
-                    
-                    const totalPendentes = dados.length;
+                // ABA HOME
+                if (dados.solicitacoes && dados.solicitacoes.length > 0) {
+                    const totalPendentes = dados.solicitacoes.length;
                     const contagemPorOnsite = {};
                     
-                    dados.forEach(sol => {
+                    dados.solicitacoes.forEach(sol => {
                         const onsite = sol.onsite && sol.onsite !== "Não Localizado" ? sol.onsite : "Sem Onsite";
                         contagemPorOnsite[onsite] = (contagemPorOnsite[onsite] || 0) + 1;
                     });
@@ -613,17 +644,14 @@
                     for (const [onsite, qtd] of Object.entries(contagemPorOnsite)) {
                         mensagensCarrossel.push(`(${totalPendentes}) - ${onsite}: ${qtd}`);
                     }
-                    
                     iniciarTickerContador(mensagensCarrossel);
                     
-                    dados.forEach(sol => {
+                    dados.solicitacoes.forEach(sol => {
                         const nomeColaborador = sol.nome && sol.nome !== "Não Localizado" ? sol.nome : `Colaborador não mapeado`;
-                        
                         const exibicaoValor = sol.valor && sol.valor !== "-" ? `<br><span class="valor-destaque">Valor: R$ ${sol.valor}</span>` : '';
                         const linkAnexoHTML = sol.anexo && sol.anexo.includes("http") ? `<br><a href="${sol.anexo}" target="_blank" class="link-anexo">📎 Baixar Anexo</a>` : '';
                         const detalheHTML = sol.detalhe && sol.detalhe !== "-" ? `<span>${sol.detalhe}</span>` : '';
                         
-                        // Passando o sol.tipo na função onclick do botão CONCLUIR
                         container.innerHTML += `
                             <div class="card-gestao" id="card-${sol.id}">
                                 <strong>${nomeColaborador}</strong><br>
@@ -645,9 +673,105 @@
                     iniciarTickerContador([]); 
                     container.innerHTML = "<p style='text-align:center; width:100%'>Nenhuma solicitação pendente.</p>";
                 }
+
+                // ABA JIRA_EXPORT
+                if (dados.jira && dados.jira.length > 0) {
+                    ticketsJiraGlobais = dados.jira;
+                    const contagemJiraPorOperacao = {};
+                    
+                    dados.jira.forEach(ticket => {
+                        contagemJiraPorOperacao[ticket.operacao] = (contagemJiraPorOperacao[ticket.operacao] || 0) + 1;
+                    });
+
+                    for (const [operacao, qtd] of Object.entries(contagemJiraPorOperacao)) {
+                        // Coloca um ícone de prédio se for HUB, ou pasta se for SOC
+                        let iconePasta = operacao.toUpperCase().startsWith("HUB") ? "🏢" : "📂";
+
+                        containerJiraAgrupado.innerHTML += `
+                            <div class="card-jira-agrupado" onclick="mostrarTicketsDoOnsite('${operacao}')">
+                                <span style="font-size: 30px;">${iconePasta}</span>
+                                <h3 style="margin: 10px 0 5px; color: var(--jira);">${operacao}</h3>
+                                <span style="font-weight: bold; color: var(--danger);">${qtd} Ticket(s) Pendente(s)</span>
+                            </div>
+                        `;
+                    }
+                } else {
+                    containerJiraAgrupado.innerHTML = "<p style='text-align:center; width:100%'>Nenhum ticket do JIRA pendente no momento.</p>";
+                }
+
             } catch(e) { 
                 container.innerHTML = "<p style='text-align:center; width:100%'>Erro ao carregar dados da planilha.</p>"; 
             }
+        }
+
+        // --- FUNÇÕES DA NOVA ABA DO JIRA ---
+        function mostrarTicketsDoOnsite(operacaoSelecionada) {
+            document.getElementById('viewAgrupadaJira').style.display = 'none';
+            document.getElementById('viewDetalhadaJira').style.display = 'block';
+            
+            // LÓGICA INTELIGENTE DO TÍTULO (SOC vs HUB vs Operação)
+            let tipoLocal = "Operação";
+            if(operacaoSelecionada.toUpperCase().startsWith("SOC")) tipoLocal = "SOC";
+            if(operacaoSelecionada.toUpperCase().startsWith("HUB")) tipoLocal = "HUB";
+
+            document.getElementById('tituloOperacaoJira').innerText = `${tipoLocal}: ${operacaoSelecionada}`;
+            
+            const container = document.getElementById('containerCardsJira');
+            container.innerHTML = "";
+
+            const ticketsDaOperacao = ticketsJiraGlobais.filter(t => t.operacao === operacaoSelecionada);
+
+            const ticketsPorTipo = {};
+            ticketsDaOperacao.forEach(t => {
+                const tipo = t.tipoItem;
+                if (!ticketsPorTipo[tipo]) ticketsPorTipo[tipo] = [];
+                ticketsPorTipo[tipo].push(t);
+            });
+
+            for (const [tipo, tickets] of Object.entries(ticketsPorTipo)) {
+                
+                let corBorda = "var(--jira)";
+                let icone = "🎫";
+                
+                const tipoLower = tipo.toLowerCase();
+                if (tipoLower.includes("deslig") || tipoLower.includes("offboarding")) {
+                    corBorda = "var(--danger)"; 
+                    icone = "🚫";
+                } else if (tipoLower.includes("moviment") || tipoLower.includes("mudança") || tipoLower.includes("horário")) {
+                    corBorda = "var(--secondary)"; 
+                    icone = "🔄";
+                }
+
+                container.innerHTML += `
+                    <div style="width: 100%; grid-column: 1 / -1; margin-top: 15px;">
+                        <h4 style="color: ${corBorda}; margin-bottom: 10px; border-bottom: 2px solid ${corBorda}; padding-bottom: 5px; font-size: 1.2rem;">
+                            ${icone} ${tipo.toUpperCase()}
+                        </h4>
+                    </div>
+                `;
+
+                tickets.forEach(ticket => {
+                    const linkJira = `https://spxresolve.atlassian.net/browse/${ticket.chave}`;
+                    
+                    container.innerHTML += `
+                        <div class="card-gestao" style="border-left-color: ${corBorda};">
+                            <strong>${ticket.nome || "Sem Nome"}</strong><br>
+                            <small>Matrícula: ${ticket.matricula} | Status: ${ticket.status}</small><br>
+                            <hr style="opacity:0.2; border: 1px solid ${corBorda};">
+                            <strong style="color: ${corBorda};">${ticket.chave}</strong><br>
+                            <span>${ticket.resumo}</span><br>
+                            <small style="color: var(--danger); font-weight: bold; margin-top: 5px; display: block;">Data Desejada: ${ticket.dataDesligamento || "Não informada"}</small>
+                            
+                            <a href="${linkJira}" target="_blank" class="btn-jira-link" style="background: ${corBorda};">🔗 ABRIR NO JIRA</a>
+                        </div>
+                    `;
+                });
+            }
+        }
+
+        function voltarParaAgrupamentoJira() {
+            document.getElementById('viewDetalhadaJira').style.display = 'none';
+            document.getElementById('viewAgrupadaJira').style.display = 'grid';
         }
 
         window.onload = function() {
