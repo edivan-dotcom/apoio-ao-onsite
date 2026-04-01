@@ -176,7 +176,7 @@
         
         .gestao-section { max-width: 1200px; margin: 40px auto; padding: 0 20px; }
         .grid-gestao { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px; align-items: start; }
-        .card-gestao { background: var(--card-bg); padding: 15px; border-radius: 10px; border-left: 5px solid var(--warning); box-shadow: 0 2px 5px rgba(0,0,0,0.1); text-align: left; position: relative; padding-bottom: 70px; }
+        .card-gestao { background: var(--card-bg); padding: 15px; border-radius: 10px; border-left: 5px solid var(--warning); box-shadow: 0 2px 5px rgba(0,0,0,0.1); text-align: left; position: relative; padding-bottom: 110px; }
         
         #contadorSolicitacoes { 
             background: #e67e22; color: #000; padding: 5px 15px; border-radius: 20px; 
@@ -213,17 +213,23 @@
 
         /* JIRA CARDS */
         .card-jira-agrupado {
-            background: var(--card-bg); padding: 25px; border-radius: 10px; border-top: 5px solid var(--jira); 
+            background: var(--card-bg); padding: 25px; border-radius: 10px; border-top: 5px solid var(--primary); 
             box-shadow: 0 4px 10px rgba(0,0,0,0.1); text-align: center; cursor: pointer; transition: 0.3s;
         }
         .card-jira-agrupado:hover { transform: translateY(-5px); box-shadow: 0 8px 20px rgba(0,0,0,0.15); }
         
         .btn-jira-link {
-            position: absolute; bottom: 15px; left: 15px; right: 15px;
-            background: var(--jira); color: white; border: none; padding: 8px 15px; 
-            border-radius: 5px; cursor: pointer; font-weight: bold; transition: 0.3s; text-decoration: none; text-align: center;
+            border: none; border-radius: 5px; cursor: pointer; font-weight: bold; transition: 0.3s; 
+            text-decoration: none; text-align: center; color: white;
         }
         .btn-jira-link:hover { filter: brightness(1.1); }
+        
+        /* BOTÕES DE FILTRO */
+        .btn-filtro {
+            padding: 8px 20px; border-radius: 20px; border: 2px solid transparent; 
+            cursor: pointer; font-weight: bold; transition: 0.3s; font-size: 0.9rem;
+        }
+        .btn-filtro:hover { transform: scale(1.05); }
     </style>
 </head>
 <body>
@@ -403,14 +409,18 @@
     <div id="jiraView" style="display: none;">
         <div class="gestao-section">
             <h2 style="text-align: center; color: var(--jira);">🎫 Tickets Shopee por On-Site</h2>
-            <p style="text-align: center; color: #666; font-size: 0.9rem;">Selecione o seu Site para visualizar as pendências do JIRA.</p>
+            <p style="text-align: center; color: #666; font-size: 0.9rem;">Selecione o seu nome para visualizar as pendências do JIRA sob sua gestão.</p>
             
             <div id="viewAgrupadaJira" class="grid-gestao"></div>
             
             <div id="viewDetalhadaJira" style="display: none; background: var(--card-bg); padding: 25px; border-radius: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.05); margin-top: 20px;">
                 <button onclick="voltarParaAgrupamentoJira()" style="margin-bottom: 20px; padding: 10px 20px; border-radius: 5px; background: #666; color: white; border: none; cursor: pointer; font-weight: bold;">← Voltar para a lista de On-Sites</button>
                 <h3 id="tituloOperacaoJira" style="color: var(--jira); margin-top: 0; text-align: center; font-size: 1.5rem;"></h3>
+                
+                <div id="containerFiltrosJira" style="display: flex; justify-content: center; gap: 10px; margin-top: 15px; margin-bottom: 25px; flex-wrap: wrap;"></div>
+
                 <hr style="opacity: 0.2; margin-bottom: 30px;">
+                
                 <div id="containerCardsJira" class="grid-gestao"></div>
             </div>
         </div>
@@ -578,7 +588,7 @@
 
         async function finalizarSolicitacao(id) {
             const checkDiv = document.getElementById('check-box-' + id);
-            checkDiv.innerHTML = "⏳ Finalizando na planilha...";
+            checkDiv.innerHTML = "⏳ Finalizando...";
             const payload = { acao: "atualizar", id: id };
             try {
                 await fetch(SCRIPT_URL, { method: 'POST', mode: 'no-cors', body: JSON.stringify(payload) });
@@ -674,23 +684,21 @@
                     container.innerHTML = "<p style='text-align:center; width:100%'>Nenhuma solicitação pendente.</p>";
                 }
 
-                // ABA JIRA_EXPORT
+                // ABA JIRA_EXPORT (AGRUPAMENTO POR ONSITE RESPONSÁVEL)
                 if (dados.jira && dados.jira.length > 0) {
                     ticketsJiraGlobais = dados.jira;
-                    const contagemJiraPorOperacao = {};
+                    const contagemJiraPorOnsite = {};
                     
                     dados.jira.forEach(ticket => {
-                        contagemJiraPorOperacao[ticket.operacao] = (contagemJiraPorOperacao[ticket.operacao] || 0) + 1;
+                        let nomeOnsite = ticket.onsite || "Não Mapeado";
+                        contagemJiraPorOnsite[nomeOnsite] = (contagemJiraPorOnsite[nomeOnsite] || 0) + 1;
                     });
 
-                    for (const [operacao, qtd] of Object.entries(contagemJiraPorOperacao)) {
-                        // Coloca um ícone de prédio se for HUB, ou pasta se for SOC
-                        let iconePasta = operacao.toUpperCase().startsWith("HUB") ? "🏢" : "📂";
-
+                    for (const [nomeOnsite, qtd] of Object.entries(contagemJiraPorOnsite)) {
                         containerJiraAgrupado.innerHTML += `
-                            <div class="card-jira-agrupado" onclick="mostrarTicketsDoOnsite('${operacao}')">
-                                <span style="font-size: 30px;">${iconePasta}</span>
-                                <h3 style="margin: 10px 0 5px; color: var(--jira);">${operacao}</h3>
+                            <div class="card-jira-agrupado" onclick="mostrarTicketsDoOnsite('${nomeOnsite}', 'TODOS')">
+                                <span style="font-size: 30px;">🧑‍💻</span>
+                                <h3 style="margin: 10px 0 5px; color: var(--primary);">${nomeOnsite}</h3>
                                 <span style="font-weight: bold; color: var(--danger);">${qtd} Ticket(s) Pendente(s)</span>
                             </div>
                         `;
@@ -704,45 +712,75 @@
             }
         }
 
-        // --- FUNÇÕES DA NOVA ABA DO JIRA ---
-        function mostrarTicketsDoOnsite(operacaoSelecionada) {
+        // --- FUNÇÃO COM FILTROS INTELIGENTES ---
+        function mostrarTicketsDoOnsite(onsiteSelecionado, filtroAtual) {
             document.getElementById('viewAgrupadaJira').style.display = 'none';
             document.getElementById('viewDetalhadaJira').style.display = 'block';
+            document.getElementById('tituloOperacaoJira').innerText = `Gestão: ${onsiteSelecionado}`;
             
-            // LÓGICA INTELIGENTE DO TÍTULO (SOC vs HUB vs Operação)
-            let tipoLocal = "Operação";
-            if(operacaoSelecionada.toUpperCase().startsWith("SOC")) tipoLocal = "SOC";
-            if(operacaoSelecionada.toUpperCase().startsWith("HUB")) tipoLocal = "HUB";
-
-            document.getElementById('tituloOperacaoJira').innerText = `${tipoLocal}: ${operacaoSelecionada}`;
+            const containerFiltros = document.getElementById('containerFiltrosJira');
+            const containerCards = document.getElementById('containerCardsJira');
             
-            const container = document.getElementById('containerCardsJira');
-            container.innerHTML = "";
+            containerFiltros.innerHTML = "";
+            containerCards.innerHTML = "";
 
-            const ticketsDaOperacao = ticketsJiraGlobais.filter(t => t.operacao === operacaoSelecionada);
+            // Separa todos os tickets desse analista
+            const ticketsDoOnsite = ticketsJiraGlobais.filter(t => t.onsite === onsiteSelecionado);
 
+            // Conta as categorias para criar os botões dinamicamente
+            let qtdDeslig = 0, qtdMov = 0, qtdOutros = 0;
+            ticketsDoOnsite.forEach(t => {
+                let tipoLower = t.tipoItem.toLowerCase();
+                if (tipoLower.includes("deslig") || tipoLower.includes("offboarding")) qtdDeslig++;
+                else if (tipoLower.includes("moviment") || tipoLower.includes("mudança") || tipoLower.includes("horário")) qtdMov++;
+                else qtdOutros++;
+            });
+
+            // 1. CONSTRÓI OS BOTÕES DE FILTRO
+            let btnTodosStyle = filtroAtual === 'TODOS' ? 'background: var(--primary); color: white;' : 'background: #eee; color: #333;';
+            let htmlBotoes = `<button class="btn-filtro" style="${btnTodosStyle}" onclick="mostrarTicketsDoOnsite('${onsiteSelecionado}', 'TODOS')">📋 Todos (${ticketsDoOnsite.length})</button>`;
+            
+            if (qtdDeslig > 0) {
+                let btnDesligStyle = filtroAtual === 'DESLIG' ? 'background: var(--danger); color: white;' : 'border-color: var(--danger); color: var(--danger);';
+                htmlBotoes += `<button class="btn-filtro" style="${btnDesligStyle}" onclick="mostrarTicketsDoOnsite('${onsiteSelecionado}', 'DESLIG')">🚫 Desligamentos (${qtdDeslig})</button>`;
+            }
+            if (qtdMov > 0) {
+                let btnMovStyle = filtroAtual === 'MOV' ? 'background: var(--secondary); color: white;' : 'border-color: var(--secondary); color: var(--secondary);';
+                htmlBotoes += `<button class="btn-filtro" style="${btnMovStyle}" onclick="mostrarTicketsDoOnsite('${onsiteSelecionado}', 'MOV')">🔄 Movimentações (${qtdMov})</button>`;
+            }
+            if (qtdOutros > 0) {
+                let btnOutrosStyle = filtroAtual === 'OUTROS' ? 'background: var(--jira); color: white;' : 'border-color: var(--jira); color: var(--jira);';
+                htmlBotoes += `<button class="btn-filtro" style="${btnOutrosStyle}" onclick="mostrarTicketsDoOnsite('${onsiteSelecionado}', 'OUTROS')">🎫 Outros (${qtdOutros})</button>`;
+            }
+            containerFiltros.innerHTML = htmlBotoes;
+
+            // 2. APLICA O FILTRO ESCOLHIDO
+            let ticketsParaExibir = ticketsDoOnsite.filter(t => {
+                if (filtroAtual === 'TODOS') return true;
+                let tipoLower = t.tipoItem.toLowerCase();
+                if (filtroAtual === 'DESLIG') return tipoLower.includes("deslig") || tipoLower.includes("offboarding");
+                if (filtroAtual === 'MOV') return tipoLower.includes("moviment") || tipoLower.includes("mudança") || tipoLower.includes("horário");
+                if (filtroAtual === 'OUTROS') return !tipoLower.includes("deslig") && !tipoLower.includes("offboarding") && !tipoLower.includes("moviment") && !tipoLower.includes("mudança") && !tipoLower.includes("horário");
+            });
+
+            // 3. RENDERIZA OS CARDS
             const ticketsPorTipo = {};
-            ticketsDaOperacao.forEach(t => {
+            ticketsParaExibir.forEach(t => {
                 const tipo = t.tipoItem;
                 if (!ticketsPorTipo[tipo]) ticketsPorTipo[tipo] = [];
                 ticketsPorTipo[tipo].push(t);
             });
 
             for (const [tipo, tickets] of Object.entries(ticketsPorTipo)) {
-                
                 let corBorda = "var(--jira)";
                 let icone = "🎫";
                 
                 const tipoLower = tipo.toLowerCase();
-                if (tipoLower.includes("deslig") || tipoLower.includes("offboarding")) {
-                    corBorda = "var(--danger)"; 
-                    icone = "🚫";
-                } else if (tipoLower.includes("moviment") || tipoLower.includes("mudança") || tipoLower.includes("horário")) {
-                    corBorda = "var(--secondary)"; 
-                    icone = "🔄";
-                }
+                if (tipoLower.includes("deslig") || tipoLower.includes("offboarding")) { corBorda = "var(--danger)"; icone = "🚫"; } 
+                else if (tipoLower.includes("moviment") || tipoLower.includes("mudança") || tipoLower.includes("horário")) { corBorda = "var(--secondary)"; icone = "🔄"; }
 
-                container.innerHTML += `
+                // Título da Sessão
+                containerCards.innerHTML += `
                     <div style="width: 100%; grid-column: 1 / -1; margin-top: 15px;">
                         <h4 style="color: ${corBorda}; margin-bottom: 10px; border-bottom: 2px solid ${corBorda}; padding-bottom: 5px; font-size: 1.2rem;">
                             ${icone} ${tipo.toUpperCase()}
@@ -750,19 +788,43 @@
                     </div>
                 `;
 
+                // Construção dos Cards
                 tickets.forEach(ticket => {
                     const linkJira = `https://spxresolve.atlassian.net/browse/${ticket.chave}`;
                     
-                    container.innerHTML += `
-                        <div class="card-gestao" style="border-left-color: ${corBorda};">
+                    let urlForms = '';
+                    let nomeForms = '';
+                    let corForms = '';
+
+                    // Define qual botão de Forms aparecerá com base na categoria
+                    if (tipoLower.includes("deslig") || tipoLower.includes("offboarding")) {
+                        urlForms = 'https://forms.office.com/Pages/ResponsePage.aspx?id=fCAtUtXsx0-nbxdGSxFh-f7MDqf4DUBBuOHjox7sxytUNFFQNTgzR1pQV0FLM05aWElXSjlRMjFHRy4u';
+                        nomeForms = '📝 FORMS DESLIGAMENTO';
+                        corForms = 'var(--danger)';
+                    } else {
+                        urlForms = 'https://forms.office.com/Pages/ResponsePage.aspx?id=fCAtUtXsx0-nbxdGSxFh-eVAzhwdpsxLmCSGMQwqNIpUM1E2TFRSRkhNWU9IQk9SVFhBSDJNWTFDVS4u';
+                        nomeForms = '📝 CENTRAL SOLICITAÇÕES';
+                        corForms = 'var(--primary)';
+                    }
+                    
+                    containerCards.innerHTML += `
+                        <div class="card-gestao" style="border-left-color: ${corBorda}; padding-bottom: 110px;">
                             <strong>${ticket.nome || "Sem Nome"}</strong><br>
                             <small>Matrícula: ${ticket.matricula} | Status: ${ticket.status}</small><br>
                             <hr style="opacity:0.2; border: 1px solid ${corBorda};">
-                            <strong style="color: ${corBorda};">${ticket.chave}</strong><br>
+                            
+                            <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 5px;">
+                                <strong style="color: ${corBorda};">${ticket.chave}</strong>
+                                <span style="font-size:0.75rem; background:#eee; color:#333; padding:2px 8px; border-radius:4px; font-weight:bold;">📍 ${ticket.operacao}</span>
+                            </div>
+                            
                             <span>${ticket.resumo}</span><br>
                             <small style="color: var(--danger); font-weight: bold; margin-top: 5px; display: block;">Data Desejada: ${ticket.dataDesligamento || "Não informada"}</small>
                             
-                            <a href="${linkJira}" target="_blank" class="btn-jira-link" style="background: ${corBorda};">🔗 ABRIR NO JIRA</a>
+                            <div style="position: absolute; bottom: 15px; left: 15px; right: 15px; display: flex; flex-direction: column; gap: 8px;">
+                                <a href="${linkJira}" target="_blank" class="btn-jira-link" style="background: ${corBorda}; padding: 6px; font-size: 0.85rem;">🔗 ABRIR NO JIRA</a>
+                                <button onclick="abrirPopup('${urlForms}')" class="btn-jira-link" style="background: ${corForms}; padding: 6px; font-size: 0.85rem;">${nomeForms}</button>
+                            </div>
                         </div>
                     `;
                 });
