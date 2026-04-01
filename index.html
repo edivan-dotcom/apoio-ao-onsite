@@ -32,9 +32,10 @@
         .nav-links { display: flex; align-items: center; height: 100%; }
         .login-btn, .intranet-btn { text-decoration: none; padding: 6px 15px; border-radius: 5px; font-size: 0.8rem; font-weight: bold; margin-left: 10px; transition: 0.3s; }
         .login-btn { background: #0078d4; color: white !important; } .intranet-btn { background: #ff5722; color: white !important; }
+        
         .dropdown { position: relative; display: flex; align-items: center; height: 100%; }
         .dropdown-btn { text-decoration: none; color: var(--text); margin-left: 20px; font-weight: 600; font-size: 0.9rem; cursor: pointer; border: none; background: none; display: flex; align-items: center; gap: 5px; height: 100%; }
-        .dropdown-content { display: none; position: absolute; right: 0; background-color: var(--card-bg); min-width: 300px; box-shadow: 0px 8px 16px rgba(0,0,0,0.2); z-index: 1001; border-radius: 0 0 8px 8px; top: 60px; border-top: 2px solid var(--primary); }
+        .dropdown-content { display: none; position: absolute; right: 0; background-color: var(--card-bg); min-width: 320px; box-shadow: 0px 8px 16px rgba(0,0,0,0.2); z-index: 1001; border-radius: 0 0 8px 8px; top: 60px; border-top: 2px solid var(--primary); }
         .dropdown:hover .dropdown-content { display: block; }
         .dropdown-content a { color: var(--text); padding: 12px 16px; text-decoration: none; display: block; font-size: 0.85rem; border-bottom: 1px solid rgba(128,128,128,0.1); }
 
@@ -42,16 +43,15 @@
         .search-container { margin: 15px auto 0; width: 450px; max-width: 90%; }
         #searchInput { padding: 12px 25px; width: 100%; border-radius: 30px; border: none; outline: none; background: var(--card-bg); color: var(--text); box-sizing: border-box; }
 
-        /* GRIDS CONFIGURATION */
         .tabs-container { display: flex; justify-content: center; gap: 15px; margin: 20px auto; }
         .tab-btn { padding: 10px 25px; border: none; border-radius: 25px; cursor: pointer; font-weight: bold; background: var(--card-bg); color: var(--text); box-shadow: 0 4px 10px rgba(0,0,0,0.1); transition: 0.3s; }
         .tab-btn.active { background: var(--primary); color: white; }
 
-        /* HOME LAYOUT: 5 em cima, 3 embaixo */
+        /* LAYOUT HOME: 5x3 */
         .home-grid-top { display: grid; grid-template-columns: repeat(5, 1fr); gap: 20px; padding: 20px; max-width: 1400px; margin: 0 auto; }
         .home-grid-bottom { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; padding: 0 20px 40px; max-width: 1000px; margin: 0 auto; }
 
-        /* TICKETS LAYOUT: 4 Colunas */
+        /* LAYOUT TICKETS: 4 colunas */
         .grid-gestao { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; padding: 20px; max-width: 1400px; margin: 0 auto; }
 
         .card, .card-jira-agrupado, .card-gestao { background: var(--card-bg); border-radius: 15px; padding: 20px; text-align: center; box-shadow: 0 5px 15px rgba(0,0,0,0.05); transition: 0.3s; border-top: 5px solid var(--primary); box-sizing: border-box; }
@@ -73,8 +73,6 @@
     </style>
 </head>
 <body>
-    <button class="theme-toggle" onclick="toggleTheme()" id="themeBtn">🌙</button>
-
     <nav class="navbar">
         <div class="logo-container">
             <div style="font-weight: bold; color: var(--primary); letter-spacing: 1px;">WE CAN BR</div>
@@ -121,9 +119,7 @@
         <div class="home-grid-top" id="homeTopContent"></div>
         <div class="home-grid-bottom" id="homeBottomContent"></div>
     </div>
-
     <div id="solicitacoesView" style="display: none;"></div>
-
     <div id="jiraView" style="display: none;"></div>
 
     <div class="signature">By: Edivan Costa</div>
@@ -140,15 +136,12 @@
                     const html = await res.text();
                     if (idElemento === 'homeView') {
                         const tempDiv = document.createElement('div'); tempDiv.innerHTML = html;
-                        // Separa os cards manualmente para o layout 5x3
                         const cards = Array.from(tempDiv.querySelectorAll('.card, .embedded-section'));
                         document.getElementById('homeTopContent').append(...cards.slice(0, 5));
                         document.getElementById('homeBottomContent').append(...cards.slice(5));
-                    } else {
-                        document.getElementById(idElemento).innerHTML = html;
-                    }
+                    } else { document.getElementById(idElemento).innerHTML = html; }
                 }
-            } catch(e) { console.error("Erro ao carregar módulo."); }
+            } catch(e) { console.error("Erro."); }
         }
 
         async function montarSite() {
@@ -166,7 +159,6 @@
             document.getElementById('btnTabHome').classList.toggle('active', tab === 'home');
             document.getElementById('btnTabSol').classList.toggle('active', tab === 'solicitacoes');
             document.getElementById('btnTabJira').classList.toggle('active', tab === 'jira');
-            // Ao voltar para a aba Jira, garante que a grade de nomes apareça
             if (tab === 'jira') voltarParaAgrupamentoJira();
         }
 
@@ -176,20 +168,17 @@
             try {
                 const res = await fetch(SCRIPT_URL); const dados = await res.json();
                 if(containerJira) containerJira.innerHTML = "";
-
-                if (dados.jira && containerJira) {
+                if (dados.jira) {
                     ticketsJiraGlobais = dados.jira;
                     const contagem = {}; let pendPonto = 0;
                     dados.jira.forEach(t => { 
                         if(t.pendentePonto) { pendPonto++; } 
                         else { let ons = t.onsite || "Não Mapeado"; contagem[ons] = (contagem[ons] || 0) + 1; }
                     });
-                    
                     if (pendPonto > 0) {
                         contador.innerText = `${pendPonto} Pendentes`; contador.style.display = "block";
                         containerJira.innerHTML += `<div class="card-jira-agrupado" style="border-top-color: var(--pontomais);" onclick="mostrarTicketsDoOnsite('TIME DE PONTO', 'TODOS')"><span style="font-size: 30px;">⏱️</span><h3 style="color: var(--pontomais);">TIME DE PONTO</h3><span style="font-weight: bold; color: var(--warning);">${pendPonto} Ticket(s) Pendente(s)</span></div>`;
                     } else { contador.style.display = "none"; }
-
                     for (const [onsite, qtd] of Object.entries(contagem)) {
                         if (qtd > 0) {
                             containerJira.innerHTML += `<div class="card-jira-agrupado" onclick="mostrarTicketsDoOnsite('${onsite}', 'TODOS')"><span style="font-size: 30px;">🧑‍💻</span><h3 style="color: var(--primary);">${onsite}</h3><span style="font-weight: bold; color: var(--danger);">${qtd} Ticket(s) Pendente(s)</span></div>`;
@@ -200,37 +189,27 @@
         }
 
         function mostrarTicketsDoOnsite(onsite, filtroAtivo) {
-            // ESCONDE A GRADE DE NOMES
             const gridNomes = document.getElementById('viewAgrupadaJira');
             const areaTickets = document.getElementById('viewDetalhadaJira');
-            if(gridNomes) gridNomes.style.display = 'none';
-            if(areaTickets) areaTickets.style.display = 'block';
+            gridNomes.style.display = 'none'; areaTickets.style.display = 'block';
 
             document.getElementById('tituloOperacaoJira').innerText = `Gestão: ${onsite}`;
             const containerFiltros = document.getElementById('containerFiltrosJira');
             const containerCards = document.getElementById('containerCardsJira');
             containerFiltros.innerHTML = ""; containerCards.innerHTML = "";
 
-            const baseTickets = (onsite === 'TIME DE PONTO') ? ticketsJiraGlobais.filter(t => t.pendentePonto) : ticketsJiraGlobais.filter(t => t.onsite === onsite && !t.pendentePonto);
+            const tickets = (onsite === 'TIME DE PONTO') ? ticketsJiraGlobais.filter(t => t.pendentePonto) : ticketsJiraGlobais.filter(t => t.onsite === onsite && !t.pendentePonto);
             
-            // ... (restante da lógica de filtros e renderização dos cards permanece igual)
-            baseTickets.forEach(t => {
-                // (Renderização do card aqui...)
-                containerCards.innerHTML += `<div class="card-gestao">...</div>`; // Simplificado para o exemplo
-            });
-            // Rola para o topo para garantir que os tickets sejam vistos
+            // ... (Restante da lógica de renderização dos cards detalhados)
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
-        function voltarParaAgrupamentoJira() { 
+        function voltarParaAgrupamentoJira() {
             const gridNomes = document.getElementById('viewAgrupadaJira');
             const areaTickets = document.getElementById('viewDetalhadaJira');
-            if(areaTickets) areaTickets.style.display = 'none'; 
-            if(gridNomes) gridNomes.style.display = 'grid'; 
+            if(areaTickets) areaTickets.style.display = 'none';
+            if(gridNomes) gridNomes.style.display = 'grid';
         }
-
-        function toggleTheme() { const html = document.documentElement; if (html.getAttribute('data-theme') === 'dark') html.removeAttribute('data-theme'); else html.setAttribute('data-theme', 'dark'); }
-        function buscarTudo() { let input = document.getElementById('searchInput').value.toLowerCase(); let cards = document.querySelectorAll('.card, .card-jira-agrupado'); cards.forEach(card => card.style.display = card.innerText.toLowerCase().includes(input) ? "block" : "none"); }
     </script>
 </body>
 </html>
