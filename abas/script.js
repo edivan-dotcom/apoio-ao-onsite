@@ -81,7 +81,6 @@ let ticketsJiraGlobais = [];
     
     const container = document.getElementById('containerCardsJira');
     
-    // Limpa o conteúdo e adiciona os botões de filtro no topo
     container.innerHTML = `
         <div style="grid-column: 1 / -1; display: flex; gap: 10px; justify-content: center; margin-bottom: 20px; width: 100%;">
             <button class="btn-filtro" style="background: ${filtroAtivo === 'TODOS' ? 'var(--primary)' : 'var(--card-bg)'}; color: ${filtroAtivo === 'TODOS' ? 'white' : 'var(--text)'}" onclick="mostrarTicketsDoOnsite('${onsite}', 'TODOS')">TUDO</button>
@@ -90,46 +89,56 @@ let ticketsJiraGlobais = [];
         </div>
     `;
 
-    // Filtra os tickets baseados no Onsite ou se é Ponto
     let tickets = (onsite === 'TIME DE PONTO') 
         ? ticketsJiraGlobais.filter(t => t.pendentePonto) 
         : ticketsJiraGlobais.filter(t => t.onsite === onsite);
     
-    // Aplica o filtro de categoria (Desligamento / Movimentação)
     if(filtroAtivo !== 'TODOS') {
         tickets = tickets.filter(t => t.resumo.toUpperCase().includes(filtroAtivo));
     }
 
     tickets.forEach(t => {
         const resumo = t.resumo.toUpperCase();
-        const isDesligamento = resumo.includes("DESLIGAMENTO");
-        const isMovimentacao = resumo.includes("MOVIMENTAÇÃO") || resumo.includes("MOVIMENTACAO");
+        const isDeslig = resumo.includes("DESLIGAMENTO");
+        const isMov = resumo.includes("MOVIMENTAÇÃO") || resumo.includes("MOVIMENTACAO");
         
-        let classeDestaque = isDesligamento ? "card-desligamento" : (isMovimentacao ? "card-movimentacao" : "");
-        let statusTag = t.pendentePonto ? `<div class="tag-ponto">⏰ PENDENTE NO PONTOMAIS</div>` : '';
+        // Lógica da Matrícula (Coluna J)
+        let matriculasRaw = t.matricula ? t.matricula.toString().split(",") : [];
+        let displayNome = (matriculasRaw.length > 1) ? "⚠️ Solicitação com mais de 1 colaborador" : t.nome;
+        let displayMatricula = (matriculasRaw.length > 1) ? "Múltiplas Matrículas" : t.matricula;
 
-        // Lógica dos Botões
-        let botoesExtras = "";
-        if (isDesligamento) {
-            botoesExtras = `<button class="btn-jira-link btn-forms-desligamento" onclick="window.open('https://forms.office.com/Pages/ResponsePage.aspx?id=fCAtUtXsx0-nbxdGSxFh-f7MDqf4DUBBuOHjox7sxytUNFFQNTgzR1pQV0FLM05aWElXSjlRMjFHRy4u&origin=Invitation&channel=0', '_blank')">📋 ENVIAR FORMS DE DESLIGAMENTO</button>`;
-        } else if (isMovimentacao) {
-            botoesExtras = `
-                <button class="btn-jira-link btn-central-solicitacao" onclick="window.open('https://forms.office.com/Pages/ResponsePage.aspx?id=fCAtUtXsx0-nbxdGSxFh-eVAzhwdpsxLmCSGMQwqNIpUM1E2TFRSRkhNWU9IQk9SVFhBSDJNWTFDVS4u', '_blank')">📥 ENVIAR CENTRAL DE SOLICITAÇÃO</button>
-                <button onclick="enviarParaPonto('${t.chave}')" class="btn-jira-link" style="background: #f1c40f; color:#000; padding: 8px;">➡️ ENVIAR PARA O PONTO</button>
-            `;
-        } else {
-            botoesExtras = `<button onclick="enviarParaPonto('${t.chave}')" class="btn-jira-link" style="background: #f1c40f; color:#000; padding: 8px;">➡️ ENVIAR PARA O PONTO</button>`;
-        }
+        let urlForms = isDeslig ? 'https://forms.office.com/Pages/ResponsePage.aspx?id=fCAtUtXsx0-nbxdGSxFh-f7MDqf4DUBBuOHjox7sxytUNFFQNTgzR1pQV0FLM05aWElXSjlRMjFHRy4u' : 'https://forms.office.com/Pages/ResponsePage.aspx?id=fCAtUtXsx0-nbxdGSxFh-eVAzhwdpsxLmCSGMQwqNIpUM1E2TFRSRkhNWU9IQk9SVFhBSDJNWTFDVS4u';
 
         container.innerHTML += `
-            <div class="card-gestao ${classeDestaque}" style="padding-bottom: 160px;">
-                ${statusTag}
-                <strong>${t.nome}</strong><br><small>${t.chave}</small><br>
-                <hr style="opacity:0.2;">
-                <span>${t.resumo}</span>
-                <div style="position: absolute; bottom: 15px; left: 15px; right: 15px; display: flex; flex-direction: column; gap: 5px;">
-                    <a href="https://spxresolve.atlassian.net/browse/${t.chave}" target="_blank" class="btn-jira-link" style="background: var(--jira); padding: 8px;">🔗 ABRIR JIRA</a>
-                    ${botoesExtras}
+            <div class="card-gestao" style="border-left: 8px solid ${isDeslig ? '#ff4b2b' : '#1a73e8'}; min-height: 380px; display: flex; flex-direction: column; justify-content: space-between; padding: 20px; background: var(--card-bg); border-radius: 15px; position: relative; box-shadow: 0 4px 10px rgba(0,0,0,0.1);">
+                <div>
+                    ${t.pendentePonto ? '<div class="tag-ponto">⏰ PENDENTE NO PONTOMAIS</div>' : ''}
+                    <h3 style="margin:0; font-size: 1.1rem;">${displayNome}</h3>
+                    <small>${t.chave} | ${displayMatricula}</small>
+                    <div style="margin-top: 10px; font-size: 0.9rem;">
+                        ${isDeslig && t.dataDesligamento ? `<b style="color:var(--danger)">📅 Data: ${t.dataDesligamento}</b><br>` : ''}
+                        ${isMov && t.centroCusto ? `<b>🏢 C.C: ${t.centroCusto}</b>` : ''}
+                    </div>
+                    <hr style="opacity:0.1; margin: 15px 0;">
+                    <p style="font-size:0.85rem; line-height: 1.4; color: var(--text);">${t.resumo}</p>
+                </div>
+
+                <div style="display: flex; gap: 6px; margin-top: 15px; width: 100%;">
+                    <a href="https://spxresolve.atlassian.net/browse/${t.chave}" target="_blank" 
+                       style="background: var(--jira); color: white; flex: 1; text-align: center; padding: 10px 2px; border-radius: 6px; text-decoration: none; font-weight: bold; font-size: 0.7rem;">🎫 JIRA</a>
+                    
+                    <button onclick="window.open('${urlForms}')" 
+                            style="background: ${isDeslig ? '#d63031' : 'var(--primary)'}; color: white; flex: 1; border: none; padding: 10px 2px; border-radius: 6px; cursor: pointer; font-weight: bold; font-size: 0.7rem;">📝 FORMS</button>
+                    
+                    ${isMov ? `
+                        <button onclick="enviarParaPonto('${t.chave}')" 
+                                style="background: #f1c40f; color: black; flex: 1; border: none; padding: 10px 2px; border-radius: 6px; cursor: pointer; font-weight: bold; font-size: 0.7rem;">➡️ PONTO</button>
+                    ` : ''}
+
+                    ${t.pendentePonto ? `
+                        <button onclick="concluirPonto('${t.chave}')" 
+                                style="background: #333; color: white; flex: 1; border: none; padding: 10px 2px; border-radius: 6px; cursor: pointer; font-weight: bold; font-size: 0.7rem;">✔️ OK</button>
+                    ` : ''}
                 </div>
             </div>`;
     });
