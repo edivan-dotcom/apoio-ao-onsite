@@ -12,7 +12,6 @@
     <script>mermaid.initialize({ startOnLoad: true, theme: 'default' });</script>
 
     <style>
-        /* Mantendo seu padrão visual de Root e Cores */
         :root {
             --primary: #6a11cb; --secondary: #2575fc; --bg: #f4f7f6;
             --card-bg: white; --text: #333; --navbar-bg: white;
@@ -28,96 +27,147 @@
 
         body { font-family: 'Segoe UI', sans-serif; background-color: var(--bg); color: var(--text); margin: 0; padding-top: 60px; transition: 0.3s; }
 
-        /* Navbar e Layout baseados na sua versão oficial */
         .navbar { background: var(--navbar-bg); height: 60px; display: flex; justify-content: space-between; align-items: center; padding: 0 30px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); position: fixed; top: 0; width: 100%; z-index: 1000; box-sizing: border-box; }
-        .nav-links { display: flex; align-items: center; }
-        .login-btn, .intranet-btn { text-decoration: none; padding: 6px 15px; border-radius: 5px; font-size: 0.8rem; font-weight: bold; margin-left: 10px; }
+        .nav-links { display: flex; align-items: center; height: 100%; }
+        .login-btn, .intranet-btn { text-decoration: none; padding: 6px 15px; border-radius: 5px; font-size: 0.8rem; font-weight: bold; margin-left: 10px; transition: 0.3s; }
         .login-btn { background: #0078d4; color: white !important; }
         .intranet-btn { background: #ff5722; color: white !important; }
 
+        .dropdown { position: relative; display: flex; align-items: center; height: 100%; }
+        .dropdown-btn { text-decoration: none; color: var(--text); margin-left: 20px; font-weight: 600; font-size: 0.9rem; cursor: pointer; border: none; background: none; display: flex; align-items: center; gap: 5px; height: 100%; }
+        .dropdown-content { display: none; position: absolute; right: 0; background-color: var(--card-bg); min-width: 350px; box-shadow: 0px 8px 16px rgba(0,0,0,0.2); z-index: 1001; border-radius: 0 0 8px 8px; top: 60px; border-top: 2px solid var(--primary); overflow: hidden; }
+        .dropdown:hover .dropdown-content { display: block; }
+        .dropdown-content a { color: var(--text); padding: 12px 16px; text-decoration: none; display: block; font-size: 0.85rem; border-bottom: 1px solid rgba(128,128,128,0.1); }
+
         header { background: linear-gradient(rgba(106, 17, 203, 0.75), rgba(37, 117, 252, 0.75)), url('https://wecanbr.com.br/img/quem-somos/main.jpg'); background-size: cover; background-position: center; color: white; padding: 60px 20px; text-align: center; }
-        
+        .search-container { margin-top: 25px; position: relative; width: 450px; max-width: 90%; margin: 20px auto 0; }
+        #searchInput { padding: 15px 25px; width: 100%; border-radius: 30px; border: none; font-size: 1rem; box-shadow: 0 5px 15px rgba(0,0,0,0.2); outline: none; background: var(--card-bg); color: var(--text); box-sizing: border-box; }
+
         .container { display: flex; justify-content: center; flex-wrap: wrap; gap: 20px; padding: 40px 20px; max-width: 1400px; margin: 0 auto; }
-        
-        /* Formulário de Solicitação Estilizado */
+        .card { background: var(--card-bg); border-radius: 15px; width: 260px; padding: 25px; text-align: center; box-shadow: 0 5px 15px rgba(0,0,0,0.05); transition: 0.3s; text-decoration: none; color: var(--text); border-top: 5px solid var(--primary); box-sizing: border-box; cursor: pointer; position: relative; }
+        .card:hover { transform: translateY(-5px); box-shadow: 0 10px 25px rgba(0,0,0,0.1); }
+        .card.hidden { display: none; }
+        .icon { font-size: 40px; margin-bottom: 15px; display: block; }
+
+        .funnel-container { display: flex; justify-content: center; flex-wrap: wrap; gap: 20px; max-width: 95%; margin: 20px auto 40px; padding: 0 20px; }
+        .embedded-section { background: var(--card-bg); padding: 25px; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); flex: 1; min-width: 300px; max-width: 400px; text-align: center; }
+        .section-btn { color: white; border: none; padding: 12px 25px; border-radius: 25px; font-size: 0.9rem; font-weight: bold; cursor: pointer; transition: 0.3s; margin-top: 15px; }
+
+        .faq-section { max-width: 1200px; margin: 20px auto 60px; background: var(--card-bg); padding: 40px; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); }
+        .mermaid { display: flex; justify-content: center; background: white; padding: 20px; border-radius: 10px; }
+
+        /* --- NOVAS SEÇÕES (FORMULÁRIO E GESTÃO) --- */
         .form-section { max-width: 600px; margin: 40px auto; background: var(--card-bg); padding: 30px; border-radius: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); border-top: 5px solid var(--primary); }
-        .form-group { margin-bottom: 15px; }
+        .form-group { margin-bottom: 15px; text-align: left; }
         .form-group label { display: block; margin-bottom: 5px; font-weight: bold; }
         .form-group input, .form-group select { width: 100%; padding: 12px; border-radius: 8px; border: 1px solid #ddd; background: var(--bg); color: var(--text); box-sizing: border-box; }
 
-        /* Gestão de Solicitações */
         .gestao-section { max-width: 1200px; margin: 40px auto; padding: 0 20px; }
         .grid-gestao { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px; }
-        .card-gestao { background: var(--card-bg); padding: 15px; border-radius: 10px; border-left: 5px solid var(--warning); box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
-        
-        #contadorSolicitacoes { background: #e67e22; color: white; padding: 3px 12px; border-radius: 20px; font-size: 0.75rem; font-weight: 800; margin-left: 15px; }
+        .card-gestao { background: var(--card-bg); padding: 15px; border-radius: 10px; border-left: 5px solid var(--warning); box-shadow: 0 2px 5px rgba(0,0,0,0.1); text-align: left; }
+
+        #contadorSolicitacoes { background: #e67e22; color: white; padding: 3px 12px; border-radius: 20px; font-size: 0.75rem; font-weight: 800; margin-left: 15px; display: none; }
         .signature { text-align: center; margin: 40px 0 20px; font-family: 'Great Vibes', cursive; font-size: 1.5rem; color: var(--signature); }
         footer { text-align: center; padding: 30px; background: #222; color: white; }
+        .theme-toggle { position: fixed; bottom: 20px; right: 20px; width: 50px; height: 50px; border-radius: 50%; background: var(--primary); color: white; border: none; cursor: pointer; z-index: 2001; font-size: 20px; }
     </style>
 </head>
 <body>
 
+    <button class="theme-toggle" onclick="toggleTheme()" id="themeBtn">🌙</button>
+
     <nav class="navbar">
         <div style="display: flex; align-items: center;">
-            <div style="font-weight: bold; color: var(--primary);">WE CAN BR</div>
-            <div id="contadorSolicitacoes" style="display: none;">0 Pendentes</div>
+            <div style="font-weight: bold; color: var(--primary); letter-spacing: 1px;">WE CAN BR</div>
+            <div id="contadorSolicitacoes">0 Pendentes</div>
         </div>
         <div class="nav-links">
+            <a href="https://portal.office.com" target="_blank" class="login-btn">🔑 Login Microsoft</a>
             <a href="https://desafiorhcombr.sharepoint.com/sites/wecanbr" target="_blank" class="intranet-btn">🌐 Intranet</a>
+            
+            <div class="dropdown">
+                <button class="dropdown-btn">📊 Planilhas ▼</button>
+                <div class="dropdown-content">
+                    <a href="https://desafiorhcombr-my.sharepoint.com/:x:/r/personal/mirian_oliveira_wecanbr_com_br/_layouts/15/Doc.aspx?sourcedoc=%7B9C5EACCF-57D1-4415-BA2B-D584B9FE2B85%7D" target="_blank">📋 Controle de Atendimento</a>
+                    <a href="https://docs.google.com/spreadsheets/d/1WBYOF9AkoS7NpzhqFyqm5PzQRP13yUF2p5ZY8FfZp_c/edit" target="_blank">🔍 Voucher 2026</a>
+                </div>
+            </div>
         </div>
     </nav>
 
     <header>
-        <h1>SOLICITAÇÕES DE AJUSTE</h1>
-        <p>Preencha os dados abaixo para processamento na planilha de gestão.</p>
+        <h1>APOIO AO ONSITE</h1>
+        <div class="search-container">
+            <input type="text" id="searchInput" onkeyup="buscarTudo()" placeholder="Pesquisar ferramentas..." autocomplete="off">
+        </div>
     </header>
 
-    <div class="form-section">
-        <form id="formBeneficio">
-            <div class="form-group">
-                <label>Matrícula:</label>
-                <input type="text" id="matr" required placeholder="Ex: 123456">
-            </div>
-            
-            <div class="form-group">
-                <label>Nickname Unidade (Para busca do Onsite):</label>
-                <select id="unidade" required>
-                    <option value="">Selecione a Unidade...</option>
-                    <option value="SOC RJ">SOC RJ</option>
-                    <option value="ARTUR ALVIM">ARTUR ALVIM</option>
-                    <option value="BEL 01">BEL 01</option>
-                    </select>
-            </div>
+    <div class="container">
+        <div onclick="abrirPopup('https://forms.office.com/Pages/ResponsePage.aspx?id=fCAtUtXsx0-nbxdGSxFh-eVAzhwdpsxLmCSGMQwqNIpUM1E2TFRSRkhNWU9IQk9SVFhBSDJNWTFDVS4u')" class="card">
+            <span class="icon">📝</span>
+            <h2>Central de Solicitações</h2>
+            <p>Clique para abrir o formulário interno.</p>
+        </div>
 
+        <div onclick="window.open('https://spxresolve.atlassian.net/jira/for-you', '_blank')" class="card" style="border-top-color: var(--jira);">
+            <span class="icon">🟦</span>
+            <h2>JIRA</h2>
+            <p>Gestão de chamados e projetos JIRA.</p>
+        </div>
+    </div>
+
+    <div class="funnel-container">
+        <div class="embedded-section" style="border-top: 5px solid var(--appsheet);">
+            <strong>📱 INATIVAÇÃO VOUCHER UBER</strong>
+            <button onclick="window.open('https://www.appsheet.com/start/8ba6b59c-c836-4d4e-9a3e-e43d38d2a47e')" class="section-btn" style="background: var(--appsheet);">🚀 Abrir AppSheet</button>
+        </div>
+
+        <div class="embedded-section" style="border-top: 5px solid var(--glpi);">
+            <strong>🛠️ CHAMADOS - GLPI</strong>
+            <a href="https://glpi.wecanbr.com.br/index.php?noAUTO=1" target="_blank"><button class="section-btn" style="background: var(--glpi);">🎫 Acessar GLPI</button></a>
+        </div>
+    </div>
+
+    <div class="faq-section">
+        <h2>📌 Fluxo de Processos e Solicitações</h2>
+        <div class="mermaid">
+            graph TD
+                Start((Início)) --> Channel{Origem?}
+                Channel -- "Direto" --> Form[Preenchimento FORMS]
+                Form --> Process[Planilha Gestão]
+                Process --> End((Fim))
+        </div>
+    </div>
+
+    <div class="form-section">
+        <h2 style="text-align: center; color: var(--primary);">Solicitação de Ajuste Local</h2>
+        <form id="formBeneficio">
+            <div class="form-group"><label>Matrícula:</label><input type="text" id="matr" required placeholder="Ex: 123456"></div>
+            <div class="form-group">
+                <label>Nickname Unidade:</label>
+                <input type="text" id="unidade" required placeholder="Ex: SOC RJ">
+            </div>
             <div class="form-group">
                 <label>Tipo de Solicitação:</label>
-                <select id="tipoSol" onchange="atualizarOpcoesBeneficio()" required>
+                <select id="tipoSol" onchange="atualizarOpcoesBeneficio()">
                     <option value="">Selecione...</option>
                     <option value="TROCA DE BENEFICIO">TROCA DE BENEFICIO</option>
                     <option value="AJUSTE VALOR">AJUSTE VALOR DA PASSAGEM</option>
                 </select>
             </div>
-
             <div class="form-group">
                 <label>Qual Benefício?</label>
-                <select id="beneDest" required>
-                    <option value="">Selecione o tipo acima primeiro...</option>
-                </select>
+                <select id="beneDest" required><option value="">Selecione o tipo acima...</option></select>
             </div>
-
-            <div class="form-group">
-                <label>Valor (se houver):</label>
-                <input type="number" id="vlr" step="0.01">
-            </div>
-            
-            <button type="button" id="btnEnviar" onclick="enviarSolicitacao()" style="background: var(--primary); color: white; width: 100%; padding: 15px; border-radius: 8px; border: none; cursor: pointer; font-weight: bold;">🚀 Enviar para Gestão</button>
+            <div class="form-group"><label>Valor:</label><input type="number" id="vlr" step="0.01"></div>
+            <button type="button" onclick="enviarSolicitacao()" style="background: var(--primary); color: white; width: 100%; padding: 15px; border-radius: 8px; border: none; cursor: pointer; font-weight: bold;">🚀 Enviar para Planilha</button>
         </form>
     </div>
 
     <div class="gestao-section">
-        <h2 style="text-align: center; color: var(--primary);">📋 Gestão de Solicitações Pendentes</h2>
+        <h2 style="text-align: center; color: var(--primary);">Gestão de Solicitações</h2>
         <div id="containerCardsGestao" class="grid-gestao">
-             <p style="text-align: center; width: 100%;">Sincronizando com a base de dados...</p>
+             <p style="text-align: center; width: 100%;">Carregando dados da planilha...</p>
         </div>
     </div>
 
@@ -125,98 +175,66 @@
     <footer>© 2026 Apoio ao On-Site | WeCanBR</footer>
 
     <script>
-        // Substitua pelo seu URL do Web App publicado no App Script
         const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxupjNwDDgxLULbLOPUVd2jc4hRUxI9JYYeqy7riYGBg5ymoqAfLeJn6IwRqLH7aozH/exec";
+
+        function abrirPopup(url) { window.open(url, 'Popup', 'width=900,height=900'); }
+
+        function buscarTudo() {
+            let input = document.getElementById('searchInput').value.toLowerCase();
+            let cards = document.getElementsByClassName('card');
+            for (let card of cards) {
+                card.classList.toggle('hidden', !card.innerText.toLowerCase().includes(input));
+            }
+        }
+
+        function toggleTheme() {
+            const html = document.documentElement;
+            if (html.getAttribute('data-theme') === 'dark') { html.removeAttribute('data-theme'); }
+            else { html.setAttribute('data-theme', 'dark'); }
+        }
 
         function atualizarOpcoesBeneficio() {
             const tipo = document.getElementById('tipoSol').value;
             const select = document.getElementById('beneDest');
-            select.innerHTML = '<option value="">Escolha uma opção...</option>';
-            
+            select.innerHTML = '<option value="">Escolha...</option>';
             if (tipo === "TROCA DE BENEFICIO") {
-                const trocas = ["VT para FRETADO", "VT para VT + VOUCHER", "VT para MOBILIDADE", "MOBILIDADE para VT", "FRETADO para VT"];
-                trocas.forEach(t => select.innerHTML += `<option value="${t}">${t}</option>`);
+                ["VT para FRETADO", "VT para VT + VOUCHER", "VT para MOBILIDADE"].forEach(t => select.innerHTML += `<option value="${t}">${t}</option>`);
             } else {
-                const padrao = ["VT", "VOUCHER UBER", "MOBILIDADE"];
-                padrao.forEach(p => select.innerHTML += `<option value="${p}">${p}</option>`);
+                ["VT", "VOUCHER UBER", "MOBILIDADE"].forEach(p => select.innerHTML += `<option value="${p}">${p}</option>`);
             }
         }
 
         async function enviarSolicitacao() {
-            const btn = document.getElementById('btnEnviar');
-            const matricula = document.getElementById('matr').value.trim();
-            const unidade = document.getElementById('unidade').value;
-            const tipo = document.getElementById('tipoSol').value;
-            const beneficio = document.getElementById('beneDest').value;
-            const valor = document.getElementById('vlr').value;
-
-            if (!matricula || !unidade || !tipo || !beneficio) {
-                alert("Preencha os campos obrigatórios!");
-                return;
-            }
-
-            btn.innerText = "⏳ Gravando na Planilha...";
-            btn.disabled = true;
-
-            // MAPEAMENTO EXATO COM O APPSCRIPT (dados.matricula, dados.unidade, etc)
-            const payload = {
-                matricula: matricula.toUpperCase().startsWith("WE") ? matricula.toUpperCase() : "WE" + matricula,
-                unidade: unidade,
-                tipo: tipo,
-                beneficio: beneficio,
-                valor: valor
+            const data = {
+                matricula: document.getElementById('matr').value,
+                unidade: document.getElementById('unidade').value,
+                tipo: document.getElementById('tipoSol').value,
+                beneficio: document.getElementById('beneDest').value,
+                valor: document.getElementById('vlr').value
             };
-
             try {
-                // Usando mode: 'no-cors' para POST em Google Script (comportamento padrão)
-                await fetch(SCRIPT_URL, { 
-                    method: 'POST', 
-                    mode: 'no-cors', 
-                    body: JSON.stringify(payload) 
-                });
-                
-                alert("✅ Sucesso! Dados enviados para a coluna de Respostas.");
-                document.getElementById('formBeneficio').reset();
-                carregarCardsGestao(); 
-            } catch (error) {
-                alert("❌ Erro de conexão.");
-            } finally {
-                btn.innerText = "🚀 Enviar para Gestão";
-                btn.disabled = false;
-            }
+                await fetch(SCRIPT_URL, { method: 'POST', mode: 'no-cors', body: JSON.stringify(data) });
+                alert("✅ Enviado!");
+                carregarCardsGestao();
+            } catch (e) { alert("❌ Erro."); }
         }
 
         async function carregarCardsGestao() {
             const container = document.getElementById('containerCardsGestao');
             const contador = document.getElementById('contadorSolicitacoes');
-
             try {
                 const res = await fetch(SCRIPT_URL);
                 const dados = await res.json();
                 container.innerHTML = "";
-
                 if (dados && dados.length > 0) {
                     contador.innerText = `${dados.length} Pendentes`;
                     contador.style.display = "block";
                     dados.forEach(sol => {
-                        container.innerHTML += `
-                            <div class="card-gestao">
-                                <strong>Matrícula: ${sol.matricula}</strong><br>
-                                <small>Onsite: ${sol.onsite} | Status: ${sol.status}</small><br>
-                                <hr style="opacity:0.1">
-                                <span>${sol.tipo}</span><br>
-                                <small>${sol.detalhe}</small>
-                            </div>`;
+                        container.innerHTML += `<div class="card-gestao"><strong>${sol.matricula}</strong><br><small>${sol.onsite}</small><br><span>${sol.tipo}</span></div>`;
                     });
-                } else {
-                    contador.style.display = "none";
-                    container.innerHTML = "<p style='text-align:center; width:100%'>Não há solicitações pendentes na planilha.</p>";
-                }
-            } catch(e) { 
-                container.innerHTML = "<p style='text-align:center; width:100%'>Erro ao carregar dados.</p>"; 
-            }
+                } else { container.innerHTML = "Vazio."; }
+            } catch(e) { container.innerHTML = "Aguardando..."; }
         }
-
         window.onload = carregarCardsGestao;
     </script>
 </body>
