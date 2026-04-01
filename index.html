@@ -12,90 +12,78 @@
         :root {
             --primary: #6a11cb; --secondary: #2575fc; --bg: #f4f7f6; --card-bg: white; --text: #333;
             --navbar-bg: white; --danger: #ff4b2b; --warning: #f39c12;
-            --jira: #0052CC; --pontomais: #00a8a8; --signature: rgba(0, 0, 0, 0.2);
-            --appsheet: #1a73e8; --glpi: #008080;
+            --jira: #0052CC; --pontomais: #00a8a8; --appsheet: #1a73e8; --glpi: #008080;
         }
         [data-theme="dark"] { --bg: #121212; --card-bg: #1e1e1e; --text: #e0e0e0; --navbar-bg: #1e1e1e; }
         
-        body { font-family: 'Segoe UI', sans-serif; background-color: var(--bg); color: var(--text); margin: 0; padding-top: 60px; transition: 0.3s; }
-        
+        body { font-family: 'Segoe UI', sans-serif; background-color: var(--bg); color: var(--text); margin: 0; padding-top: 60px; }
+
         /* NAVBAR */
         .navbar { background: var(--navbar-bg); height: 60px; display: flex; justify-content: space-between; align-items: center; padding: 0 30px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); position: fixed; top: 0; width: 100%; z-index: 1000; box-sizing: border-box; }
-        .logo-box { display: flex; align-items: center; gap: 15px; }
-        #contadorSolicitacoes { background: #e67e22; color: white; padding: 4px 12px; border-radius: 20px; font-size: 0.75rem; font-weight: bold; display: none; }
-        
+        .logo-box { font-weight: 800; color: var(--primary); font-size: 1.2rem; }
         .nav-links { display: flex; align-items: center; gap: 10px; }
         .btn-nav { text-decoration: none; padding: 6px 15px; border-radius: 5px; font-size: 0.8rem; font-weight: bold; color: white !important; }
         
-        .dropdown { position: relative; cursor: pointer; padding: 10px; }
+        .dropdown { position: relative; cursor: pointer; padding: 10px; font-weight: bold; }
         .dropdown-content { display: none; position: absolute; right: 0; background: var(--card-bg); min-width: 300px; box-shadow: 0 8px 16px rgba(0,0,0,0.2); border-radius: 0 0 8px 8px; border-top: 3px solid var(--primary); z-index: 1001; }
         .dropdown:hover .dropdown-content { display: block; }
         .dropdown-content a { color: var(--text); padding: 12px 15px; text-decoration: none; display: block; font-size: 0.85rem; border-bottom: 1px solid rgba(0,0,0,0.05); }
 
-        /* HEADER */
         header { background: linear-gradient(rgba(106,17,203,0.8), rgba(37,117,252,0.8)), url('https://wecanbr.com.br/img/quem-somos/main.jpg'); background-size: cover; padding: 50px 20px; text-align: center; color: white; }
         #searchInput { width: 450px; max-width: 90%; padding: 15px 25px; border-radius: 30px; border: none; margin-top: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.2); outline: none; }
 
-        /* TABS */
         .tabs-container { display: flex; justify-content: center; gap: 15px; margin: 30px 0; }
-        .tab-btn { padding: 12px 30px; border: none; border-radius: 25px; cursor: pointer; font-weight: bold; background: var(--card-bg); color: var(--text); box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+        .tab-btn { padding: 12px 30px; border: none; border-radius: 25px; cursor: pointer; font-weight: bold; background: var(--card-bg); color: var(--text); box-shadow: 0 4px 10px rgba(0,0,0,0.1); transition: 0.3s; }
         .tab-btn.active { background: var(--primary); color: white; }
 
-        /* HOME LAYOUT (5x3) */
-        .home-grid-top { display: grid; grid-template-columns: repeat(5, 1fr); gap: 20px; padding: 20px; max-width: 1400px; margin: 0 auto; }
-        .home-grid-bottom { display: flex; justify-content: center; gap: 25px; padding: 20px 40px 50px; max-width: 1400px; margin: 0 auto; flex-wrap: wrap; }
+        /* GRIDS PRINCIPAIS */
+        .grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; padding: 20px; max-width: 1400px; margin: 0 auto; }
+        .grid-5 { display: grid; grid-template-columns: repeat(5, 1fr); gap: 20px; padding: 20px; max-width: 1400px; margin: 0 auto; }
+        .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 25px; padding: 20px; max-width: 1200px; margin: 0 auto; }
 
-        /* CARDS VISUAL (BASE) */
-        .card, .card-jira-agrupado, .card-gestao, .embedded-section { 
+        /* CARDS VISUAL */
+        .card, .card-onsite, .card-ticket, .embedded-section { 
             background: var(--card-bg); border-radius: 15px; padding: 25px; text-align: center; 
             box-shadow: 0 5px 20px rgba(0,0,0,0.08); border-top: 6px solid var(--primary); transition: 0.3s; box-sizing: border-box;
         }
-        
-        /* ESTILO ESPECÍFICO DOS 3 CARDS DE BAIXO (image_c93e64.png) */
-        .embedded-section { width: 400px; display: flex; flex-direction: column; justify-content: space-between; min-height: 250px; }
-        .embedded-section h3 { font-size: 1.1rem; color: var(--secondary); margin-bottom: 15px; display: flex; align-items: center; justify-content: center; gap: 8px; }
-        .embedded-section p { font-size: 0.95rem; color: #666; line-height: 1.5; margin-bottom: 20px; }
-        
-        .btn-pill { 
-            display: inline-block; padding: 12px 30px; border-radius: 30px; color: white !important; 
-            text-decoration: none; font-weight: bold; font-size: 0.9rem; transition: 0.3s; box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-        }
-        .btn-pill:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0,0,0,0.15); filter: brightness(1.1); }
+        .card:hover, .card-onsite:hover { transform: translateY(-5px); box-shadow: 0 10px 25px rgba(0,0,0,0.15); cursor: pointer; }
 
-        /* TICKETS EM CARDS (4 COLUNAS) */
-        .grid-tickets { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; padding: 20px; max-width: 1400px; margin: 0 auto; }
-        .card-gestao { text-align: left; border-left: 6px solid var(--warning); border-top: none; position: relative; padding-bottom: 160px; min-height: 320px; }
+        /* ESTILO CARDS BAIXO HOME (image_c93e64.png) */
+        .embedded-section { border-top-width: 6px; min-height: 250px; display: flex; flex-direction: column; justify-content: space-between; }
+        .btn-pill { display: inline-block; padding: 12px 30px; border-radius: 30px; color: white !important; font-weight: bold; text-decoration: none; margin-top: 15px; box-shadow: 0 4px 12px rgba(0,0,0,0.15); }
+
+        /* TICKETS ESPECÍFICO */
+        .card-ticket { text-align: left; border-left: 6px solid var(--warning); border-top: none; position: relative; padding-bottom: 160px; min-height: 320px; }
+        .ticket-group-title { grid-column: 1 / -1; font-size: 1.8rem; color: var(--primary); margin: 40px 0 20px; border-bottom: 2px solid var(--primary); padding-bottom: 10px; }
 
         .btn-action { display: block; width: 100%; padding: 10px; margin-top: 8px; border-radius: 8px; font-weight: bold; text-decoration: none; text-align: center; color: white; border: none; cursor: pointer; font-size: 0.85rem; }
         
         footer { text-align: center; padding: 30px; background: #222; color: white; margin-top: 50px; }
-        .signature { font-family: 'Great Vibes', cursive; font-size: 1.6rem; text-align: center; margin: 25px 0; color: var(--signature); }
-        .theme-toggle { position: fixed; bottom: 20px; right: 20px; width: 50px; height: 50px; border-radius: 50%; background: var(--primary); color: white; border: none; cursor: pointer; z-index: 2000; }
+        .signature { font-family: 'Great Vibes', cursive; font-size: 1.6rem; color: rgba(255,255,255,0.2); margin: 20px 0; }
 
-        @media (max-width: 1300px) { .home-grid-top { grid-template-columns: repeat(3, 1fr); } .grid-tickets { grid-template-columns: repeat(2, 1fr); } }
+        @media (max-width: 1100px) { .grid-4, .grid-5, .grid-3 { grid-template-columns: repeat(2, 1fr); } }
+        @media (max-width: 700px) { .grid-4, .grid-5, .grid-3 { grid-template-columns: 1fr; } }
     </style>
 </head>
 <body>
-    <button class="theme-toggle" onclick="toggleTheme()">🌙</button>
-
     <nav class="navbar">
-        <div class="logo-box">
-            <span style="font-weight: 800; color: var(--primary); font-size: 1.2rem;">WE CAN BR</span>
-            <div id="contadorSolicitacoes">0 Pendentes</div>
-        </div>
+        <div class="logo-box">WE CAN BR</div>
         <div class="nav-links">
             <a href="https://portal.office.com" target="_blank" class="btn-nav" style="background:#0078d4">🔑 Login Microsoft</a>
             <a href="https://desafiorhcombr.sharepoint.com/sites/wecanbr" target="_blank" class="btn-nav" style="background:#ff5722">🌐 Intranet</a>
             <div class="dropdown">
-                <span class="dropdown-btn" style="font-weight:bold">📊 Planilhas ▼</span>
+                <span>📊 Planilhas ▼</span>
                 <div class="dropdown-content">
-                    <a href="https://desafiorhcombr-my.sharepoint.com/:x:/r/personal/mirian_oliveira_wecanbr_com_br/_layouts/15/Doc.aspx?sourcedoc=%7B9C5EACCF-57D1-4415-BA2B-D584B9FE2B85%7D" target="_blank">📋 Controle de Atendimento</a>
-                    <a href="https://desafiorhcombr-my.sharepoint.com/:x:/r/personal/edivan_costa_wecanbr_com_br/_layouts/15/Doc.aspx?sourcedoc=%7B63D04DA0-C7A8-4059-8591-37DFCED94A93%7D" target="_blank">📋 Central de Solicitações</a>
-                    <a href="https://docs.google.com/spreadsheets/d/1WBYOF9AkoS7NpzhqFyqm5PzQRP13yUF2p5ZY8FfZp_c/edit" target="_blank">🔍 Voucher 2026</a>
+                    <a href="https://desafiorhcombr-my.sharepoint.com/:x:/r/personal/mirian_oliveira_wecanbr_com_br/_layouts/15/Doc.aspx?sourcedoc=%7B9C5EACCF-57D1-4415-BA2B-D584B9FE2B85%7D" target="_blank">📋 Controle de Atendimento (Excel)</a>
+                    <a href="https://desafiorhcombr-my.sharepoint.com/:x:/r/personal/mirian_oliveira_wecanbr_com_br/_layouts/15/doc2.aspx?sourcedoc=%7B519706C2-BDEF-438C-B037-385F4D8A3488%7D" target="_blank">📈 Drive de Rescisão Shopee</a>
+                    <a href="https://desafiorhcombr-my.sharepoint.com/:x:/r/personal/edivan_costa_wecanbr_com_br/_layouts/15/Doc.aspx?sourcedoc=%7B63D04DA0-C7A8-4059-8591-37DFCED94A93%7D" target="_blank">📋 Central de Solicitações (Base)</a>
+                    <a href="https://docs.google.com/spreadsheets/d/1WBYOF9AkoS7NpzhqFyqm5PzQRP13yUF2p5ZY8FfZp_c/edit" target="_blank">🔍 Voucher 2026 (Base Geral)</a>
+                    <a href="https://docs.google.com/spreadsheets/d/1WBYOF9AkoS7NpzhqFyqm5PzQRP13yUF2p5ZY8FfZp_c/edit?gid=690743947#gid=690743947" target="_blank">📊 Template Shopee</a>
+                    <a href="https://desafiorhcombr.sharepoint.com/:x:/r/sites/FSWECANBR/_layouts/15/Doc.aspx?sourcedoc=%7B6265A06E-D548-4055-9261-D6A512496567%7D&file=03%202026%20REJEITOS%20MAR%C3%87O%202026.xlsx&action=default&mobileredirect=true" target="_blank">⚠️ Rejeitos 03.2026</a>
                 </div>
             </div>
             <div class="dropdown">
-                <span class="dropdown-btn" style="font-weight:bold">📄 Documentos ▼</span>
+                <span>📄 Documentos ▼</span>
                 <div class="dropdown-content">
                     <a href="https://drive.google.com/file/d/1qsLtN-HC5488FVQc3n5mcT8zjCdVja0d/view" target="_blank">📄 Carta de Suspensão</a>
                     <a href="https://drive.google.com/file/d/1lGnjwLz_5i4uASifv2OPlkSb7NUGeaHI/view" target="_blank">📄 Comunicado de Desligamento</a>
@@ -119,25 +107,20 @@
 
     <div class="tabs-container">
         <button class="tab-btn active" onclick="switchTab('home')" id="btnTabHome">🏠 HOME</button>
-        <button class="tab-btn" onclick="switchTab('solicitacoes')" id="btnTabSol">📝 SOLICITAÇÕES</button>
         <button class="tab-btn" onclick="switchTab('jira')" id="btnTabJira">🎫 TICKETS SHOPEE</button>
     </div>
 
     <div id="homeView">
-        <div class="home-grid-top" id="homeTopContent"></div>
-        <div class="home-grid-bottom" id="homeBottomContent"></div>
+        <div class="grid-5" id="homeTopContent"></div>
+        <div class="grid-3" id="homeBottomContent"></div>
     </div>
-    
-    <div id="solicitacoesView" style="display:none" class="grid-tickets"></div>
 
     <div id="jiraView" style="display:none">
-        <div class="grid-tickets" id="viewAgrupadaJira"></div>
-        <div id="viewDetalhadaJira" style="display:none">
-            <div style="padding: 20px; max-width: 1400px; margin: 0 auto;">
-                <button onclick="voltarParaAgrupamentoJira()" style="background:var(--primary); color:white; border:none; padding:10px 25px; border-radius:5px; cursor:pointer; font-weight:bold">← Voltar para Onsites</button>
-                <h2 id="tituloOperacaoJira" style="text-align:center; color:var(--primary); margin: 25px 0;"></h2>
-                <div class="grid-tickets" id="containerCardsJira"></div>
-            </div>
+        <div class="grid-4" id="viewAgrupadaJira"></div>
+        <div id="viewDetalhadaJira" style="display:none; padding:20px;">
+            <button onclick="voltarParaAgrupamentoJira()" style="background:var(--primary); color:white; border:none; padding:10px 25px; border-radius:5px; cursor:pointer; font-weight:bold">← Voltar para Onsites</button>
+            <h2 id="tituloOperacaoJira" style="text-align:center; color:var(--primary); font-size: 2rem; margin: 30px 0;"></h2>
+            <div class="grid-3" id="containerCardsJira"></div>
         </div>
     </div>
 
@@ -155,37 +138,32 @@
                 if (containerId === 'homeView') {
                     const temp = document.createElement('div'); temp.innerHTML = html;
                     const cards = Array.from(temp.querySelectorAll('.card, .embedded-section'));
-                    
                     document.getElementById('homeTopContent').append(...cards.slice(0, 5));
                     
-                    // Ajuste de botões para os 3 de baixo
                     const bottomCards = cards.slice(5);
                     bottomCards.forEach((c, i) => {
                         const btn = c.querySelector('button, .section-btn');
                         if(btn) {
                             btn.className = 'btn-pill';
-                            if(i === 0) btn.style.background = 'var(--appsheet)';
-                            if(i === 1) btn.style.background = 'var(--glpi)';
-                            if(i === 2) btn.style.background = 'var(--pontomais)';
+                            if(i === 0) { btn.style.background = 'var(--appsheet)'; c.style.borderTopColor = 'var(--appsheet)'; }
+                            if(i === 1) { btn.style.background = 'var(--glpi)'; c.style.borderTopColor = 'var(--glpi)'; }
+                            if(i === 2) { btn.style.background = 'var(--pontomais)'; c.style.borderTopColor = 'var(--pontomais)'; }
                         }
-                        c.style.borderTopColor = i === 0 ? 'var(--appsheet)' : (i === 1 ? 'var(--glpi)' : 'var(--pontomais)');
                     });
                     document.getElementById('homeBottomContent').append(...bottomCards);
                 } else { document.getElementById(containerId).innerHTML = html; }
             } catch(e) { console.error(e); }
         }
 
-        async function start() {
+        async function init() {
             await carregarAba('abas/home.html', 'homeView');
-            await carregarAba('abas/solicitacoes.html', 'solicitacoesView');
             await carregarAba('abas/jira.html', 'jiraView');
             carregarCardsGestao();
         }
-        window.onload = start;
+        window.onload = init;
 
         function switchTab(tab) {
             document.getElementById('homeView').style.display = tab === 'home' ? 'block' : 'none';
-            document.getElementById('solicitacoesView').style.display = tab === 'solicitacoes' ? 'grid' : 'none';
             document.getElementById('jiraView').style.display = tab === 'jira' ? 'block' : 'none';
             document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
             document.getElementById('btnTab' + tab.charAt(0).toUpperCase() + tab.slice(1)).classList.add('active');
@@ -193,24 +171,25 @@
         }
 
         async function carregarCardsGestao() {
-            const containerJira = document.getElementById('viewAgrupadaJira');
-            const contador = document.getElementById('contadorSolicitacoes');
+            const container = document.getElementById('viewAgrupadaJira');
             try {
                 const res = await fetch(SCRIPT_URL); const dados = await res.json();
-                if(!containerJira) return; containerJira.innerHTML = "";
+                if(!container) return; container.innerHTML = "";
                 if (dados.jira) {
                     ticketsJiraGlobais = dados.jira;
-                    const contagem = {}; let pendPonto = 0;
+                    const contagem = {};
                     dados.jira.forEach(t => { 
-                        if(t.pendentePonto) { pendPonto++; } 
-                        else { let ons = t.onsite || "Não Mapeado"; contagem[ons] = (contagem[ons] || 0) + 1; }
+                        if(!t.pendentePonto) {
+                            let ons = t.onsite || "Não Mapeado";
+                            contagem[ons] = (contagem[ons] || 0) + 1;
+                        }
                     });
-                    if (pendPonto > 0) {
-                        contador.innerText = `${pendPonto} Pendentes`; contador.style.display = "block";
-                        containerJira.innerHTML += `<div class="card-jira-agrupado" style="border-top-color: var(--pontomais)" onclick="mostrarTicketsDoOnsite('TIME DE PONTO')"><span style="font-size:40px">⏱️</span><h3 style="color:var(--pontomais)">TIME DE PONTO</h3><strong>${pendPonto} Tickets</strong></div>`;
-                    } else { contador.style.display = "none"; }
                     Object.entries(contagem).forEach(([nome, qtd]) => {
-                        containerJira.innerHTML += `<div class="card-jira-agrupado" onclick="mostrarTicketsDoOnsite('${nome}')"><span style="font-size:40px">🧑‍💻</span><h3 style="color:var(--primary)">${nome}</h3><strong>${qtd} Tickets</strong></div>`;
+                        container.innerHTML += `<div class="card-onsite" onclick="mostrarTicketsDoOnsite('${nome}')">
+                            <span style="font-size:40px">🧑‍💻</span>
+                            <h3>${nome}</h3>
+                            <strong style="color:var(--danger)">${qtd} Tickets Pendentes</strong>
+                        </div>`;
                     });
                 }
             } catch(e) { console.error(e); }
@@ -223,31 +202,37 @@
             const container = document.getElementById('containerCardsJira');
             container.innerHTML = "";
 
-            const tickets = (onsite === 'TIME DE PONTO') ? ticketsJiraGlobais.filter(t => t.pendentePonto) : ticketsJiraGlobais.filter(t => t.onsite === onsite && !t.pendentePonto);
-            
-            tickets.forEach(t => {
-                const isDeslig = t.tipoItem.toLowerCase().includes("deslig");
-                const isMov = t.tipoItem.toLowerCase().includes("moviment") || t.tipoItem.toLowerCase().includes("mudança");
-                
-                let btnCentral = `<button onclick="abrirPopup('https://forms.office.com/Pages/ResponsePage.aspx?id=fCAtUtXsx0-nbxdGSxFh-eVAzhwdpsxLmCSGMQwqNIpUM1E2TFRSRkhNWU9IQk9SVFhBSDJNWTFDVS4u')" class="btn-action" style="background:var(--primary)">📝 ENVIAR PARA CENTRAL</button>`;
-                if (isDeslig) btnCentral = `<button onclick="abrirPopup('https://forms.office.com/Pages/ResponsePage.aspx?id=fCAtUtXsx0-nbxdGSxFh-f7MDqf4DUBBuOHjox7sxytUNFFQNTgzR1pQV0FLM05aWElXSjlRMjFHRy4u')" class="btn-action" style="background:var(--danger)">📝 FORMS DESLIGAMENTO</button>`;
-                
-                const btnPonto = isMov ? `<button onclick="enviarParaPonto('${t.chave}')" class="btn-action" style="background:var(--warning); color:black">➡️ ENVIAR PARA PONTOMAIS</button>` : '';
-                const btnJira = `<a href="https://spxresolve.atlassian.net/browse/${t.chave}" target="_blank" class="btn-action" style="background:var(--jira)">🔗 ABRIR NO JIRA</a>`;
-                const btnConcluirPonto = t.pendentePonto ? `<button onclick="concluirPonto('${t.chave}')" class="btn-action" style="background:#333">✔️ CONCLUIR NO PONTO</button>` : '';
+            const tickets = ticketsJiraGlobais.filter(t => t.onsite === onsite && !t.pendentePonto);
+            const desligamentos = tickets.filter(t => t.tipoItem.toLowerCase().includes("deslig"));
+            const movimentacoes = tickets.filter(t => !t.tipoItem.toLowerCase().includes("deslig"));
 
-                container.innerHTML += `<div class="card-gestao">
-                    ${t.pendentePonto ? '<div class="tag-ponto">⏰ PENDENTE NO PONTOMAIS</div>' : ''}
-                    <h3 style="margin:0">${t.nome}</h3><small>${t.chave}</small>
-                    ${isDeslig && t.dataDesligamento ? `<br><b style="color:var(--danger)">📅 Data: ${t.dataDesligamento}</b>` : ''}
-                    <hr style="margin:15px 0; opacity:0.1">
-                    <p style="font-size:0.9rem">${t.resumo}</p>
-                    <div style="position:absolute; bottom:15px; left:15px; right:15px">
-                        ${btnJira} ${t.pendentePonto ? '' : btnCentral} ${btnPonto} ${btnConcluirPonto}
-                    </div>
-                </div>`;
-            });
+            if(desligamentos.length > 0) {
+                container.innerHTML += `<div class="ticket-group-title">🚫 DESLIGAMENTOS</div>`;
+                desligamentos.forEach(t => container.innerHTML += renderTicketCard(t));
+            }
+            if(movimentacoes.length > 0) {
+                container.innerHTML += `<div class="ticket-group-title">🔄 MOVIMENTAÇÕES</div>`;
+                movimentacoes.forEach(t => container.innerHTML += renderTicketCard(t));
+            }
             window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function renderTicketCard(t) {
+            const isDeslig = t.tipoItem.toLowerCase().includes("deslig");
+            const isMov = t.tipoItem.toLowerCase().includes("moviment") || t.tipoItem.toLowerCase().includes("mudança");
+            let urlForms = isDeslig ? 'https://forms.office.com/Pages/ResponsePage.aspx?id=fCAtUtXsx0-nbxdGSxFh-f7MDqf4DUBBuOHjox7sxytUNFFQNTgzR1pQV0FLM05aWElXSjlRMjFHRy4u' : 'https://forms.office.com/Pages/ResponsePage.aspx?id=fCAtUtXsx0-nbxdGSxFh-eVAzhwdpsxLmCSGMQwqNIpUM1E2TFRSRkhNWU9IQk9SVFhBSDJNWTFDVS4u';
+            
+            return `<div class="card-ticket">
+                <h3 style="margin:0">${t.nome}</h3><small>${t.chave}</small>
+                ${isDeslig && t.dataDesligamento ? `<br><b style="color:var(--danger)">📅 Data Desejada: ${t.dataDesligamento}</b>` : ''}
+                <hr style="margin:15px 0; opacity:0.1">
+                <p style="font-size:0.9rem">${t.resumo}</p>
+                <div style="position:absolute; bottom:15px; left:15px; right:15px">
+                    <a href="https://spxresolve.atlassian.net/browse/${t.chave}" target="_blank" class="btn-action" style="background:var(--jira)">🔗 ABRIR NO JIRA</a>
+                    <button onclick="window.open('${urlForms}')" class="btn-action" style="background:${isDeslig?'var(--danger)':'var(--primary)'}">📝 ENVIAR PARA CENTRAL</button>
+                    ${isMov ? `<button onclick="enviarParaPonto('${t.chave}')" class="btn-action" style="background:var(--warning); color:black">➡️ ENVIAR PARA PONTOMAIS</button>` : ''}
+                </div>
+            </div>`;
         }
 
         function voltarParaAgrupamentoJira() {
@@ -256,12 +241,10 @@
         }
 
         async function enviarParaPonto(chave) { await fetch(SCRIPT_URL, { method: 'POST', mode: 'no-cors', body: JSON.stringify({ acao: "marcar_ponto", chave: chave }) }); carregarCardsGestao(); }
-        async function concluirPonto(chave) { await fetch(SCRIPT_URL, { method: 'POST', mode: 'no-cors', body: JSON.stringify({ acao: "concluir_ponto", chave: chave }) }); carregarCardsGestao(); }
-        function abrirPopup(url) { window.open(url, 'Popup', 'width=900,height=900,top=50,left=300'); }
         function toggleTheme() { document.documentElement.setAttribute('data-theme', document.documentElement.getAttribute('data-theme') === 'dark' ? '' : 'dark'); }
         function buscarTudo() { 
             let q = document.getElementById('searchInput').value.toLowerCase();
-            document.querySelectorAll('.card, .card-jira-agrupado, .card-gestao').forEach(c => c.style.display = c.innerText.toLowerCase().includes(q) ? "block" : "none");
+            document.querySelectorAll('.card, .card-onsite, .card-ticket').forEach(c => c.style.display = c.innerText.toLowerCase().includes(q) ? "block" : "none");
         }
     </script>
 </body>
