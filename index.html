@@ -8,9 +8,6 @@
     <link rel="icon" type="image/png" href="https://wecanbr.com.br/wp-content/uploads/2021/10/cropped-favicon-32x32.png">
     <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet">
     
-    <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
-    <script>mermaid.initialize({ startOnLoad: true, theme: 'default' });</script>
-
     <style>
         :root {
             --primary: #6a11cb;
@@ -167,8 +164,7 @@
             z-index: 2001; font-size: 20px;
         }
 
-        /* Efeitos de Interação */
-        button:active { transform: scale(0.98); box-shadow: inset 0 2px 4px rgba(0,0,0,0.2); }
+        button:active { transform: scale(0.98); }
         button:disabled { background-color: #a5a5a5 !important; cursor: not-allowed; }
         
         #contadorSolicitacoes {
@@ -204,23 +200,15 @@
                     <a href="https://desafiorhcombr-my.sharepoint.com/:x:/r/personal/edivan_costa_wecanbr_com_br/_layouts/15/Doc.aspx?sourcedoc=%7B63D04DA0-C7A8-4059-8591-37DFCED94A93%7D" target="_blank">📋 Central de Solicitações (Base)</a>
                     <a href="https://docs.google.com/spreadsheets/d/1WBYOF9AkoS7NpzhqFyqm5PzQRP13yUF2p5ZY8FfZp_c/edit" target="_blank">🔍 Voucher 2026 (Base Geral)</a>
                     <a href="https://docs.google.com/spreadsheets/d/1WBYOF9AkoS7NpzhqFyqm5PzQRP13yUF2p5ZY8FfZp_c/edit?gid=690743947#gid=690743947" target="_blank">📊 Template Shopee</a>
-                    <a href="https://desafiorhcombr.sharepoint.com/:x:/r/sites/FSWECANBR/_layouts/15/Doc.aspx?sourcedoc=%7B6265A06E-D548-4055-9261-D6A512496567%7D&file=03%202026%20REJEITOS%20MAR%C3%87O%202026.xlsx&action=default&mobileredirect=true" target="_blank">⚠️ Rejeitos 03.2026</a>
                 </div>
             </div>
 
             <div class="dropdown">
                 <button class="dropdown-btn">📄 Documentos ▼</button>
                 <div class="dropdown-content">
-                    <a href="https://drive.google.com/file/d/1qsLtN-HC5488FVQc3n5mcT8zjCdVja0d/view" target="_blank">📄 Carta de Suspensão</a>
-                    <a href="https://drive.google.com/file/d/1lGnjwLz_5i4uASifv2OPlkSb7NUGeaHI/view" target="_blank">📄 Comunicado de Desligamento</a>
-                    <a href="https://drive.google.com/file/d/1zsrlh6KBLvMvEGc13tTA6I7Ybra5iObA/view" target="_blank">📄 Advertência Disciplinar</a>
                     <a href="https://drive.google.com/file/d/1_Dw1qLl9icW282pkZCNln8908Nfqiasi/view" target="_blank">📄 Advertência - Ponto</a>
-                    <a href="https://drive.google.com/file/d/1aryngzuxX72mOhxchNmQPBA30QT2gNt2/view" target="_blank">📄 Carta Banco Santander</a>
-                    <a href="https://drive.google.com/file/d/1PDp_bhtDB-ZR-wRwFUJ80Xpa4gWu_HkQ/view" target="_blank">📄 Termo de Ciência - EPI</a>
                     <a href="https://drive.google.com/file/d/1a_D1awqrBGXLaiKba6dc_ruE41dDF3ke/view" target="_blank">📄 Dispensa Justa Causa</a>
-                    <a href="https://docs.google.com/document/d/1pqJ2b7wfCbjdAuKC99cIys9RYnenn2nkACDo33isZFE/edit" target="_blank">📄 Aviso Prévio Indenizado</a>
                     <a href="https://drive.google.com/file/d/16qsbtlkVBkIqZN_vjXK5T0gOEI7ivXWR/view" target="_blank">📄 Declaração de Vínculo</a>
-                    <a href="https://drive.google.com/file/d/1CQQ3GTIUoOW9SGZ2EZTG8O3Q3ZFHk_El/view" target="_blank">📄 DUT</a>
                 </div>
             </div>
         </div>
@@ -240,12 +228,6 @@
             <p>Clique para abrir o formulário interno.</p>
         </div>
 
-        <div onclick="abrirPopup('https://forms.office.com/Pages/ResponsePage.aspx?id=fCAtUtXsx0-nbxdGSxFh-f7MDqf4DUBBuOHjox7sxytUNFFQNTgzR1pQV0FLM05aWElXSjlRMjFHRy4u')" class="card" style="border-top-color: var(--danger);">
-            <span class="icon">🚫</span>
-            <h2>Desligamento Shopee</h2>
-            <p>Formulário oficial para desligamento Shopee.</p>
-        </div>
-
         <div onclick="abrirPopup('https://forms.office.com/Pages/ResponsePage.aspx?id=fCAtUtXsx0-nbxdGSxFh-f7MDqf4DUBBuOHjox7sxytUNzdRMTFCOTc2SzZEQzU4NFI2TVMzUjIxWS4u')" class="card" style="border-top-color: var(--warning);">
             <span class="icon">🎧</span>
             <h2>Controle de Atendimento</h2>
@@ -257,12 +239,6 @@
             <span class="icon">🎫</span>
             <h2>Cadastro Voucher</h2>
             <p>Novo Colaborador - Cadastro de Voucher Uber.</p>
-        </div>
-
-        <div onclick="window.open('https://spxresolve.atlassian.net/jira/for-you', '_blank')" class="card" style="border-top-color: var(--jira);">
-            <span class="icon">🟦</span>
-            <h2>JIRA</h2>
-            <p>Gestão de chamados e projetos JIRA.</p>
         </div>
     </div>
 
@@ -285,6 +261,8 @@
                 </select>
             </div>
             <div class="form-group"><label>Valor:</label><input type="number" id="vlr" step="0.01"></div>
+            <div class="form-group"><label>Responsável Onsite:</label><input type="text" id="nomeOnsite" placeholder="Seu nome" required></div>
+            
             <button type="button" onclick="enviarSolicitacao()" style="background: var(--primary); color: white; width: 100%; padding: 15px; border-radius: 8px; border: none; cursor: pointer; font-weight: bold;">🚀 Enviar Solicitação</button>
         </form>
     </div>
@@ -299,21 +277,7 @@
     <div class="funnel-container">
         <div class="embedded-section" style="border-top: 5px solid var(--appsheet);">
             <div><strong style="color: var(--appsheet);">📱 INATIVAÇÃO VOUCHER UBER</strong><p>Inativação de usuários Uber em caso de desligamento.</p></div>
-            <button onclick="abrirAppSheet()" class="section-btn" style="background: var(--appsheet); box-shadow: 0 4px 15px rgba(26, 115, 232, 0.3);">🚀 Abrir AppSheet</button>
-        </div>
-
-        <div class="embedded-section" style="border-top: 5px solid var(--glpi);">
-            <div><strong style="color: var(--glpi);">🛠️ CHAMADOS - GLPI</strong><p>Abertura e consulta de chamados técnicos WeCanBR.</p></div>
-            <a href="https://glpi.wecanbr.com.br/index.php?noAUTO=1" target="_blank" style="text-decoration: none;">
-                <button class="section-btn" style="background: var(--glpi); box-shadow: 0 4px 15px rgba(0, 128, 128, 0.3);">🎫 Acessar GLPI</button>
-            </a>
-        </div>
-
-        <div class="embedded-section" style="border-top: 5px solid var(--pontomais);">
-            <div><strong style="color: var(--pontomais);">⏱️ PONTOMAIS</strong><p>Gestão de colaboradores e conferência de ponto.</p></div>
-            <a href="https://app2.pontomais.com.br/controle-de-ponto/colaboradores/lista" target="_blank" style="text-decoration: none;">
-                <button class="section-btn" style="background: var(--pontomais); box-shadow: 0 4px 15px rgba(0, 168, 168, 0.3);">🔍 Abrir Pontomais</button>
-            </a>
+            <button onclick="abrirAppSheet()" class="section-btn" style="background: var(--appsheet);">🚀 Abrir AppSheet</button>
         </div>
     </div>
 
@@ -321,6 +285,7 @@
     <footer>© 2026 Apoio ao On-Site | WeCanBR</footer>
 
     <script>
+        // CERTIFIQUE-SE DE QUE ESTA URL É A DA ÚLTIMA IMPLANTAÇÃO
         const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxupjNwDDgxLULbLOPUVd2jc4hRUxI9JYYeqy7riYGBg5ymoqAfLeJn6IwRqLH7aozH/exec";
 
         function abrirPopup(url) {
@@ -331,9 +296,7 @@
         }
 
         function abrirAppSheet() {
-            const largura = window.screen.availWidth;
-            const altura = window.screen.availHeight;
-            window.open('https://www.appsheet.com/start/8ba6b59c-c836-4d4e-9a3e-e43d38d2a47e', 'AppSheetPopup', `width=${largura},height=${altura},top=0,left=0,scrollbars=yes,resizable=yes`);
+            window.open('https://www.appsheet.com/start/8ba6b59c-c836-4d4e-9a3e-e43d38d2a47e', '_blank');
         }
 
         function buscarTudo() {
@@ -367,14 +330,7 @@
             select.innerHTML = '<option value="">Escolha uma opção...</option>';
             
             if (tipo === "TROCA DE BENEFICIO") {
-                const trocas = [
-                    "ATUALIZAR valor de VT DIÁRIO", "VT para FRETADO", "VT para VT + VOUCHER",
-                    "VT para MOBILIDADE", "MOBILIDADE para VT+VOUCHER", "MOBILIDADE para VT",
-                    "MOBILIDADE para FRETADO", "VT + VOUCHER para FRETADO",
-                    "VT + VOUCHER para VT + FRETADO", "VT + VOUCHER para MOBILIDADE",
-                    "FRETADO para VT", "FRETADO para VT + VOUCHER",
-                    "FRETADO para MOBILIDADE", "FRETADO para VT + FRETADO"
-                ];
+                const trocas = ["VT para FRETADO", "VT para MOBILIDADE", "MOBILIDADE para VT", "FRETADO para VT"];
                 trocas.forEach(t => select.innerHTML += `<option value="${t}">${t}</option>`);
             } else {
                 const padrao = ["VT", "VOUCHER UBER", "MOBILIDADE"];
@@ -387,29 +343,28 @@
             const inputMatricula = document.getElementById('matr').value.trim();
             const tipoSol = document.getElementById('tipoSol').value;
             const beneDest = document.getElementById('beneDest').value;
+            const nomeOnsite = document.getElementById('nomeOnsite').value; // Agora o campo existe!
 
-            if (!inputMatricula || !tipoSol || !beneDest) {
-                alert("Preencha Matrícula, Tipo e Benefício!");
+            if (!inputMatricula || !tipoSol || !beneDest || !nomeOnsite) {
+                alert("Preencha todos os campos, incluindo o Responsável Onsite!");
                 return;
             }
 
-            const textoOriginal = btn.innerText;
-            btn.innerText = "⏳ Enviando, Aguarde Confirmação...";
+            btn.innerText = "⏳ Enviando...";
             btn.disabled = true;
 
-            let matriculaFormatada = inputMatricula.toUpperCase().startsWith("WE") 
-                ? inputMatricula.toUpperCase() 
-                : "WE" + inputMatricula;
+            let matriculaFormatada = inputMatricula.toUpperCase().startsWith("WE") ? inputMatricula.toUpperCase() : "WE" + inputMatricula;
 
             const data = {
-    matricula: matriculaFormatada,
-    tipo_solicitacao: tipoSol,
-    qual_beneficio: beneDest,
-    valor_vt: document.getElementById('vlr').value,
-    onsite_nome: document.getElementById('nomeOnsite').value // Adicione esta linha!
-};
+                matricula: matriculaFormatada,
+                tipo_solicitacao: tipoSol,
+                qual_beneficio: beneDest,
+                valor_vt: document.getElementById('vlr').value,
+                onsite_nome: nomeOnsite
+            };
 
             try {
+                // Alterado para evitar travamento de CORS
                 await fetch(SCRIPT_URL, { 
                     method: 'POST', 
                     mode: 'no-cors', 
@@ -418,13 +373,12 @@
 
                 alert("✅ Sucesso! Solicitação enviada.");
                 document.getElementById('formBeneficio').reset();
-                atualizarOpcoesBeneficio();
                 carregarCardsGestao();
 
             } catch (error) {
-                alert("❌ Erro ao enviar.");
+                alert("❌ Erro de conexão.");
             } finally {
-                btn.innerText = textoOriginal;
+                btn.innerText = "🚀 Enviar Solicitação";
                 btn.disabled = false;
             }
         }
@@ -436,29 +390,26 @@
             try {
                 const res = await fetch(SCRIPT_URL);
                 const dados = await res.json();
-                
                 container.innerHTML = "";
 
                 if (dados && dados.length > 0) {
-                    contador.innerText = dados.length + (dados.length === 1 ? " Pendente" : " Pendentes");
+                    contador.innerText = `${dados.length} Pendentes`;
                     contador.style.display = "block";
+                    dados.forEach(sol => {
+                        container.innerHTML += `
+                            <div class="card-gestao">
+                                <strong>Matrícula: ${sol.matricula}</strong><br>
+                                <small>ID: ${sol.id} | Onsite: ${sol.onsite || 'N/A'}</small><br>
+                                <span>${sol.tipo}: ${sol.detalhe}</span><br>
+                                <span class="status-badge">${sol.status}</span>
+                            </div>`;
+                    });
                 } else {
                     contador.style.display = "none";
                     container.innerHTML = "<p style='text-align:center; width:100%'>Nenhuma solicitação pendente.</p>";
-                    return;
                 }
-
-                dados.forEach(sol => {
-                    container.innerHTML += `
-                        <div class="card-gestao">
-                            <strong>${sol.nome || 'Buscando Nome...'}</strong><br>
-                            <small>Mat: ${sol.matricula} | ID: ${sol.id}</small><br>
-                            <span>${sol.tipo}</span><br>
-                            <span class="status-badge">${sol.status}</span>
-                        </div>`;
-                });
             } catch(e) { 
-                container.innerHTML = "<p style='color:gray; text-align:center; width:100%'>Aguardando novos dados da planilha...</p>"; 
+                container.innerHTML = "<p style='text-align:center; width:100%'>Aguardando dados...</p>"; 
             }
         }
 
