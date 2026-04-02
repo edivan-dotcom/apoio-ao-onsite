@@ -507,10 +507,9 @@
                 selectBene.required = true;
 
                 if (tipo === "TROCA DE BENEFICIO") {
-                    const trocas = ["VT para FRETADO", "VT para VT + VOUCHER", "VT para MOBILIDADE", "MOBILIDADE para VT", "FRETADO para VT"];
+                    const trocas = ["VT para FRETADO", "VT para VT + VOUCHER", "VT para MOBILIDADE", "MOBILIDADE para VT", "FRETADO para VT", "FRETADO para VT + VOUCHER", "VT + VOUCHER para VT", "MOBILIDADE para VT + VOUCHER", "MOBILIDADE para FRETADO", "VT + VOUCHER para MOBILIDADE"];
                     trocas.forEach(t => selectBene.innerHTML += `<option value="${t}">${t}</option>`);
                 } else if (tipo === "AJUSTE VALOR") {
-                    const padrao = ["VT", "VOUCHER UBER", "MOBILIDADE"];
                     padrao.forEach(p => selectBene.innerHTML += `<option value="${p}">${p}</option>`);
                 }
             }
