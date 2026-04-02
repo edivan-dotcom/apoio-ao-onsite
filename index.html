@@ -1,202 +1,438 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>WeCanBR - Apoio OnSite</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Apoio ao On-Site | WeCanBR</title>
+    
+    <link rel="icon" type="image/png" href="https://wecanbr.com.br/wp-content/uploads/2021/10/cropped-favicon-32x32.png">
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet">
+    
+    <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+    <script>mermaid.initialize({ startOnLoad: true, theme: 'default' });</script>
 
-<style>
+    <style>
+        :root {
+            --primary: #6a11cb;
+            --secondary: #2575fc;
+            --bg: #f4f7f6;
+            --card-bg: white;
+            --text: #333;
+            --navbar-bg: white;
+            --danger: #ff4b2b;
+            --warning: #f39c12;
+            --voucher: #00b894;
+            --jira: #0052CC;
+            --appsheet: #1a73e8;
+            --glpi: #008080;
+            --pontomais: #00a8a8;
+            --reembolso: #3282F6;
+            --new-tag: #eb4d4b;
+            --signature: rgba(0, 0, 0, 0.2);
+        }
 
-/* ===== CORES ===== */
-:root {
-    --reembolso: #2d7ff9;
-    --appsheet: #1a73e8;
-    --glpi: #008080;
-    --pontomais: #00a8a8;
-    --card-bg: #ffffff;
-}
+        [data-theme="dark"] {
+            --bg: #121212;
+            --card-bg: #1e1e1e;
+            --text: #e0e0e0;
+            --navbar-bg: #1e1e1e;
+            --signature: rgba(255, 255, 255, 0.05);
+        }
 
-/* ===== BASE ===== */
-body {
-    margin: 0;
-    font-family: Arial, sans-serif;
-    background: #f4f6f9;
-}
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            margin: 0;
+            padding-top: 60px;
+            transition: 0.3s;
+        }
 
-/* ===== HEADER SIMPLES ===== */
-.header {
-    background: white;
-    padding: 15px 30px;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-    font-weight: bold;
-    color: #6a1b9a;
-}
+        .navbar {
+            background: var(--navbar-bg);
+            height: 60px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 30px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: fixed;
+            top: 0; width: 100%; z-index: 1000;
+            box-sizing: border-box;
+        }
 
-/* ===== CONTAINER ===== */
-.funnel-container {
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
-    gap: 20px;
+        .nav-links { display: flex; align-items: center; height: 100%; }
+        
+        .login-btn, .intranet-btn {
+            text-decoration: none; padding: 6px 15px; border-radius: 5px; 
+            font-size: 0.8rem; font-weight: bold; margin-left: 10px; transition: 0.3s;
+        }
+        .login-btn { background: #0078d4; color: white !important; }
+        .intranet-btn { background: #ff5722; color: white !important; }
 
-    max-width: 95%;
-    margin: 40px auto;
-    padding: 0 20px;
-}
+        .dropdown { position: relative; display: flex; align-items: center; height: 100%; }
+        .dropdown-btn {
+            text-decoration: none; color: var(--text); margin-left: 20px;
+            font-weight: 600; font-size: 0.9rem; cursor: pointer;
+            border: none; background: none; display: flex; align-items: center; gap: 5px; height: 100%;
+        }
 
-/* ===== CARD ===== */
-.embedded-section {
-    background: var(--card-bg);
-    padding: 25px;
-    border-radius: 15px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        .dropdown-content {
+            display: none; position: absolute; right: 0;
+            background-color: var(--card-bg); min-width: 350px;
+            box-shadow: 0px 8px 16px rgba(0,0,0,0.2); z-index: 1001;
+            border-radius: 0 0 8px 8px; top: 60px; border-top: 2px solid var(--primary);
+            overflow: hidden;
+        }
+        .dropdown:hover .dropdown-content { display: block; }
+        .dropdown-content a {
+            color: var(--text); padding: 12px 16px; text-decoration: none;
+            display: block; font-size: 0.85rem; border-bottom: 1px solid rgba(128,128,128,0.1);
+        }
+        .dropdown-content a:hover { background: rgba(106, 17, 203, 0.05); }
 
-    flex: 1 1 280px;
-    max-width: 320px;
+        header {
+            background: linear-gradient(rgba(106, 17, 203, 0.75), rgba(37, 117, 252, 0.75)), 
+                        url('https://wecanbr.com.br/img/quem-somos/main.jpg');
+            background-size: cover; background-position: center;
+            color: white; padding: 60px 20px; text-align: center;
+        }
 
-    text-align: center;
+        .search-container { margin-top: 25px; position: relative; width: 450px; max-width: 90%; margin: 20px auto 0; }
+        #searchInput {
+            padding: 15px 25px; width: 100%; border-radius: 30px; border: none;
+            font-size: 1rem; box-shadow: 0 5px 15px rgba(0,0,0,0.2); outline: none;
+            background: var(--card-bg); color: var(--text); box-sizing: border-box;
+        }
 
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
+        .tabs-container {
+            display: flex; justify-content: center; flex-wrap: wrap; gap: 15px; margin: 30px auto 10px;
+        }
+        .tab-btn {
+            padding: 12px 30px; border: none; border-radius: 25px; cursor: pointer;
+            font-weight: bold; font-size: 1rem; background: var(--card-bg); color: var(--text);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1); transition: 0.3s;
+        }
+        .tab-btn.active { background: var(--primary); color: white; }
+        .tab-btn:hover { transform: translateY(-3px); box-shadow: 0 6px 15px rgba(0,0,0,0.15); }
 
-    animation: fadeUp 0.5s ease forwards;
-    opacity: 0;
-}
+        .container { display: flex; justify-content: center; flex-wrap: wrap; gap: 20px; padding: 20px 20px 40px; max-width: 1400px; margin: 0 auto; }
+        .card {
+            background: var(--card-bg); border-radius: 15px; width: 260px; padding: 25px;
+            text-align: center; box-shadow: 0 5px 15px rgba(0,0,0,0.05); transition: 0.3s;
+            text-decoration: none; color: var(--text); border-top: 5px solid var(--primary); 
+            box-sizing: border-box; cursor: pointer; position: relative;
+        }
+        .card:hover { transform: translateY(-5px); box-shadow: 0 10px 25px rgba(0,0,0,0.1); }
+        .card.hidden { display: none; }
+        
+        .badge-new {
+            position: absolute; top: -15px; right: -10px;
+            background: var(--new-tag); color: white;
+            padding: 4px 12px; border-radius: 20px;
+            font-size: 0.75rem; font-weight: bold;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            animation: bounce 2s infinite;
+        }
 
-/* ===== ANIMAÇÃO ENTRADA ===== */
-@keyframes fadeUp {
-    from {
-        opacity: 0;
-        transform: translateY(15px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {transform: translateY(0);}
+            40% {transform: translateY(-5px);}
+            60% {transform: translateY(-3px);}
+        }
 
-/* ===== BOTÃO ===== */
-.section-btn {
-    position: relative;
-    overflow: hidden;
-    border: none;
-    padding: 12px 18px;
-    border-radius: 10px;
-    color: #fff;
-    font-weight: 600;
-    cursor: pointer;
-    width: 100%;
+        .icon { font-size: 40px; margin-bottom: 15px; display: block; }
 
-    transition: all 0.25s ease;
-}
+        .funnel-container {
+            display: flex;
+            justify-content: center;
+            align-items: stretch;
+            flex-wrap: wrap;
+            gap: 20px;
+            max-width: 100%;
+            margin: 0 auto 35px;
+            padding: 0 20px;
+        }
 
-/* hover */
-.section-btn:hover {
-    transform: translateY(-3px) scale(1.03);
-    filter: brightness(1.1);
-}
+        .embedded-section {
+            background: var(--card-bg);
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            flex: 1 1 260px;
+            max-width: 320px;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            transition: transform 0.25s ease, box-shadow 0.25s ease;
+            animation: fadeUp 0.6s ease forwards;
+            opacity: 0;
+        }
 
-/* click */
-.section-btn:active {
-    transform: scale(0.97);
-}
+        .embedded-section:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.15);
+        }
 
-/* brilho */
-.section-btn::after {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: -75%;
-    width: 50%;
-    height: 100%;
-    background: linear-gradient(
-        120deg,
-        rgba(255,255,255,0.2),
-        rgba(255,255,255,0.6),
-        rgba(255,255,255,0.2)
-    );
-    transform: skewX(-20deg);
-    transition: 0.6s;
-}
+        .section-btn {
+            border: none;
+            padding: 12px 18px;
+            border-radius: 10px;
+            color: #fff;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.25s ease;
+            margin-top: 15px;
+        }
 
-.section-btn:hover::after {
-    left: 120%;
-}
+        .section-btn:hover {
+            transform: translateY(-3px) scale(1.03);
+            filter: brightness(1.1);
+        }
 
-a {
-    text-decoration: none;
-}
+        .embedded-section:nth-child(1) { animation-delay: 0.1s; }
+        .embedded-section:nth-child(2) { animation-delay: 0.2s; }
+        .embedded-section:nth-child(3) { animation-delay: 0.3s; }
+        .embedded-section:nth-child(4) { animation-delay: 0.4s; }
 
-</style>
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(15px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .signature { text-align: center; margin: 40px 0 20px; font-family: 'Great Vibes', cursive; font-size: 1.5rem; color: var(--signature); }
+        footer { text-align: center; padding: 30px; background: #222; color: white; width: 100%; }
+
+        .theme-toggle {
+            position: fixed; bottom: 20px; right: 20px; width: 50px; height: 50px;
+            border-radius: 50%; background: var(--primary); color: white;
+            border: none; cursor: pointer; box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+            z-index: 2001; font-size: 20px;
+        }
+
+        .form-section { max-width: 600px; margin: 20px auto 40px; background: var(--card-bg); padding: 30px; border-radius: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); border-top: 5px solid var(--primary); }
+        .form-group { margin-bottom: 15px; text-align: left; }
+        .form-group label { display: block; margin-bottom: 5px; font-weight: bold; }
+        .form-group input, .form-group select { width: 100%; padding: 12px; border-radius: 8px; border: 1px solid #ddd; background: var(--bg); color: var(--text); box-sizing: border-box; }
+        
+        .gestao-section { max-width: 1200px; margin: 40px auto; padding: 0 20px; }
+        .grid-gestao { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px; align-items: start; }
+        .card-gestao { background: var(--card-bg); padding: 15px; border-radius: 10px; border-left: 5px solid var(--warning); box-shadow: 0 2px 5px rgba(0,0,0,0.1); text-align: left; position: relative; padding-bottom: 110px; }
+        
+        #contadorSolicitacoes { 
+            background: #e67e22; color: #000; padding: 5px 15px; border-radius: 20px; 
+            font-size: 0.8rem; font-weight: 800; margin-left: 15px; display: none; 
+            max-width: 60vw; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+            cursor: pointer; transition: opacity 0.5s ease, transform 0.3s ease; opacity: 1;
+        }
+
+        .btn-concluir {
+            position: absolute; bottom: 15px; left: 15px; right: 15px;
+            background: var(--primary); color: white; border: none; padding: 8px 15px; 
+            border-radius: 5px; cursor: pointer; font-weight: bold; transition: 0.3s;
+        }
+
+        .valor-destaque { color: var(--voucher); font-weight: bold; }
+        .link-anexo {
+            display: inline-block; margin-top: 8px; padding: 5px 10px; background: #e3f2fd; 
+            color: #1976d2; text-decoration: none; border-radius: 5px; font-weight: bold; font-size: 0.85rem;
+        }
+
+        .card-jira-agrupado {
+            background: var(--card-bg); padding: 25px; border-radius: 10px; border-top: 5px solid var(--primary); 
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1); text-align: center; cursor: pointer; transition: 0.3s;
+        }
+
+        .btn-jira-link {
+            border: none; border-radius: 5px; cursor: pointer; font-weight: bold; transition: 0.3s; 
+            text-decoration: none; text-align: center; color: white; display: block; width: 100%; box-sizing: border-box;
+        }
+
+        .tag-ponto { 
+            background: var(--warning); color: #000; text-align: center; 
+            font-weight: bold; padding: 6px; border-radius: 5px; margin-bottom: 10px; 
+            animation: pulse 2s infinite; font-size: 0.85rem;
+        }
+        @keyframes pulse { 
+            0% { transform: scale(1); } 
+            50% { transform: scale(1.02); } 
+            100% { transform: scale(1); } 
+        }
+    </style>
 </head>
-
 <body>
 
-<div class="header">
-    WE CAN BR
-</div>
+    <button class="theme-toggle" onclick="toggleTheme()" id="themeBtn">🌙</button>
 
-<!-- ===== CARDS ===== -->
-<div class="funnel-container">
-
-    <!-- REEMBOLSO -->
-    <div class="embedded-section" style="border-top: 4px solid var(--reembolso);">
-        <div>
-            <strong style="color: var(--reembolso);">🔄 REEMBOLSO HE/FALTAS</strong>
-            <p>Solicite Reembolso em caso de faltas e descontos indevidos.</p>
+    <nav class="navbar">
+        <div style="display: flex; align-items: center;">
+            <div style="font-weight: bold; color: var(--primary); letter-spacing: 1px;">WE CAN BR</div>
+            <div id="contadorSolicitacoes" onclick="switchTab('home')" title="Ir para Home">0 Pendentes</div>
         </div>
-        <a href="https://forms.office.com/" target="_blank">
-            <button class="section-btn" style="background: var(--reembolso);">
-                📝 Preencher Formulário
-            </button>
-        </a>
+        
+        <div class="nav-links">
+            <a href="https://portal.office.com" target="_blank" class="login-btn">🔑 Login Microsoft</a>
+            <a href="https://desafiorhcombr.sharepoint.com/sites/wecanbr" target="_blank" class="intranet-btn">🌐 Intranet</a>
+            
+            <div class="dropdown">
+                <button class="dropdown-btn">📊 Planilhas ▼</button>
+                <div class="dropdown-content">
+                    <a href="#" target="_blank">📋 Controle de Atendimento</a>
+                    <a href="#" target="_blank">📈 Drive de Rescisão Shopee</a>
+                    <a href="#" target="_blank">📋 Central de Solicitações</a>
+                    <a href="#" target="_blank">🔍 Voucher 2026</a>
+                    <a href="#" target="_blank">📊 Template Shopee</a>
+                    <a href="#" target="_blank">⚠️ Rejeitos 03.2026</a>
+                </div>
+            </div>
+
+            <div class="dropdown">
+                <button class="dropdown-btn">📄 Documentos ▼</button>
+                <div class="dropdown-content">
+                   <a href="https://drive.google.com/file/d/1qsLtN-HC5488FVQc3n5mcT8zjCdVja0d/view" target="_blank">📄 Carta de Suspensão</a>
+                    <a href="https://drive.google.com/file/d/1lGnjwLz_5i4uASifv2OPlkSb7NUGeaHI/view" target="_blank">📄 Comunicado de Desligamento</a>
+                    <a href="https://drive.google.com/file/d/1zsrlh6KBLvMvEGc13tTA6I7Ybra5iObA/view" target="_blank">📄 Advertência Disciplinar</a>
+                    <a href="https://drive.google.com/file/d/1_Dw1qLl9icW282pkZCNln8908Nfqiasi/view" target="_blank">📄 Advertência - Ponto</a>
+                    <a href="https://drive.google.com/file/d/1aryngzuxX72mOhxchNmQPBA30QT2gNt2/view" target="_blank">📄 Carta Banco Santander</a>
+                    <a href="https://drive.google.com/file/d/1PDp_bhtDB-ZR-wRwFUJ80Xpa4gWu_HkQ/view" target="_blank">📄 Termo de Ciência - EPI</a>
+                    <a href="https://drive.google.com/file/d/1a_D1awqrBGXLaiKba6dc_ruE41dDF3ke/view" target="_blank">📄 Dispensa Justa Causa</a>
+                    <a href="https://docs.google.com/document/d/1pqJ2b7wfCbjdAuKC99cIys9RYnenn2nkACDo33isZFE/edit" target="_blank">📄 Aviso Prévio Indenizado</a>
+                    <a href="https://drive.google.com/file/d/16qsbtlkVBkIqZN_vjXK5T0gOEI7ivXWR/view" target="_blank">📄 Declaração de Vínculo</a>
+                    <a href="https://drive.google.com/file/d/1CQQ3GTIUoOW9SGZ2EZTG8O3Q3ZFHk_El/view" target="_blank">📄 DUT</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <header>
+        <h1>APOIO AO ONSITE</h1>
+        <div class="search-container">
+            <input type="text" id="searchInput" onkeyup="buscarTudo()" placeholder="Pesquisar..." autocomplete="off">
+        </div>
+    </header>
+
+    <div class="tabs-container">
+        <button class="tab-btn active" onclick="switchTab('home')" id="btnTabHome">🏠 HOME</button>
+        <button class="tab-btn" onclick="switchTab('solicitacoes')" id="btnTabSol">📝 SOLICITAÇÕES</button>
+        <button class="tab-btn" onclick="switchTab('jira')" id="btnTabJira">🎫 TICKETS SHOPEE</button>
     </div>
 
-    <!-- INATIVAÇÃO -->
-    <div class="embedded-section" style="border-top: 4px solid var(--appsheet);">
-        <div>
-            <strong style="color: var(--appsheet);">📱 INATIVAÇÃO VOUCHER UBER</strong>
-            <p>Inativação de usuários Uber em caso de desligamento.</p>
+    <div id="homeView">
+        <div class="container">
+            <div onclick="abrirPopup('https://forms.office.com/')" class="card">
+                <span class="icon">📝</span>
+                <h2>Central de Solicitações</h2>
+                <p>Clique para abrir o formulário interno.</p>
+            </div>
+
+            <div onclick="abrirPopup('https://forms.office.com/')" class="card" style="border-top-color: var(--danger);">
+                <span class="icon">🚫</span>
+                <h2>Desligamento Shopee</h2>
+                <p>Formulário oficial para desligamento Shopee.</p>
+            </div>
+
+            <div onclick="abrirPopup('https://forms.office.com/')" class="card" style="border-top-color: var(--warning);">
+                <span class="icon">🎧</span>
+                <h2>Controle de Atendimento</h2>
+                <p>Registro de atendimentos Shopee.</p>
+            </div>
+
+            <div onclick="abrirPopup('https://forms.office.com/')" class="card" style="border-top-color: var(--voucher);">
+                <div class="badge-new">Novo!</div>
+                <span class="icon">🎫</span>
+                <h2>Cadastro Voucher</h2>
+                <p>Novo Colaborador - Cadastro de Voucher Uber.</p>
+            </div>
+
+            <div onclick="window.open('https://spxresolve.atlassian.net/jira/for-you', '_blank')" class="card" style="border-top-color: var(--jira);">
+                <span class="icon">🟦</span>
+                <h2>JIRA</h2>
+                <p>Gestão de chamados e projetos JIRA.</p>
+            </div>
         </div>
-        <button onclick="abrirAppSheet()" class="section-btn" style="background: var(--appsheet);">
-            🚀 Abrir AppSheet
-        </button>
+
+        <div class="funnel-container">
+            <div class="embedded-section" style="border-top: 4px solid var(--reembolso);">
+                <div>
+                    <strong style="color: var(--reembolso);">🔄 REEMBOLSO HE/FALTAS</strong>
+                    <p>Solicite Reembolso em caso de Faltas e outros descontos indevidos.</p>
+                </div>
+                <a href="https://forms.office.com/" target="_blank" style="text-decoration: none;">
+                    <button class="section-btn" style="background: var(--reembolso); width: 100%;">
+                        📝 Preencher Formulário
+                    </button>
+                </a>
+            </div>
+
+            <div class="embedded-section" style="border-top: 4px solid var(--appsheet);">
+                <div>
+                    <strong style="color: var(--appsheet);">📱 INATIVAÇÃO VOUCHER UBER</strong>
+                    <p>Inativação de usuários Uber em caso de desligamento.</p>
+                </div>
+                <button onclick="abrirAppSheet()" class="section-btn" style="background: var(--appsheet); width: 100%;">
+                    🚀 Abrir AppSheet
+                </button>
+            </div>
+
+            <div class="embedded-section" style="border-top: 4px solid var(--glpi);">
+                <div>
+                    <strong style="color: var(--glpi);">🛠️ CHAMADOS - GLPI</strong>
+                    <p>Abertura e consulta de chamados técnicos WeCanBR.</p>
+                </div>
+                <a href="https://glpi.wecanbr.com.br/index.php?noAUTO=1" target="_blank" style="text-decoration: none;">
+                    <button class="section-btn" style="background: var(--glpi); width: 100%;">
+                        🎫 Acessar GLPI
+                    </button>
+                </a>
+            </div>
+
+            <div class="embedded-section" style="border-top: 4px solid var(--pontomais);">
+                <div>
+                    <strong style="color: var(--pontomais);">⏱️ PONTOMAIS</strong>
+                    <p>Gestão de colaboradores e conferência de ponto.</p>
+                </div>
+                <a href="https://app2.pontomais.com.br/" target="_blank" style="text-decoration: none;">
+                    <button class="section-btn" style="background: var(--pontomais); width: 100%;">
+                        🔍 Abrir Pontomais
+                    </button>
+                </a>
+            </div>
+        </div>
     </div>
 
-    <!-- GLPI -->
-    <div class="embedded-section" style="border-top: 4px solid var(--glpi);">
-        <div>
-            <strong style="color: var(--glpi);">🛠️ CHAMADOS - GLPI</strong>
-            <p>Abertura e consulta de chamados técnicos WeCanBR.</p>
-        </div>
-        <a href="https://glpi.wecanbr.com.br/index.php?noAUTO=1" target="_blank">
-            <button class="section-btn" style="background: var(--glpi);">
-                🎫 Acessar GLPI
-            </button>
-        </a>
-    </div>
+    <div id="solicitacoesView" style="display: none;">...</div>
+    <div id="jiraView" style="display: none;">...</div>
 
-    <!-- PONTOMAIS -->
-    <div class="embedded-section" style="border-top: 4px solid var(--pontomais);">
-        <div>
-            <strong style="color: var(--pontomais);">⏱️ PONTOMAIS</strong>
-            <p>Gestão de colaboradores e conferência de ponto.</p>
-        </div>
-        <a href="https://app2.pontomais.com.br/" target="_blank">
-            <button class="section-btn" style="background: var(--pontomais);">
-                🔍 Abrir Pontomais
-            </button>
-        </a>
-    </div>
+    <div class="signature">By: Edivan Costa</div>
+    <footer>© 2026 Apoio ao On-Site | WeCanBR</footer>
 
-</div>
+    <script>
+        function switchTab(tab) {
+            document.getElementById('homeView').style.display = tab === 'home' ? 'block' : 'none';
+            document.getElementById('solicitacoesView').style.display = tab === 'solicitacoes' ? 'block' : 'none';
+            document.getElementById('jiraView').style.display = tab === 'jira' ? 'block' : 'none';
+            
+            document.getElementById('btnTabHome').classList.toggle('active', tab === 'home');
+            document.getElementById('btnTabSol').classList.toggle('active', tab === 'solicitacoes');
+            document.getElementById('btnTabJira').classList.toggle('active', tab === 'jira');
+        }
 
-<script>
-function abrirAppSheet() {
-    window.open("https://www.appsheet.com/start/8ba6b59c-c836-4d4e-9a3e-e43d38d2a47e", "_blank");
-}
-</script>
+        function toggleTheme() {
+            const html = document.documentElement;
+            const btn = document.getElementById('themeBtn');
+            if (html.getAttribute('data-theme') === 'dark') {
+                html.removeAttribute('data-theme');
+                btn.innerHTML = "🌙";
+            } else {
+                html.setAttribute('data-theme', 'dark');
+                btn.innerHTML = "☀️";
+            }
+        }
 
+        function abrirPopup(url) { window.open(url, '_blank', 'width=900,height=900'); }
+        function abrirAppSheet() { window.open('https://www.appsheet.com/start/...', '_blank'); }
+        function buscarTudo() { /* lógica de busca */ }
+    </script>
 </body>
 </html>
