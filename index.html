@@ -150,9 +150,23 @@
         <a href="abas/tickets-shopee.html" class="tab-btn">🎫 TICKETS SHOPEE</a>
     </div>
 
-    <div id="homeView">
+ <div id="homeView">
         <div class="home-grid-top" id="homeTopGrid"></div>
         <div class="home-grid-bottom" id="homeBottomGrid"></div>
+    </div>
+
+    <div id="solicitacoesView" style="display: none;">
+        <div class="grid-gestao" id="containerCardsGestao"></div>
+    </div>
+
+    <div id="jiraView" style="display: none; padding: 20px;">
+        <div class="grid-tickets-detalhe" id="viewAgrupadaJira"></div>
+        
+        <div id="viewDetalhadaJira" style="display: none;">
+            <button onclick="voltarParaAgrupamentoJira()" style="margin-bottom:20px; cursor:pointer; background:var(--primary); color:white; border:none; padding:10px 20px; border-radius:5px; font-weight:bold;">← Voltar</button>
+            <h2 id="tituloOperacaoJira" style="text-align:center; color:var(--primary);"></h2>
+            <div class="grid-tickets-detalhe" id="containerCardsJira"></div>
+        </div>
     </div>
 
     <div class="signature">By: Edivan Costa</div>
