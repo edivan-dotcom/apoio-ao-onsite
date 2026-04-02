@@ -2,11 +2,12 @@
 <html lang="pt-br">
 <head>
 <meta charset="UTF-8">
-<title>Painel de Acesso</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>WeCanBR - Apoio OnSite</title>
 
 <style>
 
-/* CORES */
+/* ===== CORES ===== */
 :root {
     --reembolso: #2d7ff9;
     --appsheet: #1a73e8;
@@ -15,33 +16,44 @@
     --card-bg: #ffffff;
 }
 
-/* FUNDO */
+/* ===== BASE ===== */
 body {
     margin: 0;
     font-family: Arial, sans-serif;
     background: #f4f6f9;
 }
 
-/* CONTAINER */
+/* ===== HEADER SIMPLES ===== */
+.header {
+    background: white;
+    padding: 15px 30px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+    font-weight: bold;
+    color: #6a1b9a;
+}
+
+/* ===== CONTAINER ===== */
 .funnel-container {
     display: flex;
     justify-content: center;
-    align-items: stretch;
     flex-wrap: wrap;
     gap: 20px;
-    max-width: 1200px;
+
+    max-width: 95%;
     margin: 40px auto;
     padding: 0 20px;
 }
 
-/* CARD */
+/* ===== CARD ===== */
 .embedded-section {
     background: var(--card-bg);
     padding: 25px;
     border-radius: 15px;
     box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-    flex: 1 1 260px;
-    max-width: 280px;
+
+    flex: 1 1 280px;
+    max-width: 320px;
+
     text-align: center;
 
     display: flex;
@@ -52,7 +64,7 @@ body {
     opacity: 0;
 }
 
-/* ANIMAÇÃO ENTRADA */
+/* ===== ANIMAÇÃO ENTRADA ===== */
 @keyframes fadeUp {
     from {
         opacity: 0;
@@ -64,7 +76,7 @@ body {
     }
 }
 
-/* BOTÃO */
+/* ===== BOTÃO ===== */
 .section-btn {
     position: relative;
     overflow: hidden;
@@ -79,18 +91,18 @@ body {
     transition: all 0.25s ease;
 }
 
-/* HOVER */
+/* hover */
 .section-btn:hover {
     transform: translateY(-3px) scale(1.03);
     filter: brightness(1.1);
 }
 
-/* CLICK */
+/* click */
 .section-btn:active {
     transform: scale(0.97);
 }
 
-/* EFEITO BRILHO */
+/* brilho */
 .section-btn::after {
     content: "";
     position: absolute;
@@ -121,6 +133,11 @@ a {
 
 <body>
 
+<div class="header">
+    WE CAN BR
+</div>
+
+<!-- ===== CARDS ===== -->
 <div class="funnel-container">
 
     <!-- REEMBOLSO -->
@@ -129,7 +146,7 @@ a {
             <strong style="color: var(--reembolso);">🔄 REEMBOLSO HE/FALTAS</strong>
             <p>Solicite Reembolso em caso de faltas e descontos indevidos.</p>
         </div>
-        <a href="https://forms.office.com/pages/responsepage.aspx?id=fCAtUtXsx0-nbxdGSxFh-f7MDqf4DUBBuOHjox7sxytUM1pLUFZVQjkxV1ZUNkY2RU1CWVQ1MVJZOS4u&route=shorturl" target="_blank">
+        <a href="https://forms.office.com/" target="_blank">
             <button class="section-btn" style="background: var(--reembolso);">
                 📝 Preencher Formulário
             </button>
@@ -166,7 +183,7 @@ a {
             <strong style="color: var(--pontomais);">⏱️ PONTOMAIS</strong>
             <p>Gestão de colaboradores e conferência de ponto.</p>
         </div>
-        <a href="https://app2.pontomais.com.br/controle-de-ponto/colaboradores/lista" target="_blank">
+        <a href="https://app2.pontomais.com.br/" target="_blank">
             <button class="section-btn" style="background: var(--pontomais);">
                 🔍 Abrir Pontomais
             </button>
@@ -177,7 +194,7 @@ a {
 
 <script>
 function abrirAppSheet() {
-    window.open("SEU_LINK_APPSHEET_AQUI", "_blank");
+    window.open("https://www.appsheet.com/start/8ba6b59c-c836-4d4e-9a3e-e43d38d2a47e", "_blank");
 }
 </script>
 
