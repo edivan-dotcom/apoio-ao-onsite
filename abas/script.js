@@ -9,11 +9,10 @@ let ticketsJiraGlobais = [];
         }
 
         async function montarSite() {
-            await carregarAba('abas/home.html', 'homeView');
-            await carregarAba('abas/solicitacoes.html', 'solicitacoesView');
-            await carregarAba('abas/jira.html', 'jiraView');
-            carregarCardsGestao();
-        }
+    // Carrega apenas a home, as outras abas já estão no Index agora
+    await carregarAba('abas/home.html', 'homeTopGrid'); 
+    carregarCardsGestao();
+}
         window.onload = montarSite;
 
         function switchTab(tab) {
