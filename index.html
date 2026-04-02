@@ -143,15 +143,85 @@
 
         .icon { font-size: 40px; margin-bottom: 15px; display: block; }
 
-        .funnel-container {
-            display: flex; justify-content: center; flex-wrap: wrap; gap: 20px;
-            max-width: 95%; margin: 0px auto 35px; padding: 0 20px;
-        }
+       .funnel-container {
+    display: flex;
+    justify-content: center;
+    align-items: stretch;
+    flex-wrap: wrap;
+    gap: 20px;
+    max-width: 100%;
+    margin: 0 auto 35px;
+    padding: 0 20px;
+}
 
-        .embedded-section {
-            background: var(--card-bg); padding: 25px; border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-            flex: 1; min-width: 300px; max-width: 400px; text-align: center;
+.embedded-section {
+    background: var(--card-bg);
+    padding: 25px;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    flex: 1 1 260px;
+    max-width: 320px;
+    text-align: center;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+/* efeito ao passar o mouse no card */
+.embedded-section:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 35px rgba(0,0,0,0.15);
+}
+
+/* BOTÕES */
+.section-btn {
+    border: none;
+    padding: 12px 18px;
+    border-radius: 10px;
+    color: #fff;
+    font-weight: 600;
+    cursor: pointer;
+
+    transition: all 0.25s ease;
+    transform: translateY(0);
+}
+
+/* hover do botão */
+.section-btn:hover {
+    transform: translateY(-3px) scale(1.03);
+    filter: brightness(1.1);
+}
+
+/* clique (efeito "pressionado") */
+.section-btn:active {
+    transform: scale(0.97);
+}
+
+/* animação de entrada (fade + subida) */
+.embedded-section {
+    animation: fadeUp 0.6s ease forwards;
+    opacity: 0;
+}
+
+/* delay progressivo (efeito cascata) */
+.embedded-section:nth-child(1) { animation-delay: 0.1s; }
+.embedded-section:nth-child(2) { animation-delay: 0.2s; }
+.embedded-section:nth-child(3) { animation-delay: 0.3s; }
+.embedded-section:nth-child(4) { animation-delay: 0.4s; }
+
+@keyframes fadeUp {
+    from {
+        opacity: 0;
+        transform: translateY(15px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
         }
 
         .section-btn {
