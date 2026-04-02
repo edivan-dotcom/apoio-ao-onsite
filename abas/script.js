@@ -16,13 +16,26 @@ let ticketsJiraGlobais = [];
         window.onload = montarSite;
 
         function switchTab(tab) {
-            document.getElementById('homeView').style.display = tab === 'home' ? 'block' : 'none';
-            document.getElementById('solicitacoesView').style.display = tab === 'solicitacoes' ? 'block' : 'none';
-            document.getElementById('jiraView').style.display = tab === 'jira' ? 'block' : 'none';
-            document.getElementById('btnTabHome').classList.toggle('active', tab === 'home');
-            document.getElementById('btnTabSol').classList.toggle('active', tab === 'solicitacoes');
-            document.getElementById('btnTabJira').classList.toggle('active', tab === 'jira');
-        }
+    // Esconde todas as áreas
+    document.getElementById('homeView').style.display = 'none';
+    document.getElementById('solicitacoesView').style.display = 'none';
+    document.getElementById('jiraView').style.display = 'none';
+
+    // Mostra apenas a clicada
+    if (tab === 'home') {
+        document.getElementById('homeView').style.display = 'block';
+    } else if (tab === 'solicitacoes') {
+        document.getElementById('solicitacoesView').style.display = 'block';
+    } else if (tab === 'jira') {
+        document.getElementById('jiraView').style.display = 'block';
+        voltarParaAgrupamentoJira(); // Garante que comece na lista de Onsites
+    }
+
+    // Ajusta a cor do botão ativo
+    document.getElementById('btnTabHome').classList.toggle('active', tab === 'home');
+    document.getElementById('btnTabSol').classList.toggle('active', tab === 'solicitacoes');
+    document.getElementById('btnTabJira').classList.toggle('active', tab === 'jira');
+}
 
         async function carregarCardsGestao() {
             const containerSol = document.getElementById('containerCardsGestao');
