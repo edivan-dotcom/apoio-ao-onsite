@@ -8,70 +8,105 @@
     <link rel="icon" type="image/png" href="https://wecanbr.com.br/wp-content/uploads/2021/10/cropped-favicon-32x32.png">
     <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet">
     
+    <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+    <script>mermaid.initialize({ startOnLoad: true, theme: 'default' });</script>
+
     <style>
         :root {
-            --primary: #6a11cb; --secondary: #2575fc; --bg: #f4f7f6; --card-bg: white; --text: #333;
-            --navbar-bg: white; --danger: #ff4b2b; --warning: #f39c12; --voucher: #00b894;
-            --jira: #0052CC; --appsheet: #1a73e8; --glpi: #008080; --pontomais: #00a8a8;
-            --new-tag: #eb4d4b; --signature: rgba(0, 0, 0, 0.2);
+            --primary: #6a11cb;
+            --secondary: #2575fc;
+            --bg: #f4f7f6;
+            --card-bg: white;
+            --text: #333;
+            --navbar-bg: white;
+            --danger: #ff4b2b;
+            --warning: #f39c12;
+            --voucher: #00b894;
+            --jira: #0052CC;
+            --appsheet: #1a73e8;
+            --glpi: #008080;
+            --pontomais: #00a8a8;
+            --new-tag: #eb4d4b;
+            --signature: rgba(0, 0, 0, 0.2);
         }
+
         [data-theme="dark"] {
-            --bg: #121212; --card-bg: #1e1e1e; --text: #e0e0e0; --navbar-bg: #1e1e1e;
+            --bg: #121212;
+            --card-bg: #1e1e1e;
+            --text: #e0e0e0;
+            --navbar-bg: #1e1e1e;
             --signature: rgba(255, 255, 255, 0.05);
         }
-        body { font-family: 'Segoe UI', sans-serif; background-color: var(--bg); color: var(--text); margin: 0; padding-top: 60px; transition: 0.3s; }
-        
+
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: var(--bg); color: var(--text); margin: 0; padding-top: 60px; transition: 0.3s; }
         .navbar { background: var(--navbar-bg); height: 60px; display: flex; justify-content: space-between; align-items: center; padding: 0 30px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); position: fixed; top: 0; width: 100%; z-index: 1000; box-sizing: border-box; }
         .nav-links { display: flex; align-items: center; height: 100%; }
-        .login-btn, .intranet-btn { text-decoration: none; padding: 6px 15px; border-radius: 5px; font-size: 0.8rem; font-weight: bold; margin-left: 10px; transition: 0.3s; color: white !important; }
-        .login-btn { background: #0078d4; } .intranet-btn { background: #ff5722; }
-
+        .login-btn, .intranet-btn { text-decoration: none; padding: 6px 15px; border-radius: 5px; font-size: 0.8rem; font-weight: bold; margin-left: 10px; transition: 0.3s; }
+        .login-btn { background: #0078d4; color: white !important; } .intranet-btn { background: #ff5722; color: white !important; }
         .dropdown { position: relative; display: flex; align-items: center; height: 100%; }
-        .dropdown-btn { color: var(--text); margin-left: 20px; font-weight: 600; font-size: 0.9rem; cursor: pointer; border: none; background: none; display: flex; align-items: center; gap: 5px; height: 100%; }
+        .dropdown-btn { text-decoration: none; color: var(--text); margin-left: 20px; font-weight: 600; font-size: 0.9rem; cursor: pointer; border: none; background: none; display: flex; align-items: center; gap: 5px; height: 100%; }
         .dropdown-content { display: none; position: absolute; right: 0; background-color: var(--card-bg); min-width: 350px; box-shadow: 0px 8px 16px rgba(0,0,0,0.2); z-index: 1001; border-radius: 0 0 8px 8px; top: 60px; border-top: 2px solid var(--primary); overflow: hidden; }
         .dropdown:hover .dropdown-content { display: block; }
         .dropdown-content a { color: var(--text); padding: 12px 16px; text-decoration: none; display: block; font-size: 0.85rem; border-bottom: 1px solid rgba(128,128,128,0.1); }
-
-        header { background: linear-gradient(rgba(106,17,203,0.75), rgba(37,117,252,0.75)), url('https://wecanbr.com.br/img/quem-somos/main.jpg'); background-size: cover; padding: 40px 20px; text-align: center; color: white; }
-        #searchInput { width: 450px; max-width: 90%; padding: 12px 25px; border-radius: 30px; border: none; margin-top: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.2); outline: none; }
-
-        .tabs-container { display: flex; justify-content: center; gap: 15px; margin: 25px 0; }
-        .tab-btn { padding: 12px 30px; border: none; border-radius: 25px; cursor: pointer; font-weight: bold; background: var(--card-bg); color: var(--text); box-shadow: 0 4px 10px rgba(0,0,0,0.1); transition: 0.3s; }
+        .dropdown-content a:hover { background: rgba(106, 17, 203, 0.05); }
+        header { background: linear-gradient(rgba(106, 17, 203, 0.75), rgba(37, 117, 252, 0.75)), url('https://wecanbr.com.br/img/quem-somos/main.jpg'); background-size: cover; background-position: center; color: white; padding: 60px 20px; text-align: center; }
+        .search-container { margin-top: 25px; position: relative; width: 450px; max-width: 90%; margin: 20px auto 0; }
+        #searchInput { padding: 15px 25px; width: 100%; border-radius: 30px; border: none; font-size: 1rem; box-shadow: 0 5px 15px rgba(0,0,0,0.2); outline: none; background: var(--card-bg); color: var(--text); box-sizing: border-box; }
+        .tabs-container { display: flex; justify-content: center; flex-wrap: wrap; gap: 15px; margin: 30px auto 10px; }
+        .tab-btn { padding: 12px 30px; border: none; border-radius: 25px; cursor: pointer; font-weight: bold; font-size: 1rem; background: var(--card-bg); color: var(--text); box-shadow: 0 4px 10px rgba(0,0,0,0.1); transition: 0.3s; }
         .tab-btn.active { background: var(--primary); color: white; }
-
-        /* GRIDS */
-        .grid-home { display: grid; grid-template-columns: repeat(5, 1fr); gap: 20px; padding: 20px; max-width: 1400px; margin: 0 auto; }
-        .grid-home-bottom { display: grid; grid-template-columns: repeat(3, 1fr); gap: 25px; padding: 20px; max-width: 1100px; margin: 0 auto; }
-        .grid-tickets { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; padding: 20px; max-width: 1400px; margin: 0 auto; }
-        .grid-detalhe { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; padding: 20px; max-width: 1400px; margin: 0 auto; }
-
-        /* CARDS */
-        .card, .card-onsite, .card-ticket, .embedded-section { 
-            background: var(--card-bg); border-radius: 15px; padding: 20px; text-align: center; 
-            box-shadow: 0 5px 15px rgba(0,0,0,0.08); border-top: 5px solid var(--primary); transition: 0.3s; box-sizing: border-box;
-        }
-        .card-ticket { text-align: left; border-left: 8px solid var(--warning); border-top: none; min-height: 380px; display: flex; flex-direction: column; justify-content: space-between; }
-        
-        .actions-row { display: flex; gap: 5px; margin-top: 15px; }
-        .btn-mini { flex: 1; padding: 10px 2px; border-radius: 6px; font-weight: bold; text-decoration: none; text-align: center; color: white !important; border: none; cursor: pointer; font-size: 0.7rem; }
-        .btn-pill { display: inline-block; padding: 10px 25px; border-radius: 25px; color: white !important; font-weight: bold; text-decoration: none; margin-top: 15px; font-size: 0.85rem; }
-
-        .tag-ponto { background: var(--warning); color: #000; text-align: center; font-weight: bold; padding: 5px; border-radius: 5px; margin-bottom: 10px; font-size: 0.8rem; animation: pulse 2s infinite; }
+        .tab-btn:hover { transform: translateY(-3px); box-shadow: 0 6px 15px rgba(0,0,0,0.15); }
+        .container { display: flex; justify-content: center; flex-wrap: wrap; gap: 20px; padding: 20px 20px 40px; max-width: 1400px; margin: 0 auto; }
+        .card { background: var(--card-bg); border-radius: 15px; width: 260px; padding: 25px; text-align: center; box-shadow: 0 5px 15px rgba(0,0,0,0.05); transition: 0.3s; text-decoration: none; color: var(--text); border-top: 5px solid var(--primary); box-sizing: border-box; cursor: pointer; position: relative; }
+        .card:hover { transform: translateY(-5px); box-shadow: 0 10px 25px rgba(0,0,0,0.1); }
+        .card.hidden { display: none; }
+        .badge-new { position: absolute; top: -15px; right: -10px; background: var(--new-tag); color: white; padding: 4px 12px; border-radius: 20px; font-size: 0.75rem; font-weight: bold; box-shadow: 0 4px 8px rgba(0,0,0,0.2); animation: bounce 2s infinite; }
+        @keyframes bounce { 0%, 20%, 50%, 80%, 100% {transform: translateY(0);} 40% {transform: translateY(-5px);} 60% {transform: translateY(-3px);} }
+        .icon { font-size: 40px; margin-bottom: 15px; display: block; }
+        .funnel-container { display: flex; justify-content: center; flex-wrap: wrap; gap: 20px; max-width: 95%; margin: 0px auto 40px; padding: 0 20px; }
+        .embedded-section { background: var(--card-bg); padding: 25px; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); flex: 1; min-width: 300px; max-width: 400px; text-align: center; }
+        .section-btn { color: white; border: none; padding: 12px 25px; border-radius: 25px; font-size: 0.9rem; font-weight: bold; cursor: pointer; transition: 0.3s; margin-top: 15px; }
+        .signature { text-align: center; margin: 40px 0 20px; font-family: 'Great Vibes', cursive; font-size: 1.5rem; color: var(--signature); }
+        footer { text-align: center; padding: 30px; background: #222; color: white; width: 100%; }
+        .theme-toggle { position: fixed; bottom: 20px; right: 20px; width: 50px; height: 50px; border-radius: 50%; background: var(--primary); color: white; border: none; cursor: pointer; box-shadow: 0 4px 15px rgba(0,0,0,0.3); z-index: 2001; font-size: 20px; }
+        .form-section { max-width: 600px; margin: 20px auto 40px; background: var(--card-bg); padding: 30px; border-radius: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); border-top: 5px solid var(--primary); }
+        .form-group { margin-bottom: 15px; text-align: left; } .form-group label { display: block; margin-bottom: 5px; font-weight: bold; } .form-group input, .form-group select { width: 100%; padding: 12px; border-radius: 8px; border: 1px solid #ddd; background: var(--bg); color: var(--text); box-sizing: border-box; }
+        .gestao-section { max-width: 1200px; margin: 40px auto; padding: 0 20px; }
+        .grid-gestao { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px; align-items: start; }
+        .card-gestao { background: var(--card-bg); padding: 15px; border-radius: 10px; border-left: 5px solid var(--warning); box-shadow: 0 2px 5px rgba(0,0,0,0.1); text-align: left; position: relative; padding-bottom: 110px; }
+        #contadorSolicitacoes { background: #e67e22; color: #000; padding: 5px 15px; border-radius: 20px; font-size: 0.8rem; font-weight: 800; margin-left: 15px; display: none; max-width: 60vw; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; cursor: pointer; transition: opacity 0.5s ease, transform 0.3s ease; opacity: 1; }
+        #contadorSolicitacoes:hover { filter: brightness(1.1); transform: scale(1.02); }
+        .btn-concluir { position: absolute; bottom: 15px; left: 15px; right: 15px; background: var(--primary); color: white; border: none; padding: 8px 15px; border-radius: 5px; cursor: pointer; font-weight: bold; transition: 0.3s; }
+        .btn-concluir:hover { background: var(--secondary); }
+        .check-concluido { display: none; position: absolute; bottom: 10px; left: 15px; right: 15px; background: #f4f7f6; padding: 8px; border-radius: 5px; text-align: center; border: 1px solid #ddd; font-weight: bold; color: var(--primary); box-shadow: inset 0 2px 5px rgba(0,0,0,0.05); }
+        .check-concluido input { transform: scale(1.3); margin-right: 8px; cursor: pointer; }
+        .valor-destaque { color: var(--voucher); font-weight: bold; }
+        .link-anexo { display: inline-block; margin-top: 8px; padding: 5px 10px; background: #e3f2fd; color: #1976d2; text-decoration: none; border-radius: 5px; font-weight: bold; font-size: 0.85rem; }
+        .link-anexo:hover { background: #bbdefb; }
+        .card-jira-agrupado { background: var(--card-bg); padding: 25px; border-radius: 10px; border-top: 5px solid var(--primary); box-shadow: 0 4px 10px rgba(0,0,0,0.1); text-align: center; cursor: pointer; transition: 0.3s; }
+        .card-jira-agrupado:hover { transform: translateY(-5px); box-shadow: 0 8px 20px rgba(0,0,0,0.15); }
+        .btn-jira-link { border: none; border-radius: 5px; cursor: pointer; font-weight: bold; transition: 0.3s; text-decoration: none; text-align: center; color: white; display: block; width: 100%; box-sizing: border-box; }
+        .btn-jira-link:hover { filter: brightness(1.1); }
+        .btn-filtro { padding: 8px 20px; border-radius: 20px; border: 2px solid transparent; cursor: pointer; font-weight: bold; transition: 0.3s; font-size: 0.9rem; }
+        .btn-filtro:hover { transform: scale(1.05); }
+        .tag-ponto { background: var(--warning); color: #000; text-align: center; font-weight: bold; padding: 6px; border-radius: 5px; margin-bottom: 10px; animation: pulse 2s infinite; font-size: 0.85rem;}
         @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.02); } 100% { transform: scale(1); } }
-        
-        footer { text-align: center; padding: 30px; background: #222; color: white; margin-top: 40px; }
-        .signature { font-family: 'Great Vibes', cursive; font-size: 1.5rem; text-align: center; margin: 20px 0; color: rgba(0,0,0,0.2); }
-        .theme-toggle { position: fixed; bottom: 20px; right: 20px; width: 50px; height: 50px; border-radius: 50%; background: var(--primary); color: white; border: none; cursor: pointer; z-index: 2001; }
     </style>
 </head>
 <body>
+
     <button class="theme-toggle" onclick="toggleTheme()" id="themeBtn">🌙</button>
 
     <nav class="navbar">
-        <div style="font-weight: bold; color: var(--primary);">WE CAN BR</div>
+        <div style="display: flex; align-items: center;">
+            <div style="font-weight: bold; color: var(--primary); letter-spacing: 1px;">WE CAN BR</div>
+            <div id="contadorSolicitacoes" onclick="switchTab('home')" title="Ir para Home">0 Pendentes</div>
+        </div>
+        
         <div class="nav-links">
-            <a href="https://portal.office.com" target="_blank" class="login-btn">🔑 Microsoft</a>
+            <a href="https://portal.office.com" target="_blank" class="login-btn">🔑 Login Microsoft</a>
             <a href="https://desafiorhcombr.sharepoint.com/sites/wecanbr" target="_blank" class="intranet-btn">🌐 Intranet</a>
+            
             <div class="dropdown">
                 <button class="dropdown-btn">📊 Planilhas ▼</button>
                 <div class="dropdown-content">
@@ -83,25 +118,25 @@
                     <a href="https://desafiorhcombr.sharepoint.com/:x:/r/sites/FSWECANBR/_layouts/15/Doc.aspx?sourcedoc=%7B6265A06E-D548-4055-9261-D6A512496567%7D&file=03%202026%20REJEITOS%20MAR%C3%87O%202026.xlsx&action=default&mobileredirect=true" target="_blank">⚠️ Rejeitos 03.2026</a>
                 </div>
             </div>
+
             <div class="dropdown">
                 <button class="dropdown-btn">📄 Documentos ▼</button>
                 <div class="dropdown-content">
-                    <a href="#" target="_blank">📄 Carta de Suspensão</a>
-                    <a href="#" target="_blank">📄 Comunicado de Desligamento</a>
-                    <a href="#" target="_blank">📄 Advertência Disciplinar</a>
-                    <a href="#" target="_blank">📄 Advertência - Ponto</a>
-                    <a href="#" target="_blank">📄 Carta Banco Santander</a>
-                    <a href="#" target="_blank">📄 Termo de Ciência - EPI</a>
-                    <a href="#" target="_blank">📄 Dispensa Justa Causa</a>
-                    <a href="#" target="_blank">📄 Aviso Prévio Indenizado</a>
-                    <a href="#" target="_blank">📄 Declaração de Vínculo</a>
-                    <a href="#" target="_blank">📄 DUT</a>
+                    <a href="https://drive.google.com/file/d/1qsLtN-HC5488FVQc3n5mcT8zjCdVja0d/view" target="_blank">📄 Carta de Suspensão</a>
+                    <a href="https://drive.google.com/file/d/1lGnjwLz_5i4uASifv2OPlkSb7NUGeaHI/view" target="_blank">📄 Comunicado de Desligamento</a>
+                    <a href="https://drive.google.com/file/d/1zsrlh6KBLvMvEGc13tTA6I7Ybra5iObA/view" target="_blank">📄 Advertência Disciplinar</a>
+                    <a href="https://drive.google.com/file/d/1_Dw1qLl9icW282pkZCNln8908Nfqiasi/view" target="_blank">📄 Advertência - Ponto</a>
                 </div>
             </div>
         </div>
     </nav>
 
-    <header><h1>APOIO AO ONSITE</h1><input type="text" id="searchInput" onkeyup="buscarTudo()" placeholder="Pesquisar..."></header>
+    <header>
+        <h1>APOIO AO ONSITE</h1>
+        <div class="search-container">
+            <input type="text" id="searchInput" onkeyup="buscarTudo()" placeholder="Pesquisar..." autocomplete="off">
+        </div>
+    </header>
 
     <div class="tabs-container">
         <button class="tab-btn active" onclick="switchTab('home')" id="btnTabHome">🏠 HOME</button>
@@ -110,30 +145,56 @@
     </div>
 
     <div id="homeView">
-        <div class="grid-home">
-            <div onclick="switchTab('solicitacoes')" class="card"><span>📝</span><h3>Central de Solicitações</h3><p>Clique para abrir o formulário interno.</p></div>
-            <div onclick="window.open('https://forms.office.com/r/...')" class="card" style="border-top-color: var(--danger)"><span>🚫</span><h3>Desligamento</h3><p>Formulário oficial Shopee.</p></div>
-            <div onclick="window.open('https://forms.office.com/r/...')" class="card" style="border-top-color: var(--warning)"><span>🎧</span><h3>Atendimento</h3><p>Registro de atendimentos.</p></div>
-            <div onclick="window.open('https://forms.office.com/r/...')" class="card" style="border-top-color: var(--voucher)"><span>🎫</span><h3>Voucher Uber</h3><p>Cadastro de novos vouchers.</p></div>
-            <div onclick="switchTab('jira')" class="card" style="border-top-color: var(--jira)"><span>🟦</span><h3>JIRA</h3><p>Gestão de chamados.</p></div>
-        </div>
-        <div class="grid-home-bottom">
-            <div class="embedded-section" style="border-top-color: var(--appsheet)"><h3>📱 APPSHEET</h3><p>Inativação de Vouchers.</p><button class="btn-pill" style="background:var(--appsheet)">Acessar App</button></div>
-            <div class="embedded-section" style="border-top-color: var(--glpi)"><h3>🛠️ GLPI</h3><p>Chamados técnicos.</p><button class="btn-pill" style="background:var(--glpi)">Abrir Chamado</button></div>
-            <div class="embedded-section" style="border-top-color: var(--pontomais)"><h3>⏱️ PONTOMAIS</h3><p>Gestão de Ponto.</p><button class="btn-pill" style="background:var(--pontomais)">Acessar Sistema</button></div>
+        <div class="container">
+            <div onclick="abrirPopup('https://forms.office.com/Pages/ResponsePage.aspx?id=fCAtUtXsx0-nbxdGSxFh-eVAzhwdpsxLmCSGMQwqNIpUM1E2TFRSRkhNWU9IQk9SVFhBSDJNWTFDVS4u')" class="card">
+                <span class="icon">📝</span>
+                <h2>Central de Solicitações</h2>
+                <p>Clique para abrir o formulário interno.</p>
+            </div>
+            <div onclick="abrirPopup('https://forms.office.com/Pages/ResponsePage.aspx?id=fCAtUtXsx0-nbxdGSxFh-f7MDqf4DUBBuOHjox7sxytUNFFQNTgzR1pQV0FLM05aWElXSjlRMjFHRy4u')" class="card" style="border-top-color: var(--danger);">
+                <span class="icon">🚫</span>
+                <h2>Desligamento Shopee</h2>
+                <p>Formulário oficial para desligamento Shopee.</p>
+            </div>
+            <div onclick="window.open('https://spxresolve.atlassian.net/jira/for-you', '_blank')" class="card" style="border-top-color: var(--jira);">
+                <span class="icon">🟦</span>
+                <h2>JIRA</h2>
+                <p>Gestão de chamados e projetos JIRA.</p>
+            </div>
         </div>
     </div>
 
-    <div id="solicitacoesView" style="display:none; padding: 20px; text-align: center;">
-        <h2>📝 Aba de Solicitações em Construção</h2>
+    <div id="solicitacoesView" style="display: none;">
+        <div class="form-section">
+            <h2 style="text-align: center; color: var(--primary); margin-top: 0;">Solicitação de Ajuste</h2>
+            <form id="formBeneficio">
+                <div class="form-group"><label>Matrícula:</label><input type="text" id="matr" required placeholder="Ex: 123456"></div>
+                <div class="form-group"><label>Tipo de Solicitação:</label><select id="tipoSol" onchange="atualizarOpcoesBeneficio()" required><option value="">Selecione...</option><option value="TROCA DE BENEFICIO">TROCA DE BENEFICIO</option><option value="AJUSTE VALOR">AJUSTE VALOR DA PASSAGEM</option><option value="DESLIGAMENTO" style="color: red; font-weight: bold;">SOLICITAÇÃO DE DESLIGAMENTO</option></select></div>
+                <div class="form-group" id="grupoBeneficio"><label>Qual Benefício?</label><select id="beneDest" required><option value="">Selecione o tipo acima primeiro...</option></select></div>
+                <div class="form-group" id="grupoValor"><label>Valor (se aplicável):</label><input type="number" id="vlr" step="0.01"></div>
+                <div class="form-group" id="grupoAnexo" style="display: none;"><label style="color: var(--danger);">📎 Anexar Documento:</label><input type="file" id="arquivoAnexo" accept=".pdf,.png,.jpg,.jpeg"></div>
+                <button type="button" onclick="enviarSolicitacao()" id="btnEnviar" style="background: var(--primary); color: white; width: 100%; padding: 15px; border-radius: 8px; border: none; cursor: pointer; font-weight: bold; margin-top: 10px;">🚀 Enviar Solicitação</button>
+            </form>
+        </div>
+        <div class="gestao-section">
+            <h2 style="text-align: center; color: var(--primary);">📋 Gestão de Solicitações Pendentes</h2>
+            <div id="containerCardsGestao" class="grid-gestao"><p style="text-align: center; width: 100%;">Carregando...</p></div>
+        </div>
     </div>
 
-    <div id="jiraView" style="display:none">
-        <div class="grid-tickets" id="viewAgrupadaJira"></div>
-        <div id="viewDetalhadaJira" style="display:none; padding:20px;">
-            <button onclick="voltarParaAgrupamentoJira()" style="background:var(--primary); color:white; border:none; padding:10px 25px; border-radius:5px; cursor:pointer; font-weight:bold">← Voltar</button>
-            <h2 id="tituloOperacaoJira" style="text-align:center; color:var(--primary); margin:20px 0;"></h2>
-            <div class="grid-detalhe" id="containerCardsJira"></div>
+    <div id="jiraView" style="display: none;">
+        <div class="gestao-section">
+            <h2 style="text-align: center; color: var(--jira);">🎫 Tickets Shopee por On-Site</h2>
+            
+            <div id="viewAgrupadaJira" class="grid-gestao"></div>
+            
+            <div id="viewDetalhadaJira" style="display: none; background: var(--card-bg); padding: 25px; border-radius: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.05); margin-top: 20px;">
+                <button onclick="voltarParaAgrupamentoJira()" style="margin-bottom: 20px; padding: 10px 20px; border-radius: 5px; background: #666; color: white; border: none; cursor: pointer; font-weight: bold;">← Voltar para a lista</button>
+                <h3 id="tituloOperacaoJira" style="color: var(--jira); margin-top: 0; text-align: center; font-size: 1.5rem;"></h3>
+                <div id="containerFiltrosJira" style="display: flex; justify-content: center; gap: 10px; margin-top: 15px; margin-bottom: 25px; flex-wrap: wrap;"></div>
+                <hr style="opacity: 0.2; margin-bottom: 30px;">
+                <div id="containerCardsJira" class="grid-gestao"></div>
+            </div>
         </div>
     </div>
 
@@ -142,96 +203,192 @@
 
     <script>
         let ticketsJiraGlobais = [];
-        const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxupjNwDDgxLULbLOPUVd2jc4hRUxI9JYYeqy7riYGBg5ymoqAfLeJn6IwRqLH7aozH/exec";
+        const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxupjNwDDgxLULbLOPUVd2jc4hRUxI9JYYeqy7riYGBg5ymoqAfLeJn6IwRqLH7aozH/exec"; // MANTER O MESMO
 
         function switchTab(tab) {
             document.getElementById('homeView').style.display = tab === 'home' ? 'block' : 'none';
             document.getElementById('solicitacoesView').style.display = tab === 'solicitacoes' ? 'block' : 'none';
             document.getElementById('jiraView').style.display = tab === 'jira' ? 'block' : 'none';
-            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-            document.getElementById('btnTab' + tab.charAt(0).toUpperCase() + tab.slice(1)).classList.add('active');
-            if (tab === 'jira') voltarParaAgrupamentoJira();
+            document.getElementById('btnTabHome').classList.toggle('active', tab === 'home');
+            document.getElementById('btnTabSol').classList.toggle('active', tab === 'solicitacoes');
+            document.getElementById('btnTabJira').classList.toggle('active', tab === 'jira');
         }
 
-        async function carregarDados() {
-            const container = document.getElementById('viewAgrupadaJira');
+        function abrirPopup(url) { window.open(url, 'FormsPopup', `width=900,height=900,top=50,left=300,scrollbars=yes,resizable=yes`); }
+        function toggleTheme() { const html = document.documentElement; const btn = document.getElementById('themeBtn'); if (html.getAttribute('data-theme') === 'dark') { html.removeAttribute('data-theme'); btn.innerHTML = "🌙"; } else { html.setAttribute('data-theme', 'dark'); btn.innerHTML = "☀️"; } }
+
+        // --- SISTEMA DE PONTO (HANDOFF) ---
+        async function enviarParaPonto(chave) {
+            const btn = document.getElementById('btn-ponto-' + chave);
+            btn.innerText = "⏳ Enviando...";
+            btn.style.opacity = "0.5";
             try {
-                const res = await fetch(SCRIPT_URL); const dados = await res.json();
-                ticketsJiraGlobais = dados.jira;
-                if(!container) return; container.innerHTML = "";
-                
-                const contagem = {}; let pendPontoCount = 0;
-                ticketsJiraGlobais.forEach(t => { 
-                    if(t.pendentePonto) pendPontoCount++;
-                    else {
-                        let ons = t.onsite || "Não Mapeado";
-                        contagem[ons] = (contagem[ons] || 0) + 1;
+                await fetch(SCRIPT_URL, { method: 'POST', mode: 'no-cors', body: JSON.stringify({ acao: "marcar_ponto", chave: chave }) });
+                setTimeout(() => carregarCardsGestao(), 1500); // Recarrega a tela para atualizar o card
+            } catch(e) { alert("Erro ao enviar. Tente novamente."); btn.innerText = "➡️ ENVIAR PARA O PONTO"; btn.style.opacity = "1"; }
+        }
+
+        async function concluirPonto(chave) {
+            const btn = document.getElementById('btn-concluir-ponto-' + chave);
+            btn.innerText = "⏳ Concluindo...";
+            btn.style.opacity = "0.5";
+            try {
+                await fetch(SCRIPT_URL, { method: 'POST', mode: 'no-cors', body: JSON.stringify({ acao: "concluir_ponto", chave: chave }) });
+                setTimeout(() => carregarCardsGestao(), 1500);
+            } catch(e) { alert("Erro ao concluir. Tente novamente."); btn.innerText = "✔️ MARCAR COMO CONCLUÍDO (PONTO)"; btn.style.opacity = "1"; }
+        }
+
+        // --- CARREGAMENTO PRINCIPAL ---
+        async function carregarCardsGestao() {
+            const container = document.getElementById('containerCardsGestao');
+            const containerJiraAgrupado = document.getElementById('viewAgrupadaJira');
+            
+            try {
+                const res = await fetch(SCRIPT_URL);
+                const dados = await res.json();
+                container.innerHTML = ""; containerJiraAgrupado.innerHTML = "";
+
+                if (dados.solicitacoes && dados.solicitacoes.length > 0) {
+                    dados.solicitacoes.forEach(sol => {
+                        container.innerHTML += `
+                            <div class="card-gestao" id="card-${sol.id}">
+                                <strong>${sol.nome}</strong><br><small>Matrícula: ${sol.matricula}</small><br>
+                                <hr style="opacity:0.2;"><strong>${sol.tipo}</strong><br>
+                                <button class="btn-concluir" onclick="finalizarSolicitacao('${sol.id}')">✅ CONCLUIR</button>
+                            </div>`;
+                    });
+                } else { container.innerHTML = "<p style='text-align:center; width:100%'>Nenhuma solicitação pendente.</p>"; }
+
+                if (dados.jira && dados.jira.length > 0) {
+                    ticketsJiraGlobais = dados.jira;
+                    const contagemJiraPorOnsite = {};
+                    dados.jira.forEach(ticket => {
+                        let nomeOnsite = ticket.onsite || "Não Mapeado";
+                        contagemJiraPorOnsite[nomeOnsite] = (contagemJiraPorOnsite[nomeOnsite] || 0) + 1;
+                    });
+                    for (const [nomeOnsite, qtd] of Object.entries(contagemJiraPorOnsite)) {
+                        containerJiraAgrupado.innerHTML += `
+                            <div class="card-jira-agrupado" onclick="mostrarTicketsDoOnsite('${nomeOnsite}', 'TODOS')">
+                                <span style="font-size: 30px;">🧑‍💻</span><h3 style="margin: 10px 0 5px; color: var(--primary);">${nomeOnsite}</h3>
+                                <span style="font-weight: bold; color: var(--danger);">${qtd} Ticket(s) Pendente(s)</span>
+                            </div>`;
                     }
-                });
-
-                if (pendPontoCount > 0) {
-                    container.innerHTML += `<div class="card-onsite" style="border-top-color:var(--pontomais); background:#fffdf0; cursor:pointer;" onclick="mostrarTickets('TIME DE PONTO')"><span style="font-size:40px">⏱️</span><h3>PENDENTE PONTOMAIS</h3><strong style="color:var(--danger)">${pendPontoCount} Ajustes</strong></div>`;
-                }
-
-                Object.entries(contagem).forEach(([nome, qtd]) => {
-                    container.innerHTML += `<div class="card-onsite" style="cursor:pointer;" onclick="mostrarTickets('${nome}')"><span style="font-size:40px">🧑‍💻</span><h3>${nome}</h3><strong style="color:var(--secondary)">${qtd} Pendentes</strong></div>`;
-                });
+                    
+                    // Se a aba detalhada estiver aberta, ele atualiza o filtro atual
+                    if(document.getElementById('viewDetalhadaJira').style.display === 'block') {
+                        let tituloAtual = document.getElementById('tituloOperacaoJira').innerText.replace("Gestão: ", "");
+                        mostrarTicketsDoOnsite(tituloAtual, 'TODOS');
+                    }
+                    
+                } else { containerJiraAgrupado.innerHTML = "<p style='text-align:center; width:100%'>Nenhum ticket do JIRA pendente no momento.</p>"; }
             } catch(e) { console.error(e); }
         }
 
-        function mostrarTickets(onsite) {
+        function mostrarTicketsDoOnsite(onsiteSelecionado, filtroAtual) {
             document.getElementById('viewAgrupadaJira').style.display = 'none';
             document.getElementById('viewDetalhadaJira').style.display = 'block';
-            document.getElementById('tituloOperacaoJira').innerText = onsite === 'TIME DE PONTO' ? "Fila de Ajustes: Time de Ponto" : `Gestão: ${onsite}`;
-            const container = document.getElementById('containerCardsJira');
-            container.innerHTML = "";
-
-            const tickets = (onsite === 'TIME DE PONTO') 
-                ? ticketsJiraGlobais.filter(t => t.pendentePonto) 
-                : ticketsJiraGlobais.filter(t => t.onsite === onsite && !t.pendentePonto);
+            document.getElementById('tituloOperacaoJira').innerText = `Gestão: ${onsiteSelecionado}`;
             
-            tickets.forEach(t => {
-                const resumo = t.resumo.toUpperCase();
-                const isDeslig = resumo.includes("DESLIGAMENTO");
-                const isMov = resumo.includes("MOVIMENTAÇÃO") || resumo.includes("MOVIMENTACAO");
-                let matriculas = t.matricula ? t.matricula.toString().split(",") : [];
-                let displayNome = (matriculas.length > 1) ? "⚠️ Solicitação com mais de 1 colaborador" : t.nome;
-                
-                container.innerHTML += `
-                    <div class="card-ticket" style="border-left-color: ${t.pendentePonto ? 'var(--pontomais)' : (isDeslig ? '#ff4b2b' : '#1a73e8')};">
-                        <div>
-                            ${t.pendentePonto ? '<div class="tag-ponto">⏰ PENDENTE NO PONTOMAIS</div>' : ''}
-                            <h3 style="margin:0">${displayNome}</h3><small>${t.chave} | ${t.matricula}</small>
-                            ${isDeslig && t.dataDesligamento ? `<br><b style="color:#d63031">📅 Data: ${t.dataDesligamento}</b>` : ''}
-                            ${isMov && t.centroCusto ? `<br><b>🏢 C.C: ${t.centroCusto}</b>` : ''}
-                            <hr style="opacity:0.1; margin:15px 0"><p style="font-size:0.85rem">${t.resumo}</p>
-                        </div>
-                        <div class="actions-row">
-                            <a href="https://spxresolve.atlassian.net/browse/${t.chave}" target="_blank" class="btn-mini" style="background:var(--jira)">🎫 JIRA</a>
-                            <button onclick="window.open('https://forms.office.com/r/...')" class="btn-mini" style="background:${isDeslig?'#d63031':'var(--primary)'}">📝 FORMS</button>
-                            ${onsite === 'TIME DE PONTO' 
-                                ? `<button onclick="concluirPonto('${t.chave}')" class="btn-mini" style="background:#333">✔️ OK</button>`
-                                : isMov ? `<button onclick="enviarParaPonto('${t.chave}')" class="btn-mini" style="background:var(--warning); color:black">➡️ PONTO</button>` : ''
-                            }
-                        </div>
-                    </div>`;
+            const containerFiltros = document.getElementById('containerFiltrosJira');
+            const containerCards = document.getElementById('containerCardsJira');
+            containerFiltros.innerHTML = ""; containerCards.innerHTML = "";
+
+            const ticketsDoOnsite = ticketsJiraGlobais.filter(t => t.onsite === onsiteSelecionado);
+            let qtdDeslig = 0, qtdMov = 0, qtdOutros = 0;
+            ticketsDoOnsite.forEach(t => {
+                let tipoLower = t.tipoItem.toLowerCase();
+                if (tipoLower.includes("deslig") || tipoLower.includes("offboarding")) qtdDeslig++;
+                else if (tipoLower.includes("moviment") || tipoLower.includes("mudança")) qtdMov++;
+                else qtdOutros++;
             });
+
+            let htmlBotoes = `<button class="btn-filtro" style="${filtroAtual === 'TODOS' ? 'background: var(--primary); color: white;' : 'background: #eee; color: #333;'}" onclick="mostrarTicketsDoOnsite('${onsiteSelecionado}', 'TODOS')">📋 Todos (${ticketsDoOnsite.length})</button>`;
+            if (qtdDeslig > 0) htmlBotoes += `<button class="btn-filtro" style="${filtroAtual === 'DESLIG' ? 'background: var(--danger); color: white;' : 'border-color: var(--danger); color: var(--danger);'}" onclick="mostrarTicketsDoOnsite('${onsiteSelecionado}', 'DESLIG')">🚫 Desligamentos (${qtdDeslig})</button>`;
+            if (qtdMov > 0) htmlBotoes += `<button class="btn-filtro" style="${filtroAtual === 'MOV' ? 'background: var(--secondary); color: white;' : 'border-color: var(--secondary); color: var(--secondary);'}" onclick="mostrarTicketsDoOnsite('${onsiteSelecionado}', 'MOV')">🔄 Movimentações (${qtdMov})</button>`;
+            containerFiltros.innerHTML = htmlBotoes;
+
+            let ticketsParaExibir = ticketsDoOnsite.filter(t => {
+                if (filtroAtual === 'TODOS') return true;
+                let tipoLower = t.tipoItem.toLowerCase();
+                if (filtroAtual === 'DESLIG') return tipoLower.includes("deslig") || tipoLower.includes("offboarding");
+                if (filtroAtual === 'MOV') return tipoLower.includes("moviment") || tipoLower.includes("mudança");
+            });
+
+            const ticketsPorTipo = {};
+            ticketsParaExibir.forEach(t => { if (!ticketsPorTipo[t.tipoItem]) ticketsPorTipo[t.tipoItem] = []; ticketsPorTipo[t.tipoItem].push(t); });
+
+            for (const [tipo, tickets] of Object.entries(ticketsPorTipo)) {
+                let corBorda = "var(--jira)", icone = "🎫", isMovimentacao = false;
+                const tipoLower = tipo.toLowerCase();
+                if (tipoLower.includes("deslig") || tipoLower.includes("offboarding")) { corBorda = "var(--danger)"; icone = "🚫"; } 
+                else if (tipoLower.includes("moviment") || tipoLower.includes("mudança")) { corBorda = "var(--secondary)"; icone = "🔄"; isMovimentacao = true; }
+
+                containerCards.innerHTML += `<div style="width: 100%; grid-column: 1 / -1; margin-top: 15px;"><h4 style="color: ${corBorda}; margin-bottom: 10px; border-bottom: 2px solid ${corBorda}; padding-bottom: 5px; font-size: 1.2rem;">${icone} ${tipo.toUpperCase()}</h4></div>`;
+
+                tickets.forEach(ticket => {
+                    const linkJira = `https://spxresolve.atlassian.net/browse/${ticket.chave}`;
+                    let urlForms = 'https://forms.office.com/Pages/ResponsePage.aspx?id=fCAtUtXsx0-nbxdGSxFh-eVAzhwdpsxLmCSGMQwqNIpUM1E2TFRSRkhNWU9IQk9SVFhBSDJNWTFDVS4u';
+                    let nomeForms = '📝 CENTRAL SOLICITAÇÕES';
+                    let corForms = 'var(--primary)';
+                    
+                    if (tipoLower.includes("deslig") || tipoLower.includes("offboarding")) {
+                        urlForms = 'https://forms.office.com/Pages/ResponsePage.aspx?id=fCAtUtXsx0-nbxdGSxFh-f7MDqf4DUBBuOHjox7sxytUNFFQNTgzR1pQV0FLM05aWElXSjlRMjFHRy4u';
+                        nomeForms = '📝 FORMS DESLIGAMENTO';
+                        corForms = 'var(--danger)';
+                    }
+
+                    // A MÁGICA DOS BOTÕES
+                    let areaBotoes = '';
+                    let tagAlerta = '';
+
+                    // SE ESTIVER PENDENTE NO PONTO (Handoff feito)
+                    if (ticket.pendentePonto) {
+                        tagAlerta = `<div class="tag-ponto">⏰ PENDENTE NO PONTOMAIS</div>`;
+                        
+                        areaBotoes = `
+                            <a href="${linkJira}" target="_blank" class="btn-jira-link" style="background: #ccc; color: #333; padding: 8px;">🔗 ABRIR NO JIRA</a>
+                            <a href="https://app2.pontomais.com.br/controle-de-ponto/colaboradores/lista" target="_blank" class="btn-jira-link" style="background: var(--pontomais); padding: 8px;">✅ ACESSAR PONTOMAIS</a>
+                            <button id="btn-concluir-ponto-${ticket.chave}" onclick="concluirPonto('${ticket.chave}')" class="btn-jira-link" style="background: #333; padding: 8px; margin-top: 5px;">✔️ CONCLUIR PONTO</button>
+                        `;
+                    } else {
+                        // NORMAL (Onsite ainda não fez)
+                        let btnEnviarPontoHTML = '';
+                        if (isMovimentacao) {
+                            btnEnviarPontoHTML = `<button id="btn-ponto-${ticket.chave}" onclick="enviarParaPonto('${ticket.chave}')" class="btn-jira-link" style="background: #f1c40f; color: #000; padding: 8px; margin-top: 5px; box-shadow: 0 4px 10px rgba(241, 196, 15, 0.4);">➡️ ENVIAR PARA O PONTO</button>`;
+                        }
+
+                        areaBotoes = `
+                            <a href="${linkJira}" target="_blank" class="btn-jira-link" style="background: ${corBorda}; padding: 8px;">🔗 ABRIR NO JIRA</a>
+                            <button onclick="abrirPopup('${urlForms}')" class="btn-jira-link" style="background: ${corForms}; padding: 8px; margin-top: 5px;">${nomeForms}</button>
+                            ${btnEnviarPontoHTML}
+                        `;
+                    }
+
+                    containerCards.innerHTML += `
+                        <div class="card-gestao" style="border-left-color: ${corBorda}; padding-bottom: ${ticket.pendentePonto ? '130px' : (isMovimentacao ? '160px' : '110px')};">
+                            ${tagAlerta}
+                            <strong>${ticket.nome || "Sem Nome"}</strong><br>
+                            <small>Matrícula: ${ticket.matricula} | Status: ${ticket.status}</small><br>
+                            <hr style="opacity:0.2; border: 1px solid ${corBorda};">
+                            
+                            <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 5px;">
+                                <strong style="color: ${corBorda};">${ticket.chave}</strong>
+                                <span style="font-size:0.75rem; background:#eee; color:#333; padding:2px 8px; border-radius:4px; font-weight:bold;">📍 ${ticket.operacao}</span>
+                            </div>
+                            
+                            <span>${ticket.resumo}</span><br>
+                            
+                            <div style="position: absolute; bottom: 15px; left: 15px; right: 15px; display: flex; flex-direction: column; gap: 5px;">
+                                ${areaBotoes}
+                            </div>
+                        </div>
+                    `;
+                });
+            }
         }
 
-        function voltarParaAgrupamentoJira() {
-            document.getElementById('viewDetalhadaJira').style.display = 'none';
-            document.getElementById('viewAgrupadaJira').style.display = 'grid';
-            carregarDados();
-        }
-
-        async function enviarParaPonto(chave) { await fetch(SCRIPT_URL, { method: 'POST', mode: 'no-cors', body: JSON.stringify({ acao: "marcar_ponto", chave: chave }) }); carregarDados(); }
-        async function concluirPonto(chave) { await fetch(SCRIPT_URL, { method: 'POST', mode: 'no-cors', body: JSON.stringify({ acao: "concluir_ponto", chave: chave }) }); carregarDados(); }
-        function toggleTheme() { document.documentElement.setAttribute('data-theme', document.documentElement.getAttribute('data-theme') === 'dark' ? '' : 'dark'); }
-        function buscarTudo() { 
-            let q = document.getElementById('searchInput').value.toLowerCase();
-            document.querySelectorAll('.card, .card-onsite, .card-ticket').forEach(c => c.style.display = c.innerText.toLowerCase().includes(q) ? "block" : "none");
-        }
-        window.onload = carregarDados;
+        function voltarParaAgrupamentoJira() { document.getElementById('viewDetalhadaJira').style.display = 'none'; document.getElementById('viewAgrupadaJira').style.display = 'grid'; }
+        window.onload = function() { carregarCardsGestao(); };
     </script>
 </body>
 </html>
