@@ -93,7 +93,7 @@
 
         header {
             background: linear-gradient(rgba(106, 17, 203, 0.75), rgba(37, 117, 252, 0.75)), 
-                        url('https://wecanbr.com.br/img/quem-somos/main.jpg');
+                        url('https://wecanbr.com.br/wp-content/uploads/2021/10/quem-somos-main.jpg');
             background-size: cover; background-position: center;
             color: white; padding: 60px 20px; text-align: center;
         }
@@ -175,6 +175,11 @@
             box-shadow: 0 15px 35px rgba(0,0,0,0.15);
         }
 
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(15px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
         .section-btn {
             border: none;
             padding: 12px 18px;
@@ -184,6 +189,7 @@
             cursor: pointer;
             transition: all 0.25s ease;
             margin-top: 15px;
+            width: 100%;
         }
 
         .section-btn:hover {
@@ -191,54 +197,10 @@
             filter: brightness(1.1);
         }
 
-        .embedded-section:nth-child(1) { animation-delay: 0.1s; }
-        .embedded-section:nth-child(2) { animation-delay: 0.2s; }
-        .embedded-section:nth-child(3) { animation-delay: 0.3s; }
-        .embedded-section:nth-child(4) { animation-delay: 0.4s; }
-
-        @keyframes fadeUp {
-            from { opacity: 0; transform: translateY(15px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .signature { text-align: center; margin: 40px 0 20px; font-family: 'Great Vibes', cursive; font-size: 1.5rem; color: var(--signature); }
-        footer { text-align: center; padding: 30px; background: #222; color: white; width: 100%; }
-
-        .theme-toggle {
-            position: fixed; bottom: 20px; right: 20px; width: 50px; height: 50px;
-            border-radius: 50%; background: var(--primary); color: white;
-            border: none; cursor: pointer; box-shadow: 0 4px 15px rgba(0,0,0,0.3);
-            z-index: 2001; font-size: 20px;
-        }
-
-        .form-section { max-width: 600px; margin: 20px auto 40px; background: var(--card-bg); padding: 30px; border-radius: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); border-top: 5px solid var(--primary); }
-        .form-group { margin-bottom: 15px; text-align: left; }
-        .form-group label { display: block; margin-bottom: 5px; font-weight: bold; }
-        .form-group input, .form-group select { width: 100%; padding: 12px; border-radius: 8px; border: 1px solid #ddd; background: var(--bg); color: var(--text); box-sizing: border-box; }
-        
-        .gestao-section { max-width: 1200px; margin: 40px auto; padding: 0 20px; }
+        /* --- CORREÇÕES DE GESTÃO --- */
         .grid-gestao { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px; align-items: start; }
         .card-gestao { background: var(--card-bg); padding: 15px; border-radius: 10px; border-left: 5px solid var(--warning); box-shadow: 0 2px 5px rgba(0,0,0,0.1); text-align: left; position: relative; padding-bottom: 110px; }
         
-        #contadorSolicitacoes { 
-            background: #e67e22; color: #000; padding: 5px 15px; border-radius: 20px; 
-            font-size: 0.8rem; font-weight: 800; margin-left: 15px; display: none; 
-            max-width: 60vw; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
-            cursor: pointer; transition: opacity 0.5s ease, transform 0.3s ease; opacity: 1;
-        }
-
-        .btn-concluir {
-            position: absolute; bottom: 15px; left: 15px; right: 15px;
-            background: var(--primary); color: white; border: none; padding: 8px 15px; 
-            border-radius: 5px; cursor: pointer; font-weight: bold; transition: 0.3s;
-        }
-
-        .valor-destaque { color: var(--voucher); font-weight: bold; }
-        .link-anexo {
-            display: inline-block; margin-top: 8px; padding: 5px 10px; background: #e3f2fd; 
-            color: #1976d2; text-decoration: none; border-radius: 5px; font-weight: bold; font-size: 0.85rem;
-        }
-
         .card-jira-agrupado {
             background: var(--card-bg); padding: 25px; border-radius: 10px; border-top: 5px solid var(--primary); 
             box-shadow: 0 4px 10px rgba(0,0,0,0.1); text-align: center; cursor: pointer; transition: 0.3s;
@@ -247,6 +209,7 @@
         .btn-jira-link {
             border: none; border-radius: 5px; cursor: pointer; font-weight: bold; transition: 0.3s; 
             text-decoration: none; text-align: center; color: white; display: block; width: 100%; box-sizing: border-box;
+            padding: 8px; margin-top: 5px;
         }
 
         .tag-ponto { 
@@ -254,16 +217,21 @@
             font-weight: bold; padding: 6px; border-radius: 5px; margin-bottom: 10px; 
             animation: pulse 2s infinite; font-size: 0.85rem;
         }
-        @keyframes pulse { 
-            0% { transform: scale(1); } 
-            50% { transform: scale(1.02); } 
-            100% { transform: scale(1); } 
-        }
+
+        .signature { text-align: center; margin: 40px 0 20px; font-family: 'Great Vibes', cursive; font-size: 1.5rem; color: var(--signature); }
+        footer { text-align: center; padding: 30px; background: #222; color: white; width: 100%; }
+
+        /* Delays */
+        .embedded-section:nth-child(1) { animation-delay: 0.1s; }
+        .embedded-section:nth-child(2) { animation-delay: 0.2s; }
+        .embedded-section:nth-child(3) { animation-delay: 0.3s; }
+        .embedded-section:nth-child(4) { animation-delay: 0.4s; }
+
     </style>
 </head>
 <body>
 
-    <button class="theme-toggle" onclick="toggleTheme()" id="themeBtn">🌙</button>
+    <button class="theme-toggle" onclick="toggleTheme()" id="themeBtn" style="position: fixed; bottom: 20px; right: 20px; width: 50px; height: 50px; border-radius: 50%; background: var(--primary); color: white; border: none; cursor: pointer; z-index: 2001;">🌙</button>
 
     <nav class="navbar">
         <div style="display: flex; align-items: center;">
@@ -276,21 +244,21 @@
             <a href="https://desafiorhcombr.sharepoint.com/sites/wecanbr" target="_blank" class="intranet-btn">🌐 Intranet</a>
             
             <div class="dropdown">
-                <button class="dropdown-btn">📊 Planilhas ▼</button>
+              <button class="dropdown-btn">📊 Planilhas ▼</button>
                 <div class="dropdown-content">
-                    <a href="#" target="_blank">📋 Controle de Atendimento</a>
-                    <a href="#" target="_blank">📈 Drive de Rescisão Shopee</a>
-                    <a href="#" target="_blank">📋 Central de Solicitações</a>
-                    <a href="#" target="_blank">🔍 Voucher 2026</a>
-                    <a href="#" target="_blank">📊 Template Shopee</a>
-                    <a href="#" target="_blank">⚠️ Rejeitos 03.2026</a>
+                    <a href="https://desafiorhcombr-my.sharepoint.com/:x:/r/personal/mirian_oliveira_wecanbr_com_br/_layouts/15/Doc.aspx?sourcedoc=%7B9C5EACCF-57D1-4415-BA2B-D584B9FE2B85%7D" target="_blank">📋 Controle de Atendimento (Excel)</a>
+                    <a href="https://desafiorhcombr-my.sharepoint.com/:x:/r/personal/mirian_oliveira_wecanbr_com_br/_layouts/15/doc2.aspx?sourcedoc=%7B519706C2-BDEF-438C-B037-385F4D8A3488%7D" target="_blank">📈 Drive de Rescisão Shopee</a>
+                    <a href="https://desafiorhcombr-my.sharepoint.com/:x:/r/personal/edivan_costa_wecanbr_com_br/_layouts/15/Doc.aspx?sourcedoc=%7B63D04DA0-C7A8-4059-8591-37DFCED94A93%7D" target="_blank">📋 Central de Solicitações (Base)</a>
+                    <a href="https://docs.google.com/spreadsheets/d/1WBYOF9AkoS7NpzhqFyqm5PzQRP13yUF2p5ZY8FfZp_c/edit" target="_blank">🔍 Voucher 2026 (Base Geral)</a>
+                    <a href="https://docs.google.com/spreadsheets/d/1WBYOF9AkoS7NpzhqFyqm5PzQRP13yUF2p5ZY8FfZp_c/edit?gid=690743947#gid=690743947" target="_blank">📊 Template Shopee</a>
+                    <a href="https://desafiorhcombr.sharepoint.com/:x:/r/sites/FSWECANBR/_layouts/15/Doc.aspx?sourcedoc=%7B6265A06E-D548-4055-9261-D6A512496567%7D&file=03%202026%20REJEITOS%20MAR%C3%87O%202026.xlsx&action=default&mobileredirect=true" target="_blank">⚠️ Rejeitos 03.2026</a>
                 </div>
             </div>
 
             <div class="dropdown">
                 <button class="dropdown-btn">📄 Documentos ▼</button>
                 <div class="dropdown-content">
-                   <a href="https://drive.google.com/file/d/1qsLtN-HC5488FVQc3n5mcT8zjCdVja0d/view" target="_blank">📄 Carta de Suspensão</a>
+                    <a href="https://drive.google.com/file/d/1qsLtN-HC5488FVQc3n5mcT8zjCdVja0d/view" target="_blank">📄 Carta de Suspensão</a>
                     <a href="https://drive.google.com/file/d/1lGnjwLz_5i4uASifv2OPlkSb7NUGeaHI/view" target="_blank">📄 Comunicado de Desligamento</a>
                     <a href="https://drive.google.com/file/d/1zsrlh6KBLvMvEGc13tTA6I7Ybra5iObA/view" target="_blank">📄 Advertência Disciplinar</a>
                     <a href="https://drive.google.com/file/d/1_Dw1qLl9icW282pkZCNln8908Nfqiasi/view" target="_blank">📄 Advertência - Ponto</a>
@@ -320,25 +288,25 @@
 
     <div id="homeView">
         <div class="container">
-            <div onclick="abrirPopup('https://forms.office.com/')" class="card">
+            <div onclick="abrirPopup('https://forms.office.com/Pages/ResponsePage.aspx?id=fCAtUtXsx0-nbxdGSxFh-eVAzhwdpsxLmCSGMQwqNIpUM1E2TFRSRkhNWU9IQk9SVFhBSDJNWTFDVS4u')" class="card">
                 <span class="icon">📝</span>
                 <h2>Central de Solicitações</h2>
                 <p>Clique para abrir o formulário interno.</p>
             </div>
 
-            <div onclick="abrirPopup('https://forms.office.com/')" class="card" style="border-top-color: var(--danger);">
+            <div onclick="abrirPopup('https://forms.office.com/Pages/ResponsePage.aspx?id=fCAtUtXsx0-nbxdGSxFh-f7MDqf4DUBBuOHjox7sxytUNFFQNTgzR1pQV0FLM05aWElXSjlRMjFHRy4u')" class="card" style="border-top-color: var(--danger);">
                 <span class="icon">🚫</span>
                 <h2>Desligamento Shopee</h2>
                 <p>Formulário oficial para desligamento Shopee.</p>
             </div>
 
-            <div onclick="abrirPopup('https://forms.office.com/')" class="card" style="border-top-color: var(--warning);">
+            <div onclick="abrirPopup('https://forms.office.com/Pages/ResponsePage.aspx?id=fCAtUtXsx0-nbxdGSxFh-f7MDqf4DUBBuOHjox7sxytUMzdRMTFCOTc2SzZEQzU4NFI2TVMzUjIxWS4u')" class="card" style="border-top-color: var(--warning);">
                 <span class="icon">🎧</span>
                 <h2>Controle de Atendimento</h2>
                 <p>Registro de atendimentos Shopee.</p>
             </div>
 
-            <div onclick="abrirPopup('https://forms.office.com/')" class="card" style="border-top-color: var(--voucher);">
+            <div onclick="abrirPopup('https://forms.office.com/Pages/ResponsePage.aspx?id=fCAtUtXsx0-nbxdGSxFh-eVAzhwdpsxLmCSGMQwqNIpUQVBSTFlOTUxSUEMwMFhWSTdTTEVOV1lBUy4u')" class="card" style="border-top-color: var(--voucher);">
                 <div class="badge-new">Novo!</div>
                 <span class="icon">🎫</span>
                 <h2>Cadastro Voucher</h2>
@@ -356,83 +324,137 @@
             <div class="embedded-section" style="border-top: 4px solid var(--reembolso);">
                 <div>
                     <strong style="color: var(--reembolso);">🔄 REEMBOLSO HE/FALTAS</strong>
-                    <p>Solicite Reembolso em caso de Faltas e outros descontos indevidos.</p>
+                    <p>Solicite Reembolso em caso de Faltas.</p>
                 </div>
-                <a href="https://forms.office.com/" target="_blank" style="text-decoration: none;">
-                    <button class="section-btn" style="background: var(--reembolso); width: 100%;">
-                        📝 Preencher Formulário
-                    </button>
+                <a href="https://forms.office.com/pages/responsepage.aspx?id=fCAtUtXsx0-nbxdGSxFh-f7MDqf4DUBBuOHjox7sxytUM1pLUFZVQjkxV1ZUNkY2RU1CWVQ1MVJZOS4u&route=shorturl" target="_blank" style="text-decoration: none;">
+                    <button class="section-btn" style="background: var(--reembolso);">📝 Preencher Formulário</button>
                 </a>
             </div>
 
             <div class="embedded-section" style="border-top: 4px solid var(--appsheet);">
                 <div>
                     <strong style="color: var(--appsheet);">📱 INATIVAÇÃO VOUCHER UBER</strong>
-                    <p>Inativação de usuários Uber em caso de desligamento.</p>
+                    <p>Inativação de usuários Uber.</p>
                 </div>
-                <button onclick="abrirAppSheet()" class="section-btn" style="background: var(--appsheet); width: 100%;">
-                    🚀 Abrir AppSheet
-                </button>
+                <button onclick="abrirAppSheet()" class="section-btn" style="background: var(--appsheet);">🚀 Abrir AppSheet</button>
             </div>
 
             <div class="embedded-section" style="border-top: 4px solid var(--glpi);">
                 <div>
                     <strong style="color: var(--glpi);">🛠️ CHAMADOS - GLPI</strong>
-                    <p>Abertura e consulta de chamados técnicos WeCanBR.</p>
+                    <p>Consulta de chamados técnicos.</p>
                 </div>
                 <a href="https://glpi.wecanbr.com.br/index.php?noAUTO=1" target="_blank" style="text-decoration: none;">
-                    <button class="section-btn" style="background: var(--glpi); width: 100%;">
-                        🎫 Acessar GLPI
-                    </button>
+                    <button class="section-btn" style="background: var(--glpi);">🎫 Acessar GLPI</button>
                 </a>
             </div>
 
             <div class="embedded-section" style="border-top: 4px solid var(--pontomais);">
                 <div>
                     <strong style="color: var(--pontomais);">⏱️ PONTOMAIS</strong>
-                    <p>Gestão de colaboradores e conferência de ponto.</p>
+                    <p>Conferência de ponto.</p>
                 </div>
                 <a href="https://app2.pontomais.com.br/" target="_blank" style="text-decoration: none;">
-                    <button class="section-btn" style="background: var(--pontomais); width: 100%;">
-                        🔍 Abrir Pontomais
-                    </button>
+                    <button class="section-btn" style="background: var(--pontomais);">🔍 Abrir Pontomais</button>
                 </a>
             </div>
         </div>
     </div>
 
-    <div id="solicitacoesView" style="display: none;">...</div>
-    <div id="jiraView" style="display: none;">...</div>
+    <div id="jiraView" style="display: none;">
+        <div class="gestao-section">
+            <h2 style="text-align: center; color: var(--jira);">🎫 Tickets Shopee por On-Site</h2>
+            <div id="viewAgrupadaJira" class="grid-gestao"></div>
+            <div id="viewDetalhadaJira" style="display: none; background: var(--card-bg); padding: 25px; border-radius: 15px; margin-top: 20px;">
+                <button onclick="voltarParaAgrupamentoJira()" style="margin-bottom: 20px; padding: 10px 20px; border-radius: 5px; background: #666; color: white; border: none; cursor: pointer;">← Voltar</button>
+                <h3 id="tituloOperacaoJira" style="color: var(--jira); text-align: center;"></h3>
+                <div id="containerCardsJira" class="grid-gestao"></div>
+            </div>
+        </div>
+    </div>
 
     <div class="signature">By: Edivan Costa</div>
     <footer>© 2026 Apoio ao On-Site | WeCanBR</footer>
 
     <script>
+        // Use sua URL real do Script aqui
+        const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxupjNwDDgxLULbLOPUVd2jc4hRUxI9JYYeqy7riYGBg5ymoqAfLeJn6IwRqLH7aozH/exec"; 
+        let ticketsJiraGlobais = [];
+
         function switchTab(tab) {
             document.getElementById('homeView').style.display = tab === 'home' ? 'block' : 'none';
-            document.getElementById('solicitacoesView').style.display = tab === 'solicitacoes' ? 'block' : 'none';
             document.getElementById('jiraView').style.display = tab === 'jira' ? 'block' : 'none';
-            
             document.getElementById('btnTabHome').classList.toggle('active', tab === 'home');
-            document.getElementById('btnTabSol').classList.toggle('active', tab === 'solicitacoes');
             document.getElementById('btnTabJira').classList.toggle('active', tab === 'jira');
         }
 
-        function toggleTheme() {
-            const html = document.documentElement;
-            const btn = document.getElementById('themeBtn');
-            if (html.getAttribute('data-theme') === 'dark') {
-                html.removeAttribute('data-theme');
-                btn.innerHTML = "🌙";
-            } else {
-                html.setAttribute('data-theme', 'dark');
-                btn.innerHTML = "☀️";
-            }
+        async function carregarCardsGestao() {
+            try {
+                const res = await fetch(SCRIPT_URL);
+                const dados = await res.json();
+                const containerJira = document.getElementById('viewAgrupadaJira');
+                containerJira.innerHTML = "";
+
+                if (dados.jira && dados.jira.length > 0) {
+                    ticketsJiraGlobais = dados.jira;
+                    const contagem = {};
+                    dados.jira.forEach(t => {
+                        let nome = t.onsite || "Não Mapeado";
+                        contagem[nome] = (contagem[nome] || 0) + 1;
+                    });
+                    for (const [nome, qtd] of Object.entries(contagem)) {
+                        containerJira.innerHTML += `
+                            <div class="card-jira-agrupado" onclick="mostrarTicketsDoOnsite('${nome}')">
+                                <span style="font-size: 30px;">🧑‍💻</span>
+                                <h3 style="margin: 10px 0 5px; color: var(--primary);">${nome}</h3>
+                                <span style="font-weight: bold; color: var(--danger);">${qtd} Pendente(s)</span>
+                            </div>`;
+                    }
+                } else {
+                    containerJira.innerHTML = "<p style='text-align:center; width:100%'>Nenhum ticket encontrado.</p>";
+                }
+            } catch(e) { console.error(e); }
         }
 
-        function abrirPopup(url) { window.open(url, '_blank', 'width=900,height=900'); }
-        function abrirAppSheet() { window.open('https://www.appsheet.com/start/...', '_blank'); }
-        function buscarTudo() { /* lógica de busca */ }
+        function mostrarTicketsDoOnsite(onsite) {
+            document.getElementById('viewAgrupadaJira').style.display = 'none';
+            document.getElementById('viewDetalhadaJira').style.display = 'block';
+            document.getElementById('tituloOperacaoJira').innerText = `Gestão: ${onsite}`;
+            const container = document.getElementById('containerCardsJira');
+            container.innerHTML = "";
+            const filtrados = ticketsJiraGlobais.filter(t => t.onsite === onsite);
+            filtrados.forEach(ticket => {
+                container.innerHTML += `
+                    <div class="card-gestao" style="border-left-color: var(--jira);">
+                        <strong>${ticket.nome || "Sem Nome"}</strong><br>
+                        <small>${ticket.chave} | ${ticket.status}</small><br>
+                        <p>${ticket.resumo}</p>
+                        <div style="position: absolute; bottom: 15px; left: 15px; right: 15px;">
+                             <a href="https://spxresolve.atlassian.net/browse/${ticket.chave}" target="_blank" class="btn-jira-link" style="background: var(--jira);">🔗 Abrir JIRA</a>
+                        </div>
+                    </div>`;
+            });
+        }
+
+        function voltarParaAgrupamentoJira() {
+            document.getElementById('viewDetalhadaJira').style.display = 'none';
+            document.getElementById('viewAgrupadaJira').style.display = 'grid';
+        }
+
+        function abrirPopup(url) { window.open(url, 'Popup', 'width=900,height=900'); }
+        function abrirAppSheet() { window.open('https://www.appsheet.com/start/8ba6b59c-c836-4d4e-9a3e-e43d38d2a47e', '_blank'); }
+        function toggleTheme() {
+            const html = document.documentElement;
+            if (html.getAttribute('data-theme') === 'dark') { html.removeAttribute('data-theme'); }
+            else { html.setAttribute('data-theme', 'dark'); }
+        }
+        function buscarTudo() {
+            let input = document.getElementById('searchInput').value.toLowerCase();
+            let cards = document.getElementsByClassName('card');
+            for (let card of cards) { card.classList.toggle('hidden', !card.innerText.toLowerCase().includes(input)); }
+        }
+
+        window.onload = carregarCardsGestao;
     </script>
 </body>
 </html>
