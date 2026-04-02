@@ -6,6 +6,7 @@
     <title>Apoio ao On-Site | WeCanBR</title>
     
     <link rel="icon" type="image/png" href="https://wecanbr.com.br/wp-content/uploads/2021/10/cropped-favicon-32x32.png">
+    
     <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet">
     
     <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
@@ -13,98 +14,170 @@
 
     <style>
         :root {
-            --primary: #6a11cb; --secondary: #2575fc; --bg: #f4f7f6; --card-bg: white; --text: #333;
-            --navbar-bg: white; --danger: #ff4b2b; --warning: #f39c12; --voucher: #00b894;
-            --jira: #0052CC; --appsheet: #1a73e8; --glpi: #008080; --pontomais: #00a8a8;
-            --new-tag: #eb4d4b; --signature: rgba(0, 0, 0, 0.2);
+            --primary: #6a11cb;
+            --secondary: #2575fc;
+            --bg: #f4f7f6;
+            --card-bg: white;
+            --text: #333;
+            --navbar-bg: white;
+            --danger: #ff4b2b;
+            --warning: #f39c12;
+            --voucher: #00b894;
+            --jira: #0052CC;
+            --appsheet: #1a73e8;
+            --glpi: #008080;
+            --pontomais: #00a8a8;
+            --new-tag: #eb4d4b;
+            --signature: rgba(0, 0, 0, 0.2);
         }
+
         [data-theme="dark"] {
-            --bg: #121212; --card-bg: #1e1e1e; --text: #e0e0e0; --navbar-bg: #1e1e1e;
+            --bg: #121212;
+            --card-bg: #1e1e1e;
+            --text: #e0e0e0;
+            --navbar-bg: #1e1e1e;
             --signature: rgba(255, 255, 255, 0.05);
         }
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: var(--bg); color: var(--text); margin: 0; padding-top: 60px; transition: 0.3s; }
-        
-        /* NAVBAR */
-        .navbar { background: var(--navbar-bg); height: 60px; display: flex; justify-content: space-between; align-items: center; padding: 0 30px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); position: fixed; top: 0; width: 100%; z-index: 1000; box-sizing: border-box; }
-        .nav-links { display: flex; align-items: center; height: 100%; }
-        .login-btn, .intranet-btn { text-decoration: none; padding: 6px 15px; border-radius: 5px; font-size: 0.8rem; font-weight: bold; margin-left: 10px; transition: 0.3s; }
-        .login-btn { background: #0078d4; color: white !important; } .intranet-btn { background: #ff5722; color: white !important; }
-        
-        .dropdown { position: relative; display: flex; align-items: center; height: 100%; }
-        .dropdown-btn { text-decoration: none; color: var(--text); margin-left: 20px; font-weight: 600; font-size: 0.9rem; cursor: pointer; border: none; background: none; display: flex; align-items: center; gap: 5px; height: 100%; }
-        .dropdown-content { display: none; position: absolute; right: 0; background-color: var(--card-bg); min-width: 350px; box-shadow: 0px 8px 16px rgba(0,0,0,0.2); z-index: 1001; border-radius: 0 0 8px 8px; top: 60px; border-top: 2px solid var(--primary); overflow: hidden; }
-        .dropdown:hover .dropdown-content { display: block; }
-        .dropdown-content a { color: var(--text); padding: 12px 16px; text-decoration: none; display: block; font-size: 0.85rem; border-bottom: 1px solid rgba(128,128,128,0.1); }
-        
-        header { background: linear-gradient(rgba(106, 17, 203, 0.75), rgba(37, 117, 252, 0.75)), url('https://wecanbr.com.br/img/quem-somos/main.jpg'); background-size: cover; background-position: center; color: white; padding: 60px 20px; text-align: center; }
-        #searchInput { padding: 15px 25px; width: 450px; max-width: 90%; border-radius: 30px; border: none; font-size: 1rem; box-shadow: 0 5px 15px rgba(0,0,0,0.2); outline: none; margin: 20px auto 0; display: block; }
 
-        .tabs-container { display: flex; justify-content: center; flex-wrap: wrap; gap: 15px; margin: 30px auto 10px; }
-        .tab-btn { padding: 12px 30px; border: none; border-radius: 25px; cursor: pointer; font-weight: bold; font-size: 1rem; background: var(--card-bg); color: var(--text); box-shadow: 0 4px 10px rgba(0,0,0,0.1); text-decoration: none; }
-        .tab-btn.active { background: var(--primary); color: white; }
-
-        /* GRIDS HOME */
-        .home-grid-top { display: grid; grid-template-columns: repeat(5, 1fr); gap: 20px; padding: 20px; max-width: 1400px; margin: 0 auto; }
-        .home-grid-bottom { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; padding: 20px; max-width: 1100px; margin: 0 auto; }
-
-        /* CARDS VISUAL */
-        .card, .embedded-section { background: var(--card-bg); border-radius: 15px; padding: 25px; text-align: center; box-shadow: 0 5px 15px rgba(0,0,0,0.05); transition: 0.3s; color: var(--text); border-top: 5px solid var(--primary); box-sizing: border-box; }
-        .card:hover { transform: translateY(-5px); box-shadow: 0 10px 25px rgba(0,0,0,0.1); }
-        
-        /* BOTÕES CARDS BAIXO */
-        .section-btn { color: white; border: none; padding: 12px 25px; border-radius: 25px; font-size: 0.9rem; font-weight: bold; cursor: pointer; transition: 0.3s; margin-top: 15px; text-decoration: none; display: inline-block; }
-
-        .signature { text-align: center; margin: 40px 0 20px; font-family: 'Great Vibes', cursive; font-size: 1.5rem; color: var(--signature); }
-        footer { text-align: center; padding: 30px; background: #222; color: white; width: 100%; }
-        .theme-toggle { position: fixed; bottom: 20px; right: 20px; width: 50px; height: 50px; border-radius: 50%; background: var(--primary); color: white; border: none; cursor: pointer; z-index: 2001; }
-    /* AJUSTE PARA OS TICKETS EM CARDS (3 COLUNAS) */
-        .grid-tickets-detalhe { 
-            display: grid !important; 
-            grid-template-columns: repeat(3, 1fr) !important; 
-            gap: 20px !important; 
-            padding: 20px;
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            margin: 0;
+            padding-top: 60px;
+            transition: 0.3s;
         }
 
-        .card-ticket { 
-            background: var(--card-bg); 
-            border-radius: 15px; 
-            padding: 20px; 
-            box-shadow: 0 5px 15px rgba(0,0,0,0.08); 
-            border-left: 8px solid var(--warning); 
-            min-height: 380px; /* Impede o encolhimento */
-            display: flex; 
-            flex-direction: column; 
-            justify-content: space-between; 
+        /* --- NAVBAR --- */
+        .navbar {
+            background: var(--navbar-bg);
+            height: 60px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 30px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: fixed;
+            top: 0; width: 100%; z-index: 1000;
             box-sizing: border-box;
         }
 
-        /* BOTÕES LADO A LADO */
-        .actions-row { 
-            display: flex !important; 
-            gap: 5px !important; 
-            margin-top: 15px; 
-            width: 100%; 
+        .nav-links { display: flex; align-items: center; height: 100%; }
+        
+        .login-btn, .intranet-btn {
+            text-decoration: none; padding: 6px 15px; border-radius: 5px; 
+            font-size: 0.8rem; font-weight: bold; margin-left: 10px; transition: 0.3s;
+        }
+        .login-btn { background: #0078d4; color: white !important; }
+        .intranet-btn { background: #ff5722; color: white !important; }
+
+        .dropdown { position: relative; display: flex; align-items: center; height: 100%; }
+        .dropdown-btn {
+            text-decoration: none; color: var(--text); margin-left: 20px;
+            font-weight: 600; font-size: 0.9rem; cursor: pointer;
+            border: none; background: none; display: flex; align-items: center; gap: 5px; height: 100%;
         }
 
-        .btn-mini { 
-            flex: 1 !important; 
-            padding: 10px 2px !important; 
-            font-size: 0.7rem !important; 
-            font-weight: bold;
-            color: white; 
-            border-radius: 6px; 
-            text-align: center; 
-            text-decoration: none;
-            border: none;
-            cursor: pointer;
+        .dropdown-content {
+            display: none; position: absolute; right: 0;
+            background-color: var(--card-bg); min-width: 350px;
+            box-shadow: 0px 8px 16px rgba(0,0,0,0.2); z-index: 1001;
+            border-radius: 0 0 8px 8px; top: 60px; border-top: 2px solid var(--primary);
+            overflow: hidden;
+        }
+        .dropdown:hover .dropdown-content { display: block; }
+        .dropdown-content a {
+            color: var(--text); padding: 12px 16px; text-decoration: none;
+            display: block; font-size: 0.85rem; border-bottom: 1px solid rgba(128,128,128,0.1);
+        }
+        .dropdown-content a:hover { background: rgba(106, 17, 203, 0.05); }
+
+        /* --- HEADER --- */
+        header {
+            background: linear-gradient(rgba(106, 17, 203, 0.75), rgba(37, 117, 252, 0.75)), 
+                        url('https://wecanbr.com.br/img/quem-somos/main.jpg');
+            background-size: cover; background-position: center;
+            color: white; padding: 60px 20px; text-align: center;
+        }
+
+        .search-container { margin-top: 25px; position: relative; width: 450px; max-width: 90%; margin: 20px auto 0; }
+        #searchInput {
+            padding: 15px 25px; width: 100%; border-radius: 30px; border: none;
+            font-size: 1rem; box-shadow: 0 5px 15px rgba(0,0,0,0.2); outline: none;
+            background: var(--card-bg); color: var(--text); box-sizing: border-box;
+        }
+
+        /* --- CARDS COLORIDOS --- */
+        .container { display: flex; justify-content: center; flex-wrap: wrap; gap: 20px; padding: 40px 20px; max-width: 1400px; margin: 0 auto; }
+        .card {
+            background: var(--card-bg); border-radius: 15px; width: 260px; padding: 25px;
+            text-align: center; box-shadow: 0 5px 15px rgba(0,0,0,0.05); transition: 0.3s;
+            text-decoration: none; color: var(--text); border-top: 5px solid var(--primary); 
+            box-sizing: border-box; cursor: pointer; position: relative;
+        }
+        .card:hover { transform: translateY(-5px); box-shadow: 0 10px 25px rgba(0,0,0,0.1); }
+        .card.hidden { display: none; }
+        
+        .badge-new {
+            position: absolute; top: -15px; right: -10px;
+            background: var(--new-tag); color: white;
+            padding: 4px 12px; border-radius: 20px;
+            font-size: 0.75rem; font-weight: bold;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {transform: translateY(0);}
+            40% {transform: translateY(-5px);}
+            60% {transform: translateY(-3px);}
+        }
+
+        .icon { font-size: 40px; margin-bottom: 15px; display: block; }
+
+        /* --- FUNIL DE BAIXO --- */
+        .funnel-container {
+            display: flex; justify-content: center; flex-wrap: wrap; gap: 20px;
+            max-width: 95%; margin: 20px auto 40px; padding: 0 20px;
+        }
+
+        .embedded-section {
+            background: var(--card-bg); padding: 25px; border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            flex: 1; min-width: 300px; max-width: 400px; text-align: center;
+        }
+
+        .section-btn {
+            color: white; border: none; padding: 12px 25px; border-radius: 25px; 
+            font-size: 0.9rem; font-weight: bold; cursor: pointer; transition: 0.3s; margin-top: 15px;
+        }
+
+        /* --- SEÇÃO FLUXOGRAMA --- */
+        .faq-section {
+            max-width: 1200px; margin: 20px auto 60px;
+            background: var(--card-bg); padding: 40px; border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+        .faq-section h2 { text-align: center; color: var(--primary); margin-bottom: 30px; }
+        .mermaid { display: flex; justify-content: center; background: white; padding: 20px; border-radius: 10px; }
+
+        .signature { text-align: center; margin: 40px 0 20px; font-family: 'Great Vibes', cursive; font-size: 1.5rem; color: var(--signature); }
+        footer { text-align: center; padding: 30px; background: #222; color: white; width: 100%; }
+
+        .theme-toggle {
+            position: fixed; bottom: 20px; right: 20px; width: 50px; height: 50px;
+            border-radius: 50%; background: var(--primary); color: white;
+            border: none; cursor: pointer; box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+            z-index: 2001; font-size: 20px;
+        }
     </style>
 </head>
 <body>
+
+    <button class="theme-toggle" onclick="toggleTheme()" id="themeBtn">🌙</button>
+
     <nav class="navbar">
-        <div style="display: flex; align-items: center;">
-            <div style="font-weight: bold; color: var(--primary); letter-spacing: 1px;">WE CAN BR</div>
-            <div id="contadorSolicitacoes" style="display:none; background: #e67e22; color: #000; padding: 5px 15px; border-radius: 20px; font-size: 0.8rem; font-weight: 800; margin-left: 15px;">0 Pendentes</div>
-        </div>
+        <div style="font-weight: bold; color: var(--primary); letter-spacing: 1px;">WE CAN BR</div>
         <div class="nav-links">
             <a href="https://portal.office.com" target="_blank" class="login-btn">🔑 Login Microsoft</a>
             <a href="https://desafiorhcombr.sharepoint.com/sites/wecanbr" target="_blank" class="intranet-btn">🌐 Intranet</a>
@@ -112,10 +185,10 @@
             <div class="dropdown">
                 <button class="dropdown-btn">📊 Planilhas ▼</button>
                 <div class="dropdown-content">
-                    <a href="https://desafiorhcombr-my.sharepoint.com/:x:/r/personal/mirian_oliveira_wecanbr_com_br/_layouts/15/Doc.aspx?sourcedoc=%7B9C5EACCF-57D1-4415-BA2B-D584B9FE2B85%7D" target="_blank">📋 Controle de Atendimento</a>
+                    <a href="https://desafiorhcombr-my.sharepoint.com/:x:/r/personal/mirian_oliveira_wecanbr_com_br/_layouts/15/Doc.aspx?sourcedoc=%7B9C5EACCF-57D1-4415-BA2B-D584B9FE2B85%7D" target="_blank">📋 Controle de Atendimento (Excel)</a>
                     <a href="https://desafiorhcombr-my.sharepoint.com/:x:/r/personal/mirian_oliveira_wecanbr_com_br/_layouts/15/doc2.aspx?sourcedoc=%7B519706C2-BDEF-438C-B037-385F4D8A3488%7D" target="_blank">📈 Drive de Rescisão Shopee</a>
-                    <a href="https://desafiorhcombr-my.sharepoint.com/:x:/r/personal/edivan_costa_wecanbr_com_br/_layouts/15/Doc.aspx?sourcedoc=%7B63D04DA0-C7A8-4059-8591-37DFCED94A93%7D" target="_blank">📋 Central de Solicitações</a>
-                    <a href="https://docs.google.com/spreadsheets/d/1WBYOF9AkoS7NpzhqFyqm5PzQRP13yUF2p5ZY8FfZp_c/edit" target="_blank">🔍 Voucher 2026</a>
+                    <a href="https://desafiorhcombr-my.sharepoint.com/:x:/r/personal/edivan_costa_wecanbr_com_br/_layouts/15/Doc.aspx?sourcedoc=%7B63D04DA0-C7A8-4059-8591-37DFCED94A93%7D" target="_blank">📋 Central de Solicitações (Base)</a>
+                    <a href="https://docs.google.com/spreadsheets/d/1WBYOF9AkoS7NpzhqFyqm5PzQRP13yUF2p5ZY8FfZp_c/edit" target="_blank">🔍 Voucher 2026 (Base Geral)</a>
                     <a href="https://docs.google.com/spreadsheets/d/1WBYOF9AkoS7NpzhqFyqm5PzQRP13yUF2p5ZY8FfZp_c/edit?gid=690743947#gid=690743947" target="_blank">📊 Template Shopee</a>
                     <a href="https://desafiorhcombr.sharepoint.com/:x:/r/sites/FSWECANBR/_layouts/15/Doc.aspx?sourcedoc=%7B6265A06E-D548-4055-9261-D6A512496567%7D&file=03%202026%20REJEITOS%20MAR%C3%87O%202026.xlsx&action=default&mobileredirect=true" target="_blank">⚠️ Rejeitos 03.2026</a>
                 </div>
@@ -141,31 +214,104 @@
 
     <header>
         <h1>APOIO AO ONSITE</h1>
-        <input type="text" id="searchInput" onkeyup="buscarTudo()" placeholder="Pesquisar...">
+        <div class="search-container">
+            <input type="text" id="searchInput" onkeyup="buscarTudo()" placeholder="Pesquisar..." autocomplete="off">
+        </div>
     </header>
 
-   <div class="tabs-container">
-    <button class="tab-btn active" id="btnTabHome" onclick="switchTab('home')">🏠 HOME</button>
-    <button class="tab-btn" id="btnTabSol" onclick="switchTab('solicitacoes')">📝 SOLICITAÇÕES</button>
-    <button class="tab-btn" id="btnTabJira" onclick="switchTab('jira')">🎫 TICKETS SHOPEE</button>
-</div>
+    <div class="container">
+        <div onclick="abrirPopup('https://forms.office.com/Pages/ResponsePage.aspx?id=fCAtUtXsx0-nbxdGSxFh-eVAzhwdpsxLmCSGMQwqNIpUM1E2TFRSRkhNWU9IQk9SVFhBSDJNWTFDVS4u')" class="card">
+            <span class="icon">📝</span>
+            <h2>Central de Solicitações</h2>
+            <p>Clique para abrir o formulário interno.</p>
+        </div>
 
- <div id="homeView">
-        <div class="home-grid-top" id="homeTopGrid"></div>
-        <div class="home-grid-bottom" id="homeBottomGrid"></div>
+        <div onclick="abrirPopup('https://forms.office.com/Pages/ResponsePage.aspx?id=fCAtUtXsx0-nbxdGSxFh-eVAzhwdpsxLmCSGMQwqNIpUM1E2TFRSRkhNWU9IQk9SVFhBSDJNWTFDVS4u')" class="card" style="border-top-color: var(--danger);">
+            <span class="icon">🚫</span>
+            <h2>Desligamento Shopee</h2>
+            <p>Formulário oficial para desligamento Shopee.</p>
+        </div>
+
+        <div onclick="abrirPopup('https://forms.office.com/Pages/ResponsePage.aspx?id=fCAtUtXsx0-nbxdGSxFh-eVAzhwdpsxLmCSGMQwqNIpUM1E2TFRSRkhNWU9IQk9SVFhBSDJNWTFDVS4u')" class="card" style="border-top-color: var(--warning);">
+            <span class="icon">🎧</span>
+            <h2>Controle de Atendimento</h2>
+            <p>Registro de atendimentos Shopee.</p>
+        </div>
+
+        <div onclick="abrirPopup('https://forms.office.com/Pages/ResponsePage.aspx?id=fCAtUtXsx0-nbxdGSxFh-eVAzhwdpsxLmCSGMQwqNIpUQVBSTFlOTUxSUEMwMFhWSTdTTEVOV1lBUy4u')" class="card" style="border-top-color: var(--voucher);">
+            <div class="badge-new">Novo!</div>
+            <span class="icon">🎫</span>
+            <h2>Cadastro Voucher</h2>
+            <p>Novo Colaborador - Cadastro de Voucher Uber.</p>
+        </div>
+
+        <div onclick="window.open('https://spxresolve.atlassian.net/jira/for-you', '_blank')" class="card" style="border-top-color: var(--jira);">
+            <span class="icon">🟦</span>
+            <h2>JIRA</h2>
+            <p>Gestão de chamados e projetos JIRA.</p>
+        </div>
     </div>
 
-    <div id="solicitacoesView" style="display: none;">
-        <div class="grid-gestao" id="containerCardsGestao"></div>
+    <div class="funnel-container">
+        <div class="embedded-section" style="border-top: 5px solid var(--appsheet);">
+            <div>
+                <strong style="color: var(--appsheet);">📱 INATIVAÇÃO VOUCHER UBER</strong>
+                <p>Inativação de usuários Uber em caso de desligamento.</p>
+            </div>
+            <button onclick="abrirAppSheet()" class="section-btn" style="background: var(--appsheet); box-shadow: 0 4px 15px rgba(26, 115, 232, 0.3);">
+                🚀 Abrir AppSheet
+            </button>
+        </div>
+
+        <div class="embedded-section" style="border-top: 5px solid var(--glpi);">
+            <div>
+                <strong style="color: var(--glpi);">🛠️ CHAMADOS - GLPI</strong>
+                <p>Abertura e consulta de chamados técnicos WeCanBR.</p>
+            </div>
+            <a href="https://glpi.wecanbr.com.br/index.php?noAUTO=1" target="_blank" style="text-decoration: none;">
+                <button class="section-btn" style="background: var(--glpi); box-shadow: 0 4px 15px rgba(0, 128, 128, 0.3);">
+                    🎫 Acessar GLPI
+                </button>
+            </a>
+        </div>
+
+        <div class="embedded-section" style="border-top: 5px solid var(--pontomais);">
+            <div>
+                <strong style="color: var(--pontomais);">⏱️ PONTOMAIS</strong>
+                <p>Gestão de colaboradores e conferência de ponto.</p>
+            </div>
+            <a href="https://app2.pontomais.com.br/controle-de-ponto/colaboradores/lista" target="_blank" style="text-decoration: none;">
+                <button class="section-btn" style="background: var(--pontomais); box-shadow: 0 4px 15px rgba(0, 168, 168, 0.3);">
+                    🔍 Abrir Pontomais
+                </button>
+            </a>
+        </div>
     </div>
 
-    <div id="jiraView" style="display: none; padding: 20px;">
-        <div class="grid-tickets-detalhe" id="viewAgrupadaJira"></div>
-        
-        <div id="viewDetalhadaJira" style="display: none;">
-            <button onclick="voltarParaAgrupamentoJira()" style="margin-bottom:20px; cursor:pointer; background:var(--primary); color:white; border:none; padding:10px 20px; border-radius:5px; font-weight:bold;">← Voltar</button>
-            <h2 id="tituloOperacaoJira" style="text-align:center; color:var(--primary);"></h2>
-            <div class="grid-tickets-detalhe" id="containerCardsJira"></div>
+    <div class="faq-section">
+        <h2>📌 Fluxo de Processos e Solicitações</h2>
+        <div class="mermaid">
+            graph TD
+                Start((Início do Pedido)) --> Channel{Origem?}
+                
+                Channel -- "Onsite (Direto)" --> Form[Preenchimento do FORMS]
+                Channel -- "Colaborador (Chat Shopee)" --> Chat[Atendente do Chat] --> Form
+                Channel -- "Outros Setores (E-mail)" --> Manual[Redirecionar para o FORMS] --> Form
+
+                Form --> Type{Tipo de Ajuste?}
+                
+                Type -- "Troca de Horário" --> OnsiteResp[Responsabilidade do Onsite]
+                OnsiteResp --> Refund{Precisa de Reembolso?}
+                
+                Refund -- "Sim" --> TickBox[Marcar Opção de Reembolso no Forms] --> Process
+                Refund -- "Não" --> Process
+                
+                Type -- "Outros Ajustes" --> Process[Sua Planilha de Gestão]
+
+                Process --> Ginfor[[Atualização no Sistema GINFOR]]
+                Ginfor --> End((Solicitação Finalizada))
+
+                NoForm{Solicitação via E-mail/Chat?} -.-> |PROIBIDO| Deny((NÃO REALIZAR))
         </div>
     </div>
 
@@ -173,33 +319,38 @@
     <footer>© 2026 Apoio ao On-Site | WeCanBR</footer>
 
     <script>
-        async function carregarHome() {
-            try {
-                const res = await fetch('abas/home.html');
-                const html = await res.text();
-                const temp = document.createElement('div'); temp.innerHTML = html;
-                const cards = Array.from(temp.querySelectorAll('.card, .embedded-section'));
-                
-                document.getElementById('homeTopGrid').append(...cards.slice(0, 5));
-                
-                const bottomCards = cards.slice(5);
-                bottomCards.forEach((c, i) => {
-                    const btn = c.querySelector('button, .section-btn');
-                    if(btn) {
-                        if(i === 0) btn.style.background = 'var(--appsheet)';
-                        if(i === 1) btn.style.background = 'var(--glpi)';
-                        if(i === 2) btn.style.background = 'var(--pontomais)';
-                    }
-                });
-                document.getElementById('homeBottomGrid').append(...bottomCards);
-            } catch(e) { console.error(e); }
+        function abrirPopup(url) {
+            const largura = 900;
+            const altura = 900;
+            const esquerda = (screen.width - largura) / 2;
+            const topo = (screen.height - altura) / 2;
+            window.open(url, 'FormsPopup', `width=${largura},height=${altura},top=${topo},left=${esquerda},scrollbars=yes,resizable=yes`);
         }
-        window.onload = carregarHome;
 
-        function toggleTheme() { document.documentElement.setAttribute('data-theme', document.documentElement.getAttribute('data-theme') === 'dark' ? '' : 'dark'); }
-        function buscarTudo() { 
-            let q = document.getElementById('searchInput').value.toLowerCase();
-            document.querySelectorAll('.card').forEach(c => c.style.display = c.innerText.toLowerCase().includes(q) ? "block" : "none");
+        function abrirAppSheet() {
+            const largura = window.screen.availWidth;
+            const altura = window.screen.availHeight;
+            window.open('https://www.appsheet.com/start/8ba6b59c-c836-4d4e-9a3e-e43d38d2a47e', 'AppSheetPopup', `width=${largura},height=${altura},top=0,left=0,scrollbars=yes,resizable=yes`);
+        }
+
+        function buscarTudo() {
+            let input = document.getElementById('searchInput').value.toLowerCase();
+            let cards = document.getElementsByClassName('card');
+            for (let card of cards) {
+                card.classList.toggle('hidden', !card.innerText.toLowerCase().includes(input));
+            }
+        }
+
+        function toggleTheme() {
+            const html = document.documentElement;
+            const btn = document.getElementById('themeBtn');
+            if (html.getAttribute('data-theme') === 'dark') {
+                html.removeAttribute('data-theme');
+                btn.innerHTML = "🌙";
+            } else {
+                html.setAttribute('data-theme', 'dark');
+                btn.innerHTML = "☀️";
+            }
         }
     </script>
 </body>
