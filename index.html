@@ -57,6 +57,46 @@
         .signature { text-align: center; margin: 40px 0 20px; font-family: 'Great Vibes', cursive; font-size: 1.5rem; color: var(--signature); }
         footer { text-align: center; padding: 30px; background: #222; color: white; width: 100%; }
         .theme-toggle { position: fixed; bottom: 20px; right: 20px; width: 50px; height: 50px; border-radius: 50%; background: var(--primary); color: white; border: none; cursor: pointer; z-index: 2001; }
+    /* AJUSTE PARA OS TICKETS EM CARDS (3 COLUNAS) */
+        .grid-tickets-detalhe { 
+            display: grid !important; 
+            grid-template-columns: repeat(3, 1fr) !important; 
+            gap: 20px !important; 
+            padding: 20px;
+        }
+
+        .card-ticket { 
+            background: var(--card-bg); 
+            border-radius: 15px; 
+            padding: 20px; 
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08); 
+            border-left: 8px solid var(--warning); 
+            min-height: 380px; /* Impede o encolhimento */
+            display: flex; 
+            flex-direction: column; 
+            justify-content: space-between; 
+            box-sizing: border-box;
+        }
+
+        /* BOTÕES LADO A LADO */
+        .actions-row { 
+            display: flex !important; 
+            gap: 5px !important; 
+            margin-top: 15px; 
+            width: 100%; 
+        }
+
+        .btn-mini { 
+            flex: 1 !important; 
+            padding: 10px 2px !important; 
+            font-size: 0.7rem !important; 
+            font-weight: bold;
+            color: white; 
+            border-radius: 6px; 
+            text-align: center; 
+            text-decoration: none;
+            border: none;
+            cursor: pointer;
     </style>
 </head>
 <body>
