@@ -144,11 +144,11 @@
         <input type="text" id="searchInput" onkeyup="buscarTudo()" placeholder="Pesquisar...">
     </header>
 
-    <div class="tabs-container">
-        <a href="index.html" class="tab-btn active">🏠 HOME</a>
-        <a href="abas/solicitacoes.html" class="tab-btn">📝 SOLICITAÇÕES</a>
-        <a href="abas/tickets-shopee.html" class="tab-btn">🎫 TICKETS SHOPEE</a>
-    </div>
+   <div class="tabs-container">
+    <button class="tab-btn active" id="btnTabHome" onclick="switchTab('home')">🏠 HOME</button>
+    <button class="tab-btn" id="btnTabSol" onclick="switchTab('solicitacoes')">📝 SOLICITAÇÕES</button>
+    <button class="tab-btn" id="btnTabJira" onclick="switchTab('jira')">🎫 TICKETS SHOPEE</button>
+</div>
 
  <div id="homeView">
         <div class="home-grid-top" id="homeTopGrid"></div>
