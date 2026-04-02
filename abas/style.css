@@ -106,3 +106,40 @@ footer { text-align: center; padding: 30px; background: #222; color: white; widt
     justify-content: center; /* Centraliza os botões na tela */
     width: 100%;            /* Garante que use a largura total */
 }
+
+/* AJUSTE DOS TICKETS - COPIE DAQUI PARA BAIXO */
+.grid-tickets-detalhe { 
+    display: grid !important; 
+    grid-template-columns: repeat(3, 1fr) !important; 
+    gap: 20px !important; 
+}
+
+.card-ticket { 
+    background: white !important;
+    min-height: 380px !important; 
+    display: flex !important; 
+    flex-direction: column !important; 
+    justify-content: space-between !important; 
+    padding: 20px !important;
+    border-radius: 15px !important;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1) !important;
+}
+
+.actions-row { 
+    display: flex !important; 
+    gap: 5px !important; 
+    margin-top: 15px !important; 
+}
+
+.btn-mini { 
+    flex: 1 !important; 
+    padding: 10px 2px !important; 
+    font-size: 0.7rem !important; 
+    border-radius: 6px !important;
+    text-align: center !important;
+    font-weight: bold !important;
+    text-decoration: none !important;
+    color: white !important;
+    border: none !important;
+    cursor: pointer !important;
+}
