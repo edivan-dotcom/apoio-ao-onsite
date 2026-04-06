@@ -197,7 +197,6 @@
             filter: brightness(1.1);
         }
 
-        /* --- CORREÇÕES DE GESTÃO --- */
         .grid-gestao { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px; align-items: start; }
         .card-gestao { background: var(--card-bg); padding: 15px; border-radius: 10px; border-left: 5px solid var(--warning); box-shadow: 0 2px 5px rgba(0,0,0,0.1); text-align: left; position: relative; padding-bottom: 110px; }
         
@@ -221,7 +220,6 @@
         .signature { text-align: center; margin: 40px 0 20px; font-family: 'Great Vibes', cursive; font-size: 1.5rem; color: var(--signature); }
         footer { text-align: center; padding: 30px; background: #222; color: white; width: 100%; }
 
-        /* Delays */
         .embedded-section:nth-child(1) { animation-delay: 0.1s; }
         .embedded-section:nth-child(2) { animation-delay: 0.2s; }
         .embedded-section:nth-child(3) { animation-delay: 0.3s; }
@@ -236,7 +234,7 @@
     <nav class="navbar">
         <div style="display: flex; align-items: center;">
             <div style="font-weight: bold; color: var(--primary); letter-spacing: 1px;">WE CAN BR</div>
-            <div id="contadorSolicitacoes" onclick="switchTab('home')" title="Ir para Home">0 Pendentes</div>
+            <div id="contadorSolicitacoes" style="display:none; background: #e67e22; color: #000; padding: 5px 15px; border-radius: 20px; font-size: 0.8rem; font-weight: 800; margin-left: 15px;" onclick="switchTab('home')" title="Ir para Home">0 Pendentes</div>
         </div>
         
         <div class="nav-links">
@@ -364,7 +362,7 @@
     <div id="jiraView" style="display: none;">
         <div class="gestao-section">
             <h2 style="text-align: center; color: var(--jira);">🎫 Tickets Shopee por On-Site</h2>
-            <div id="viewAgrupadaJira" class="grid-gestao"></div>
+            <div id="viewAgrupadaJira" class="grid-gestao" style="padding: 20px;"></div>
             <div id="viewDetalhadaJira" style="display: none; background: var(--card-bg); padding: 25px; border-radius: 15px; margin-top: 20px;">
                 <button onclick="voltarParaAgrupamentoJira()" style="margin-bottom: 20px; padding: 10px 20px; border-radius: 5px; background: #666; color: white; border: none; cursor: pointer;">← Voltar</button>
                 <h3 id="tituloOperacaoJira" style="color: var(--jira); text-align: center;"></h3>
@@ -377,7 +375,6 @@
     <footer>© 2026 Apoio ao On-Site | WeCanBR</footer>
 
     <script>
-        // Use sua URL real do Script aqui
         const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxupjNwDDgxLULbLOPUVd2jc4hRUxI9JYYeqy7riYGBg5ymoqAfLeJn6IwRqLH7aozH/exec"; 
         let ticketsJiraGlobais = [];
 
@@ -398,16 +395,34 @@
                 if (dados.jira && dados.jira.length > 0) {
                     ticketsJiraGlobais = dados.jira;
                     const contagem = {};
-                    dados.jira.forEach(t => {
-                        let nome = t.onsite || "Não Mapeado";
-                        contagem[nome] = (contagem[nome] || 0) + 1;
+                    let pendPontoCount = 0;
+
+                    ticketsJiraGlobais.forEach(t => {
+                        if(t.pendentePonto) {
+                            pendPontoCount++;
+                        } else {
+                            let nome = t.onsite || "Não Mapeado";
+                            contagem[nome] = (contagem[nome] || 0) + 1;
+                        }
                     });
+
+                    // Card do Time de Ponto
+                    if (pendPontoCount > 0) {
+                        containerJira.innerHTML += `
+                            <div class="card-jira-agrupado" style="border-top-color: var(--pontomais); background: #fffdf0;" onclick="mostrarTicketsDoOnsite('PONTO')">
+                                <span style="font-size: 30px;">⏱️</span>
+                                <h3 style="margin: 10px 0 5px; color: var(--pontomais);">PONTOS E TROCAS PENDENTES</h3>
+                                <span style="font-weight: bold; color: var(--danger);">${pendPontoCount} Ajuste(s) Pendente(s)</span>
+                            </div>`;
+                    }
+
+                    // Cards Onsites
                     for (const [nome, qtd] of Object.entries(contagem)) {
                         containerJira.innerHTML += `
                             <div class="card-jira-agrupado" onclick="mostrarTicketsDoOnsite('${nome}')">
                                 <span style="font-size: 30px;">🧑‍💻</span>
                                 <h3 style="margin: 10px 0 5px; color: var(--primary);">${nome}</h3>
-                                <span style="font-weight: bold; color: var(--danger);">${qtd} Pendente(s)</span>
+                                <span style="font-weight: bold; color: var(--secondary);">${qtd} Pendente(s)</span>
                             </div>`;
                     }
                 } else {
@@ -419,18 +434,36 @@
         function mostrarTicketsDoOnsite(onsite) {
             document.getElementById('viewAgrupadaJira').style.display = 'none';
             document.getElementById('viewDetalhadaJira').style.display = 'block';
-            document.getElementById('tituloOperacaoJira').innerText = `Gestão: ${onsite}`;
+            document.getElementById('tituloOperacaoJira').innerText = onsite === 'PONTO' ? "Fila do Time de Ponto" : `Gestão: ${onsite}`;
             const container = document.getElementById('containerCardsJira');
             container.innerHTML = "";
-            const filtrados = ticketsJiraGlobais.filter(t => t.onsite === onsite);
+
+            const filtrados = (onsite === 'PONTO') 
+                ? ticketsJiraGlobais.filter(t => t.pendentePonto)
+                : ticketsJiraGlobais.filter(t => t.onsite === onsite && !t.pendentePonto);
+
             filtrados.forEach(ticket => {
+                const resumo = ticket.resumo.toUpperCase();
+                const isMovDeslig = resumo.includes("MOVIMENTAÇ") || resumo.includes("DESLIGAMENTO");
+                const corBorda = ticket.pendentePonto ? 'var(--pontomais)' : (isMovDeslig ? 'var(--warning)' : 'var(--jira)');
+
                 container.innerHTML += `
-                    <div class="card-gestao" style="border-left-color: var(--jira);">
+                    <div class="card-gestao" style="border-left-color: ${corBorda};">
+                        ${ticket.pendentePonto ? '<div class="tag-ponto">⏰ AGUARDANDO AJUSTE NO PONTO</div>' : ''}
                         <strong>${ticket.nome || "Sem Nome"}</strong><br>
-                        <small>${ticket.chave} | ${ticket.status}</small><br>
-                        <p>${ticket.resumo}</p>
-                        <div style="position: absolute; bottom: 15px; left: 15px; right: 15px;">
+                        <small>${ticket.chave} | ${ticket.status}</small>
+                        <hr style="opacity:0.1; margin: 10px 0;">
+                        <p style="font-size: 0.85rem;">${ticket.resumo}</p>
+                        <div style="position: absolute; bottom: 15px; left: 15px; right: 15px; display: flex; flex-direction: column; gap: 5px;">
                              <a href="https://spxresolve.atlassian.net/browse/${ticket.chave}" target="_blank" class="btn-jira-link" style="background: var(--jira);">🔗 Abrir JIRA</a>
+                             
+                             ${onsite === 'PONTO' 
+                                ? `<button onclick="finalizarPonto('${ticket.chave}')" class="btn-jira-link" style="background: #333;">✔️ PONTO FINALIZADO</button>`
+                                : `
+                                    <button onclick="concluirTicket('${ticket.chave}')" class="btn-jira-link" style="background: var(--voucher);">✅ CONCLUIR TICKET</button>
+                                    ${isMovDeslig ? `<button onclick="enviarParaPonto('${ticket.chave}')" class="btn-jira-link" style="background: var(--warning); color: #000 !important;">➡️ ENVIAR PARA PONTO</button>` : ''}
+                                `
+                             }
                         </div>
                     </div>`;
             });
@@ -439,6 +472,29 @@
         function voltarParaAgrupamentoJira() {
             document.getElementById('viewDetalhadaJira').style.display = 'none';
             document.getElementById('viewAgrupadaJira').style.display = 'grid';
+            carregarCardsGestao();
+        }
+
+        async function concluirTicket(chave) {
+            if(!confirm("Deseja concluir este ticket?")) return;
+            await fetch(SCRIPT_URL, { method: 'POST', mode: 'no-cors', body: JSON.stringify({ acao: "concluir_jira", chave: chave }) });
+            alert("Ticket concluído!");
+            carregarCardsGestao();
+            voltarParaAgrupamentoJira();
+        }
+
+        async function enviarParaPonto(chave) {
+            await fetch(SCRIPT_URL, { method: 'POST', mode: 'no-cors', body: JSON.stringify({ acao: "marcar_ponto", chave: chave }) });
+            alert("Enviado para a equipe do Ponto!");
+            carregarCardsGestao();
+            voltarParaAgrupamentoJira();
+        }
+
+        async function finalizarPonto(chave) {
+            await fetch(SCRIPT_URL, { method: 'POST', mode: 'no-cors', body: JSON.stringify({ acao: "concluir_ponto", chave: chave }) });
+            alert("Ajuste de ponto finalizado!");
+            carregarCardsGestao();
+            voltarParaAgrupamentoJira();
         }
 
         function abrirPopup(url) { window.open(url, 'Popup', 'width=900,height=900'); }
