@@ -114,7 +114,6 @@
             box-shadow: 0 4px 10px rgba(0,0,0,0.1); transition: 0.3s;
         }
         .tab-btn.active { background: var(--primary); color: white; }
-        .tab-btn:hover { transform: translateY(-3px); box-shadow: 0 6px 15px rgba(0,0,0,0.15); }
 
         .container { display: flex; justify-content: center; flex-wrap: wrap; gap: 20px; padding: 20px 20px 40px; max-width: 1400px; margin: 0 auto; }
         .card {
@@ -126,104 +125,33 @@
         .card:hover { transform: translateY(-5px); box-shadow: 0 10px 25px rgba(0,0,0,0.1); }
         .card.hidden { display: none; }
         
-        .badge-new {
-            position: absolute; top: -15px; right: -10px;
-            background: var(--new-tag); color: white;
-            padding: 4px 12px; border-radius: 20px;
-            font-size: 0.75rem; font-weight: bold;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-            animation: bounce 2s infinite;
-        }
-
-        @keyframes bounce {
-            0%, 20%, 50%, 80%, 100% {transform: translateY(0);}
-            40% {transform: translateY(-5px);}
-            60% {transform: translateY(-3px);}
-        }
-
         .icon { font-size: 40px; margin-bottom: 15px; display: block; }
 
         .funnel-container {
-            display: flex;
-            justify-content: center;
-            align-items: stretch;
-            flex-wrap: wrap;
-            gap: 20px;
-            max-width: 100%;
-            margin: 0 auto 35px;
-            padding: 0 20px;
+            display: flex; justify-content: center; align-items: stretch; flex-wrap: wrap; gap: 20px; max-width: 100%; margin: 0 auto 35px; padding: 0 20px;
         }
 
         .embedded-section {
-            background: var(--card-bg);
-            padding: 25px;
-            border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-            flex: 1 1 260px;
-            max-width: 320px;
-            text-align: center;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            transition: transform 0.25s ease, box-shadow 0.25s ease;
-            animation: fadeUp 0.6s ease forwards;
-            opacity: 0;
+            background: var(--card-bg); padding: 25px; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); flex: 1 1 260px; max-width: 320px; text-align: center; display: flex; flex-direction: column; justify-content: space-between; transition: 0.25s ease; animation: fadeUp 0.6s ease forwards; opacity: 0;
         }
 
-        .embedded-section:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 15px 35px rgba(0,0,0,0.15);
-        }
+        .embedded-section:hover { transform: translateY(-5px); box-shadow: 0 15px 35px rgba(0,0,0,0.15); }
 
-        @keyframes fadeUp {
-            from { opacity: 0; transform: translateY(15px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
+        @keyframes fadeUp { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
 
-        .section-btn {
-            border: none;
-            padding: 12px 18px;
-            border-radius: 10px;
-            color: #fff;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.25s ease;
-            margin-top: 15px;
-            width: 100%;
-        }
-
-        .section-btn:hover {
-            transform: translateY(-3px) scale(1.03);
-            filter: brightness(1.1);
-        }
+        .section-btn { border: none; padding: 12px 18px; border-radius: 10px; color: #fff; font-weight: 600; cursor: pointer; transition: all 0.25s ease; margin-top: 15px; width: 100%; }
 
         .grid-gestao { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px; align-items: start; }
-        .card-gestao { background: var(--card-bg); padding: 15px; border-radius: 10px; border-left: 5px solid var(--warning); box-shadow: 0 2px 5px rgba(0,0,0,0.1); text-align: left; position: relative; padding-bottom: 110px; }
+        .card-gestao { background: var(--card-bg); padding: 15px; border-radius: 10px; border-left: 5px solid var(--warning); box-shadow: 0 2px 5px rgba(0,0,0,0.1); text-align: left; position: relative; padding-bottom: 140px; }
         
-        .card-jira-agrupado {
-            background: var(--card-bg); padding: 25px; border-radius: 10px; border-top: 5px solid var(--primary); 
-            box-shadow: 0 4px 10px rgba(0,0,0,0.1); text-align: center; cursor: pointer; transition: 0.3s;
-        }
+        .card-jira-agrupado { background: var(--card-bg); padding: 25px; border-radius: 10px; border-top: 5px solid var(--primary); box-shadow: 0 4px 10px rgba(0,0,0,0.1); text-align: center; cursor: pointer; transition: 0.3s; }
 
-        .btn-jira-link {
-            border: none; border-radius: 5px; cursor: pointer; font-weight: bold; transition: 0.3s; 
-            text-decoration: none; text-align: center; color: white; display: block; width: 100%; box-sizing: border-box;
-            padding: 8px; margin-top: 5px;
-        }
+        .btn-jira-link { border: none; border-radius: 5px; cursor: pointer; font-weight: bold; transition: 0.3s; text-decoration: none; text-align: center; color: white; display: block; width: 100%; box-sizing: border-box; padding: 8px; margin-top: 5px; }
 
-        .tag-ponto { 
-            background: var(--warning); color: #000; text-align: center; 
-            font-weight: bold; padding: 6px; border-radius: 5px; margin-bottom: 10px; 
-            animation: pulse 2s infinite; font-size: 0.85rem;
-        }
+        .tag-ponto { background: var(--warning); color: #000; text-align: center; font-weight: bold; padding: 6px; border-radius: 5px; margin-bottom: 10px; animation: pulse 2s infinite; font-size: 0.85rem; }
 
         .signature { text-align: center; margin: 40px 0 20px; font-family: 'Great Vibes', cursive; font-size: 1.5rem; color: var(--signature); }
         footer { text-align: center; padding: 30px; background: #222; color: white; width: 100%; }
-
-        .embedded-section:nth-child(1) { animation-delay: 0.1s; }
-        .embedded-section:nth-child(2) { animation-delay: 0.2s; }
-        .embedded-section:nth-child(3) { animation-delay: 0.3s; }
-        .embedded-section:nth-child(4) { animation-delay: 0.4s; }
 
     </style>
 </head>
@@ -234,7 +162,7 @@
     <nav class="navbar">
         <div style="display: flex; align-items: center;">
             <div style="font-weight: bold; color: var(--primary); letter-spacing: 1px;">WE CAN BR</div>
-            <div id="contadorSolicitacoes" style="display:none; background: #e67e22; color: #000; padding: 5px 15px; border-radius: 20px; font-size: 0.8rem; font-weight: 800; margin-left: 15px;" onclick="switchTab('home')" title="Ir para Home">0 Pendentes</div>
+            <div id="contadorSolicitacoes" style="display:none; background: #e67e22; color: #000; padding: 5px 15px; border-radius: 20px; font-size: 0.8rem; font-weight: 800; margin-left: 15px;" onclick="switchTab('home')">0 Pendentes</div>
         </div>
         
         <div class="nav-links">
@@ -249,7 +177,6 @@
                     <a href="https://desafiorhcombr-my.sharepoint.com/:x:/r/personal/edivan_costa_wecanbr_com_br/_layouts/15/Doc.aspx?sourcedoc=%7B63D04DA0-C7A8-4059-8591-37DFCED94A93%7D" target="_blank">📋 Central de Solicitações (Base)</a>
                     <a href="https://docs.google.com/spreadsheets/d/1WBYOF9AkoS7NpzhqFyqm5PzQRP13yUF2p5ZY8FfZp_c/edit" target="_blank">🔍 Voucher 2026 (Base Geral)</a>
                     <a href="https://docs.google.com/spreadsheets/d/1WBYOF9AkoS7NpzhqFyqm5PzQRP13yUF2p5ZY8FfZp_c/edit?gid=690743947#gid=690743947" target="_blank">📊 Template Shopee</a>
-                    <a href="https://desafiorhcombr.sharepoint.com/:x:/r/sites/FSWECANBR/_layouts/15/Doc.aspx?sourcedoc=%7B6265A06E-D548-4055-9261-D6A512496567%7D&file=03%202026%20REJEITOS%20MAR%C3%87O%202026.xlsx&action=default&mobileredirect=true" target="_blank">⚠️ Rejeitos 03.2026</a>
                 </div>
             </div>
 
@@ -286,32 +213,27 @@
 
     <div id="homeView">
         <div class="container">
-            <div onclick="abrirPopup('https://forms.office.com/Pages/ResponsePage.aspx?id=fCAtUtXsx0-nbxdGSxFh-eVAzhwdpsxLmCSGMQwqNIpUM1E2TFRSRkhNWU9IQk9SVFhBSDJNWTFDVS4u')" class="card">
+            <div onclick="abrirPopup('https://forms.office.com/...')" class="card">
                 <span class="icon">📝</span>
                 <h2>Central de Solicitações</h2>
                 <p>Clique para abrir o formulário interno.</p>
             </div>
-
-            <div onclick="abrirPopup('https://forms.office.com/Pages/ResponsePage.aspx?id=fCAtUtXsx0-nbxdGSxFh-f7MDqf4DUBBuOHjox7sxytUNFFQNTgzR1pQV0FLM05aWElXSjlRMjFHRy4u')" class="card" style="border-top-color: var(--danger);">
+            <div onclick="abrirPopup('https://forms.office.com/...')" class="card" style="border-top-color: var(--danger);">
                 <span class="icon">🚫</span>
                 <h2>Desligamento Shopee</h2>
                 <p>Formulário oficial para desligamento Shopee.</p>
             </div>
-
-            <div onclick="abrirPopup('https://forms.office.com/Pages/ResponsePage.aspx?id=fCAtUtXsx0-nbxdGSxFh-f7MDqf4DUBBuOHjox7sxytUMzdRMTFCOTc2SzZEQzU4NFI2TVMzUjIxWS4u')" class="card" style="border-top-color: var(--warning);">
+            <div onclick="abrirPopup('https://forms.office.com/...')" class="card" style="border-top-color: var(--warning);">
                 <span class="icon">🎧</span>
                 <h2>Controle de Atendimento</h2>
                 <p>Registro de atendimentos Shopee.</p>
             </div>
-
-            <div onclick="abrirPopup('https://forms.office.com/Pages/ResponsePage.aspx?id=fCAtUtXsx0-nbxdGSxFh-eVAzhwdpsxLmCSGMQwqNIpUQVBSTFlOTUxSUEMwMFhWSTdTTEVOV1lBUy4u')" class="card" style="border-top-color: var(--voucher);">
-                <div class="badge-new">Novo!</div>
+            <div onclick="abrirPopup('https://forms.office.com/...')" class="card" style="border-top-color: var(--voucher);">
                 <span class="icon">🎫</span>
                 <h2>Cadastro Voucher</h2>
                 <p>Novo Colaborador - Cadastro de Voucher Uber.</p>
             </div>
-
-            <div onclick="window.open('https://spxresolve.atlassian.net/jira/for-you', '_blank')" class="card" style="border-top-color: var(--jira);">
+            <div onclick="window.open('https://spxresolve.atlassian.net/...')" class="card" style="border-top-color: var(--jira);">
                 <span class="icon">🟦</span>
                 <h2>JIRA</h2>
                 <p>Gestão de chamados e projetos JIRA.</p>
@@ -320,41 +242,20 @@
 
         <div class="funnel-container">
             <div class="embedded-section" style="border-top: 4px solid var(--reembolso);">
-                <div>
-                    <strong style="color: var(--reembolso);">🔄 REEMBOLSO HE/FALTAS</strong>
-                    <p>Solicite Reembolso em caso de Faltas.</p>
-                </div>
-                <a href="https://forms.office.com/pages/responsepage.aspx?id=fCAtUtXsx0-nbxdGSxFh-f7MDqf4DUBBuOHjox7sxytUM1pLUFZVQjkxV1ZUNkY2RU1CWVQ1MVJZOS4u&route=shorturl" target="_blank" style="text-decoration: none;">
-                    <button class="section-btn" style="background: var(--reembolso);">📝 Preencher Formulário</button>
-                </a>
+                <div><strong style="color: var(--reembolso);">🔄 REEMBOLSO HE/FALTAS</strong><p>Solicite Reembolso.</p></div>
+                <button class="section-btn" style="background: var(--reembolso);" onclick="window.open('https://forms.office.com/...')">📝 Preencher</button>
             </div>
-
             <div class="embedded-section" style="border-top: 4px solid var(--appsheet);">
-                <div>
-                    <strong style="color: var(--appsheet);">📱 INATIVAÇÃO VOUCHER UBER</strong>
-                    <p>Inativação de usuários Uber.</p>
-                </div>
+                <div><strong style="color: var(--appsheet);">📱 INATIVAÇÃO VOUCHER</strong><p>Inativação Uber.</p></div>
                 <button onclick="abrirAppSheet()" class="section-btn" style="background: var(--appsheet);">🚀 Abrir AppSheet</button>
             </div>
-
             <div class="embedded-section" style="border-top: 4px solid var(--glpi);">
-                <div>
-                    <strong style="color: var(--glpi);">🛠️ CHAMADOS - GLPI</strong>
-                    <p>Consulta de chamados técnicos.</p>
-                </div>
-                <a href="https://glpi.wecanbr.com.br/index.php?noAUTO=1" target="_blank" style="text-decoration: none;">
-                    <button class="section-btn" style="background: var(--glpi);">🎫 Acessar GLPI</button>
-                </a>
+                <div><strong style="color: var(--glpi);">🛠️ CHAMADOS - GLPI</strong><p>Técnicos WeCanBR.</p></div>
+                <button class="section-btn" style="background: var(--glpi);" onclick="window.open('https://glpi.wecanbr.com.br/...')">🎫 Acessar GLPI</button>
             </div>
-
             <div class="embedded-section" style="border-top: 4px solid var(--pontomais);">
-                <div>
-                    <strong style="color: var(--pontomais);">⏱️ PONTOMAIS</strong>
-                    <p>Conferência de ponto.</p>
-                </div>
-                <a href="https://app2.pontomais.com.br/" target="_blank" style="text-decoration: none;">
-                    <button class="section-btn" style="background: var(--pontomais);">🔍 Abrir Pontomais</button>
-                </a>
+                <div><strong style="color: var(--pontomais);">⏱️ PONTOMAIS</strong><p>Conferência de ponto.</p></div>
+                <button class="section-btn" style="background: var(--pontomais);" onclick="window.open('https://app2.pontomais.com.br/')">🔍 Abrir Pontomais</button>
             </div>
         </div>
     </div>
@@ -394,39 +295,30 @@
 
                 if (dados.jira && dados.jira.length > 0) {
                     ticketsJiraGlobais = dados.jira;
-                    const contagem = {};
-                    let pendPontoCount = 0;
-
+                    const contagem = {}; let pendPontoCount = 0;
                     ticketsJiraGlobais.forEach(t => {
-                        if(t.pendentePonto) {
-                            pendPontoCount++;
-                        } else {
+                        if(t.pendentePonto) pendPontoCount++;
+                        else {
                             let nome = t.onsite || "Não Mapeado";
                             contagem[nome] = (contagem[nome] || 0) + 1;
                         }
                     });
 
-                    // Card do Time de Ponto
                     if (pendPontoCount > 0) {
                         containerJira.innerHTML += `
                             <div class="card-jira-agrupado" style="border-top-color: var(--pontomais); background: #fffdf0;" onclick="mostrarTicketsDoOnsite('PONTO')">
-                                <span style="font-size: 30px;">⏱️</span>
-                                <h3 style="margin: 10px 0 5px; color: var(--pontomais);">PONTOS E TROCAS PENDENTES</h3>
+                                <span style="font-size: 30px;">⏱️</span><h3 style="margin: 10px 0 5px; color: var(--pontomais);">PONTOS E TROCAS PENDENTES</h3>
                                 <span style="font-weight: bold; color: var(--danger);">${pendPontoCount} Ajuste(s) Pendente(s)</span>
                             </div>`;
                     }
 
-                    // Cards Onsites
                     for (const [nome, qtd] of Object.entries(contagem)) {
                         containerJira.innerHTML += `
                             <div class="card-jira-agrupado" onclick="mostrarTicketsDoOnsite('${nome}')">
-                                <span style="font-size: 30px;">🧑‍💻</span>
-                                <h3 style="margin: 10px 0 5px; color: var(--primary);">${nome}</h3>
+                                <span style="font-size: 30px;">🧑‍💻</span><h3 style="margin: 10px 0 5px; color: var(--primary);">${nome}</h3>
                                 <span style="font-weight: bold; color: var(--secondary);">${qtd} Pendente(s)</span>
                             </div>`;
                     }
-                } else {
-                    containerJira.innerHTML = "<p style='text-align:center; width:100%'>Nenhum ticket encontrado.</p>";
                 }
             } catch(e) { console.error(e); }
         }
@@ -450,19 +342,14 @@
                 container.innerHTML += `
                     <div class="card-gestao" style="border-left-color: ${corBorda};">
                         ${ticket.pendentePonto ? '<div class="tag-ponto">⏰ AGUARDANDO AJUSTE NO PONTO</div>' : ''}
-                        <strong>${ticket.nome || "Sem Nome"}</strong><br>
-                        <small>${ticket.chave} | ${ticket.status}</small>
-                        <hr style="opacity:0.1; margin: 10px 0;">
-                        <p style="font-size: 0.85rem;">${ticket.resumo}</p>
+                        <strong>${ticket.nome || "Sem Nome"}</strong><br><small>${ticket.chave} | ${ticket.status}</small>
+                        <hr style="opacity:0.1; margin: 10px 0;"><p style="font-size: 0.85rem;">${ticket.resumo}</p>
                         <div style="position: absolute; bottom: 15px; left: 15px; right: 15px; display: flex; flex-direction: column; gap: 5px;">
                              <a href="https://spxresolve.atlassian.net/browse/${ticket.chave}" target="_blank" class="btn-jira-link" style="background: var(--jira);">🔗 Abrir JIRA</a>
-                             
                              ${onsite === 'PONTO' 
                                 ? `<button onclick="finalizarPonto('${ticket.chave}')" class="btn-jira-link" style="background: #333;">✔️ PONTO FINALIZADO</button>`
-                                : `
-                                    <button onclick="concluirTicket('${ticket.chave}')" class="btn-jira-link" style="background: var(--voucher);">✅ CONCLUIR TICKET</button>
-                                    ${isMovDeslig ? `<button onclick="enviarParaPonto('${ticket.chave}')" class="btn-jira-link" style="background: var(--warning); color: #000 !important;">➡️ ENVIAR PARA PONTO</button>` : ''}
-                                `
+                                : `<button onclick="concluirTicket('${ticket.chave}')" class="btn-jira-link" style="background: var(--voucher);">✅ CONCLUIR TICKET</button>
+                                   ${isMovDeslig ? `<button onclick="enviarParaPonto('${ticket.chave}')" class="btn-jira-link" style="background: var(--warning); color: #000 !important;">➡️ ENVIAR PARA PONTO</button>` : ''}`
                              }
                         </div>
                     </div>`;
@@ -484,8 +371,19 @@
         }
 
         async function enviarParaPonto(chave) {
-            await fetch(SCRIPT_URL, { method: 'POST', mode: 'no-cors', body: JSON.stringify({ acao: "marcar_ponto", chave: chave }) });
-            alert("Enviado para a equipe do Ponto!");
+            const btn = event.target;
+            const originalText = btn.innerText;
+            btn.innerText = "⏳ Aguarde, enviando...";
+            btn.disabled = true;
+
+            try {
+                await fetch(SCRIPT_URL, { method: 'POST', mode: 'no-cors', body: JSON.stringify({ acao: "marcar_ponto", chave: chave }) });
+                alert("Enviado para a equipe do Ponto!");
+            } catch (e) {
+                alert("Erro ao enviar.");
+                btn.innerText = originalText;
+                btn.disabled = false;
+            }
             carregarCardsGestao();
             voltarParaAgrupamentoJira();
         }
